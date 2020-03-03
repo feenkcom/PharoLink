@@ -1,0 +1,55 @@
+Class {
+	#name : #LanguageLinkRegistryFinalizer,
+	#superclass : #LanguageLinkAbstractFinalizer,
+	#instVars : [
+		'executionHandler',
+		'proxyObjectId'
+	],
+	#category : #'PharoLink-Execution'
+}
+
+{ #category : #accessing }
+LanguageLinkRegistryFinalizer class >> javaScriptVariable: aPythonVariable executionHandler: executionHandler [
+	^ self new
+		proxyObjectId: aPythonVariable;
+		executionHandler: executionHandler
+		yourself
+]
+
+{ #category : #accessing }
+LanguageLinkRegistryFinalizer >> application [ 
+
+	^ executionHandler application
+]
+
+{ #category : #accessing }
+LanguageLinkRegistryFinalizer >> executionHandler [
+	^ executionHandler
+]
+
+{ #category : #accessing }
+LanguageLinkRegistryFinalizer >> executionHandler: anObject [
+	executionHandler := anObject
+]
+
+{ #category : #finalization }
+LanguageLinkRegistryFinalizer >> finalize [
+	| cf |
+	self application isRunning ifFalse: 
+		[ StringSignal emit: 'LanguageLink not finalizing: ', proxyObjectId printString.
+		^ self ].
+	StringSignal emit: 'LanguageLink finalizing: ', proxyObjectId printString.
+	cf := executionHandler newCommandFactory.
+	cf << (executionHandler removeId: proxyObjectId).
+	cf send.
+]
+
+{ #category : #accessing }
+LanguageLinkRegistryFinalizer >> proxyObjectId [
+	^ proxyObjectId
+]
+
+{ #category : #accessing }
+LanguageLinkRegistryFinalizer >> proxyObjectId: anObject [
+	proxyObjectId := anObject
+]

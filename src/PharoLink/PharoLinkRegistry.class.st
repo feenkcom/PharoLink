@@ -59,6 +59,14 @@ PharoLinkRegistry >> includesId: anId [
 	^ idToObjMap includesKey: anId
 ]
 
+{ #category : #initialization }
+PharoLinkRegistry >> initialize [ 
+
+	super initialize.
+	idToObjMap := Dictionary new.
+	objToIdMap := Dictionary new.
+]
+
 { #category : #testing }
 PharoLinkRegistry >> isPrimitive: anObject [
 	"Answer a boolean indicating whether the supplied object is considered a primitive,
@@ -107,4 +115,13 @@ PharoLinkRegistry >> register: anObject withId: newObjId [
 	ifFalse:
 		[ self primRegister: anObject withId: newObjId ].
 	^ newObjId
+]
+
+{ #category : #resolving }
+PharoLinkRegistry >> resolve: objId [
+	"Answer the object with the supplied id"
+
+	^ idToObjMap 
+		at: objId
+		ifAbsent: [ PharoLinkRegistryUnknownObjectError signalId: objId ]
 ]

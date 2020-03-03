@@ -4,13 +4,32 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : #'PharoLink-Serializer'
+	#category : #'PharoLink-Server'
 }
+
+{ #category : #convenience }
+PharoLinkJSONWriter class >> toString: object registry: registry [
+
+	^ String streamContents: [ :stream |
+			(self on: stream) 
+				registry: registry;
+				nextPut: object ]
+]
+
+{ #category : #convenience }
+PharoLinkJSONWriter class >> toStringPretty: object registry: registry [ 
+
+	^ String streamContents: [ :stream |
+			(self on: stream)
+				prettyPrint: true; 
+				registry: registry;
+				nextPut: object ]
+]
 
 { #category : #accessing }
 PharoLinkJSONWriter >> registry [ 
 
-	^ registry ifNil: [ registry := PharoLinkRegistry default ]
+	^ registry "ifNil: [ registry := PharoLinkRegistry default ]"
 ]
 
 { #category : #accessing }

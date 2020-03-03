@@ -25,7 +25,7 @@ LanguageLinkCommandFactory >> << aJavaScriptStatement [
 
 { #category : #bindings }
 LanguageLinkCommandFactory >> addBinding: aBinding [
-	bindingsDictionary at: aBinding javaScriptVariable name put: aBinding object.
+	bindingsDictionary at: aBinding key put: aBinding object.
 	^ aBinding
 ]
 
@@ -68,11 +68,11 @@ LanguageLinkCommandFactory >> buildCommand [
 	| finishedCommand |
 	finishedCommand := command
 								instructions: self instructionsWithNotifyAtEnd;
-								bindings: bindingsDictionary associations;
+								bindings: bindingsDictionary;
 								observers: observers;
 								transformBlock: transformBlock;
 								yourself.
-	self initialize.
+	self reset.
 	^ finishedCommand
 ]
 
@@ -81,6 +81,32 @@ LanguageLinkCommandFactory >> decorateTransform: aBlock [
 	| previousBlock |
 	previousBlock := transformBlock.
 	^ transformBlock := [ :obj | aBlock value: (previousBlock value: obj) ]
+]
+
+{ #category : #'as yet unclassified' }
+LanguageLinkCommandFactory >> evaluateSourceSequence: aString [
+
+	"self addPlaygroundBindings."
+	self << aString.
+	^ self sendAndWait.
+
+]
+
+{ #category : #ui }
+LanguageLinkCommandFactory >> gtPlaygroundFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'Playground' translated;
+		priority: 10;
+		text: [ '' asRopedText attributesBuilder attribute: (BlFontGenericFamilyAttribute monospace beNotOverwritableByStyler) ];
+		actionButtonIcon: BrGlamorousIcons playinspect  
+			action: [ :aButton |
+				| statements result |
+				statements := aButton phlow textViewContent asString.
+				result := self evaluateSourceSequence: statements.
+				aButton phlow spawnObject: result ].
+
 ]
 
 { #category : #accessing }

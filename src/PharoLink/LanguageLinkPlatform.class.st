@@ -43,7 +43,7 @@ LanguageLinkPlatform >> ensureEnvironmentForApp: anApplication [
 ]
 
 { #category : #hooks }
-LanguageLinkPlatform >> folderForApplication: application [
+LanguageLinkPlatform >> folderForApplication [
 	self subclassResponsibility
 ]
 

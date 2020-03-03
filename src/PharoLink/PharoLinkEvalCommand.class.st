@@ -5,7 +5,8 @@ Class {
 		'blockString',
 		'bindings',
 		'id',
-		'responsePort'
+		'responsePort',
+		'registry'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -42,12 +43,17 @@ PharoLinkEvalCommand >> blockString: anObject [
 
 { #category : #running }
 PharoLinkEvalCommand >> execute: globalsDictionary [
+	| receiver |
 
 	PharoLinkEvalSignal emitCommand: self.
 	self bindings at: #llCommand put: self.
+	globalsDictionary associationsDo: [ :assoc |
+		self bindings at: assoc key put: assoc value ].
+	receiver := self bindings at: 'self' ifAbsent: [ nil ].
 	[ self class compiler
 		source: self blockString;
 		bindings: self bindings;
+		receiver: receiver;
 		evaluate ]
 			on: Error 
 			do: [ :ex | self notifyError: ex ]
@@ -72,8 +78,8 @@ PharoLinkEvalCommand >> notify: anObject command: commandIdString observer: obse
 		at: 'type' put: 'CALLBACK';
 		at: 'commandId' put: commandIdString;
 		at: 'observerId' put: observerIdString;
-		at: 'value' put: (PharoLinkSerializer new serialize: anObject).
-	^ PharoLinkSerializer new deserialize: (self sendResponse: data).
+		at: 'value' put: (PharoLinkServerSerializer serialize: anObject registry: registry).
+	^ (PharoLinkServerSerializer deserialize: (self sendResponse: data) contents registry: registry) at: #value.
 ]
 
 { #category : #private }
@@ -84,7 +90,7 @@ PharoLinkEvalCommand >> notify: anObject id: anIdString [
 	data 	
 		at: 'type' put: 'EVAL';
 		at: 'id' put: anIdString;
-		at: 'value' put: (PharoLinkSerializer new serialize: anObject).
+		at: 'value' put: (PharoLinkServerSerializer serialize: anObject registry: registry).
 	^ self sendResponse: data.
 ]
 
@@ -95,10 +101,11 @@ PharoLinkEvalCommand >> notifyError: error [
 	data := Dictionary new.
 	data 	
 		at: 'type' put: 'ERR';
-		at: 'errMsg' put: error messageText;
+		at: 'errMsg' put: error printString;
 		at: 'commandId' put: self id;
-		at: 'trace' put: ''.
-	^ PharoLinkSerializer new deserialize: (self sendResponse: data).
+		at: 'trace' put: self stackString.
+	self halt.
+	^ self sendResponse: data.
 ]
 
 { #category : #private }
@@ -111,6 +118,16 @@ PharoLinkEvalCommand >> notifyImmediate: anObject id: anIdString [
 		at: 'id' put: anIdString;
 		at: 'value' put: (NeoJSONWriter toString: anObject).
 	^ self sendResponse: data.
+]
+
+{ #category : #accessing }
+PharoLinkEvalCommand >> registry [
+	^ registry
+]
+
+{ #category : #accessing }
+PharoLinkEvalCommand >> registry: anObject [
+	registry := anObject
 ]
 
 { #category : #accessing }
@@ -147,4 +164,12 @@ PharoLinkEvalCommand >> sendResponse: data [
 		[ PharoLinkBadResponseSignal emitRequest: data response: response ].
 
 	^ response
+]
+
+{ #category : #'as yet unclassified' }
+PharoLinkEvalCommand >> stackString [
+
+	^ String streamContents: [ :stream |
+		thisContext stack do: [ :stackItem |
+			stream print: stackItem; cr ] ]
 ]

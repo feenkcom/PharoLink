@@ -10,7 +10,7 @@ PharoLinkCommand >> codeForRemote [
 	^ String streamContents: [ :codeStream |
 		self instructions do: [ :instr | 
 			codeStream
-				<< instr formattedCode;
+				<< instr pharoLinkFormattedCode;
 				<< '.';
 				cr. ] ].
 ]

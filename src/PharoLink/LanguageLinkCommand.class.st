@@ -67,7 +67,7 @@ LanguageLinkCommand >> id: anObject [
 LanguageLinkCommand >> initializeWith: aLLApplication [
 
 	id := aLLApplication settings platform newRandomName.
-	bindings := #().
+	bindings := Dictionary new.
 	observers := #().
 	instructions := OrderedCollection new.
 	transformBlock := #yourself
@@ -86,7 +86,7 @@ LanguageLinkCommand >> instructions: anObject [
 { #category : #testing }
 LanguageLinkCommand >> isValid [
 	^ [ self id isString and: [ 
-			(self bindings allSatisfy: [ :assoc | assoc key isString ]) and: [ 
+			(self bindings associations allSatisfy: [ :assoc | assoc key isString ]) and: [ 
 				self observers allSatisfy: [ :obs | obs callback isBlock ] ] ] ] on: Error do: [ false ]
 ]
 

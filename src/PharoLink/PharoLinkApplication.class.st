@@ -17,7 +17,7 @@ PharoLinkApplication >> initializeHandlers [
 	loggingHandler := PharoLinkLoggingHandler application: self.
 	communicationHandler := LanguageLinkCommunicationHandler application: self.
 	processHandler := LanguageLinkServerHandler application: self.
-	executionHandler := LanguageLinkExecutionHandler application: self
+	executionHandler := PharoLinkExecutionHandler application: self
 ]
 
 { #category : #initialization }

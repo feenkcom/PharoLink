@@ -55,7 +55,7 @@ LanguageLinkApplication class >> platform [
 
 { #category : #'python hooks file' }
 LanguageLinkApplication class >> repositoryFileReference [
-	^ self platform folderForApplication: self
+	^ self platform folderForApplication
 ]
 
 { #category : #instructions }
@@ -154,9 +154,38 @@ LanguageLinkApplication >> errorMessage [
 	^ processHandler errorMessage
 ]
 
+{ #category : #'as yet unclassified' }
+LanguageLinkApplication >> evaluateSourceSequence: aString [
+	| cf |
+
+	cf := self newCommandFactory.
+	"self addPlaygroundBindingsTo: cf."
+	^ cf 
+		<< aString;
+		sendAndWait.
+
+]
+
 { #category : #accessing }
 LanguageLinkApplication >> executionHandler [
 	^ executionHandler
+]
+
+{ #category : #ui }
+LanguageLinkApplication >> gtPlaygroundFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'Playground' translated;
+		priority: 10;
+		text: [ '' asRopedText attributesBuilder attribute: (BlFontGenericFamilyAttribute monospace beNotOverwritableByStyler) ];
+		actionButtonIcon: BrGlamorousIcons playinspect  
+			action: [ :aButton |
+				| statements result |
+				statements := aButton phlow textViewContent asString.
+				result := self evaluateSourceSequence: statements.
+				aButton phlow spawnObject: result ].
+
 ]
 
 { #category : #handlers }

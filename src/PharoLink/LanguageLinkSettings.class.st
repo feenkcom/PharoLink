@@ -9,9 +9,12 @@ Class {
 		'messageBrokerStrategy',
 		'serverProcessClass',
 		'serverExecutable',
+		'serverImage',
 		'commandFactoryClass',
 		'commandClass',
-		'platform'
+		'platform',
+		'serializerClass',
+		'deserializerClass'
 	],
 	#category : #'PharoLink-Platform'
 }
@@ -29,6 +32,8 @@ LanguageLinkSettings class >> jsDefaultSettings [
 		platform: JSLinkPharoPlatform new;
 		commandFactoryClass: JSLinkCommandFactory;
 		commandClass: LanguageLinkCommand;
+		serializerClass: LanguageLinkSerializer;
+		deserializerClass: JSLinkDeserializer;
 		yourself
 ]
 
@@ -42,10 +47,13 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 				ipOrName: 'localhost' port: (6900 + 99 atRandom));
 		messageBrokerStrategy: LanguageLinkHttpMessageBroker;
 		serverProcessClass: PharoLinkPharoProcess;
-		serverExecutable: FileLocator imageDirectory / 'vmgt/gtoolkit';
+		serverExecutable: FileLocator vmBinary resolve;
+		serverImage: FileLocator image resolve;
 		platform: PharoLinkPharoPlatform new;
 		commandFactoryClass: PharoLinkCommandFactory;
 		commandClass: PharoLinkCommand;
+		serializerClass: LanguageLinkSerializer;
+		deserializerClass: PharoLinkDeserializer;
 		yourself
 ]
 
@@ -89,6 +97,16 @@ LanguageLinkSettings >> debugMode: anObject [
 	debugMode := anObject
 ]
 
+{ #category : #accessing }
+LanguageLinkSettings >> deserializerClass [
+	^ deserializerClass
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> deserializerClass: anObject [
+	deserializerClass := anObject
+]
+
 { #category : #initialization }
 LanguageLinkSettings >> initialize [
 
@@ -123,6 +141,16 @@ LanguageLinkSettings >> platform: anObject [
 ]
 
 { #category : #accessing }
+LanguageLinkSettings >> serializerClass [
+	^ serializerClass
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> serializerClass: anObject [
+	serializerClass := anObject
+]
+
+{ #category : #accessing }
 LanguageLinkSettings >> serverExecutable [
 	^ serverExecutable
 ]
@@ -130,6 +158,16 @@ LanguageLinkSettings >> serverExecutable [
 { #category : #accessing }
 LanguageLinkSettings >> serverExecutable: anObject [
 	serverExecutable := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> serverImage [
+	^ serverImage
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> serverImage: anObject [
+	serverImage := anObject
 ]
 
 { #category : #accessing }
@@ -150,4 +188,10 @@ LanguageLinkSettings >> serverSocketAddress [
 { #category : #accessing }
 LanguageLinkSettings >> serverSocketAddress: anObject [
 	serverSocketAddress := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> workingDirectory [ 
+
+	^ self platform folderForApplication
 ]

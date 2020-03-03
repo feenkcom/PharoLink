@@ -45,7 +45,7 @@ LanguageLinkExecutionHandler >> buildMessageFromCommand: command [
 	message := LanguageLinkEnqueueCommandMessage 
 					commandId: command id 
 					statements: command codeForRemote 
-					bindings: (command bindings asDictionary collect: [ :obj | self serialize: obj ]).
+					bindings: (command bindings collect: [ :obj | self serialize: obj ]).
 	message addBinding: #pharoCommandId -> (self serialize: command id).
 	^ message
 ]
@@ -68,16 +68,7 @@ LanguageLinkExecutionHandler >> getObserverAtCommandId: commandId id: observerId
 { #category : #initialization }
 LanguageLinkExecutionHandler >> initializeHandler [
 
-	commandQueue := JSLinkCommandQueue executionHandler: self.
-	mapperFactory := JSLinkMapperFactory forExecutionHandler: self.
-	promiseRegistry := JSLinkPromiseRegistry new.
-	weakRegistry := self settings platform weakRegistry.
-	objectRegistry := JSLinkObjectRegistry new.
-
-	self communicationHandler
-		addHandler: [ :msg | self notifyHandler: msg ] forMessageClass: LanguageLinkUpdatePromiseMessage;
-		addHandler: [ :msg | self notifyErrorHandler: msg ] forMessageClass: LanguageLinkErrorMessage;
-		addHandler: [ :msg | self notifyCallbackHandler: msg ] forMessageClass: LanguageLinkCallbackMessage
+	^ self subclassResponsibility
 ]
 
 { #category : #'private protocol' }
@@ -85,7 +76,7 @@ LanguageLinkExecutionHandler >> mapperFactory [
 	^ mapperFactory
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LanguageLinkExecutionHandler >> newCommandFactory [
 
 	^ self application newCommandFactory
@@ -108,7 +99,7 @@ LanguageLinkExecutionHandler >> notifyCallbackHandler: msg [
 { #category : #handlers }
 LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 	| error |
-	error := JSLinkJavaScriptError new
+	error := PharoLinkLinkRemoteError new
 					application: self application;
 					command: (commandQueue getCommand: errorMsg commandId);
 					errorMessage: errorMsg errorMessage;
@@ -137,13 +128,13 @@ LanguageLinkExecutionHandler >> primitiveSendCommand: command [
 	^ self communicationHandler sendMessage: (self buildMessageFromCommand: command)
 ]
 
-{ #category : #'as yet unclassified' }
-LanguageLinkExecutionHandler >> registerObject: aPythonObject [
-	objectRegistry registerObject: aPythonObject.
+{ #category : #registry }
+LanguageLinkExecutionHandler >> registerObject: aProxyObject [
+	objectRegistry registerObject: aProxyObject.
 	weakRegistry 
-		registerObject: aPythonObject 
-		finalizer: (JSLinkRegistryFinalizer 
-							javaScriptVariable: aPythonObject javaScriptVariable 
+		registerObject: aProxyObject 
+		finalizer: (LanguageLinkRegistryFinalizer 
+							javaScriptVariable: aProxyObject id 
 							executionHandler: self)
 ]
 
@@ -159,7 +150,14 @@ LanguageLinkExecutionHandler >> registerPromiseForCommand: aCommand [
 	^ promise
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #registry }
+LanguageLinkExecutionHandler >> removeId: aRemoteProxyId [
+	"Tell the remote server to remove the object from its registry"
+
+	^ self subclassResponsibility
+]
+
+{ #category : #handlers }
 LanguageLinkExecutionHandler >> safeTriggerDebugger: error [
 	| sem |
 
@@ -198,7 +196,7 @@ LanguageLinkExecutionHandler >> stop [
 	weakRegistry destroy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #handlers }
 LanguageLinkExecutionHandler >> triggerDebugger: pythonError [
 	"This method is called when an error rised on Python execution."
 	"Inspect error to review the Command that caused the error.

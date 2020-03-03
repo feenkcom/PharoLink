@@ -5,10 +5,56 @@ Class {
 		'listenPort',
 		'responsePort',
 		'znServer',
-		'debugMode'
+		'debugMode',
+		'registry',
+		'globals'
 	],
 	#category : #'PharoLink-Server'
 }
+
+{ #category : #clap }
+PharoLinkServer class >> commandLine [
+	<commandline>
+
+	^ self commandLineCommand meaning: [ :args | | logger listenPort responsePort |
+		args atName: 'help' ifFound: [ :help |
+			help value.
+			help context exitSuccess ].
+
+		args atName: 'log' ifFound: 
+			[ SignalLogger resetAllInstances.
+			logger := RestartingStreamLogger stdout.
+			logger start ].
+
+		listenPort := (args atName: 'listenPort') value asNumber.
+		responsePort := (args atName: 'responsePort') value asNumber.
+		StringSignal emit: 'Listen Port: ', listenPort printString.
+		StringSignal emit: 'Response Port: ', responsePort printString.
+		self new 
+			listenPort: listenPort;
+			responsePort: responsePort;
+			start.
+		StringSignal emit: 'Running'.
+		
+		"Wait until the process is killed"
+		Semaphore new wait.
+		 ].
+]
+
+{ #category : #clap }
+PharoLinkServer class >> commandLineCommand [
+
+	^ (ClapCommand withName: 'pharoLinkServer')
+		description: 'Run the PharoLink Server';
+		add: ClapFlag forHelp;
+		add: ((ClapFlag withName: 'log') 
+					description: 'Enable logging to stdout');
+		add: ((ClapPositional withName: 'listenPort')
+					description: 'The port number on which to listen for requests');
+		add: ((ClapPositional withName: 'responsePort')
+					description: 'The port number on which to send responses');
+		yourself
+]
 
 { #category : #accessing }
 PharoLinkServer >> debugMode [
@@ -20,13 +66,18 @@ PharoLinkServer >> handlEnqueue: aZnRequest [
 	"Process the supplied statements"
 	| command dict |
 
-	dict := JSLinkNeoJsonSerializer new deserialize: aZnRequest entity contents.
+	dict := PharoLinkServerSerializer 
+					deserialize: aZnRequest entity contents
+					registry: registry.
 	command := PharoLinkEvalCommand
 					source: (dict at: #'statements')
 					bindings: (dict at: #'bindings')
 					id: (dict at: #'commandId').
-	command responsePort: self responsePort.
-	[ command execute: { } ] forkAt: Processor userBackgroundPriority.
+	command 
+		responsePort: responsePort;
+		registry: registry.
+"self halt: (dict at: #statements)."
+	[ command execute: globals ] forkAt: Processor userBackgroundPriority.
 	^ (ZnResponse statusLine: ZnStatusLine ok)
 		entity: (ZnEntity json: '{}');
 		yourself
@@ -62,7 +113,16 @@ PharoLinkServer >> handleRequest: aZnRequest [
 PharoLinkServer >> initialize [ 
 
 	super initialize.
+	registry := PharoLinkRegistry new.
+	globals := Dictionary new.
+	globals at: #registry put: registry.
 	debugMode := false.
+]
+
+{ #category : #testing }
+PharoLinkServer >> isRunning [ 
+
+	^ znServer isRunning
 ]
 
 { #category : #accessing }
