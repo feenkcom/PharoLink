@@ -46,15 +46,13 @@ LanguageLinkProxyObject >> declarativeViews [
 ]
 
 { #category : #'as yet unclassified' }
-LanguageLinkProxyObject >> evaluateSourceSequence: aString [ [
+LanguageLinkProxyObject >> evaluateSourceSequence: aString [
 	| cf |
 
 	cf := self newCommandFactory.
 	^ cf 
 		<< aString;
 		sendAndWait.
-]
-
 ]
 
 { #category : #'gt inspector' }

@@ -159,7 +159,6 @@ LanguageLinkApplication >> evaluateSourceSequence: aString [
 	| cf |
 
 	cf := self newCommandFactory.
-	"self addPlaygroundBindingsTo: cf."
 	^ cf 
 		<< aString;
 		sendAndWait.
