@@ -19,6 +19,12 @@ LanguageLinkApplication class >> baseApplication [
 	^ JSLinkApplication
 ]
 
+{ #category : #accessing }
+LanguageLinkApplication class >> defaultSettings [
+
+	^ LanguageLinkSettings pharoDefaultSettings
+]
+
 { #category : #'start-stop' }
 LanguageLinkApplication class >> do: aBlockClosure [ 
 	| retVal |
@@ -116,6 +122,13 @@ LanguageLinkApplication class >> uniqueInstance [
 { #category : #accessing }
 LanguageLinkApplication class >> uniqueInstance: anObject [
 	uniqueInstance := anObject
+]
+
+{ #category : #'instance creation' }
+LanguageLinkApplication class >> withDefaultSettings [
+	"Answer a new instance configured with default settings"
+
+	^ self newWith: self defaultSettings
 ]
 
 { #category : #utils }
