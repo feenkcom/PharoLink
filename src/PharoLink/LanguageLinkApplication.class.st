@@ -178,6 +178,7 @@ LanguageLinkApplication >> gtPlaygroundFor: aView [
 		title: 'Playground' translated;
 		priority: 10;
 		text: [ '' asRopedText attributesBuilder attribute: (BlFontGenericFamilyAttribute monospace beNotOverwritableByStyler) ];
+		styler: self settings parserClass gtStyler;
 		actionButtonIcon: BrGlamorousIcons playinspect  
 			action: [ :aButton |
 				| statements result |

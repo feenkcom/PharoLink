@@ -14,7 +14,8 @@ Class {
 		'commandClass',
 		'platform',
 		'serializerClass',
-		'deserializerClass'
+		'deserializerClass',
+		'parserClass'
 	],
 	#category : #'PharoLink-Platform'
 }
@@ -34,6 +35,7 @@ LanguageLinkSettings class >> jsDefaultSettings [
 		commandClass: LanguageLinkCommand;
 		serializerClass: LanguageLinkSerializer;
 		deserializerClass: JSLinkDeserializer;
+		parserClass: JSParser;
 		yourself
 ]
 
@@ -54,6 +56,7 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 		commandClass: PharoLinkCommand;
 		serializerClass: LanguageLinkSerializer;
 		deserializerClass: PharoLinkDeserializer;
+		parserClass: StParser;
 		yourself
 ]
 
@@ -128,6 +131,16 @@ LanguageLinkSettings >> messageBrokerStrategy [
 { #category : #accessing }
 LanguageLinkSettings >> messageBrokerStrategy: anObject [
 	messageBrokerStrategy := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> parserClass [
+	^ parserClass
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> parserClass: anObject [
+	parserClass := anObject
 ]
 
 { #category : #accessing }
