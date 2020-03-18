@@ -41,7 +41,11 @@ LanguageLinkRegistryFinalizer >> finalize [
 	StringSignal emit: 'LanguageLink finalizing: ', proxyObjectId printString.
 	cf := executionHandler newCommandFactory.
 	cf << (executionHandler removeId: proxyObjectId).
-	cf send.
+	[ cf send ]
+		on: LanguageLinkCommunicationError
+		do: [ :ex |
+			"The application may have closed down, if it has ignore the error"
+			self application isRunning ifTrue: [ ex pass ] ].
 ]
 
 { #category : #accessing }
