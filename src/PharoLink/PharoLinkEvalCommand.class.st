@@ -104,7 +104,6 @@ PharoLinkEvalCommand >> notifyError: error [
 		at: 'errMsg' put: error printString;
 		at: 'commandId' put: self id;
 		at: 'trace' put: self stackString.
-	self halt.
 	^ self sendResponse: data.
 ]
 
