@@ -135,6 +135,7 @@ LanguageLinkProxyObject >> gtViewsInContext: aContext [
 	^ OrderedCollection 
 		with: (self gtProxyFor: emptyView)
 		with: (self gtProxyViewsFor: emptyView)
+		with: (self gtPlaygroundFor: emptyView)
 ]
 
 { #category : #accessing }
