@@ -65,9 +65,11 @@ PharoLinkLinkRemoteError >> isResumable [
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> messageText [
+PharoLinkLinkRemoteError >> messageText [ 
 
-	^ messageText ifNil: [ messageText := self messageTextFromError ]
+	(messageText isNil or: [ messageText isEmpty ]) ifTrue: 
+		[ ^ self trace asString ].
+	^ super messageText
 ]
 
 { #category : #'as yet unclassified' }
