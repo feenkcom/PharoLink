@@ -1,40 +1,40 @@
 Class {
-	#name : #JSLinkAbstractMessage,
+	#name : #LanguageLinkAbstractMessage,
 	#superclass : #Object,
 	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #'instance creation' }
-JSLinkAbstractMessage class >> forApplication: aLLApplication [
+LanguageLinkAbstractMessage class >> forApplication: aLLApplication [
 
 	^ self new initializeWith: aLLApplication
 ]
 
 { #category : #testing }
-JSLinkAbstractMessage class >> isReverseMessage [
+LanguageLinkAbstractMessage class >> isReverseMessage [
 	"Reverse messages corresponds to messages that start on Python to Pharo. In other words
 	in reverse direction from normal messages."
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-JSLinkAbstractMessage class >> type [
+LanguageLinkAbstractMessage class >> type [
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
-JSLinkAbstractMessage >> initializeWith: aLLApplication [
+LanguageLinkAbstractMessage >> initializeWith: aLLApplication [
 	"Subclasses can override this for application specific initialization"
 ]
 
 { #category : #testing }
-JSLinkAbstractMessage >> isReverseMessage [
+LanguageLinkAbstractMessage >> isReverseMessage [
 	"Reverse messages corresponds to messages that start on Python to Pharo. In other words
 	in reverse direction from normal messages."
 	^ self class isReverseMessage
 ]
 
 { #category : #accessing }
-JSLinkAbstractMessage >> type [
+LanguageLinkAbstractMessage >> type [
 	^ self class type
 ]

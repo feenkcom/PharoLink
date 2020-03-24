@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkRMessage,
-	#superclass : #JSLinkAbstractMessage,
+	#superclass : #LanguageLinkAbstractMessage,
 	#category : #'PharoLink-Platform-Messages'
 }
 

@@ -57,6 +57,6 @@ LanguageLinkMessageTest >> testEncodeMessage [
 { #category : #tests }
 LanguageLinkMessageTest >> testNoDuplicatedTypes [
 	| messageClasses |
-	messageClasses := JSLinkAbstractMessage allSubclasses.
+	messageClasses := LanguageLinkAbstractMessage allSubclasses.
 	self assert: (messageClasses collect: #type) asSet size equals: messageClasses size
 ]

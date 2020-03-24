@@ -12,7 +12,7 @@ LanguageLinkCommandQueueTest >> setUp [
 	| execHandler |
 
 	super setUp.
-	execHandler := JSLinkExecutionHandler basicNew 
+	execHandler := LanguageLinkExecutionHandler basicNew 
 							application: self application;
 							yourself.
 	queue := LanguageLinkCommandQueue executionHandler: execHandler
