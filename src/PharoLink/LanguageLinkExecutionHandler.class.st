@@ -99,7 +99,7 @@ LanguageLinkExecutionHandler >> notifyCallbackHandler: msg [
 { #category : #handlers }
 LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 	| error |
-	error := PharoLinkLinkRemoteError new
+	error := PharoLinkRemoteError new
 					application: self application;
 					command: (commandQueue getCommand: errorMsg commandId);
 					errorMessage: errorMsg errorMessage;

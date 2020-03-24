@@ -9,7 +9,7 @@ PharoLinkErrorHandling >> testMNUError [
 
 	self
 		should: [ application newCommandFactory sendAndWait: 'llCommand doesntKnowThis' ]
-		raise: PharoLinkLinkRemoteError
+		raise: PharoLinkRemoteError
 		withExceptionDo: [ :ex | 
 			self assert: ex errorMessage equals: 'MessageNotUnderstood: PharoLinkEvalCommand>> #doesntKnowThis' ]
 ]

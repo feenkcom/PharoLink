@@ -1,5 +1,5 @@
 Class {
-	#name : #PharoLinkLinkRemoteError,
+	#name : #PharoLinkRemoteError,
 	#superclass : #Notification,
 	#instVars : [
 		'command',
@@ -12,60 +12,60 @@ Class {
 }
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> application [
+PharoLinkRemoteError >> application [
 	^ application
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> application: anObject [
+PharoLinkRemoteError >> application: anObject [
 	application := anObject
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> command [
+PharoLinkRemoteError >> command [
 	^ command
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> command: anObject [
+PharoLinkRemoteError >> command: anObject [
 	command := anObject
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> defaultAction [
+PharoLinkRemoteError >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError-defaultAction)"
 
 	^ self application settings platform uiManager spawnDebuggerOnException: self
 ]
 
 { #category : #'as yet unclassified' }
-PharoLinkLinkRemoteError >> defaultProceedAction [
+PharoLinkRemoteError >> defaultProceedAction [
 	^ JSLinkDropQueue new
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> errorMessage [
+PharoLinkRemoteError >> errorMessage [
 	^ errorMessage
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> errorMessage: anObject [
+PharoLinkRemoteError >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
 { #category : #initialization }
-PharoLinkLinkRemoteError >> initialize [
+PharoLinkRemoteError >> initialize [
 	super initialize.
 	proceedAction := self defaultProceedAction
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> isResumable [
+PharoLinkRemoteError >> isResumable [
 	^ true
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> messageText [ 
+PharoLinkRemoteError >> messageText [ 
 
 	(messageText isNil or: [ messageText isEmpty ]) ifTrue: 
 		[ ^ self trace asString ].
@@ -73,7 +73,7 @@ PharoLinkLinkRemoteError >> messageText [
 ]
 
 { #category : #'as yet unclassified' }
-PharoLinkLinkRemoteError >> messageTextFromError [
+PharoLinkRemoteError >> messageTextFromError [
 
 	errorMessage ifNil: [ ^'' ].
 	errorMessage isDictionary ifFalse: [ ^'' ].
@@ -89,21 +89,21 @@ PharoLinkLinkRemoteError >> messageTextFromError [
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> proceedAction [
+PharoLinkRemoteError >> proceedAction [
 	^ proceedAction
 ]
 
 { #category : #accessing }
-PharoLinkLinkRemoteError >> proceedAction: anObject [
+PharoLinkRemoteError >> proceedAction: anObject [
 	proceedAction := anObject
 ]
 
 { #category : #tracing }
-PharoLinkLinkRemoteError >> trace [
+PharoLinkRemoteError >> trace [
 	^ trace
 ]
 
 { #category : #tracing }
-PharoLinkLinkRemoteError >> trace: aTrace [
+PharoLinkRemoteError >> trace: aTrace [
 	trace := aTrace
 ]
