@@ -45,7 +45,7 @@ PharoLinkAbstractMessageBroker >> debugMode [
 PharoLinkAbstractMessageBroker >> handle: dict reverseMessageClass: msgClass [
 	| handler |
 	(messageCallbacks includesKey: msgClass) ifFalse: [ LanguageLinkCommunicationError signal ].
-	handler := JSLinkMessageHandler 
+	handler := LanguageLinkMessageHandler 
 						forMessage: (msgClass decodeFrom: dict) 
 						callback: (messageCallbacks at: msgClass).
 	handler handleMessage.

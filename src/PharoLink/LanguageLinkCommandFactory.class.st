@@ -19,8 +19,8 @@ LanguageLinkCommandFactory class >> application: aLLApplication [
 ]
 
 { #category : #streaming }
-LanguageLinkCommandFactory >> << aJavaScriptStatement [
-	instructions add: aJavaScriptStatement
+LanguageLinkCommandFactory >> << anLLStatement [
+	instructions add: anLLStatement
 ]
 
 { #category : #bindings }
@@ -54,13 +54,14 @@ LanguageLinkCommandFactory >> application: aLLApplication [
 
 { #category : #bindings }
 LanguageLinkCommandFactory >> bindingAt: varName put: anObject [
-	bindingsDictionary at: varName put: anObject.
-	^ JSLinkBinding key: varName wrap: anObject
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #bindings }
 LanguageLinkCommandFactory >> bindingWrap: anObject [
-	^ self addBinding: (JSLinkBinding wrap: anObject)
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #send }
@@ -83,7 +84,7 @@ LanguageLinkCommandFactory >> decorateTransform: aBlock [
 	^ transformBlock := [ :obj | aBlock value: (previousBlock value: obj) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #ui }
 LanguageLinkCommandFactory >> evaluateSourceSequence: aString [
 
 	"self addPlaygroundBindings."
@@ -130,7 +131,7 @@ LanguageLinkCommandFactory >> instructionsWithNotifyAtEnd [
 { #category : #observers }
 LanguageLinkCommandFactory >> observerFromCallback: aBlock [
 	| observer |
-	observer := (JSLinkObserver callback: aBlock)
+	observer := (LanguageLinkObserver callback: aBlock)
 						command: command;
 						yourself.
 	^ self addObserver: observer

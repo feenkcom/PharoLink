@@ -26,7 +26,7 @@ LanguageLinkBinding class >> wrap: anObject [
 { #category : #initialization }
 LanguageLinkBinding >> initialize [
 	super initialize.
-	key := JSLinkUtils newVariableName
+	key := 'll' , UUID new asString36
 ]
 
 { #category : #testing }

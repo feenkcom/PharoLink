@@ -141,7 +141,7 @@ LanguageLinkExecutionHandler >> registerObject: aProxyObject [
 { #category : #'private protocol' }
 LanguageLinkExecutionHandler >> registerPromiseForCommand: aCommand [
 	| promise |
-	promise := JSLinkPromise new
+	promise := LanguageLinkPromise new
 					id: aCommand id;
 					transformBlock: aCommand transformBlock;
 					yourself.

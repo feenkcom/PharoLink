@@ -14,14 +14,14 @@ PharoLinkPromiseRegistryTest >> setUp [
 
 { #category : #initialization }
 PharoLinkPromiseRegistryTest >> testAddPromise [
-	registry addPromise: (JSLinkPromise id: '123').
+	registry addPromise: (LanguageLinkPromise id: '123').
 	self assert: registry promiseTable size equals: 1.
 	self assert: registry promiseTable anyOne id equals: '123'
 ]
 
 { #category : #initialization }
 PharoLinkPromiseRegistryTest >> testRemovePromiseId [
-	registry addPromise: (JSLinkPromise id: '123').
+	registry addPromise: (LanguageLinkPromise id: '123').
 	registry removePromiseId: '123'.
 	self assert: registry promiseTable size equals: 0
 ]
@@ -31,7 +31,7 @@ PharoLinkPromiseRegistryTest >> testSignalPromise [
 	| semaphore flag promise |
 	semaphore := Semaphore new.
 	flag := false.
-	promise := (JSLinkPromise id: '123').
+	promise := (LanguageLinkPromise id: '123').
 	registry addPromise: promise.
 	[ 	
 		self assert: promise waitForValue equals: #foo.
@@ -47,7 +47,7 @@ PharoLinkPromiseRegistryTest >> testSignalPromiseWithTransformBlock [
 	| semaphore flag promise |
 	semaphore := Semaphore new.
 	flag := false.
-	promise := (JSLinkPromise id: '123')
+	promise := (LanguageLinkPromise id: '123')
 						transformBlock: [ :obj | 55 ].
 	registry addPromise: promise.
 	[ 	

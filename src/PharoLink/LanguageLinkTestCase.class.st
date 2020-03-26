@@ -73,7 +73,7 @@ LanguageLinkTestCase >> resolveId: anId [
 { #category : #running }
 LanguageLinkTestCase >> setUp [
 	super setUp.
-	application := JSLinkApplication newWith: LanguageLinkSettings jsDefaultSettings.
+	application := LanguageLinkApplication newWith: LanguageLinkSettings jsDefaultSettings.
 	commandFactory := application newCommandFactory.
 	self cf reset.
 ]

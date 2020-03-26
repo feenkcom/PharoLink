@@ -4,6 +4,17 @@ Class {
 	#category : #'PharoLink-Execution'
 }
 
+{ #category : #bindings }
+PharoLinkCommandFactory >> bindingAt: varName put: anObject [
+	bindingsDictionary at: varName put: anObject.
+	^ PharoLinkBinding key: varName wrap: anObject
+]
+
+{ #category : #bindings }
+PharoLinkCommandFactory >> bindingWrap: anObject [
+	^ self addBinding: (PharoLinkBinding wrap: anObject)
+]
+
 { #category : #initialization }
 PharoLinkCommandFactory >> setNotifyToInstruction: aLLInstruction [
 	| node notifyNode |

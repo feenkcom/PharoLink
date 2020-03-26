@@ -40,7 +40,7 @@ PharoLinkRemoteError >> defaultAction [
 
 { #category : #private }
 PharoLinkRemoteError >> defaultProceedAction [
-	^ JSLinkDropQueue new
+	^ LanguageLinkDropQueue new
 ]
 
 { #category : #accessing }
@@ -73,7 +73,7 @@ PharoLinkRemoteError >> formattedText: aString [
 	^ fullText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #ui }
 PharoLinkRemoteError >> gtMessageTextFor: aView [
 	"<gtView>"
 
