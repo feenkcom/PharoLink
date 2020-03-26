@@ -196,7 +196,9 @@ LanguageLinkApplication >> gtPlaygroundFor: aView [
 			action: [ :aButton |
 				| statements result |
 				statements := aButton phlow textViewContent asString.
-				result := self evaluateSourceSequence: statements.
+				result := [ self evaluateSourceSequence: statements ]
+					on: PharoLinkRemoteError  
+					do: [ :ex | ex ].
 				aButton phlow spawnObject: result ].
 
 ]
