@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkPharoUiManager,
-	#superclass : #JSLinkUiManager,
+	#superclass : #LanguageLinkUiManager,
 	#category : #'PharoLink-Pharo-Platform'
 }
 

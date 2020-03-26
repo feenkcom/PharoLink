@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkNeoJsonSerializerTest,
-	#superclass : #JSLinkJsonSerializerTest,
+	#superclass : #LanguageLinkJsonSerializerTest,
 	#category : #'PharoLink-Pharo-MessageBroker'
 }
 
