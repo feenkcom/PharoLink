@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkPharoWeakRegistry,
-	#superclass : #JSLinkAbstractWeakRegistry,
+	#superclass : #LanguageLinkAbstractWeakRegistry,
 	#instVars : [
 		'weakRegistry'
 	],
