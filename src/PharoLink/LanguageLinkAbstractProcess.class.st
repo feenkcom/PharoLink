@@ -19,11 +19,6 @@ LanguageLinkAbstractProcess class >> application: application [
 		yourself
 ]
 
-{ #category : #accessing }
-LanguageLinkAbstractProcess class >> platform [
-	self subclassResponsibility
-]
-
 { #category : #private }
 LanguageLinkAbstractProcess class >> resolveServerExecutable [
 

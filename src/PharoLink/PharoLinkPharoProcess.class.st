@@ -12,11 +12,6 @@ Class {
 	#category : #'PharoLink-Pharo-Processes'
 }
 
-{ #category : #accessing }
-PharoLinkPharoProcess class >> platform [
-	^ JSLinkPharoPlatform current
-]
-
 { #category : #private }
 PharoLinkPharoProcess class >> resolveServerExecutable [
 	"Use the same executable as the receiver"

@@ -14,7 +14,7 @@ LanguageLinkHttpMessageBroker class >> javaScriptMethodArg [
 
 { #category : #accessing }
 LanguageLinkHttpMessageBroker class >> serializerClass [
-	^ JSLinkNeoJsonSerializer
+	^ LanguageLinkNeoJsonSerializer
 ]
 
 { #category : #private }

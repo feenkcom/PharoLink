@@ -6,7 +6,7 @@ Class {
 
 { #category : #private }
 PharoLinkPharoPlatform class >> uiManagerClass [
-	^ JSLinkPharoUiManager
+	^ LanguageLinkPharoUiManager
 ]
 
 { #category : #hooks }

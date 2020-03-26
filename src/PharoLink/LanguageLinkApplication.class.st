@@ -15,11 +15,6 @@ Class {
 }
 
 { #category : #accessing }
-LanguageLinkApplication class >> baseApplication [
-	^ JSLinkApplication
-]
-
-{ #category : #accessing }
 LanguageLinkApplication class >> defaultSettings [
 
 	^ LanguageLinkSettings pharoDefaultSettings
@@ -56,7 +51,8 @@ LanguageLinkApplication class >> newWith: aLLSettings [
 
 { #category : #'pipenv setup' }
 LanguageLinkApplication class >> platform [
-	^ JSLinkPlatform current
+
+	^ self defaultSettings platform
 ]
 
 { #category : #'python hooks file' }
@@ -69,7 +65,7 @@ LanguageLinkApplication class >> resetUniqueInstance [
 	uniqueInstance ifNotNil: [ 
 		[ uniqueInstance stop ] 
 			on: Error 
-			do: [ JSLinkPlatform current uiManager inform: 'Error on reseting unique instance.' ]. ].
+			do: [ self platform uiManager inform: 'Error on reseting unique instance.' ]. ].
 	uniqueInstance := nil
 ]
 
