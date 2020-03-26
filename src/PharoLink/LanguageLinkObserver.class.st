@@ -1,8 +1,6 @@
 Class {
 	#name : #LanguageLinkObserver,
 	#superclass : #Object,
-	#traits : 'JSGCallable',
-	#classTraits : 'JSGCallable classTrait',
 	#instVars : [
 		'id',
 		'callback',
@@ -16,6 +14,11 @@ LanguageLinkObserver class >> callback: aBlock [
 	^ self new
 		callback: aBlock;
 		yourself
+]
+
+{ #category : #call }
+LanguageLinkObserver >> call [
+	^ self callWith: #()
 ]
 
 { #category : #call }
