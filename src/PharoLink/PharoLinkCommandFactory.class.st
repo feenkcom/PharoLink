@@ -6,18 +6,22 @@ Class {
 
 { #category : #initialization }
 PharoLinkCommandFactory >> setNotifyToInstruction: aLLInstruction [
-	| node notifyNode rewriter |
+	| node notifyNode |
 
-	node := RBParser parseExpression: aLLInstruction pharoLinkFormattedCode.
+	node := RBParser 
+		parseExpression: aLLInstruction pharoLinkFormattedCode
+		onError: [ :aString :position :parser | 
+			PharoLinkParserError new 
+				messageText: aString;
+				position: position;
+				parser: parser;
+				source: aLLInstruction pharoLinkFormattedCode;
+				signal ].
 	notifyNode := node isSequence ifTrue: 
 		[ self setNotifyToInstructionSequence: node ]
 	ifFalse: 
-		[ self setNotifyToInstructionStatement: aLLInstruction ].
-	"rewriter := RBParseTreeRewriter new.
-	bindingsDictionary keysAndValuesDo: [ :key :value |
-		rewriter replace: key with: value pharoLinkFormattedCode ].
-	rewriter executeTree: notifyNode.
-	^ rewriter tree"
+		"Use the formatted code rather than the supplied string in case a period has been included"
+		[ self setNotifyToInstructionStatement: node formattedCode ].
 	^ notifyNode
 ]
 
