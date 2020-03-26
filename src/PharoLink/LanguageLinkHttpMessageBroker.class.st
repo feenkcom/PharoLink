@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkHttpMessageBroker,
-	#superclass : #JSLinkAbstractMessageBroker,
+	#superclass : #PharoLinkAbstractMessageBroker,
 	#instVars : [
 		'server'
 	],
