@@ -31,21 +31,23 @@ LanguageLinkProxyObject >> declarativeViews [
 	"Answer the views for the receiver"
 	| viewSelectors rawViews viewDictionary |
 
-	viewSelectors := self newCommandFactory
-				<< 'self gtDeclarativeViewSelectors';
+	self viewProxyDo: [ :viewProxy |
+		viewSelectors := viewProxy newCommandFactory
+				<< 'self getGtViewMethodNames';
 				sendAndWait.
-	rawViews := viewSelectors collect: [ :viewSelector |
-		viewDictionary := self newCommandFactory
-				<< ('(self ', viewSelector, ' GtPhlowEmptyView new) asGtDeclarativeView asDictionaryForExport');
+		rawViews := viewSelectors collect: [ :viewSelector |
+			viewDictionary := viewProxy newCommandFactory
+				<< ('self getViewDeclaration: #', viewSelector);
 				sendAndWait.
-		((GtDeclarativeView fromDictionary: viewDictionary)
-					accessor: self;
+			((GtDeclarativeView fromDictionary: viewDictionary)
+					accessor: viewProxy;
 					methodName: viewSelector;
-					yourself) ].
+					yourself) ] ].
+
 	^ rawViews
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'gt inspector' }
 LanguageLinkProxyObject >> evaluateSourceSequence: aString [
 	| cf |
 
@@ -53,6 +55,16 @@ LanguageLinkProxyObject >> evaluateSourceSequence: aString [
 	^ cf 
 		<< aString;
 		sendAndWait.
+]
+
+{ #category : #'gt inspector' }
+LanguageLinkProxyObject >> getViewProxy [
+	"Answer a GtViewedProxy on the receiver"
+
+	^ self newCommandFactory
+		<< 'GtViewedObject object: self';
+		sendAndWait.
+
 ]
 
 { #category : #'gt inspector' }
@@ -99,6 +111,33 @@ LanguageLinkProxyObject >> gtProxyFor: aView [
 ]
 
 { #category : #'gt inspector' }
+LanguageLinkProxyObject >> gtProxyRawFor: aView [
+
+	^ aView columnedList 
+		title: 'Raw';
+		priority: 5;
+		items: [ self viewProxyDo: [ :viewProxy |
+				viewProxy newCommandFactory
+					<< 'self rawViewData';
+					sendAndWait ] ];
+		column: 'Icon' do: [ :aColumn |
+			aColumn
+				itemStencil: [ :aNode | aNode third iconNamed: aNode first ];
+				noResize ];
+		column: 'Variable' do: [ :aColumn |
+			aColumn
+				itemFormat: [ :aNode | aNode second asRopedText ];
+				matchParent ];
+		column: 'Value' do: [ :aColumn |
+			aColumn
+				itemFormat: [ :aNode | 
+					[ aNode third gtDisplayString asRopedText ]
+						on: Error 
+						do: [ :ex | ex messageText asRopedText foreground: Color red ] ] ];
+		send: [ :aNode | aNode third ]
+]
+
+{ #category : #'gt inspector' }
 LanguageLinkProxyObject >> gtProxyViewsFor: aView [
 	<gtView>
 	^ aView list
@@ -134,10 +173,13 @@ LanguageLinkProxyObject >> gtViewsInContext: aContext [
 	| emptyView |
 
 	emptyView := GtPhlowEmptyView new.
-	^ OrderedCollection 
-		with: (self gtProxyFor: emptyView)
-		with: (self gtProxyViewsFor: emptyView)
-		with: (self gtPlaygroundFor: emptyView)
+	^ OrderedCollection new
+		"The raw view is a special case to easily handle icons"
+		add: (self gtProxyRawFor: emptyView);
+		add: (self gtProxyFor: emptyView);
+		add: (self gtProxyViewsFor: emptyView);
+		add: (self gtPlaygroundFor: emptyView);
+		yourself
 ]
 
 { #category : #accessing }
@@ -187,6 +229,19 @@ LanguageLinkProxyObject >> remoteClass [
 { #category : #accessing }
 LanguageLinkProxyObject >> remoteClass: anObject [
 	remoteClass := anObject
+]
+
+{ #category : #'gt inspector' }
+LanguageLinkProxyObject >> viewProxyDo: aBlock [
+	"Evaluate the supplied block ensuring that the receiver is a GtViewedObject"
+
+	| viewProxy |
+
+	viewProxy := remoteClass = #GtViewedObject
+		ifTrue: [ self ]
+		ifFalse: [ self getViewProxy ].
+	^ aBlock value: viewProxy.
+
 ]
 
 { #category : #'gt inspector' }
