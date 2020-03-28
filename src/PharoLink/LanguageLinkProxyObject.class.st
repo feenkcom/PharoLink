@@ -149,6 +149,25 @@ LanguageLinkProxyObject >> gtProxyViewsFor: aView [
 ]
 
 { #category : #'gt inspector' }
+LanguageLinkProxyObject >> gtSentItemFor: methodName at: selection [ 
+	"Pass the #gtSentItemFor:at: request on to the receiver's object, which is a GtViewedObject"
+	| message |
+
+	self assert: (PharoLinkRegistry isPrimitive: methodName).
+	self assert: (PharoLinkRegistry isPrimitive: selection).
+
+	message := String streamContents: [ :stream |
+		stream 
+			<< 'self gtSentItemFor: #';
+			<< methodName;
+			<< ' at: ';
+			print: selection ].
+	^ self newCommandFactory
+		<< message;
+		sendAndWait.
+]
+
+{ #category : #'gt inspector' }
 LanguageLinkProxyObject >> gtViewsFor: aView inContext: aContext [
 	"Add the declarative views from the inspectors object to the inspectors views"
 
