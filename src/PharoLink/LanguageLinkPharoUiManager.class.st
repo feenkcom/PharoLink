@@ -4,7 +4,7 @@ Class {
 	#category : #'PharoLink-Pharo-Platform'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 LanguageLinkPharoUiManager >> notify: aString [
 	Transcript show: aString asString.
 ]
