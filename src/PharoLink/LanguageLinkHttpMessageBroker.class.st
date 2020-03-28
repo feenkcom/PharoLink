@@ -56,15 +56,20 @@ LanguageLinkHttpMessageBroker >> preventTestForkedPDestroyServer [
 
 { #category : #private }
 LanguageLinkHttpMessageBroker >> primSendMessage: dict [
-	| ans |
+	| ans client |
 
-	ans := [ ZnClient new
-					beOneShot;
-					url: self javaScriptUri , '/' , (dict at: #type);
-					entity: (ZnEntity json: (self serializer serialize: dict));
-					post; 
-					response.
-			] on: Error do: [ :err | LanguageLinkCommunicationError signal: 'Request fail' ].
+	ans := 
+		[ client := ZnClient new.
+		client
+				beOneShot;
+				url: self javaScriptUri , '/' , (dict at: #type);
+				entity: (ZnEntity json: (self serializer serialize: dict)).
+		self debugMode ifFalse: [ client logLevel: 0 ].
+		client 
+			post;
+			response ]
+				on: Error 
+				do: [ :err | LanguageLinkCommunicationError signal: 'Request fail' ].
 	ans status = 200 ifFalse: [ LanguageLinkCommunicationError signal: 'Request fail' ].
 	^ self serializer deserialize: ans contents
 ]
@@ -119,6 +124,7 @@ LanguageLinkHttpMessageBroker >> setDebugMode [
 LanguageLinkHttpMessageBroker >> start [
 	server := ZnServer on: self port.
 	server debugMode: self debugMode.
+	self debugMode ifFalse: [ server loggingOff ].
 	server start.
 	self preventTestForkedPDestroyServer.
 	self

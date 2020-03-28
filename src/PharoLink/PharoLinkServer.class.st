@@ -160,6 +160,7 @@ PharoLinkServer >> start [
 
 	znServer := ZnServer on: listenPort.
 	znServer debugMode: debugMode.
+	debugMode ifFalse: [ znServer loggingOff ].
 	znServer start.
 	self
 		assert: znServer isRunning & znServer isListening

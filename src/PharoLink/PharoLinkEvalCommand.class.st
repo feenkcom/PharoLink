@@ -156,6 +156,7 @@ PharoLinkEvalCommand >> sendResponse: data [
 		beOneShot;
 		url: url;
 		entity: entity;
+		logLevel: 0;
 		post;
 		response.
 
