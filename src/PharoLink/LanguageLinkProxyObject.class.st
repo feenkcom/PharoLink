@@ -240,6 +240,14 @@ LanguageLinkProxyObject >> pharoLinkFormattedCode [
 	^ 'llCommand registry resolve: ', name printString
 ]
 
+{ #category : #printing }
+LanguageLinkProxyObject >> printOn: str [
+	str 
+		<< (remoteClass asString first isVowel ifTrue: ['an '] ifFalse: ['a ']);
+		<< remoteClass asString;
+		<< ' (Proxy)'
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> remoteClass [
 	^ remoteClass

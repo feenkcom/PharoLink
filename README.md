@@ -1,4 +1,4 @@
-# JSLink
+# PharoLink
 
 PharoLink provides a mechanism for Pharo to communicate with remote Pharo processes.
 
@@ -57,100 +57,69 @@ If the value of the attribute is a non-primitive object, a proxy will be returne
 
 ![Inspect Primitive](doc/images/Inspect_Primitive.png)
 
-When evaluating statements in a proxy object's playground, `this` is bound to the proxy object:
+As well as inspecting the raw values of the remote object, any views which can be represented declaratively, or which have been explicitly specified by the remote object will also be displayed, e.g. the String, List and Columned List views shown below:
 
-![this bound](doc/images/this_bound.png)
+![Declarative Views](doc/images/Declarative_Views.png)
 
-The node.js server can then be stopped with:
+When evaluating statements in a proxy object's playground, `self` is bound to the proxy object:
+
+![this bound](doc/images/self_bound.png)
+
+The remote server can then be stopped with:
 
 ```smalltalk
-JSLinkApplication stop.
+PharoLinkApplication stop.
 ```
 
 
 ### Programatic Use
 
-So far we have been using a global instance of JSLink, however it is possible to have multiple servers running concurrently through the use of private instances.
+So far we have been using a global instance of PharoLink, however it is also possible to have multiple servers running concurrently through the use of private instances.
 
-For this example we'll create an Excel spreadsheet by installing and using the existing `excel4node` module.
+PharoLink allows Pharo code to be supplied in two ways:
 
-To install the module:
-
-```smalltalk
-jslink := JSLinkApplication withDefaultSettings.
-jslink start.
-jslink installModule: 'excel4node'.
-```
-
-JSLink allows JavaScript code to be supplied in two ways:
-
-1. Strings of JavaScript code, and
-1. AST objects generated using the [JavaScriptGenerator package](https://github.com/feenkcom/JavaScriptGenerator/)
+1. Strings of code, and
+1. AST objects generated using `RBParser`
 
 First, using strings:
 
 ```smalltalk
-"Start JSLink"
-jslink := JSLinkApplication withDefaultSettings.
-jslink start.
+"Start PharoLink"
+pharolink := PharoLinkApplication withDefaultSettings.
+pharolink start.
 
-"Ensure that the 'excel4node' module is installed."
-jslink installModule: 'excel4node'
-
-"Create the spreadsheet and worksheet"
-worksheet := jslink newCommandFactory
-	<< 'const excel = require(''excel4node'')';
-	<< 'let workbook = new excel.Workbook()';
-	<< 'let worksheet = workbook.addWorksheet(''HW'')';
-	<< 'worksheet';
+"Create an instance of the test inspectable and retrieve the string"
+object := pharolink newCommandFactory
+	<< 'GtDeclarativeTestInspectable new';
 	sendAndWait.
 
-"Write Hello, World!"
-worksheet newCommandFactory
-	<< 'this.cell(2, 2).string("Hello, World!")';
-	sendAndWait.
-
-"Save the spreadsheet"
-worksheet newCommandFactory
-	<< 'this.wb.write("hw.xlsx")';
+date := object newCommandFactory
+	<< 'self collectionOfObjects second';
 	sendAndWait.
 
 "Stop the server"
-jslink stop
+pharolink stop
 ```
 
-![Hello, World! with strings](doc/images/helloworld_strings.png)
+![Hello, World!](doc/images/helloworld_string.png)
 
 
-Second, using JavaScript generated with `JavaScriptGenerator`:
+Second, using JavaScript generated with `RBParser`:
 
 ```smalltalk
-"Start JSLink"
-jslink := JSLinkApplication withDefaultSettings.
-jslink start.
+"Start PharoLink"
+pharolink := PharoLinkApplication withDefaultSettings.
+pharolink start.
 
-"Ensure that the 'excel4node' module is installed."
-jslink installModule: 'excel4node'
+"Generate the expression and evaluate"
+node := RBParser parseExpression: 
+	'| inspectable hw |
+	inspectable := GtDeclarativeTestInspectable new.
+	hw := inspectable collectionOfObjects second.
+	hw'.
 
-"Create the spreadsheet and worksheet"
-excel := #excel asJSGIdentifier.
-wb := #wb asJSGIdentifier.
-ws := #ws asJSGIdentifier.
-worksheet := jslink newCommandFactory
-	<< (excel <- #'excel4node' require) beLetDeclaration;
-	<< (wb <- (excel => #Workbook) call new) beLetDeclaration;
-	<< (ws <- ((wb => #addWorksheet) callWith: { 'HW' })) beLetDeclaration;
-	<< 'ws';
-	sendAndWait.
-
-"Write Hello, World!"
-worksheet newCommandFactory
-	<< (((#this asJSGI => #cell callWith: { 2. 2. }) => #string) callWith: { 'Hello, World!'});
-	sendAndWait.
-
-"Save the spreadsheet"
-worksheet newCommandFactory
-	<< ((#this asJSGI => #wb => #write) callWith: { 'hw2.xlsx' });
+date := pharolink newCommandFactory
+	<< node;
 	sendAndWait.
 
 "Stop the server"
@@ -158,7 +127,7 @@ jslink stop
 ```
 
 
-![Hello, World! with JavaScriptGenerator](doc/images/helloworld_jsg.png)
+![Hello, World! with RBParser](doc/images/helloworld_rbparser.png)
 
 
 ## Garbage Collection
@@ -168,14 +137,14 @@ Proxy objects register them selves for finalisation.  When they are garbage coll
 
 ## Callbacks
 
-Callbacks in to Pharo from node.js are supported through observables.
+Callbacks in to Pharo from the remote server are supported through observables.
 
-See `JSLinkSendCommandTest` for examples of setting up and using callbacks.
+See `PharoLinkSendCommandTest` for examples of setting up and using callbacks.
 
 
 ## Automated Tests
 
-See the 'JSLink-Tests` package.
+See the 'PharoLink-Tests` package.
 
 ## ToDo
 
@@ -184,9 +153,9 @@ See the 'JSLink-Tests` package.
 
 ## Futures
 
-Currently JSLink is specific to node.js.  Planned future work includes adding support for the debug port in node.js, to provide better program control, and adding support for browsers, initially Chrome, using their debug port.
+TBS.
 
 
 ## Acknowledgements and Thanks
 
-Thanks to the team at [ObjectProfile](http://www.objectprofile.com/) for making [PythonBridge](https://github.com/ObjectProfile/PythonBridge), on which JSLink is based, and to [Julien Delplanque](https://github.com/juliendelplanque) for [Python3Generator](https://github.com/juliendelplanque/Python3Generator), on which JavaScriptGenerator is based.
+Thanks to the team at [ObjectProfile](http://www.objectprofile.com/) for making [PythonBridge](https://github.com/ObjectProfile/PythonBridge), on which PharoLink is based.
