@@ -10,9 +10,9 @@ BaselineOfPharoLink >> baseline: spec [
 	spec
 		for: #common
 		do: [			
-			spec
+			"spec
 				baseline: 'OSSubprocess' 
-				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
+				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ]."
 			spec baseline: 'NeoJSON' with: [
                 spec
                     repository: 'github://svenvc/NeoJSON/repository' ].
@@ -20,6 +20,6 @@ BaselineOfPharoLink >> baseline: spec [
                 spec
                     repository: 'github://msgpack/msgpack-smalltalk:v1.3.1/repository' ].
 			spec
-				package: 'PharoLink' with: [ spec requires: #('OSSubprocess') ]
+				package: 'PharoLink' "with: [ spec requires: #('OSSubprocess') ]"
 			 ]
 ]
