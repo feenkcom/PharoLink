@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkCommandQueueTest,
-	#superclass : #LanguageLinkTestCase,
+	#superclass : #PharoLinkTestCase,
 	#instVars : [
 		'queue'
 	],

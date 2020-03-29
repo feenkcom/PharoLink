@@ -69,11 +69,3 @@ LanguageLinkTestCase >> registryExpression [
 LanguageLinkTestCase >> resolveId: anId [
 	^ self registryExpression => #resolve callWith: (Array with: anId)
 ]
-
-{ #category : #running }
-LanguageLinkTestCase >> setUp [
-	super setUp.
-	application := PharoLinkApplication newWith: LanguageLinkSettings pharoDefaultSettings.
-	commandFactory := application newCommandFactory.
-	self cf reset.
-]
