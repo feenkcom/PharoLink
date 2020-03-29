@@ -73,7 +73,7 @@ LanguageLinkTestCase >> resolveId: anId [
 { #category : #running }
 LanguageLinkTestCase >> setUp [
 	super setUp.
-	application := LanguageLinkApplication newWith: LanguageLinkSettings jsDefaultSettings.
+	application := PharoLinkApplication newWith: LanguageLinkSettings pharoDefaultSettings.
 	commandFactory := application newCommandFactory.
 	self cf reset.
 ]

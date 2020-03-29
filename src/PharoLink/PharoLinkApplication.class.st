@@ -4,13 +4,6 @@ Class {
 	#category : #'PharoLink-Global'
 }
 
-{ #category : #accessing }
-PharoLinkApplication >> commandFactory [
-
-	self deprecated: 'Use #newCommandFactory'.
-	^ PharoLinkCommandFactory application: self.
-]
-
 { #category : #initialization }
 PharoLinkApplication >> initializeHandlers [
 

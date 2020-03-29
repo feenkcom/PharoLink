@@ -134,13 +134,6 @@ LanguageLinkApplication >> addMapping: jsType to: mapFunction [
 ]
 
 { #category : #accessing }
-LanguageLinkApplication >> commandFactory [
-
-	self deprecated: 'Use #newCommandFactory'.
-	^ self subclassResponsibility 
-]
-
-{ #category : #accessing }
 LanguageLinkApplication >> communicationHandler [
 	^ communicationHandler
 ]
@@ -163,40 +156,9 @@ LanguageLinkApplication >> errorMessage [
 	^ processHandler errorMessage
 ]
 
-{ #category : #'as yet unclassified' }
-LanguageLinkApplication >> evaluateSourceSequence: aString [
-	| cf |
-
-	cf := self newCommandFactory.
-	^ cf 
-		<< aString;
-		sendAndWait.
-
-]
-
 { #category : #accessing }
 LanguageLinkApplication >> executionHandler [
 	^ executionHandler
-]
-
-{ #category : #ui }
-LanguageLinkApplication >> gtPlaygroundFor: aView [
-	<gtView>
-
-	^ aView textEditor
-		title: 'Playground' translated;
-		priority: 10;
-		text: [ '' asRopedText attributesBuilder attribute: (BlFontGenericFamilyAttribute monospace beNotOverwritableByStyler) ];
-		styler: self settings parserClass gtStyler;
-		actionButtonIcon: BrGlamorousIcons playinspect  
-			action: [ :aButton |
-				| statements result |
-				statements := aButton phlow textViewContent asString.
-				result := [ self evaluateSourceSequence: statements ]
-					on: PharoLinkRemoteError, PharoLinkParserError
-					do: [ :ex | ex ].
-				aButton phlow spawnObject: result ].
-
 ]
 
 { #category : #handlers }
@@ -298,7 +260,7 @@ LanguageLinkApplication >> settings: anObject [
 	settings := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'start-stop' }
 LanguageLinkApplication >> start [
 	self handlers do: #start.
 	self waitInitialization.

@@ -166,7 +166,7 @@ PharoLinkEvalCommand >> sendResponse: data [
 	^ response
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> stackString [
 
 	^ String streamContents: [ :stream |

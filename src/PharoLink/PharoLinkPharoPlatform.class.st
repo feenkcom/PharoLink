@@ -26,7 +26,7 @@ PharoLinkPharoPlatform >> createSymlinkFor: originalFile on: targetFile [
 				runAndWaitOnExitDo: [ :command | ^ self ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 PharoLinkPharoPlatform >> ensureEnvironmentForApp: anApplication [
 	" Currently assumes the current environment, so nothing to do"
 ]
