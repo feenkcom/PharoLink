@@ -19,6 +19,8 @@ PharoLink provides a mechanism for Pharo to communicate with remote Pharo proces
 
 ### Installation
 
+PharoLink is already installed if you are using Gtoolkit.
+
 Requirements:
 
 PharoLink has been tested with Pharo 8
