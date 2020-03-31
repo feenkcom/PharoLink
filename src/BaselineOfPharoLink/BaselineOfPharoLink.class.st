@@ -10,9 +10,9 @@ BaselineOfPharoLink >> baseline: spec [
 	spec
 		for: #common
 		do: [			
-			"spec
+			spec
 				baseline: 'OSSubprocess' 
-				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ]."
+				with: [ spec repository: 'github://feenkcom/OSSubprocess/repository' ].
 			spec baseline: 'NeoJSON' with: [
                 spec
                     repository: 'github://svenvc/NeoJSON/repository' ].
