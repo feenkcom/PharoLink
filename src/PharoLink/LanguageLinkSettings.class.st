@@ -15,7 +15,8 @@ Class {
 		'platform',
 		'serializerClass',
 		'deserializerClass',
-		'parserClass'
+		'parserClass',
+		'serverDebugMode'
 	],
 	#category : #'PharoLink-Platform'
 }
@@ -96,6 +97,7 @@ LanguageLinkSettings >> initialize [
 
 	super initialize.
 	debugMode := false.
+	serverDebugMode := false.
 ]
 
 { #category : #accessing }
@@ -142,6 +144,19 @@ LanguageLinkSettings >> serializerClass [
 { #category : #accessing }
 LanguageLinkSettings >> serializerClass: anObject [
 	serializerClass := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> serverDebugMode [
+	"Answer a boolean indicating whether the server should be started with the debugger enabled.
+	Only supported on JSLink at the moment"
+
+	^ serverDebugMode
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> serverDebugMode: anObject [
+	serverDebugMode := anObject
 ]
 
 { #category : #accessing }

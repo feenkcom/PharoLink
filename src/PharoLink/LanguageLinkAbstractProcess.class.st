@@ -85,8 +85,20 @@ LanguageLinkAbstractProcess >> start [
 ]
 
 { #category : #'start-stop' }
+LanguageLinkAbstractProcess >> startServerDebugger [
+	"Perform any initialisation necessary when running the server with debug mode enabled.
+	By default there's nothing to do.  Subclasses should override this as required (typically in an extension method associated with the debugger)"
+]
+
+{ #category : #'start-stop' }
 LanguageLinkAbstractProcess >> stop [
 	self subclassResponsibility
+]
+
+{ #category : #'start-stop' }
+LanguageLinkAbstractProcess >> stopServerDebugger [
+	"Perform any shutdown necessary when running the server with debug mode enabled.
+	By default there's nothing to do.  Subclasses should override this as required (typically in an extension method associated with the debugger)"
 ]
 
 { #category : #accessing }

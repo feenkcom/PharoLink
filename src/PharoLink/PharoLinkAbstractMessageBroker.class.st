@@ -1,3 +1,26 @@
+"
+The Message Broker is responsible for handling communications between the client and the server, and provides an abstraction to support multiple transport protocols, e.g. http and MsgPack.
+
+Messages are either synchronous or asynchronous.  Messages that are synchronous are expected to have their answer in the http response.  Messages that are asynchronous will have their response sent back at a later time by the server in a separate http request from the server.
+ 
+
+Public API and Key Messages
+
+- message one   
+- message two 
+- (for bonus points) how to create instances.
+
+   One simple example is simply gorgeous.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	messageCallbacks:		<Object>
+	settings:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #PharoLinkAbstractMessageBroker,
 	#superclass : #Object,
