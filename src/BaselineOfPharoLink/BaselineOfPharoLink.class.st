@@ -16,9 +16,6 @@ BaselineOfPharoLink >> baseline: spec [
 			spec baseline: 'NeoJSON' with: [
                 spec
                     repository: 'github://svenvc/NeoJSON/repository' ].
-            spec baseline: 'GToolkitRemote' with: [
-                spec
-                    repository: 'github://feenkcom/gtoolkit-remote/src' ].
 			spec baseline: 'MessagePack' with: [
                 spec
                     repository: 'github://msgpack/msgpack-smalltalk:v1.3.1/repository' ].
