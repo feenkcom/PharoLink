@@ -1,8 +1,6 @@
 Class {
 	#name : #LanguageLinkCommandFactory,
 	#superclass : #Object,
-	#traits : 'TGtPharoLinkPlayground',
-	#classTraits : 'TGtPharoLinkPlayground classTrait',
 	#instVars : [
 		'application',
 		'bindingsDictionary',
