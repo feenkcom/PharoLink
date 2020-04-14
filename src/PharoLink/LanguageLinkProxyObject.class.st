@@ -1,6 +1,8 @@
 Class {
 	#name : #LanguageLinkProxyObject,
 	#superclass : #Object,
+	#traits : 'TGtPharoLinkPlayground',
+	#classTraits : 'TGtPharoLinkPlayground classTrait',
 	#instVars : [
 		'application',
 		'remoteClass',
