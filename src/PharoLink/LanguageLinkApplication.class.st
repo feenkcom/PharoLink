@@ -1,8 +1,6 @@
 Class {
 	#name : #LanguageLinkApplication,
 	#superclass : #Object,
-	#traits : 'TGtPharoLinkPlayground',
-	#classTraits : 'TGtPharoLinkPlayground classTrait',
 	#instVars : [
 		'communicationHandler',
 		'processHandler',
