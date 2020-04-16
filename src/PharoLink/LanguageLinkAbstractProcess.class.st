@@ -3,6 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'settings',
+		'application',
 		'workingDirectory'
 	],
 	#classInstVars : [
@@ -14,7 +15,7 @@ Class {
 { #category : #accessing }
 LanguageLinkAbstractProcess class >> application: application [
 	^ self new
-		settings: application settings;
+		application: application;
 		workingDirectory: (application settings platform folderForApplication);
 		yourself
 ]
@@ -54,6 +55,16 @@ LanguageLinkAbstractProcess class >> signalCommandNotFound: commandString [
 ]
 
 { #category : #accessing }
+LanguageLinkAbstractProcess >> application [
+	^ application
+]
+
+{ #category : #accessing }
+LanguageLinkAbstractProcess >> application: anObject [
+	application := anObject
+]
+
+{ #category : #accessing }
 LanguageLinkAbstractProcess >> debugMode [
 
 	^ settings debugMode
@@ -71,12 +82,7 @@ LanguageLinkAbstractProcess >> isRunning [
 
 { #category : #accessing }
 LanguageLinkAbstractProcess >> settings [
-	^ settings
-]
-
-{ #category : #accessing }
-LanguageLinkAbstractProcess >> settings: anObject [
-	settings := anObject
+	^ self application settings
 ]
 
 { #category : #'start-stop' }

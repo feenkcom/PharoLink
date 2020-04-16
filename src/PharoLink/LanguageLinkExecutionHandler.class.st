@@ -96,6 +96,13 @@ LanguageLinkExecutionHandler >> notifyCallbackHandler: msg [
 		yourself
 ]
 
+{ #category : #instructions }
+LanguageLinkExecutionHandler >> notifyDebuggerPaused: aDebugger [
+	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
+
+	promiseRegistry notifyDebuggerPaused: aDebugger.
+]
+
 { #category : #handlers }
 LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 	| error |
