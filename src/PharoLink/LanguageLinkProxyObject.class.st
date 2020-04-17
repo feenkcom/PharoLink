@@ -77,3 +77,9 @@ LanguageLinkProxyObject >> remoteClass [
 LanguageLinkProxyObject >> remoteClass: anObject [
 	remoteClass := anObject
 ]
+
+{ #category : #accessing }
+LanguageLinkProxyObject >> settings [ 
+
+	^ self application settings
+]

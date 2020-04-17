@@ -1,3 +1,16 @@
+"
+Write the JSON textual representation of an object to the receiver's stream for PharoLink.
+
+Primitives, which are Integers, Strings and Arrays, are returned immediately.  All other objects are added to a registry and returned as a dictionary with the object's class and registry id, allowing a proxy object to be generated in the client.
+
+
+!!Internal Representation and Key Implementation Points.
+
+!!!Instance Variables
+
+	registry:		<PharoLinkRegistry> the registry of non-primitive objects.
+
+"
 Class {
 	#name : #PharoLinkJSONWriter,
 	#superclass : #NeoJSONWriter,
@@ -35,6 +48,22 @@ PharoLinkJSONWriter >> registry [
 { #category : #accessing }
 PharoLinkJSONWriter >> registry: anObject [
 	registry := anObject
+]
+
+{ #category : #writing }
+PharoLinkJSONWriter >> writeList: collection [ 
+
+	^collection isArray
+		ifTrue: [ super writeList: collection ]
+		ifFalse: [ self writeObject: collection ]
+]
+
+{ #category : #writing }
+PharoLinkJSONWriter >> writeMap: keyValueCollection [
+
+	^ (keyValueCollection at: #'__pharolinkImmediate' ifAbsent: [ false ])
+		ifTrue: [ super writeMap: keyValueCollection ]
+		ifFalse: [ self writeObject: keyValueCollection ]
 ]
 
 { #category : #writing }
