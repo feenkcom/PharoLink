@@ -224,6 +224,13 @@ LanguageLinkApplication >> newCommandFactory [
 		yourself
 ]
 
+{ #category : #instructions }
+LanguageLinkApplication >> notifyDebuggerPaused: aDebugger [
+	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
+
+	self executionHandler notifyDebuggerPaused: aDebugger.
+]
+
 { #category : #accessing }
 LanguageLinkApplication >> platform [ 
 

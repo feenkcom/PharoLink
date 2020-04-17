@@ -20,6 +20,17 @@ LanguageLinkPromiseRegistry >> initialize [
 	semaphore := Semaphore forMutualExclusion
 ]
 
+{ #category : #instructions }
+LanguageLinkPromiseRegistry >> notifyDebuggerPaused: aDebugger [
+	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
+	| signal promises |
+
+	signal := PharoLinkDebuggerPaused new debugger: aDebugger.
+	semaphore critical: [ promises := promiseTable values ].
+	promises do: [ :promise |
+		promise signalWithValue: signal copy ].
+]
+
 { #category : #'private - testing' }
 LanguageLinkPromiseRegistry >> promiseTable [
 	^ promiseTable
