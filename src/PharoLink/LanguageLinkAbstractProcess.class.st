@@ -2,7 +2,6 @@ Class {
 	#name : #LanguageLinkAbstractProcess,
 	#superclass : #Object,
 	#instVars : [
-		'settings',
 		'application',
 		'workingDirectory'
 	],
@@ -67,7 +66,7 @@ LanguageLinkAbstractProcess >> application: anObject [
 { #category : #accessing }
 LanguageLinkAbstractProcess >> debugMode [
 
-	^ settings debugMode
+	^ self settings debugMode
 ]
 
 { #category : #accessing }
