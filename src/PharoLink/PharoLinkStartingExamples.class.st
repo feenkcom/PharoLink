@@ -19,6 +19,7 @@ PharoLinkStartingExamples >> checkPidInImage [
 	As this is in image, they should be the same"
 	<gtExample>
 	<after: #shutdownServer>
+	<noTest>
 	| clientPID serverPID |
 
 	self inImageClient.
@@ -36,6 +37,7 @@ PharoLinkStartingExamples >> checkPidRemoteImage [
 	As this is a remote image, they should be different"
 	<gtExample>
 	<after: #shutdownServer>
+	<noTest>
 	| clientPID serverPID |
 
 	self remoteImageClient.
