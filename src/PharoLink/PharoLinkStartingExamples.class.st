@@ -27,6 +27,7 @@ PharoLinkStartingExamples >> checkPidInImage [
 		<< 'LibC uniqueInstance currentProcessId';
 		sendAndWait.
 	self assert: clientPID = serverPID.
+	self shutdownServer.
 	^ serverPID
 ]
 
@@ -44,6 +45,7 @@ PharoLinkStartingExamples >> checkPidRemoteImage [
 		<< 'LibC uniqueInstance currentProcessId';
 		sendAndWait.
 	self assert: clientPID ~= serverPID.
+	self shutdownServer.
 	^ { clientPID. serverPID. }
 ]
 
