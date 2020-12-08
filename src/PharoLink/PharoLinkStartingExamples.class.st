@@ -19,6 +19,7 @@ PharoLinkStartingExamples >> checkPidInImage [
 	As this is in image, they should be the same"
 	<gtExample>
 	<after: #shutdownServer>
+	<noTest>
 	| clientPID serverPID |
 
 	self inImageClient.
@@ -27,7 +28,6 @@ PharoLinkStartingExamples >> checkPidInImage [
 		<< 'LibC uniqueInstance currentProcessId';
 		sendAndWait.
 	self assert: clientPID = serverPID.
-	self shutdownServer.
 	^ serverPID
 ]
 
@@ -37,6 +37,7 @@ PharoLinkStartingExamples >> checkPidRemoteImage [
 	As this is a remote image, they should be different"
 	<gtExample>
 	<after: #shutdownServer>
+	<noTest>
 	| clientPID serverPID |
 
 	self remoteImageClient.
@@ -45,7 +46,6 @@ PharoLinkStartingExamples >> checkPidRemoteImage [
 		<< 'LibC uniqueInstance currentProcessId';
 		sendAndWait.
 	self assert: clientPID ~= serverPID.
-	self shutdownServer.
 	^ { clientPID. serverPID. }
 ]
 
