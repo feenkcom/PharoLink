@@ -86,7 +86,7 @@ LanguageLinkApplication class >> start [
 { #category : #'start-stop' }
 LanguageLinkApplication class >> startWith: settings [
 
-	self isRunning ifTrue: [ Error signal: self name, ' already running.' ].
+	self isRunning ifTrue: [ ^ uniqueInstance ].
 	self stop.
 	uniqueInstance := self new initializeWith: settings.
 	uniqueInstance start.
