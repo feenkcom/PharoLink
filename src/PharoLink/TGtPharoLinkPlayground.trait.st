@@ -74,8 +74,7 @@ TGtPharoLinkPlayground >> gtPlaygroundString [
 TGtPharoLinkPlayground >> gtPlaygroundText [
 	"Answer the formatted text to be initially displayed in the playground"
 
-	^ self gtPlaygroundString asRopedText attributesBuilder 
-				attribute: (BlFontGenericFamilyAttribute monospace beNotOverwritableByStyler)
+	^ self gtPlaygroundString asRopedText attributesBuilder
 ]
 
 { #category : #'ui - accessing' }
