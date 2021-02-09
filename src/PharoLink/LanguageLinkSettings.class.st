@@ -171,8 +171,8 @@ LanguageLinkSettings >> serverExecutable [
 ]
 
 { #category : #accessing }
-LanguageLinkSettings >> serverExecutable: anObject [
-	serverExecutable := anObject
+LanguageLinkSettings >> serverExecutable: aFileReference [
+	serverExecutable := aFileReference
 ]
 
 { #category : #accessing }
