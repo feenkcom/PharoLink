@@ -2,8 +2,7 @@ Class {
 	#name : #LanguageLinkAbstractProcess,
 	#superclass : #Object,
 	#instVars : [
-		'application',
-		'workingDirectory'
+		'application'
 	],
 	#classInstVars : [
 		'serverExecutable'
@@ -15,7 +14,6 @@ Class {
 LanguageLinkAbstractProcess class >> application: application [
 	^ self new
 		application: application;
-		workingDirectory: (application settings platform folderForApplication);
 		yourself
 ]
 
@@ -29,14 +27,6 @@ LanguageLinkAbstractProcess class >> resolveServerExecutable [
 LanguageLinkAbstractProcess class >> serverExecutable [ 
 
 	^ serverExecutable ifNil: [ serverExecutable := self resolveServerExecutable ]
-]
-
-{ #category : #accessing }
-LanguageLinkAbstractProcess class >> settings: settings workingDirectory: fileRef [
-	^ self new
-		settings: settings;
-		workingDirectory: fileRef;
-		yourself
 ]
 
 { #category : #initialization }
@@ -108,10 +98,5 @@ LanguageLinkAbstractProcess >> stopServerDebugger [
 
 { #category : #accessing }
 LanguageLinkAbstractProcess >> workingDirectory [
-	^ workingDirectory
-]
-
-{ #category : #accessing }
-LanguageLinkAbstractProcess >> workingDirectory: anObject [
-	workingDirectory := anObject
+	^ application settings workingDirectory
 ]

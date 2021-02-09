@@ -62,10 +62,10 @@ LanguageLinkTestCase >> newCommand [
 
 { #category : #asserting }
 LanguageLinkTestCase >> registryExpression [
-	^ #registry callWith: #()
+	^ #registry jsCallWith: #()
 ]
 
 { #category : #asserting }
 LanguageLinkTestCase >> resolveId: anId [
-	^ self registryExpression => #resolve callWith: (Array with: anId)
+	^ self registryExpression => #resolve jsCallWith: (Array with: anId)
 ]

@@ -16,7 +16,8 @@ Class {
 		'serializerClass',
 		'deserializerClass',
 		'parserClass',
-		'serverDebugMode'
+		'serverDebugMode',
+		'workingDirectory'
 	],
 	#category : #'PharoLink-Platform'
 }
@@ -133,7 +134,12 @@ LanguageLinkSettings >> platform [
 
 { #category : #accessing }
 LanguageLinkSettings >> platform: anObject [
-	platform := anObject
+	"Set the platform.
+	This must be done before changing the workingDirectory."
+
+	platform := anObject.
+	"The platform knows the default workingDirectory"
+	workingDirectory := platform folderForApplication.
 ]
 
 { #category : #accessing }
@@ -200,7 +206,14 @@ LanguageLinkSettings >> serverSocketAddress: anObject [
 ]
 
 { #category : #accessing }
-LanguageLinkSettings >> workingDirectory [ 
+LanguageLinkSettings >> workingDirectory [
+	^ workingDirectory
+]
 
-	^ self platform folderForApplication
+{ #category : #accessing }
+LanguageLinkSettings >> workingDirectory: aFileReference [
+	"Set the working directory where the runtime environment is installed.
+	This must be changed after the platform has been set."
+
+	workingDirectory := aFileReference
 ]

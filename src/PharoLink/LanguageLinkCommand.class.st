@@ -41,7 +41,7 @@ LanguageLinkCommand >> codeForRemote [
 			"If making a call, it should be await"
 			instr class = JSGCall ifTrue:
 				[ py3CodeStream << 'await ' ].
-			instr writeLinkLanguageOn: py3CodeStream.
+			instr writeJavaScriptOn: py3CodeStream.
 			py3CodeStream 
 				<< ';';
 				<< String lf ].
