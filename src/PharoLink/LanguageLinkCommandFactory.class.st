@@ -152,13 +152,13 @@ LanguageLinkCommandFactory >> sendCommand [
 { #category : #initialization }
 LanguageLinkCommandFactory >> setNotifyImmediateToInstruction: aJSgInstruction [
 	^ 'notify_immediate' asJSGIdentifier 
-			callWith: (Array with: aJSgInstruction with: command id)
+			jsCallWith: (Array with: aJSgInstruction with: command id)
 ]
 
 { #category : #initialization }
 LanguageLinkCommandFactory >> setNotifyToInstruction: aP3gInstruction [
 	^ 'notify' asJSGIdentifier 
-			callWith: (Array with: aP3gInstruction with: command id)
+			jsCallWith: (Array with: aP3gInstruction with: command id)
 ]
 
 { #category : #accessing }

@@ -31,14 +31,6 @@ LanguageLinkAbstractProcess class >> serverExecutable [
 	^ serverExecutable ifNil: [ serverExecutable := self resolveServerExecutable ]
 ]
 
-{ #category : #accessing }
-LanguageLinkAbstractProcess class >> settings: settings workingDirectory: fileRef [
-	^ self new
-		settings: settings;
-		workingDirectory: fileRef;
-		yourself
-]
-
 { #category : #initialization }
 LanguageLinkAbstractProcess class >> signalCommandNotFound: commandString [
 	"JSLink use the unix command `which` to find the full path of the supplied command. From Pharo

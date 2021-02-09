@@ -16,21 +16,6 @@ LanguageLinkObserver class >> callback: aBlock [
 		yourself
 ]
 
-{ #category : #call }
-LanguageLinkObserver >> call [
-	^ self callWith: #()
-]
-
-{ #category : #call }
-LanguageLinkObserver >> callWith: anArrayOrADictionary [
-	^ anArrayOrADictionary jsgCallArgumentsOf: self
-]
-
-{ #category : #call }
-LanguageLinkObserver >> callWith: anArray with: aDictionary [
-	^ JSGCall target: self positionalArguments: anArray keywordArguments: aDictionary
-]
-
 { #category : #accessing }
 LanguageLinkObserver >> callback [
 	^ callback
@@ -79,9 +64,19 @@ LanguageLinkObserver >> javaScriptNotify [
 
 { #category : #'error handling' }
 LanguageLinkObserver >> javaScriptNotify: anObject [
-	^ (self callWith: (Array with: anObject))
+	^ (self jsCallWith: (Array with: anObject))
 		await: true;
 		yourself
+]
+
+{ #category : #call }
+LanguageLinkObserver >> jsCall [
+	^ self jsCallWith: #()
+]
+
+{ #category : #call }
+LanguageLinkObserver >> jsCallWith: anArrayOrADictionary [
+	^ anArrayOrADictionary jsgCallArgumentsOf: self
 ]
 
 { #category : #'error handling' }
@@ -108,8 +103,8 @@ LanguageLinkObserver >> pharoNotify: anObject [
 ]
 
 { #category : #testing }
-LanguageLinkObserver >> writeLinkLanguageOn: aStream [
-	(#observer asJSGI callWith: (Array 
+LanguageLinkObserver >> writeJavaScriptOn: aStream [
+	(#observer asJSGI jsCallWith: (Array 
 											with: self command id
-											with: self id)) writeLinkLanguageOn: aStream
+											with: self id)) writeJavaScriptOn: aStream
 ]
