@@ -255,7 +255,10 @@ LanguageLinkApplication >> registerObject: aProxyObject [
 
 { #category : #instructions }
 LanguageLinkApplication >> send: aCommand [
-	self isRunning ifFalse: [ Error signal: 'Server not running.' ].
+	self isRunning ifFalse: 
+		[ LanguageLinkServerNotRunningError new
+			application: self;
+			signal ].
 	^ executionHandler sendCommand: aCommand
 ]
 
