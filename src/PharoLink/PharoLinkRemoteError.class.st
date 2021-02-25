@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkRemoteError,
-	#superclass : #Notification,
+	#superclass : #PharoLinkRemoteNotification,
 	#instVars : [
 		'command',
 		'errorMessage',

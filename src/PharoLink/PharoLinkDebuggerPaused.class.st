@@ -1,9 +1,8 @@
 Class {
 	#name : #PharoLinkDebuggerPaused,
-	#superclass : #Notification,
+	#superclass : #PharoLinkRemoteNotification,
 	#instVars : [
-		'debugger',
-		'promise'
+		'debugger'
 	],
 	#category : #'PharoLink-ErrorHandling'
 }
@@ -31,19 +30,6 @@ PharoLinkDebuggerPaused >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError-defaultAction)"
 
 	^ UnhandledError signalForException: self
-]
-
-{ #category : #accessing }
-PharoLinkDebuggerPaused >> promise [
-	<return: #LanguageLinkPromise>
-
-	^ promise
-]
-
-{ #category : #accessing }
-PharoLinkDebuggerPaused >> promise: aLanguageLinkPromise [
-
-	promise := aLanguageLinkPromise
 ]
 
 { #category : #initialization }
