@@ -2,7 +2,7 @@ Class {
 	#name : #PharoLinkDebuggerPaused,
 	#superclass : #PharoLinkRemoteNotification,
 	#instVars : [
-		'debugger'
+		'dapDebugger'
 	],
 	#category : #'PharoLink-ErrorHandling'
 }
@@ -16,13 +16,13 @@ PharoLinkDebuggerPaused class >> signalDebugger: aDebugger [
 ]
 
 { #category : #accessing }
-PharoLinkDebuggerPaused >> debugger [
-	^ debugger
+PharoLinkDebuggerPaused >> dapDebugger [
+	^ dapDebugger
 ]
 
 { #category : #accessing }
-PharoLinkDebuggerPaused >> debugger: anObject [
-	debugger := anObject
+PharoLinkDebuggerPaused >> dapDebugger: anObject [
+	dapDebugger := anObject
 ]
 
 { #category : #exceptiondescription }
