@@ -120,9 +120,14 @@ LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 
 { #category : #handlers }
 LanguageLinkExecutionHandler >> notifyHandler: updatePromiseMsg [
+	"Update the promise with the deserialised value.
+	If an error occurs during deserialisation, pass it on to the promise to handle, as the promise may be the UI loop, in which case any other exception won't actually be displayed"
+
 	self 
 		updatePromiseId: updatePromiseMsg promiseId 
-		with: (self deserialize: updatePromiseMsg value)
+		with: ([ self deserialize: updatePromiseMsg value ]
+			on: Error 
+			do: [ :ex | ex ])
 ]
 
 { #category : #initialization }

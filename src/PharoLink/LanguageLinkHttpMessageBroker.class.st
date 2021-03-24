@@ -56,10 +56,12 @@ LanguageLinkHttpMessageBroker >> preventTestForkedPDestroyServer [
 
 { #category : #private }
 LanguageLinkHttpMessageBroker >> primSendMessage: dict [
-	| ans client |
+	| ans client response |
 
-	ans := 
-		[ client := ZnClient new.
+	PharoLinkRequestSignal new 
+		request: dict;
+		emit.
+	ans := [ client := ZnClient new.
 		client
 				beOneShot;
 				url: self javaScriptUri , '/' , (dict at: #type);
@@ -71,35 +73,35 @@ LanguageLinkHttpMessageBroker >> primSendMessage: dict [
 				on: Error 
 				do: [ :err | LanguageLinkCommunicationError signal: 'Request fail' ].
 	ans status = 200 ifFalse: [ LanguageLinkCommunicationError signal: 'Request fail' ].
-	^ self serializer deserialize: ans contents
+	response := self serializer deserialize: ans contents.
+	^ response
 ]
 
 { #category : #private }
 LanguageLinkHttpMessageBroker >> prim_handle: req [
 	"Because of the nature of HTTP, answers of sync messages are not received through this method, but as 	the answers of HTTP requests. This channel is only for RMessages."
+	| dict ansDict handler |
 
-	StringSignal emit: 'prim_handle:'.
-	^ req method = #POST 
-		ifTrue: [ | dict ansDict handler |
-			[
-				StringSignal emit: req relativeUrl asString.
-				"req relativeUrl asString = '/CALLBACK' ifTrue: [ self halt ]."
-				dict := self serializer deserialize: req contents.
-				StringSignal emit: dict printString.
-				handler := self handleRMessage: dict.
-				"(DateAndTime now -> { dict. handler. }) inspect."
-				ansDict := handler shouldAnswer
-								ifTrue: [ handler answer encode ]
-								ifFalse: [ Dictionary new ].
-				StringSignal emit: 'response: ', ansDict printString.
-				^ ZnResponse ok: (ZnEntity json: (self serializer serialize: ansDict)) ] 
-			on: Error 
-			do: [ :e | StringSignal emit: 'Error: ', e printString.
-				self debugMode
+	^ req method = #POST ifTrue: 
+		[ [
+			"req relativeUrl asString = '/CALLBACK' ifTrue: [ self halt ]."
+			dict := self serializer deserialize: req contents.
+			PharoLinkResponseSignal new 
+				response: dict;
+				emit.
+			handler := self handleRMessage: dict.
+			"(DateAndTime now -> { dict. handler. }) inspect."
+			ansDict := handler shouldAnswer
+					ifTrue: [ handler answer encode ]
+					ifFalse: [ Dictionary new ].
+			^ ZnResponse ok: (ZnEntity json: (self serializer serialize: ansDict)) ] 
+				on: Error 
+				do: [ :e | StringSignal emit: 'Error: ', e printString.
+					self debugMode
 							ifTrue: [ e pass ]
 							ifFalse: [ ZnResponse serverError: e printString  ] ] ]
-		ifFalse: [ 
-			self invalidMethod ]
+		ifFalse: 
+			[ self invalidMethod ]
 ]
 
 { #category : #messaging }
