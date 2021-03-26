@@ -11,6 +11,28 @@ Class {
 	#category : #'PharoLink-Core'
 }
 
+{ #category : #'instance creation' }
+LanguageLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
+
+	^ self new
+		remoteClass: remoteClassName;
+		name: registryId;
+		application: aLLApplication
+]
+
+{ #category : #comparing }
+LanguageLinkProxyObject >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ remoteClass = anObject remoteClass
+		and: [ application = anObject application
+				and: [ name = anObject name ] ]
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> application [
 	^ application
@@ -19,6 +41,13 @@ LanguageLinkProxyObject >> application [
 { #category : #accessing }
 LanguageLinkProxyObject >> application: anObject [
 	application := anObject
+]
+
+{ #category : #comparing }
+LanguageLinkProxyObject >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ remoteClass hash bitXor: (application hash bitXor: name hash)
 ]
 
 { #category : #accessing }

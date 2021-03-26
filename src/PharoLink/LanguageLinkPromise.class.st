@@ -99,7 +99,7 @@ LanguageLinkPromise >> waitForValue [
 	[ waitAgain := false.
 	self isSignaled ifFalse: [ semaphore wait ].
 	(value isKindOf: Exception) ifTrue:
-		[ value promise: self.
+		[ value isPharoLinkNotification ifTrue: [ value promise: self ].
 		value copy signal ].
 	"If an exception was signalled, it may request that the promise wait for the real value to come through."
 	waitAgain ] whileTrue.
