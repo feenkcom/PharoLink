@@ -110,5 +110,5 @@ LanguageLinkProxyObject >> remoteClass: anObject [
 { #category : #accessing }
 LanguageLinkProxyObject >> settings [ 
 
-	^ self application settings
+	^ application settings
 ]
