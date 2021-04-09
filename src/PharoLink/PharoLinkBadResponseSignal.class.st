@@ -22,7 +22,7 @@ PharoLinkBadResponseSignal >> printOneLineContentsOn: stream [
 
 	stream 
 		<< 'id: ';
-		<< (request at: 'id');
+		<< (request at: 'id' ifAbsent: [ '<unknown>' ]);
 		<< ', status: ';
 		print: response status.
 ]
