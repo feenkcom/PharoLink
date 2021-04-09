@@ -96,7 +96,13 @@ PharoLinkEvalCommand >> notify: anObject id: anIdString [
 
 { #category : #private }
 PharoLinkEvalCommand >> notifyError: error [
+	"Notify the client of the error encountered during evaluation"
 	| data |
+
+	"NetworkErrors typically mean that the client has gone away, just log and move on"
+	(error isKindOf: NetworkError) ifTrue: 
+		[ PharoLinkNetworkErrorSignal emitCommand: self error: error.
+		^ self ].
 
 	data := Dictionary new.
 	data 	
