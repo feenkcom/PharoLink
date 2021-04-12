@@ -23,7 +23,7 @@ TGtPharoLinkPlayground >> gtPlaygroundFor: aView [
 
 	^ aView textEditor
 		title: 'Playground' translated;
-		priority: 10;
+		priority: 100;
 		text: [ self gtPlaygroundText ];
 		styler: self settings parserClass gtStyler;
 		actionButtonIcon: BrGlamorousVectorIcons playinspect  
