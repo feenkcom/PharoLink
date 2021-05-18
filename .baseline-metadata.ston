@@ -1,1 +1,1 @@
-{	"repositories" : {		"github://msgpack/msgpack-smalltalk/repository" : "v1.3.1",		"github://feenkcom/pharo-beacon/repository" : "v0.5.123",		"github://feenkcom/OSSubprocess/repository" : "v1.1.12",		"github://svenvc/NeoJSON/repository" : "v17"	}}
+{	"repositories" : {		"github://msgpack/msgpack-smalltalk/repository" : "v1.3.1",		"github://feenkcom/pharo-beacon/repository" : "v0.5.123",		"github://feenkcom/OSSubprocess/repository" : "v1.1.13",		"github://svenvc/NeoJSON/repository" : "v17"	}}
