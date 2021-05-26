@@ -10,7 +10,7 @@ BaselineOfPharoLink >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'OSSubprocess' with: [
-				spec repository: 'github://feenkcom/OSSubprocess:v1.1.17/repository' ];
+				spec repository: 'github://feenkcom/OSSubprocess:v1.1.18/repository' ];
 			baseline: 'NeoJSON' with: [
 				spec repository: 'github://svenvc/NeoJSON:v17/repository' ];
 			baseline: 'MessagePack' with: [
