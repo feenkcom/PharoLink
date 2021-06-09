@@ -31,14 +31,6 @@ PharoLinkPharoPlatform >> ensureEnvironmentForApp: anApplication [
 	" Currently assumes the current environment, so nothing to do"
 ]
 
-{ #category : #'private - symlinks' }
-PharoLinkPharoPlatform >> ensureFolderSymlinkFor: aFolder [
-	| symlinkRef |
-	symlinkRef := aFolder basename asFileReference.
-	symlinkRef exists ifFalse: [ 
-		self createSymlinkFor: aFolder on: symlinkRef ]
-]
-
 { #category : #utils }
 PharoLinkPharoPlatform >> folderForApplication [
 
