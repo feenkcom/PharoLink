@@ -37,6 +37,13 @@ PharoLinkPharoProcess >> errorMessage [
 ]
 
 { #category : #testing }
+PharoLinkPharoProcess >> hasProcess [
+	"Answer a boolean indicating whether the receiver has a process object"
+
+	^ process isNotNil
+]
+
+{ #category : #testing }
 PharoLinkPharoProcess >> isRunning [
 	^ process
 		ifNil: [ false ]
@@ -46,12 +53,10 @@ PharoLinkPharoProcess >> isRunning [
 { #category : #private }
 PharoLinkPharoProcess >> newProcess [
 	| newProcess |
-	newProcess := OSSUnixSubprocess new
+	newProcess := GtUnixSubprocess new
 				command: self settings serverExecutable fullName;
 				arguments: self processArguments;
 				workingDirectory: self workingDirectory resolve fullName;
-"				redirectStdout;
-				redirectStderr;"
 				terminateOnShutdown;
 				yourself.
 	self environmentVariables associationsDo: [ :assoc |
@@ -80,12 +85,30 @@ PharoLinkPharoProcess >> processArguments [
 	^ args
 ]
 
+{ #category : #accessing }
+PharoLinkPharoProcess >> serverPath [
+
+	^ self settings serverExecutable
+]
+
 { #category : #'start-stop' }
 PharoLinkPharoProcess >> start [
 
 	self assert: process isNil.
 	process := self newProcess.
 	process run.
+]
+
+{ #category : #accessing }
+PharoLinkPharoProcess >> stderr [
+
+	^ process stderr
+]
+
+{ #category : #accessing }
+PharoLinkPharoProcess >> stdout [ 
+
+	^ process stdout
 ]
 
 { #category : #'start-stop' }

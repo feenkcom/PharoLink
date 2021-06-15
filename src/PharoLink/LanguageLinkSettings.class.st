@@ -94,6 +94,21 @@ LanguageLinkSettings >> deserializerClass: anObject [
 	deserializerClass := anObject
 ]
 
+{ #category : #ui }
+LanguageLinkSettings >> gtSettingsFor: aView [
+	<gtView>
+
+	^ aView columnedList
+		title: 'Settings';
+		priority: 1;
+		items: [ self settingNames ];
+		column: #Item 
+			text: [ :item | item ] 
+			width: 170;
+		column: #Value 
+			text: [ :item | item value: self ]
+]
+
 { #category : #accessing }
 LanguageLinkSettings >> gtViewedObjectClassName [
 	^ gtViewedObjectClassName
@@ -215,6 +230,12 @@ LanguageLinkSettings >> serverSocketAddress [
 { #category : #accessing }
 LanguageLinkSettings >> serverSocketAddress: anObject [
 	serverSocketAddress := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> settingNames [
+
+	^ self class instVarNames sorted
 ]
 
 { #category : #accessing }

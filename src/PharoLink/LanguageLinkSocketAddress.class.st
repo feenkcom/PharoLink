@@ -40,3 +40,15 @@ LanguageLinkSocketAddress >> port: anObject [
 LanguageLinkSocketAddress >> printAddress [
 	^ ipOrName , ':' , port asString
 ]
+
+{ #category : #printing }
+LanguageLinkSocketAddress >> printOn: aStream [
+
+	(ipOrName isNil or: [ port isNil ]) ifTrue:
+		[ ^ super printOn: aStream ].
+
+	aStream
+		<< ipOrName;
+		nextPut: $:;
+		print: port
+]

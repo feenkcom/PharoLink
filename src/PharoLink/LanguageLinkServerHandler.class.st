@@ -29,7 +29,26 @@ Class {
 
 { #category : #accessing }
 LanguageLinkServerHandler >> errorMessage [
-	^ process errorMessage
+	^ self stderr
+]
+
+{ #category : #accessing }
+LanguageLinkServerHandler >> exitCode [
+
+	^ process exitCode
+]
+
+{ #category : #accessing }
+LanguageLinkServerHandler >> exitStatusInterpreter [
+
+	^ process exitStatusInterpreter
+]
+
+{ #category : #testing }
+LanguageLinkServerHandler >> hasProcess [
+	"Answer a boolean indicating whether the is an external process object available"
+
+	^ process hasProcess
 ]
 
 { #category : #initialization }
@@ -49,10 +68,29 @@ LanguageLinkServerHandler >> platform [
 	^ self application settings platform
 ]
 
+{ #category : #accessing }
+LanguageLinkServerHandler >> serverPath [
+	"Answer the file reference to the server's executable"
+
+	^ process serverPath
+]
+
 { #category : #testing }
 LanguageLinkServerHandler >> start [
 	self platform ensureEnvironmentForApp: self application.
 	^ process start
+]
+
+{ #category : #accessing }
+LanguageLinkServerHandler >> stderr [
+
+	^ process stderr
+]
+
+{ #category : #accessing }
+LanguageLinkServerHandler >> stdout [
+
+	^ process stdout
 ]
 
 { #category : #testing }
