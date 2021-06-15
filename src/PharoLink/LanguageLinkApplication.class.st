@@ -327,20 +327,27 @@ LanguageLinkApplication >> serverStatus [
 LanguageLinkApplication >> serverStatusOn: aStream process: process [
 	"Write the environment and server status on the supplied stream.
 	Mostly for problem solving."
+	| serverPathString |
 
+	serverPathString := [ self serverPath isExecutable
+		ifTrue: [ self serverPath fullName ]
+		ifFalse: [ self serverPath fullName, ': doesn''t exist or isn''t executable, it should be in the PATH' ] ]
+			on: Error
+			do: [ '<Unable to determine server path.  It should be in the PATH>' ].
 	aStream
 		<< 'Running:                 ';
 			print: self isRunning; cr;
 		<< 'Server:                  ';
-			<< self serverPath fullName; cr;
+			<< serverPathString; cr;
 		<< 'Working directory:       ';
 			<< settings workingDirectory fullName; cr;
 		<< 'Server process  running: ';
 			print: process isRunning; cr.
+	process hasProcess ifFalse: [ ^ self ].
 	process isRunning ifFalse: 
-		[ aStream
+		[ aStream 
 			<< 'Exit status:             ';
-				print: process exitStatusInterpreter exitStatus; cr ].
+			print: process exitCode; cr ].
 	aStream
 		cr; cr;
 		<< 'Stdout:'; cr;

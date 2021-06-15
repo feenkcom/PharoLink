@@ -33,9 +33,22 @@ LanguageLinkServerHandler >> errorMessage [
 ]
 
 { #category : #accessing }
+LanguageLinkServerHandler >> exitCode [
+
+	^ process exitCode
+]
+
+{ #category : #accessing }
 LanguageLinkServerHandler >> exitStatusInterpreter [
 
 	^ process exitStatusInterpreter
+]
+
+{ #category : #testing }
+LanguageLinkServerHandler >> hasProcess [
+	"Answer a boolean indicating whether the is an external process object available"
+
+	^ process hasProcess
 ]
 
 { #category : #initialization }

@@ -37,6 +37,13 @@ PharoLinkPharoProcess >> errorMessage [
 ]
 
 { #category : #testing }
+PharoLinkPharoProcess >> hasProcess [
+	"Answer a boolean indicating whether the receiver has a process object"
+
+	^ process isNotNil
+]
+
+{ #category : #testing }
 PharoLinkPharoProcess >> isRunning [
 	^ process
 		ifNil: [ false ]
