@@ -39,6 +39,30 @@ LanguageLinkApplication class >> isRunning [
 	^ uniqueInstance notNil and: [ uniqueInstance isRunning ]
 ]
 
+{ #category : #'start-stop' }
+LanguageLinkApplication class >> killAll [
+	"Stop ALL instances of the receiver and kill any server processes that may still be running."
+	| allInstances firstApplication wd proc error |
+
+	allInstances := self allInstances.
+	allInstances ifEmpty: [ ^ self ].
+	firstApplication := allInstances
+		detect: #isRunning 
+		ifNone: [ allInstances first ].
+	allInstances do: #stop.
+	wd := firstApplication settings workingDirectory.
+	proc := GtUnixSubprocess new command: (wd / 'killservers.sh') fullName.
+	proc runAndWait.
+	proc isSuccess ifFalse: 
+		[ error:= LanguageLinkProcessError new
+			messageText: 'Unable to kill server processes';
+			application: firstApplication;
+			process: proc.
+			error signal ].
+	self assert: proc stderr trimBoth isEmpty.
+	^ proc stdout
+]
+
 { #category : #testing }
 LanguageLinkApplication class >> module [
 	^ self uniqueInstance module
@@ -163,6 +187,27 @@ LanguageLinkApplication >> executionHandler [
 	^ executionHandler
 ]
 
+{ #category : #ui }
+LanguageLinkApplication >> gtSettingsFor: aView [
+	<gtView>
+
+	^ aView forward 
+		title: 'Settings';
+		priority: 60;
+		object: [ settings ];
+		view: #gtSettingsFor:
+]
+
+{ #category : #ui }
+LanguageLinkApplication >> gtStatusFor: aView [
+	<gtView>
+
+	^ aView textEditor 
+		title: 'Status';
+		priority: 50;
+		text: [ self serverStatus asRopedText glamorousCodeFont ]
+]
+
 { #category : #handlers }
 LanguageLinkApplication >> handlers [
 	^ Array
@@ -260,6 +305,49 @@ LanguageLinkApplication >> send: aCommand [
 			application: self;
 			signal ].
 	^ executionHandler sendCommand: aCommand
+]
+
+{ #category : #accessing }
+LanguageLinkApplication >> serverPath [
+	"Answer the file reference to the server's executable"
+
+	^ processHandler serverPath
+]
+
+{ #category : #printing }
+LanguageLinkApplication >> serverStatus [
+	"Answer a string describing the environment and server status.
+	Mostly for problem solving."
+
+	^ String streamContents: [ :stream |
+		self serverStatusOn: stream process: processHandler ]
+]
+
+{ #category : #printing }
+LanguageLinkApplication >> serverStatusOn: aStream process: process [
+	"Write the environment and server status on the supplied stream.
+	Mostly for problem solving."
+
+	aStream
+		<< 'Running:                 ';
+			print: self isRunning; cr;
+		<< 'Server:                  ';
+			<< self serverPath fullName; cr;
+		<< 'Working directory:       ';
+			<< settings workingDirectory fullName; cr;
+		<< 'Server process  running: ';
+			print: process isRunning; cr.
+	process isRunning ifFalse: 
+		[ aStream
+			<< 'Exit status:             ';
+				print: process exitStatusInterpreter exitStatus; cr ].
+	aStream
+		cr; cr;
+		<< 'Stdout:'; cr;
+			<< process stdout; cr;
+		cr; cr;
+		<< 'Stderr:'; cr;
+			<< process stderr.
 ]
 
 { #category : #accessing }
