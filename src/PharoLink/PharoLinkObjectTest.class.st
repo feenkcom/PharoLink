@@ -11,7 +11,7 @@ PharoLinkObjectTest >> testProxyIdentity [
 	cf := application newCommandFactory.
 	cf << 'llCommand registry'.
 	obj := cf sendAndWait.
-	self assert: obj class equals: LanguageLinkProxyObject.
+	self assert: obj class equals: PharoLinkProxyObject.
 	self assert: obj remoteClass equals: 'PharoLinkRegistry'.
 	cf := application newCommandFactory.
 	cf << ('llCommand registry resolve: ', obj id printString).
@@ -24,7 +24,7 @@ PharoLinkObjectTest >> testSimpleProxy [
 
 	obj := application newCommandFactory
 		sendAndWait: 'llCommand registry'.
-	self assert: obj class equals: LanguageLinkProxyObject.
+	self assert: obj class equals: PharoLinkProxyObject.
 	self assert: obj remoteClass equals: 'PharoLinkRegistry'.
 	hasId := application newCommandFactory
 			sendAndWait: 'llCommand registry includesId: 0'.
