@@ -1,3 +1,6 @@
+"
+It is possible there's a race condition in LanguageLinkRegistryFinalizer that means that the application is still flagged as running when in fact it has gone.  This causes the attempt to remove an object from the registry to fail, failing the test.  See {{gtMethod:LanguageLinkRegistryFinalizer>>#finalize}}.
+"
 Class {
 	#name : #PharoLinkObjectTest,
 	#superclass : #PharoLinkApplicationTest,
