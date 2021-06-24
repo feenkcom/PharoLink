@@ -17,8 +17,7 @@ Class {
 		'deserializerClass',
 		'parserClass',
 		'serverDebugMode',
-		'workingDirectory',
-		'gtViewedObjectClassName'
+		'workingDirectory'
 	],
 	#category : #'PharoLink-Platform'
 }
@@ -110,23 +109,13 @@ LanguageLinkSettings >> gtSettingsFor: aView [
 		send: [ :item | item value: self ]
 ]
 
-{ #category : #accessing }
-LanguageLinkSettings >> gtViewedObjectClassName [
-	^ gtViewedObjectClassName
-]
-
-{ #category : #accessing }
-LanguageLinkSettings >> gtViewedObjectClassName: anObject [
-	gtViewedObjectClassName := anObject
-]
-
 { #category : #initialization }
 LanguageLinkSettings >> initialize [
 
 	super initialize.
 	debugMode := false.
 	serverDebugMode := false.
-	gtViewedObjectClassName := #GtViewedObject.
+
 ]
 
 { #category : #accessing }
