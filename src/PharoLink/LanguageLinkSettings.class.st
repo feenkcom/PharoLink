@@ -106,7 +106,8 @@ LanguageLinkSettings >> gtSettingsFor: aView [
 			text: [ :item | item ] 
 			width: 170;
 		column: #Value 
-			text: [ :item | item value: self ]
+			text: [ :item | item value: self ];
+		send: [ :item | item value: self ]
 ]
 
 { #category : #accessing }

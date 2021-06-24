@@ -21,6 +21,13 @@ LanguageLinkManualProcess >> errorMessage [
 	^ '<see manually run process>'
 ]
 
+{ #category : #testing }
+LanguageLinkManualProcess >> hasProcess [ 
+	"Assume that the external process is already running"
+
+	^ true
+]
+
 { #category : #'start-stop' }
 LanguageLinkManualProcess >> isRunning [
 	"true - the server is controlled externally and assumed to be running"

@@ -41,7 +41,7 @@ LanguageLinkHttpMessageBroker >> invalidType [
 
 { #category : #testing }
 LanguageLinkHttpMessageBroker >> isRunning [
-	^ server notNil
+	^ server notNil and: [ server isRunning ]
 ]
 
 { #category : #private }

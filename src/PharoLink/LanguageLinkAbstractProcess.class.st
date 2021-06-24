@@ -85,6 +85,22 @@ LanguageLinkAbstractProcess >> startServerDebugger [
 	By default there's nothing to do.  Subclasses should override this as required (typically in an extension method associated with the debugger)"
 ]
 
+{ #category : #accessing }
+LanguageLinkAbstractProcess >> stderr [
+	"Answer stderr of the process.
+	Subclasses that can provide stdout out should overwrite this method"
+
+	^ '<unavailable>'
+]
+
+{ #category : #accessing }
+LanguageLinkAbstractProcess >> stdout [ 
+	"Answer stdout of the process.
+	Subclasses that can provide stdout out should overwrite this method"
+
+	^ '<unavailable>'
+]
+
 { #category : #'start-stop' }
 LanguageLinkAbstractProcess >> stop [
 	self subclassResponsibility

@@ -19,6 +19,12 @@ LanguageLinkCommunicationHandler >> initializeHandler [
 ]
 
 { #category : #testing }
+LanguageLinkCommunicationHandler >> isRunning [ 
+
+	^ messageBroker isRunning
+]
+
+{ #category : #testing }
 LanguageLinkCommunicationHandler >> isServerReady [
 	| semaphore ans |
 	semaphore := Semaphore new.
