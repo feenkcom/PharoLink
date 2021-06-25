@@ -14,8 +14,11 @@ Class {
 
 { #category : #clap }
 PharoLinkServer class >> commandLine [
-
 	<commandline>
+
+	SystemVersion current major = 8 ifTrue: 
+		[ ^ self commandLine8 ].
+
 	^ self commandLineCommand meaning: [ :args | 
 		  | logger listenPort responsePort |
 		  args at: #help ifPresent: [ :help | 
@@ -42,7 +45,39 @@ PharoLinkServer class >> commandLine [
 ]
 
 { #category : #clap }
+PharoLinkServer class >> commandLine8 [
+	<commandline>
+
+	^ self commandLineCommand meaning: [ :args | | logger listenPort responsePort |
+		args atName: 'help' ifFound: [ :help |
+			help value.
+			help context exitSuccess ].
+
+		args atName: 'log' ifFound: 
+			[ SignalLogger resetAllInstances.
+			logger := RestartingStreamLogger stdout.
+			logger start ].
+
+		listenPort := (args atName: 'listenPort') value asNumber.
+		responsePort := (args atName: 'responsePort') value asNumber.
+		StringSignal emit: 'Listen Port: ', listenPort printString.
+		StringSignal emit: 'Response Port: ', responsePort printString.
+		self new 
+			listenPort: listenPort;
+			responsePort: responsePort;
+			start.
+		StringSignal emit: 'Running'.
+		
+		"Wait until the process is killed"
+		Semaphore new wait.
+		 ].
+]
+
+{ #category : #clap }
 PharoLinkServer class >> commandLineCommand [
+
+	SystemVersion current major = 8 ifTrue: 
+		[ ^ self commandLineCommand8 ].
 
 	^ (ClapCommand id: 'pharoLinkServer')
 		  description: 'Run the PharoLink Server';
@@ -54,6 +89,21 @@ PharoLinkServer class >> commandLineCommand [
 		  add: ((ClapPositional id: 'responsePort') description:
 					   'The port number on which to send responses');
 		  yourself
+]
+
+{ #category : #clap }
+PharoLinkServer class >> commandLineCommand8 [
+
+	^ (ClapCommand withName: 'pharoLinkServer')
+		description: 'Run the PharoLink Server';
+		add: ClapFlag forHelp;
+		add: ((ClapFlag withName: 'log') 
+					description: 'Enable logging to stdout');
+		add: ((ClapPositional withName: 'listenPort')
+					description: 'The port number on which to listen for requests');
+		add: ((ClapPositional withName: 'responsePort')
+					description: 'The port number on which to send responses');
+		yourself
 ]
 
 { #category : #accessing }
