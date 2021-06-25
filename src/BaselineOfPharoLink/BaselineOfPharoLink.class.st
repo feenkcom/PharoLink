@@ -12,7 +12,7 @@ BaselineOfPharoLink >> baseline: spec [
 		do: [			
 			spec
 				baseline: 'OSSubprocess' 
-				with: [ spec repository: 'github://feenkcom/OSSubprocess/repository' ].
+				with: [ spec repository: 'github://pharo-contributions/OSSubprocess:v1.3.0/repository' ].
 			spec 
 				baseline: 'NeoJSON' 
 				with: [ spec repository: 'github://svenvc/NeoJSON:v17/repository' ].
