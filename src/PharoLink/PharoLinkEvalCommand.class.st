@@ -60,6 +60,18 @@ PharoLinkEvalCommand >> execute: globalsDictionary [
 ]
 
 { #category : #accessing }
+PharoLinkEvalCommand >> gtViewedObjectClass [
+	"Answer the class used to server gtViews.
+	WARNING: This method is part of the GToolkit-RemotePharo package.  It shouldn't be confused with the extension method defined in TBD"
+	| env |
+
+	env := self class environment.
+	(env includes: #GtViewedObject) ifTrue: [ ^ env at: #GtViewedObject ].
+	(env includes: #GtPharoViewedObject) ifTrue: [ ^ env at: #GtPharoViewedObject ].
+	self error: 'Unable to find Gt view server'.
+]
+
+{ #category : #accessing }
 PharoLinkEvalCommand >> id [
 	^ id
 ]
