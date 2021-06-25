@@ -23,7 +23,7 @@ PharoLink is already installed if you are using Gtoolkit.
 
 Requirements:
 
-PharoLink has been tested with Pharo 8
+PharoLink has been tested with Pharo 8 & 9.
 
 To install PharoLink evaluate:
 
@@ -38,7 +38,7 @@ Metacello new
 
 ### First statements
 
-When first running PharoLink it is worthwhile starting Pharo from the command line so you can monitor the output.
+The playground examples pictured below assume you are running Gtoolkit.  If you are running a vanilla Pharo image, the programmatic examples can be used.
 
 Open a playground in [Gtoolkit](https://gtoolkit.com/) and start the PharoLinkApplication:
 
