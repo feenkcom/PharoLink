@@ -14,46 +14,46 @@ Class {
 
 { #category : #clap }
 PharoLinkServer class >> commandLine [
+
 	<commandline>
+	^ self commandLineCommand meaning: [ :args | 
+		  | logger listenPort responsePort |
+		  args at: #help ifPresent: [ :help | 
+			  help value.
+			  help context exitSuccess ].
 
-	^ self commandLineCommand meaning: [ :args | | logger listenPort responsePort |
-		args atName: 'help' ifFound: [ :help |
-			help value.
-			help context exitSuccess ].
+		  args at: #log ifPresent: [ 
+			  SignalLogger resetAllInstances.
+			  logger := RestartingStreamLogger stdout.
+			  logger start ].
 
-		args atName: 'log' ifFound: 
-			[ SignalLogger resetAllInstances.
-			logger := RestartingStreamLogger stdout.
-			logger start ].
+		  listenPort := (args at: #listenPort) value asNumber.
+		  responsePort := (args at: #responsePort) value asNumber.
+		  StringSignal emit: 'Listen Port: ' , listenPort printString.
+		  StringSignal emit: 'Response Port: ' , responsePort printString.
+		  self new
+			  listenPort: listenPort;
+			  responsePort: responsePort;
+			  start.
+		  StringSignal emit: 'Running'.
 
-		listenPort := (args atName: 'listenPort') value asNumber.
-		responsePort := (args atName: 'responsePort') value asNumber.
-		StringSignal emit: 'Listen Port: ', listenPort printString.
-		StringSignal emit: 'Response Port: ', responsePort printString.
-		self new 
-			listenPort: listenPort;
-			responsePort: responsePort;
-			start.
-		StringSignal emit: 'Running'.
-		
-		"Wait until the process is killed"
-		Semaphore new wait.
-		 ].
+		  "Wait until the process is killed"
+		  Semaphore new wait ]
 ]
 
 { #category : #clap }
 PharoLinkServer class >> commandLineCommand [
 
-	^ (ClapCommand withName: 'pharoLinkServer')
-		description: 'Run the PharoLink Server';
-		add: ClapFlag forHelp;
-		add: ((ClapFlag withName: 'log') 
-					description: 'Enable logging to stdout');
-		add: ((ClapPositional withName: 'listenPort')
-					description: 'The port number on which to listen for requests');
-		add: ((ClapPositional withName: 'responsePort')
-					description: 'The port number on which to send responses');
-		yourself
+	^ (ClapCommand id: 'pharoLinkServer')
+		  description: 'Run the PharoLink Server';
+		  add: ClapFlag forHelp;
+		  add:
+			  ((ClapFlag id: 'log') description: 'Enable logging to stdout');
+		  add: ((ClapPositional id: 'listenPort') description:
+					   'The port number on which to listen for requests');
+		  add: ((ClapPositional id: 'responsePort') description:
+					   'The port number on which to send responses');
+		  yourself
 ]
 
 { #category : #accessing }
