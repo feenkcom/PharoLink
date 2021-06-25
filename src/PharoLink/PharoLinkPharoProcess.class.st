@@ -36,6 +36,12 @@ PharoLinkPharoProcess >> errorMessage [
 	^ process stderrStream contents
 ]
 
+{ #category : #accessing }
+PharoLinkPharoProcess >> exitCode [ 
+
+	^ process exitCode
+]
+
 { #category : #testing }
 PharoLinkPharoProcess >> hasProcess [
 	"Answer a boolean indicating whether the receiver has a process object"
