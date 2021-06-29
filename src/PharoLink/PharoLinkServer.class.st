@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'listenPort',
 		'responsePort',
+		'responseHost',
 		'znServer',
 		'debugMode',
 		'registry',
@@ -124,6 +125,7 @@ PharoLinkServer >> handlEnqueue: aZnRequest [
 					bindings: (dict at: #'bindings')
 					id: (dict at: #'commandId').
 	command 
+		responseHost: responseHost;
 		responsePort: responsePort;
 		registry: registry.
 "self halt: (dict at: #statements)."
@@ -167,6 +169,7 @@ PharoLinkServer >> initialize [
 	globals := Dictionary new.
 	globals at: #registry put: registry.
 	debugMode := false.
+	responseHost := 'localhost'.
 ]
 
 { #category : #testing }
@@ -183,6 +186,16 @@ PharoLinkServer >> listenPort [
 { #category : #accessing }
 PharoLinkServer >> listenPort: anObject [
 	listenPort := anObject
+]
+
+{ #category : #accessing }
+PharoLinkServer >> responseHost [
+	^ responseHost
+]
+
+{ #category : #accessing }
+PharoLinkServer >> responseHost: anObject [
+	responseHost := anObject
 ]
 
 { #category : #accessing }

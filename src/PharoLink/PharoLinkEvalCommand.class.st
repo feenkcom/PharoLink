@@ -6,6 +6,7 @@ Class {
 		'bindings',
 		'id',
 		'responsePort',
+		'responseHost',
 		'registry'
 	],
 	#category : #'PharoLink-Server'
@@ -81,6 +82,13 @@ PharoLinkEvalCommand >> id: anObject [
 	id := anObject
 ]
 
+{ #category : #initialization }
+PharoLinkEvalCommand >> initialize [
+
+	super initialize.
+	responseHost := 'localhost'.
+]
+
 { #category : #private }
 PharoLinkEvalCommand >> notify: anObject command: commandIdString observer: observerIdString [
 	| data |
@@ -148,6 +156,16 @@ PharoLinkEvalCommand >> registry: anObject [
 ]
 
 { #category : #accessing }
+PharoLinkEvalCommand >> responseHost [
+	^ responseHost
+]
+
+{ #category : #accessing }
+PharoLinkEvalCommand >> responseHost: anObject [
+	responseHost := anObject
+]
+
+{ #category : #accessing }
 PharoLinkEvalCommand >> responsePort [
 	^ responsePort
 ]
@@ -163,8 +181,8 @@ PharoLinkEvalCommand >> sendResponse: data [
 
 	url := ZnUrl new 
 		scheme: 'http';
-		host: 'localhost';
-		port: self responsePort;
+		host: responseHost;
+		port: responsePort;
 		addPathSegment: (data at: 'type').
 
 	data at: '__sync' put: UUIDGenerator next.
