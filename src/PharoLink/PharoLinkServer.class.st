@@ -21,7 +21,7 @@ PharoLinkServer class >> commandLine [
 		[ ^ self commandLine8 ].
 
 	^ self commandLineCommand meaning: [ :args | 
-		  | logger listenPort responsePort |
+		  | logger listenPort responseHostPort |
 		  args at: #help ifPresent: [ :help | 
 			  help value.
 			  help context exitSuccess ].
@@ -32,12 +32,12 @@ PharoLinkServer class >> commandLine [
 			  logger start ].
 
 		  listenPort := (args at: #listenPort) value asNumber.
-		  responsePort := (args at: #responsePort) value asNumber.
+		  responseHostPort := (args at: #responsePort) value asNumber.
 		  StringSignal emit: 'Listen Port: ' , listenPort printString.
-		  StringSignal emit: 'Response Port: ' , responsePort printString.
+		  StringSignal emit: 'Response Port: ' , responseHostPort printString.
 		  self new
 			  listenPort: listenPort;
-			  responsePort: responsePort;
+			  responseHostPort: responseHostPort;
 			  start.
 		  StringSignal emit: 'Running'.
 
@@ -65,7 +65,7 @@ PharoLinkServer class >> commandLine8 [
 		StringSignal emit: 'Response Port: ', responsePort printString.
 		self new 
 			listenPort: listenPort;
-			responsePort: responsePort;
+			responseHostPort: responsePort;
 			start.
 		StringSignal emit: 'Running'.
 		
@@ -88,7 +88,7 @@ PharoLinkServer class >> commandLineCommand [
 		  add: ((ClapPositional id: 'listenPort') description:
 					   'The port number on which to listen for requests');
 		  add: ((ClapPositional id: 'responsePort') description:
-					   'The port number on which to send responses');
+					   'The [host:]port on which to send responses');
 		  yourself
 ]
 
@@ -103,7 +103,7 @@ PharoLinkServer class >> commandLineCommand8 [
 		add: ((ClapPositional withName: 'listenPort')
 					description: 'The port number on which to listen for requests');
 		add: ((ClapPositional withName: 'responsePort')
-					description: 'The port number on which to send responses');
+					description: 'The [host:]port on which to send responses');
 		yourself
 ]
 
@@ -196,6 +196,23 @@ PharoLinkServer >> responseHost [
 { #category : #accessing }
 PharoLinkServer >> responseHost: anObject [
 	responseHost := anObject
+]
+
+{ #category : #accessing }
+PharoLinkServer >> responseHostPort: aString [
+	"Accept a string of the form [host:]port and set the host and port appropriately"
+	| segments |
+
+	(aString includes: $:) ifFalse: 
+		[ responsePort := aString asNumber.
+		^ self ].
+
+	segments := $: split: aString.
+	self
+		assert: segments size = 2
+		description: 'The respose address must be in the form [host:]port'.
+	responseHost := segments first.
+	responsePort := segments second asNumber.
 ]
 
 { #category : #accessing }
