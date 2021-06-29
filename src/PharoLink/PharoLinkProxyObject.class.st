@@ -8,9 +8,12 @@ Class {
 PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
 	| proxyClass |
 
-	proxyClass := self subclasses
+	proxyClass := self allSubclasses
 		detect: [ :each | each remoteClassName = remoteClassName ]
-		ifNone: [ self ].
+		ifNone: 
+			[ (remoteClassName endsWith: ' class')
+				ifTrue: [ PlpoClass ]
+				ifFalse: [ self ] ].
 
 	^ proxyClass new
 		remoteClass: remoteClassName;

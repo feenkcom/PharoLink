@@ -94,7 +94,18 @@ LanguageLinkProxyObject >> printOn: str [
 	str 
 		<< (remoteClass asString first isVowel ifTrue: ['an '] ifFalse: ['a ']);
 		<< remoteClass asString;
-		<< ' (Proxy)'
+		<< ' (';
+		<< self class name;
+		<< ')'
+]
+
+{ #category : #'message performing' }
+LanguageLinkProxyObject >> proxyPerform: aSymbol [
+	"Evaluate the supplied selector on the remote"
+
+	^ self newCommandFactory
+		<< ('self ', aSymbol);
+		sendAndWait
 ]
 
 { #category : #accessing }
