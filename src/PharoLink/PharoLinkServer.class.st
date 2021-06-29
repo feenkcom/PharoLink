@@ -32,7 +32,7 @@ PharoLinkServer class >> commandLine [
 			  logger start ].
 
 		  listenPort := (args at: #listenPort) value asNumber.
-		  responseHostPort := (args at: #responsePort) value asNumber.
+		  responseHostPort := (args at: #responsePort) value.
 		  StringSignal emit: 'Listen Port: ' , listenPort printString.
 		  StringSignal emit: 'Response Port: ' , responseHostPort printString.
 		  self new
@@ -47,9 +47,8 @@ PharoLinkServer class >> commandLine [
 
 { #category : #clap }
 PharoLinkServer class >> commandLine8 [
-	<commandline>
 
-	^ self commandLineCommand meaning: [ :args | | logger listenPort responsePort |
+	^ self commandLineCommand8 meaning: [ :args | | logger listenPort responsePort |
 		args atName: 'help' ifFound: [ :help |
 			help value.
 			help context exitSuccess ].
