@@ -23,14 +23,14 @@ PharoLink is already installed if you are using Gtoolkit.
 
 Requirements:
 
-PharoLink has been tested with Pharo 8
+PharoLink has been tested with Pharo 8 & 9.
 
 To install PharoLink evaluate:
 
 ```smalltalk
 EpMonitor disableDuring: [ 
 Metacello new
-	repository: 'github://feenkcom/Pharolink/src';
+	repository: 'github://feenkcom/PharoLink/src';
 	baseline: 'PharoLink';
 	load ]
 ```
@@ -38,9 +38,9 @@ Metacello new
 
 ### First statements
 
-When first running JSLink it is worthwhile starting Pharo from the command line so you can monitor the output.
+The playground examples pictured below assume you are running Gtoolkit.  If you are running a vanilla Pharo image, the programmatic examples can be used.
 
-Open a playground in [Gtoolkit](https://gtoolkit.com/) and start the JSLinkApplication:
+Open a playground in [Gtoolkit](https://gtoolkit.com/) and start the PharoLinkApplication:
 
 ![Start PharoLink](doc/images/Start_PharoLink.png)
 
@@ -65,7 +65,7 @@ As well as inspecting the raw values of the remote object, any views which can b
 
 When evaluating statements in a proxy object's playground, `self` is bound to the proxy object:
 
-![this bound](doc/images/self_bound.png)
+![self bound](doc/images/self_bound.png)
 
 The remote server can then be stopped with:
 
@@ -106,7 +106,7 @@ pharolink stop
 ![Hello, World!](doc/images/helloworld_string.png)
 
 
-Second, using JavaScript generated with `RBParser`:
+Second, using Smalltalk generated with `RBParser`:
 
 ```smalltalk
 "Start PharoLink"
@@ -125,7 +125,7 @@ date := pharolink newCommandFactory
 	sendAndWait.
 
 "Stop the server"
-jslink stop
+pharolink stop
 ```
 
 

@@ -6,6 +6,7 @@ Class {
 		'bindings',
 		'id',
 		'responsePort',
+		'responseHost',
 		'registry'
 	],
 	#category : #'PharoLink-Server'
@@ -60,6 +61,18 @@ PharoLinkEvalCommand >> execute: globalsDictionary [
 ]
 
 { #category : #accessing }
+PharoLinkEvalCommand >> gtViewedObjectClass [
+	"Answer the class used to server gtViews.
+	WARNING: This method is part of the GToolkit-RemotePharo package.  It shouldn't be confused with the extension method defined in TBD"
+	| env |
+
+	env := self class environment.
+	(env includesKey: #GtViewedObject) ifTrue: [ ^ env at: #GtViewedObject ].
+	(env includesKey: #GtPharoViewedObject) ifTrue: [ ^ env at: #GtPharoViewedObject ].
+	self error: 'Unable to find Gt view server'.
+]
+
+{ #category : #accessing }
 PharoLinkEvalCommand >> id [
 	^ id
 ]
@@ -67,6 +80,13 @@ PharoLinkEvalCommand >> id [
 { #category : #accessing }
 PharoLinkEvalCommand >> id: anObject [
 	id := anObject
+]
+
+{ #category : #initialization }
+PharoLinkEvalCommand >> initialize [
+
+	super initialize.
+	responseHost := 'localhost'.
 ]
 
 { #category : #private }
@@ -136,6 +156,16 @@ PharoLinkEvalCommand >> registry: anObject [
 ]
 
 { #category : #accessing }
+PharoLinkEvalCommand >> responseHost [
+	^ responseHost
+]
+
+{ #category : #accessing }
+PharoLinkEvalCommand >> responseHost: anObject [
+	responseHost := anObject
+]
+
+{ #category : #accessing }
 PharoLinkEvalCommand >> responsePort [
 	^ responsePort
 ]
@@ -151,8 +181,8 @@ PharoLinkEvalCommand >> sendResponse: data [
 
 	url := ZnUrl new 
 		scheme: 'http';
-		host: 'localhost';
-		port: self responsePort;
+		host: responseHost;
+		port: responsePort;
 		addPathSegment: (data at: 'type').
 
 	data at: '__sync' put: UUIDGenerator next.
