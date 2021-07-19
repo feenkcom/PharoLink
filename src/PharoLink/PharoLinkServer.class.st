@@ -59,7 +59,7 @@ PharoLinkServer class >> commandLine8 [
 			logger start ].
 
 		listenPort := (args atName: 'listenPort') value asNumber.
-		responsePort := (args atName: 'responsePort') value asNumber.
+		responsePort := (args atName: 'responsePort') value.
 		StringSignal emit: 'Listen Port: ', listenPort printString.
 		StringSignal emit: 'Response Port: ', responsePort printString.
 		self new 
