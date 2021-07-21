@@ -8,7 +8,7 @@ Class {
 		'remoteClass',
 		'name'
 	],
-	#category : #'PharoLink-Core'
+	#category : 'PharoLink-Core'
 }
 
 { #category : #'instance creation' }
@@ -106,6 +106,30 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol [
 	^ self newCommandFactory
 		<< ('self ', aSymbol);
 		sendAndWait
+]
+
+{ #category : #'message performing' }
+LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArrayOfArguments [
+	"Evaluate the supplied selector on the remote with the given arguments"
+	| message keywords |
+	self assert: (anArrayOfArguments allSatisfy: [ :anArgument | 
+		PharoLinkRegistry isPrimitive: anArgument ]).
+
+	keywords := aSymbol findTokens: $:.
+	self assert: keywords size = anArrayOfArguments size.
+	
+	message := String streamContents: [ :stream |
+		stream 
+			<< 'self '.
+		keywords withIndexDo: [ :keyword :index |
+			| argumentValue |
+			argumentValue := anArrayOfArguments at: index.
+			stream 
+				<< keyword;
+				<< $:;
+				<< ' '.
+			stream << argumentValue printString ] ].
+	^ self evaluateSourceSequence: message
 ]
 
 { #category : #accessing }
