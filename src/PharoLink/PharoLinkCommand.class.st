@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkCommand,
-	#superclass : #LanguageLinkCommand,
-	#category : #'PharoLink-Execution'
+	#name : 'PharoLinkCommand',
+	#superclass : 'LanguageLinkCommand',
+	#category : 'PharoLink-Execution'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkCommand >> codeForRemote [
 
 	^ String streamContents: [ :codeStream |

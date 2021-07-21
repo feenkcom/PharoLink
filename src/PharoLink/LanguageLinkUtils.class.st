@@ -1,10 +1,10 @@
 Class {
-	#name : #LanguageLinkUtils,
-	#superclass : #Object,
-	#category : #'PharoLink-Core'
+	#name : 'LanguageLinkUtils',
+	#superclass : 'Object',
+	#category : 'PharoLink-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageLinkUtils class >> newVariableName [
 	^ 'll' , UUID new asString36
 ]

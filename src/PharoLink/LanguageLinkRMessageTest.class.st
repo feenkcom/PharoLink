@@ -1,10 +1,10 @@
 Class {
-	#name : #LanguageLinkRMessageTest,
-	#superclass : #TestCase,
-	#category : #'PharoLink-Tests'
+	#name : 'LanguageLinkRMessageTest',
+	#superclass : 'TestCase',
+	#category : 'PharoLink-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkRMessageTest >> stubDict [
 	^ {#type -> #RSTUB .
 		#ivar1 -> #foo .
@@ -14,7 +14,7 @@ LanguageLinkRMessageTest >> stubDict [
 		} asDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkRMessageTest >> testDecodeRMessage [
 	| msg |
 	msg := LanguageLinkRMessage decodeFrom: { #type -> #RMSG } asDictionary.
@@ -22,7 +22,7 @@ LanguageLinkRMessageTest >> testDecodeRMessage [
 	self assert: msg type equals: #RMSG
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkRMessageTest >> testDecodeRStubMessage [
 	| msg |
 	msg := LanguageLinkRStubMessage decodeFrom: self stubDict.
@@ -31,7 +31,7 @@ LanguageLinkRMessageTest >> testDecodeRStubMessage [
 	self assert: msg syncId equals: 'ab45d3'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkRMessageTest >> testEncodeRAnswer [
 	| msg ans |
 	msg := LanguageLinkRSyncMessage decodeFrom: { #type -> #RSYNC . #__sync -> 'abcde1234' } asDictionary.
@@ -40,7 +40,7 @@ LanguageLinkRMessageTest >> testEncodeRAnswer [
 	self assert: ans encode equals: { #type -> #RSYNC . #__sync -> 'abcde1234' } asDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkRMessageTest >> testEncodeRStubAnswer [
 	| msg ans |
 	msg := LanguageLinkRStubMessage decodeFrom: self stubDict.

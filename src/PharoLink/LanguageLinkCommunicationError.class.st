@@ -1,5 +1,5 @@
 Class {
-	#name : #LanguageLinkCommunicationError,
-	#superclass : #Error,
-	#category : #'PharoLink-Platform'
+	#name : 'LanguageLinkCommunicationError',
+	#superclass : 'Error',
+	#category : 'PharoLink-Platform'
 }

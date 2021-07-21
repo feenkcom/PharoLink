@@ -1,18 +1,18 @@
 Class {
-	#name : #LanguageLinkReplaceCommand,
-	#superclass : #LanguageLinkErrorHandlingAction,
+	#name : 'LanguageLinkReplaceCommand',
+	#superclass : 'LanguageLinkErrorHandlingAction',
 	#instVars : [
 		'newCommand'
 	],
-	#category : #'PharoLink-ErrorHandling'
+	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkReplaceCommand >> actionSymbol [
 	^ #'REPLACE_COMMAND'
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkReplaceCommand >> encodeAsDictionary [
 	| response |
 	response := super encodeAsDictionary.
@@ -20,12 +20,12 @@ LanguageLinkReplaceCommand >> encodeAsDictionary [
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkReplaceCommand >> newCommand [
 	^ newCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkReplaceCommand >> newCommand: anObject [
 	newCommand := anObject
 ]

@@ -1,23 +1,23 @@
 Class {
-	#name : #LanguageLinkHttpMessageBroker,
-	#superclass : #PharoLinkAbstractMessageBroker,
+	#name : 'LanguageLinkHttpMessageBroker',
+	#superclass : 'PharoLinkAbstractMessageBroker',
 	#instVars : [
 		'server'
 	],
-	#category : #'PharoLink-Pharo-MessageBroker'
+	#category : 'PharoLink-Pharo-MessageBroker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkHttpMessageBroker class >> javaScriptMethodArg [
 	^ 'http'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkHttpMessageBroker class >> serializerClass [
 	^ LanguageLinkNeoJsonSerializer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkHttpMessageBroker >> handleRMessage: dict [
 	| msgClass |
 	msgClass := self resolveMessageFromType: (dict at: #type).
@@ -25,26 +25,26 @@ LanguageLinkHttpMessageBroker >> handleRMessage: dict [
 	^ self handle: dict reverseMessageClass: msgClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkHttpMessageBroker >> invalidMethod [
 	^ (ZnResponse statusLine: ZnStatusLine badRequest)
 		entity: (ZnEntity text: 'Bad method');
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkHttpMessageBroker >> invalidType [
 	^ (ZnResponse statusLine: ZnStatusLine notFound)
 		entity: (ZnEntity text: 'Invalid type');
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkHttpMessageBroker >> isRunning [
 	^ server notNil and: [ server isRunning ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkHttpMessageBroker >> preventTestForkedPDestroyServer [
 	| env |
 	env := CurrentExecutionEnvironment value.
@@ -54,7 +54,7 @@ LanguageLinkHttpMessageBroker >> preventTestForkedPDestroyServer [
 			ifAbsent: [  ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkHttpMessageBroker >> primSendMessage: dict [
 	| ans client response |
 
@@ -77,7 +77,7 @@ LanguageLinkHttpMessageBroker >> primSendMessage: dict [
 	^ response
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkHttpMessageBroker >> prim_handle: req [
 	"Because of the nature of HTTP, answers of sync messages are not received through this method, but as 	the answers of HTTP requests. This channel is only for RMessages."
 	| dict ansDict handler |
@@ -104,25 +104,25 @@ LanguageLinkHttpMessageBroker >> prim_handle: req [
 			[ self invalidMethod ]
 ]
 
-{ #category : #messaging }
+{ #category : 'messaging' }
 LanguageLinkHttpMessageBroker >> sendAsyncMessage: msg [
 	self primSendMessage: msg encode.
 ]
 
-{ #category : #messaging }
+{ #category : 'messaging' }
 LanguageLinkHttpMessageBroker >> sendSyncMessage: msg [
 	| ansDict |
 	ansDict := self primSendMessage: msg encode.
 	^ msg createAnswer decode: ansDict
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkHttpMessageBroker >> setDebugMode [
 	super setDebugMode.
 	server ifNotNil: [ server debugMode: true ]
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 LanguageLinkHttpMessageBroker >> start [
 	server := ZnServer on: self port.
 	server debugMode: self debugMode.
@@ -136,7 +136,7 @@ LanguageLinkHttpMessageBroker >> start [
 	server onRequestRespond: [ :req | self prim_handle: req ]
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 LanguageLinkHttpMessageBroker >> stop [
 	server ifNotNil: [ server stop ]
 ]

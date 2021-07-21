@@ -1,24 +1,24 @@
 Class {
-	#name : #LanguageLinkSyncMessageHandler,
-	#superclass : #LanguageLinkMessageHandler,
+	#name : 'LanguageLinkSyncMessageHandler',
+	#superclass : 'LanguageLinkMessageHandler',
 	#instVars : [
 		'answer'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkSyncMessageHandler >> answer [
 	^ answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkSyncMessageHandler >> handleMessage [
 	answer := callback value: message.
 	self assert: answer class = message answerClass.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 LanguageLinkSyncMessageHandler >> shouldAnswer [
 	^ true
 ]

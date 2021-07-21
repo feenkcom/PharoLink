@@ -1,49 +1,49 @@
 Class {
-	#name : #LanguageLinkWeakFinalizerTest,
-	#superclass : #TestCase,
+	#name : 'LanguageLinkWeakFinalizerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'weakRegistry',
 		'assertCounter'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkWeakFinalizerTest class >> isAbstract [
 	^ self == LanguageLinkWeakFinalizerTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> assertCount: anInteger [
 	self assert: assertCounter equals: anInteger
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> countFinalizer [
 	^ LanguageLinkBlockFinalizer block: [ assertCounter := assertCounter + 1 ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> setUp [
 	super setUp.
 	weakRegistry := self weakRegistryClass new.
 	assertCounter := 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> tearDown [
 	weakRegistry destroy.
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> testBlockFinalizer [
 	self assertCount: 0.
 	self countFinalizer finalize.
 	self assertCount: 1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> testDestroy [
 	| obj |
 	obj := Object new.
@@ -54,7 +54,7 @@ LanguageLinkWeakFinalizerTest >> testDestroy [
 	self assertCount: 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> testGcMultObjects [
 	| obj1 obj2 obj3 |
 	obj1 := Object new.
@@ -74,7 +74,7 @@ LanguageLinkWeakFinalizerTest >> testGcMultObjects [
 	self assertCount: 3
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> testGcObject [
 	| obj |
 	obj := Object new.
@@ -84,7 +84,7 @@ LanguageLinkWeakFinalizerTest >> testGcObject [
 	self assertCount: 1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> testNotGcObject [
 	| obj |
 	obj := Object new.
@@ -93,12 +93,12 @@ LanguageLinkWeakFinalizerTest >> testNotGcObject [
 	self assertCount: 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> triggerGC [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkWeakFinalizerTest >> weakRegistryClass [
 	self subclassResponsibility
 ]

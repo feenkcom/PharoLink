@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkExecutionHandler,
-	#superclass : #LanguageLinkExecutionHandler,
-	#category : #'PharoLink-Execution'
+	#name : 'PharoLinkExecutionHandler',
+	#superclass : 'LanguageLinkExecutionHandler',
+	#category : 'PharoLink-Execution'
 }
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 PharoLinkExecutionHandler >> buildMessageFromCommand: command [
 	| message |
 	message := LanguageLinkEnqueueCommandMessage 
@@ -15,7 +15,7 @@ PharoLinkExecutionHandler >> buildMessageFromCommand: command [
 	^ message
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkExecutionHandler >> initializeHandler [
 
 	commandQueue := LanguageLinkCommandQueue executionHandler: self.
@@ -30,7 +30,7 @@ PharoLinkExecutionHandler >> initializeHandler [
 		addHandler: [ :msg | self notifyCallbackHandler: msg ] forMessageClass: LanguageLinkCallbackMessage
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 PharoLinkExecutionHandler >> notifyCallbackHandler: msg [
 	| val serialization |
 
@@ -45,7 +45,7 @@ PharoLinkExecutionHandler >> notifyCallbackHandler: msg [
 		yourself
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 PharoLinkExecutionHandler >> removeId: aRemoteProxyId [
 	"Answer the command that removes the supplied proxy id from the server's registry"
 

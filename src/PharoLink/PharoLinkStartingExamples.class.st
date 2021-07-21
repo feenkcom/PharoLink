@@ -1,19 +1,19 @@
 Class {
-	#name : #PharoLinkStartingExamples,
-	#superclass : #Object,
+	#name : 'PharoLinkStartingExamples',
+	#superclass : 'Object',
 	#instVars : [
 		'server',
 		'application'
 	],
-	#category : #'PharoLink-Examples'
+	#category : 'PharoLink-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkStartingExamples >> application [
 	^ application
 ]
 
-{ #category : #'in image' }
+{ #category : 'in image' }
 PharoLinkStartingExamples >> checkPidInImage [
 	"Ask for the vm PID in the client and server.
 	As this is in image, they should be the same"
@@ -31,7 +31,7 @@ PharoLinkStartingExamples >> checkPidInImage [
 	^ serverPID
 ]
 
-{ #category : #'in image' }
+{ #category : 'in image' }
 PharoLinkStartingExamples >> checkPidRemoteImage [
 	"Ask for the vm PID in the client and server.
 	As this is a remote image, they should be different"
@@ -49,7 +49,7 @@ PharoLinkStartingExamples >> checkPidRemoteImage [
 	^ { clientPID. serverPID. }
 ]
 
-{ #category : #'in image' }
+{ #category : 'in image' }
 PharoLinkStartingExamples >> inImageClient [
 	"Answer a client configure to use the in image server"
 	| settings |
@@ -68,7 +68,7 @@ PharoLinkStartingExamples >> inImageClient [
 	^ application
 ]
 
-{ #category : #'in image' }
+{ #category : 'in image' }
 PharoLinkStartingExamples >> inImageServer [
 	"Start a server running in this image"
 
@@ -81,7 +81,7 @@ PharoLinkStartingExamples >> inImageServer [
 	^ server
 ]
 
-{ #category : #'remote image' }
+{ #category : 'remote image' }
 PharoLinkStartingExamples >> remoteImageClient [
 	"Answer a client configure to use a remote image server (which is automatically started)"
 	| settings |
@@ -94,12 +94,12 @@ PharoLinkStartingExamples >> remoteImageClient [
 	^ application
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkStartingExamples >> server [
 	^ server
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkStartingExamples >> shutdownServer [
 	"Shut down the running server"
 

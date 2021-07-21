@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkBinding,
-	#superclass : #LanguageLinkBinding,
-	#category : #'PharoLink-Execution'
+	#name : 'PharoLinkBinding',
+	#superclass : 'LanguageLinkBinding',
+	#category : 'PharoLink-Execution'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkBinding >> pharoLinkFormattedCode [
 
 	^ key

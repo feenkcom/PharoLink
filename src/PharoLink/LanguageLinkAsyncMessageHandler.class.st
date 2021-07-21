@@ -1,5 +1,5 @@
 Class {
-	#name : #LanguageLinkAsyncMessageHandler,
-	#superclass : #LanguageLinkMessageHandler,
-	#category : #'PharoLink-Platform'
+	#name : 'LanguageLinkAsyncMessageHandler',
+	#superclass : 'LanguageLinkMessageHandler',
+	#category : 'PharoLink-Platform'
 }

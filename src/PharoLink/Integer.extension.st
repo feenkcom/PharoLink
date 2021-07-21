@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*PharoLink' }
+{ #category : '*PharoLink' }
 Integer >> isLanguageLinkValue [
 	^ true
 ]

@@ -1,24 +1,24 @@
 Class {
-	#name : #LanguageLinkCallbackAnswer,
-	#superclass : #LanguageLinkRAnswer,
+	#name : 'LanguageLinkCallbackAnswer',
+	#superclass : 'LanguageLinkRAnswer',
 	#instVars : [
 		'value'
 	],
-	#category : #'PharoLink-Platform-Messages'
+	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkCallbackAnswer >> privateEncode: dict [
 	super privateEncode: dict.
 	dict at: #value put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackAnswer >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackAnswer >> value: anObject [
 	value := anObject
 ]

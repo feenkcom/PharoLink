@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkTestCase,
-	#superclass : #LanguageLinkTestCase,
-	#category : #'PharoLink-Tests'
+	#name : 'PharoLinkTestCase',
+	#superclass : 'LanguageLinkTestCase',
+	#category : 'PharoLink-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 PharoLinkTestCase >> setUp [
 	super setUp.
 	application := PharoLinkApplication newWith: LanguageLinkSettings pharoDefaultSettings.

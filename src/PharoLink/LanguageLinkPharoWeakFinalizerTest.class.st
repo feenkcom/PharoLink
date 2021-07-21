@@ -1,17 +1,17 @@
 Class {
-	#name : #LanguageLinkPharoWeakFinalizerTest,
-	#superclass : #LanguageLinkWeakFinalizerTest,
-	#category : #'PharoLink-Pharo-Platform'
+	#name : 'LanguageLinkPharoWeakFinalizerTest',
+	#superclass : 'LanguageLinkWeakFinalizerTest',
+	#category : 'PharoLink-Pharo-Platform'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkPharoWeakFinalizerTest >> triggerGC [
 	Smalltalk garbageCollect.
 	(Delay forMilliseconds: 100) wait.
 	Smalltalk garbageCollect.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LanguageLinkPharoWeakFinalizerTest >> weakRegistryClass [
 	^ LanguageLinkPharoWeakRegistry
 ]

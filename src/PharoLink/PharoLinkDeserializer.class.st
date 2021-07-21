@@ -1,16 +1,16 @@
 Class {
-	#name : #PharoLinkDeserializer,
-	#superclass : #LanguageLinkDeserializer,
-	#category : #'PharoLink-Serialization'
+	#name : 'PharoLinkDeserializer',
+	#superclass : 'LanguageLinkDeserializer',
+	#category : 'PharoLink-Serialization'
 }
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 PharoLinkDeserializer class >> deserialize: anObject [
 	^ self new
 		deserialize: anObject
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 PharoLinkDeserializer >> buildProxyFor: rawObject [
 	| proxy |
 	proxy :=  PharoLinkProxyObject

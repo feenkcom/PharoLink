@@ -27,8 +27,8 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #LanguageLinkExecutionHandler,
-	#superclass : #LanguageLinkHandler,
+	#name : 'LanguageLinkExecutionHandler',
+	#superclass : 'LanguageLinkHandler',
 	#instVars : [
 		'commandQueue',
 		'weakRegistry',
@@ -36,10 +36,10 @@ Class {
 		'promiseRegistry',
 		'mapperFactory'
 	],
-	#category : #'PharoLink-Execution'
+	#category : 'PharoLink-Execution'
 }
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> buildMessageFromCommand: command [
 	| message |
 	message := LanguageLinkEnqueueCommandMessage 
@@ -50,39 +50,39 @@ LanguageLinkExecutionHandler >> buildMessageFromCommand: command [
 	^ message
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> communicationHandler [
 	^ self application communicationHandler
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> deserialize: anObject [
 	^ mapperFactory deserializer deserialize: anObject
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> getObserverAtCommandId: commandId id: observerId [
 	^ (commandQueue getCommand: commandId) getObserver: observerId
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkExecutionHandler >> initializeHandler [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> mapperFactory [
 	^ mapperFactory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkExecutionHandler >> newCommandFactory [
 
 	^ self application newCommandFactory
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 LanguageLinkExecutionHandler >> notifyCallbackHandler: msg [
 	| val serialization |
 	val := self 
@@ -96,14 +96,14 @@ LanguageLinkExecutionHandler >> notifyCallbackHandler: msg [
 		yourself
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 LanguageLinkExecutionHandler >> notifyDebuggerPaused: aDebugger [
 	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
 
 	promiseRegistry notifyDebuggerPaused: aDebugger.
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 	| error |
 	error := PharoLinkRemoteError new
@@ -118,7 +118,7 @@ LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 			yourself
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 LanguageLinkExecutionHandler >> notifyHandler: updatePromiseMsg [
 	"Update the promise with the deserialised value.
 	If an error occurs during deserialisation, pass it on to the promise to handle, as the promise may be the UI loop, in which case any other exception won't actually be displayed"
@@ -130,17 +130,17 @@ LanguageLinkExecutionHandler >> notifyHandler: updatePromiseMsg [
 			do: [ :ex | ex ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkExecutionHandler >> objectRegistry [
 	^ objectRegistry
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> primitiveSendCommand: command [
 	^ self communicationHandler sendMessage: (self buildMessageFromCommand: command)
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 LanguageLinkExecutionHandler >> registerObject: aProxyObject [
 	objectRegistry registerObject: aProxyObject.
 	weakRegistry 
@@ -150,7 +150,7 @@ LanguageLinkExecutionHandler >> registerObject: aProxyObject [
 							executionHandler: self)
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> registerPromiseForCommand: aCommand [
 	| promise |
 	promise := LanguageLinkPromise new
@@ -162,14 +162,14 @@ LanguageLinkExecutionHandler >> registerPromiseForCommand: aCommand [
 	^ promise
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 LanguageLinkExecutionHandler >> removeId: aRemoteProxyId [
 	"Tell the remote server to remove the object from its registry"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 LanguageLinkExecutionHandler >> safeTriggerDebugger: error [
 	| sem |
 
@@ -182,7 +182,7 @@ LanguageLinkExecutionHandler >> safeTriggerDebugger: error [
 	^ error proceedAction: error defaultProceedAction"
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> sendCommand: command [
 	| promise |
 	self assert: command isValid.
@@ -192,23 +192,23 @@ LanguageLinkExecutionHandler >> sendCommand: command [
 	^ promise
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> serialize: anObject [
 	^ mapperFactory serializer serialize: anObject
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> signalObserver: observer withValue: object [
 	^ observer pharoNotify: object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkExecutionHandler >> stop [
 	super stop.
 	weakRegistry destroy
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 LanguageLinkExecutionHandler >> triggerDebugger: pythonError [
 	"This method is called when an error rised on Python execution."
 	"Inspect error to review the Command that caused the error.
@@ -222,7 +222,7 @@ LanguageLinkExecutionHandler >> triggerDebugger: pythonError [
 	pythonError signal.
 ]
 
-{ #category : #'private protocol' }
+{ #category : 'private protocol' }
 LanguageLinkExecutionHandler >> updatePromiseId: id with: anObject [
 	commandQueue finishCommandId: id.
 	promiseRegistry removeAndSignalPromiseId: id with: anObject

@@ -1,21 +1,21 @@
 Class {
-	#name : #PharoLinkApplicationTest,
-	#superclass : #PharoLinkTest,
-	#category : #'PharoLink-Tests'
+	#name : 'PharoLinkApplicationTest',
+	#superclass : 'PharoLinkTest',
+	#category : 'PharoLink-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkApplicationTest class >> appResource [
 
 	^ PharoLinkApplicationTestResource 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkApplicationTest class >> resources [
 	^ super resources , { PharoLinkApplicationTestResource. }
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PharoLinkApplicationTest >> setUp [ 
 	"Subclasses of JSLinkApplicationTest require a running server"
 

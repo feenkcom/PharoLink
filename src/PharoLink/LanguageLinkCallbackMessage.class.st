@@ -1,35 +1,35 @@
 Class {
-	#name : #LanguageLinkCallbackMessage,
-	#superclass : #LanguageLinkRSyncMessage,
+	#name : 'LanguageLinkCallbackMessage',
+	#superclass : 'LanguageLinkRSyncMessage',
 	#instVars : [
 		'commandId',
 		'observerId',
 		'value'
 	],
-	#category : #'PharoLink-Platform-Messages'
+	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackMessage class >> answerClass [
 	^ LanguageLinkCallbackAnswer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackMessage class >> type [
 	^ #CALLBACK
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackMessage >> commandId [
 	^ commandId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackMessage >> observerId [
 	^ observerId
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 LanguageLinkCallbackMessage >> privateDecode: dict [
 	super privateDecode: dict.
 	commandId := dict at: #commandId.
@@ -37,7 +37,7 @@ LanguageLinkCallbackMessage >> privateDecode: dict [
 	value := dict at: #value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCallbackMessage >> value [
 	^ value
 ]

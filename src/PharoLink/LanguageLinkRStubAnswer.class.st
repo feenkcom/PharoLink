@@ -1,24 +1,24 @@
 Class {
-	#name : #LanguageLinkRStubAnswer,
-	#superclass : #LanguageLinkRAnswer,
+	#name : 'LanguageLinkRStubAnswer',
+	#superclass : 'LanguageLinkRAnswer',
 	#instVars : [
 		'ivar1',
 		'ivar2'
 	],
-	#category : #'PharoLink-Platform-Messages'
+	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkRStubAnswer >> ivar1: anObject [
 	ivar1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkRStubAnswer >> ivar2: anObject [
 	ivar2 := anObject
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkRStubAnswer >> privateEncode: dict [
 	super privateEncode: dict.
 	dict at: #ivar1 put: ivar1.

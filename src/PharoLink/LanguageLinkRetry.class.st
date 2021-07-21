@@ -1,5 +1,5 @@
 Class {
-	#name : #LanguageLinkRetry,
-	#superclass : #LanguageLinkErrorHandlingAction,
-	#category : #'PharoLink-ErrorHandling'
+	#name : 'LanguageLinkRetry',
+	#superclass : 'LanguageLinkErrorHandlingAction',
+	#category : 'PharoLink-ErrorHandling'
 }

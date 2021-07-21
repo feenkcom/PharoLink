@@ -1,15 +1,15 @@
 Class {
-	#name : #LanguageLinkUiManager,
-	#superclass : #Object,
-	#category : #'PharoLink-Platform'
+	#name : 'LanguageLinkUiManager',
+	#superclass : 'Object',
+	#category : 'PharoLink-Platform'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 LanguageLinkUiManager >> notify: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 LanguageLinkUiManager >> spawnDebuggerOnException: anException [
 	self subclassResponsibility
 ]

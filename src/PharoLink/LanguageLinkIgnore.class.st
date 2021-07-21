@@ -1,10 +1,10 @@
 Class {
-	#name : #LanguageLinkIgnore,
-	#superclass : #LanguageLinkErrorHandlingAction,
-	#category : #'PharoLink-ErrorHandling'
+	#name : 'LanguageLinkIgnore',
+	#superclass : 'LanguageLinkErrorHandlingAction',
+	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkIgnore >> actionSymbol [
 	^ #'IGNORE'
 ]

@@ -1,15 +1,15 @@
 Class {
-	#name : #LanguageLinkAbstractSerializerWrapper,
-	#superclass : #Object,
-	#category : #'PharoLink-Platform'
+	#name : 'LanguageLinkAbstractSerializerWrapper',
+	#superclass : 'Object',
+	#category : 'PharoLink-Platform'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkAbstractSerializerWrapper >> deserialize: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkAbstractSerializerWrapper >> serialize: anObject [
 	self subclassResponsibility
 ]

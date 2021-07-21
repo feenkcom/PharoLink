@@ -1,5 +1,5 @@
 Class {
-	#name : #LanguageLinkFatalErrorLog,
-	#superclass : #LanguageLinkErrorLog,
-	#category : #'PharoLink-Logs'
+	#name : 'LanguageLinkFatalErrorLog',
+	#superclass : 'LanguageLinkErrorLog',
+	#category : 'PharoLink-Logs'
 }

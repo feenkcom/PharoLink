@@ -1,13 +1,13 @@
 Class {
-	#name : #LanguageLinkCommandQueueTest,
-	#superclass : #PharoLinkTestCase,
+	#name : 'LanguageLinkCommandQueueTest',
+	#superclass : 'PharoLinkTestCase',
 	#instVars : [
 		'queue'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkCommandQueueTest >> setUp [
 	| execHandler |
 
@@ -18,7 +18,7 @@ LanguageLinkCommandQueueTest >> setUp [
 	queue := LanguageLinkCommandQueue executionHandler: execHandler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testCleaningCommand [
 	| cc1 cc2 |
 	cc1 := LanguageLinkCommand new.
@@ -31,14 +31,14 @@ LanguageLinkCommandQueueTest >> testCleaningCommand [
 	self assert: queue isFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testEmptyQueue [
 	self assert: queue list isEmpty.
 	self assert: queue isFinished.
 	self assert: queue currentCommand isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testEnqueue [
 	| c |
 	c := LanguageLinkCommand new.
@@ -48,7 +48,7 @@ LanguageLinkCommandQueueTest >> testEnqueue [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testFinishCommand [
 	| cc |
 	cc := LanguageLinkCommand new.
@@ -57,7 +57,7 @@ LanguageLinkCommandQueueTest >> testFinishCommand [
 	self assert: queue isFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testFinishCommand2 [
 	| cc |
 	cc := LanguageLinkCommand new.
@@ -67,14 +67,14 @@ LanguageLinkCommandQueueTest >> testFinishCommand2 [
 	self deny: queue isFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testFinishNotFoundCommand [
 	self 
 		should: [ queue finishCommandId: 'aa' ]
 		raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testFinishOutOfSync1Command [
 	| cc1 cc2 |
 	cc1 := self newCommand.
@@ -85,7 +85,7 @@ LanguageLinkCommandQueueTest >> testFinishOutOfSync1Command [
 	self assert: queue isFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testFinishOutOfSync2Command [
 	| cc1 cc2 |
 	cc1 := self newCommand.
@@ -97,7 +97,7 @@ LanguageLinkCommandQueueTest >> testFinishOutOfSync2Command [
 	self assert: queue isFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkCommandQueueTest >> testNotFoundCommand [
 	queue enqueueCommand: LanguageLinkCommand new.
 	self 

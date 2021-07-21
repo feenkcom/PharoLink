@@ -1,10 +1,10 @@
 Class {
-	#name : #LanguageLinkNeoJsonSerializerTest,
-	#superclass : #LanguageLinkJsonSerializerTest,
-	#category : #'PharoLink-Pharo-MessageBroker'
+	#name : 'LanguageLinkNeoJsonSerializerTest',
+	#superclass : 'LanguageLinkJsonSerializerTest',
+	#category : 'PharoLink-Pharo-MessageBroker'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 LanguageLinkNeoJsonSerializerTest >> jsonSerializerClass [
 	^ LanguageLinkNeoJsonSerializer
 ]

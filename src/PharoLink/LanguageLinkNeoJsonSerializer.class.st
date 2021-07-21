@@ -1,15 +1,15 @@
 Class {
-	#name : #LanguageLinkNeoJsonSerializer,
-	#superclass : #LanguageLinkAbstractSerializerWrapper,
-	#category : #'PharoLink-Pharo-MessageBroker'
+	#name : 'LanguageLinkNeoJsonSerializer',
+	#superclass : 'LanguageLinkAbstractSerializerWrapper',
+	#category : 'PharoLink-Pharo-MessageBroker'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkNeoJsonSerializer >> deserialize: aString [
 	^ NeoJSONReader fromString: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LanguageLinkNeoJsonSerializer >> serialize: anObject [
 	^ NeoJSONWriter toString: anObject
 ]

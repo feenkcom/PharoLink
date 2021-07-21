@@ -1,6 +1,6 @@
 Class {
-	#name : #LanguageLinkProxyObject,
-	#superclass : #Object,
+	#name : 'LanguageLinkProxyObject',
+	#superclass : 'Object',
 	#traits : 'TGtPharoLinkPlayground',
 	#classTraits : 'TGtPharoLinkPlayground classTrait',
 	#instVars : [
@@ -8,10 +8,10 @@ Class {
 		'remoteClass',
 		'name'
 	],
-	#category : #'PharoLink-Core'
+	#category : 'PharoLink-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
 
 	^ self new
@@ -20,7 +20,7 @@ LanguageLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	
 		application: aLLApplication
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LanguageLinkProxyObject >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -33,40 +33,40 @@ LanguageLinkProxyObject >> = anObject [
 				and: [ name = anObject name ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> application [
 	^ application
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> application: anObject [
 	application := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LanguageLinkProxyObject >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ remoteClass hash bitXor: (application hash bitXor: name hash)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> id [ 
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 LanguageLinkProxyObject >> neoJsonOn: aWriter [
 
 	{ '__class__' -> remoteClass.
@@ -74,7 +74,7 @@ LanguageLinkProxyObject >> neoJsonOn: aWriter [
 		neoJsonOn: aWriter
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LanguageLinkProxyObject >> newCommandFactory [
 	| cf |
 
@@ -83,13 +83,13 @@ LanguageLinkProxyObject >> newCommandFactory [
 	^ cf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> pharoLinkFormattedCode [ 
 
 	^ 'llCommand registry resolve: ', name printString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LanguageLinkProxyObject >> printOn: str [
 	str 
 		<< (remoteClass asString first isVowel ifTrue: ['an '] ifFalse: ['a ']);
@@ -99,7 +99,7 @@ LanguageLinkProxyObject >> printOn: str [
 		<< ')'
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 LanguageLinkProxyObject >> proxyPerform: aSymbol [
 	"Evaluate the supplied selector on the remote"
 
@@ -108,17 +108,41 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol [
 		sendAndWait
 ]
 
-{ #category : #accessing }
+{ #category : 'message performing' }
+LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArrayOfArguments [
+	"Evaluate the supplied selector on the remote with the given arguments"
+	| message keywords |
+	self assert: (anArrayOfArguments allSatisfy: [ :anArgument | 
+		PharoLinkRegistry isPrimitive: anArgument ]).
+
+	keywords := aSymbol findTokens: $:.
+	self assert: keywords size = anArrayOfArguments size.
+	
+	message := String streamContents: [ :stream |
+		stream 
+			<< 'self '.
+		keywords withIndexDo: [ :keyword :index |
+			| argumentValue |
+			argumentValue := anArrayOfArguments at: index.
+			stream 
+				<< keyword;
+				<< $:;
+				<< ' '.
+			stream << argumentValue printString ] ].
+	^ self evaluateSourceSequence: message
+]
+
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> remoteClass [
 	^ remoteClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> remoteClass: anObject [
 	remoteClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProxyObject >> settings [ 
 
 	^ application settings

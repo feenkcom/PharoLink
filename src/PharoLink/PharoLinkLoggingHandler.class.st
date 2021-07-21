@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkLoggingHandler,
-	#superclass : #LanguageLinkHandler,
-	#category : #'PharoLink-Core'
+	#name : 'PharoLinkLoggingHandler',
+	#superclass : 'LanguageLinkHandler',
+	#category : 'PharoLink-Core'
 }
 
-{ #category : #logging }
+{ #category : 'logging' }
 PharoLinkLoggingHandler >> log: aLogMessage [
 
 	aLogMessage asBeaconSignal emit

@@ -1,10 +1,10 @@
 Class {
-	#name : #LanguageLinkMessageTest,
-	#superclass : #TestCase,
-	#category : #'PharoLink-Tests'
+	#name : 'LanguageLinkMessageTest',
+	#superclass : 'TestCase',
+	#category : 'PharoLink-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkMessageTest >> stubMessage [
 	^ LanguageLinkStubMessage new
 		ivar1: #foo;
@@ -12,7 +12,7 @@ LanguageLinkMessageTest >> stubMessage [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkMessageTest >> testDecodeAnswer [
 	| msg dict ans |
 	msg := self stubMessage.
@@ -27,21 +27,21 @@ LanguageLinkMessageTest >> testDecodeAnswer [
 	self assert: ans ivar2 equals: #(3 #zork).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkMessageTest >> testDecodeBaseMessage [
 	self 
 		assert: (LanguageLinkSyncMessage new createAnswer decode: { #type -> #MSG } asDictionary) class
 		equals: LanguageLinkAnswer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkMessageTest >> testEncodeBaseMessage [
 	self 
 		assert: LanguageLinkMessage new encode 
 		equals: { #type -> #MSG } asDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkMessageTest >> testEncodeMessage [
 	| msg dict |
 	msg := self stubMessage.
@@ -54,7 +54,7 @@ LanguageLinkMessageTest >> testEncodeMessage [
 	self assert: msg encode equals: dict
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LanguageLinkMessageTest >> testNoDuplicatedTypes [
 	| messageClasses |
 	messageClasses := LanguageLinkAbstractMessage allSubclasses.

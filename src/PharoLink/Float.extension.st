@@ -1,6 +1,6 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*PharoLink' }
+{ #category : '*PharoLink' }
 Float >> isLanguageLinkValue [
 	^ true
 ]

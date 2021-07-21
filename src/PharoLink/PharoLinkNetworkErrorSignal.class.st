@@ -1,14 +1,14 @@
 Class {
-	#name : #PharoLinkNetworkErrorSignal,
-	#superclass : #BeaconSignal,
+	#name : 'PharoLinkNetworkErrorSignal',
+	#superclass : 'BeaconSignal',
 	#instVars : [
 		'command',
 		'networkError'
 	],
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PharoLinkNetworkErrorSignal class >> emitCommand: aPharoLinkEvalCommand error: anError [
 
 	^ self new
@@ -17,27 +17,27 @@ PharoLinkNetworkErrorSignal class >> emitCommand: aPharoLinkEvalCommand error: a
 		emit.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkNetworkErrorSignal >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkNetworkErrorSignal >> command: anObject [
 	command := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkNetworkErrorSignal >> networkError [
 	^ networkError
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkNetworkErrorSignal >> networkError: anObject [
 	networkError := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PharoLinkNetworkErrorSignal >> printOneLineContentsOn: stream [
 
 	stream 
