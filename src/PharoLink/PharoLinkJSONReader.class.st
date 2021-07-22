@@ -1,13 +1,13 @@
 Class {
-	#name : 'PharoLinkJSONReader',
-	#superclass : 'NeoJSONReader',
+	#name : #PharoLinkJSONReader,
+	#superclass : #NeoJSONReader,
 	#instVars : [
 		'registry'
 	],
 	#category : 'PharoLink-Server'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 PharoLinkJSONReader class >> fromString: aString registry: aPharoLinkRegistry [
 
 	^ (self new 
@@ -16,7 +16,7 @@ PharoLinkJSONReader class >> fromString: aString registry: aPharoLinkRegistry [
 			next
 ]
 
-{ #category : 'parsing' }
+{ #category : #parsing }
 PharoLinkJSONReader >> parseMap [ 
 	| map |
 
@@ -29,12 +29,12 @@ PharoLinkJSONReader >> parseMap [
 	ifFalse: [ map ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkJSONReader >> registry [
 	^ registry
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkJSONReader >> registry: anObject [
 	registry := anObject
 ]

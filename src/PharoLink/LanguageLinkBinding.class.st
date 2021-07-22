@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkBinding',
-	#superclass : 'Object',
+	#name : #LanguageLinkBinding,
+	#superclass : #Object,
 	#instVars : [
 		'object',
 		'key'
@@ -8,7 +8,7 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkBinding class >> key: aKey wrap: anObject [
 	^ self new
 		key: aKey;
@@ -16,45 +16,45 @@ LanguageLinkBinding class >> key: aKey wrap: anObject [
 		yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkBinding class >> wrap: anObject [
 	^ self new
 		object: anObject;
 		yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkBinding >> initialize [
 	super initialize.
 	key := 'll' , UUID new asString36
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkBinding >> isLanguageLinkValue [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkBinding >> key [
 	^ key
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkBinding >> key: anObject [
 	key := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkBinding >> object [
 	^ object
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkBinding >> object: anObject [
 	object := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 LanguageLinkBinding >> printOn: aStream [
 
 	super printOn: aStream.

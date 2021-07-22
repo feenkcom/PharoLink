@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkMapper',
-	#superclass : 'Object',
+	#name : #LanguageLinkMapper,
+	#superclass : #Object,
 	#instVars : [
 		'mappings',
 		'serializerWrapper',
@@ -10,7 +10,7 @@ Class {
 	#category : 'PharoLink-Serialization'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 LanguageLinkMapper class >> mappings: mappings executionHandler: handler [
 	^ self new
 			mappings: mappings;
@@ -18,39 +18,39 @@ LanguageLinkMapper class >> mappings: mappings executionHandler: handler [
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> application [
 	^ executionHandler application
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> application: anObject [
 	application := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> executionHandler [
 	^ executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> executionHandler: anObject [
 
 	executionHandler := anObject.
 	serializerWrapper := self application settings messageBrokerStrategy serializer
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> mappings [
 	^ mappings
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> mappings: anObject [
 	mappings := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapper >> serializerWrapper: anObject [
 	serializerWrapper := anObject
 ]

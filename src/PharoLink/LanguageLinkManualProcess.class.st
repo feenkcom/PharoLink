@@ -1,46 +1,46 @@
 Class {
-	#name : 'LanguageLinkManualProcess',
-	#superclass : 'LanguageLinkAbstractProcess',
+	#name : #LanguageLinkManualProcess,
+	#superclass : #LanguageLinkAbstractProcess,
 	#category : 'PharoLink-Pharo-Processes'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 LanguageLinkManualProcess class >> resolveServerExecutable [
 
 	^ self shouldNotImplement 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkManualProcess class >> workingDirectory [
 	^ FileLocator workingDirectory
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkManualProcess >> errorMessage [
 
 	^ '<see manually run process>'
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkManualProcess >> hasProcess [ 
 	"Assume that the external process is already running"
 
 	^ true
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkManualProcess >> isRunning [
 	"true - the server is controlled externally and assumed to be running"
 
 	^ true
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkManualProcess >> start [
 	"Do nothing - the server is controlled externally and assumed to be running"
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkManualProcess >> stop [
 	"Do nothing - the server is controlled externally and assumed to be running"
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkErrorMessage',
-	#superclass : 'LanguageLinkRSyncMessage',
+	#name : #LanguageLinkErrorMessage,
+	#superclass : #LanguageLinkRSyncMessage,
 	#instVars : [
 		'commandId',
 		'errorMessage',
@@ -9,37 +9,37 @@ Class {
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage class >> answerClass [
 	^ LanguageLinkErrorAnswer
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage class >> type [
 	^ #ERR
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage >> commandId [
 	^ commandId
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage >> commandId: anObject [
 	commandId := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage >> errorMessage [
 	^ errorMessage
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 LanguageLinkErrorMessage >> privateDecode: dict [
 	super privateDecode: dict.
 	commandId := dict at: #commandId.
@@ -47,12 +47,12 @@ LanguageLinkErrorMessage >> privateDecode: dict [
 	trace := dict at: #trace
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage >> trace [
 	^ trace
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorMessage >> trace: anObject [
 	trace := anObject
 ]

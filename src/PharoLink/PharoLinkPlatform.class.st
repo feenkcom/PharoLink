@@ -1,5 +1,5 @@
 Class {
-	#name : 'PharoLinkPlatform',
-	#superclass : 'LanguageLinkPlatform',
+	#name : #PharoLinkPlatform,
+	#superclass : #LanguageLinkPlatform,
 	#category : 'PharoLink-Platform'
 }

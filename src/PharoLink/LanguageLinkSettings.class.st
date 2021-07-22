@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkSettings',
-	#superclass : 'Object',
+	#name : #LanguageLinkSettings,
+	#superclass : #Object,
 	#instVars : [
 		'debugMode',
 		'clientSocketAddress',
@@ -22,7 +22,7 @@ Class {
 	#category : 'PharoLink-Platform'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkSettings class >> pharoDefaultSettings [
 
 	^ self new 
@@ -43,57 +43,57 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> clientSocketAddress [
 	^ clientSocketAddress
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> clientSocketAddress: anObject [
 	clientSocketAddress := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> commandClass [
 	^ commandClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> commandClass: anObject [
 	commandClass := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> commandFactoryClass [
 	^ commandFactoryClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> commandFactoryClass: anObject [
 	commandFactoryClass := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> debugMode [
 	^ debugMode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> debugMode: anObject [
 	debugMode := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> deserializerClass [
 	^ deserializerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> deserializerClass: anObject [
 	deserializerClass := anObject
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 LanguageLinkSettings >> gtSettingsFor: aView [
 	<gtView>
 
@@ -109,7 +109,7 @@ LanguageLinkSettings >> gtSettingsFor: aView [
 		send: [ :item | item value: self ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkSettings >> initialize [
 
 	super initialize.
@@ -118,38 +118,38 @@ LanguageLinkSettings >> initialize [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> messageBroker [
 
 	^ messageBroker ifNil: [ messageBroker := self messageBrokerStrategy settings: self ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> messageBrokerStrategy [
 	^ messageBrokerStrategy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> messageBrokerStrategy: anObject [
 	messageBrokerStrategy := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> parserClass [
 	^ parserClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> parserClass: anObject [
 	parserClass := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> platform [
 	^ platform
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> platform: anObject [
 	"Set the platform.
 	This must be done before changing the workingDirectory."
@@ -159,17 +159,17 @@ LanguageLinkSettings >> platform: anObject [
 	workingDirectory := platform folderForApplication.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serializerClass [
 	^ serializerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serializerClass: anObject [
 	serializerClass := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverDebugMode [
 	"Answer a boolean indicating whether the server should be started with the debugger enabled.
 	Only supported on JSLink at the moment"
@@ -177,63 +177,63 @@ LanguageLinkSettings >> serverDebugMode [
 	^ serverDebugMode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverDebugMode: anObject [
 	serverDebugMode := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverExecutable [
 	^ serverExecutable
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverExecutable: aFileReference [
 	serverExecutable := aFileReference
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverImage [
 	^ serverImage
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverImage: anObject [
 	serverImage := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverProcessClass [
 	^ serverProcessClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverProcessClass: anObject [
 	serverProcessClass := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverSocketAddress [
 	^ serverSocketAddress
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> serverSocketAddress: anObject [
 	serverSocketAddress := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> settingNames [
 
 	^ self class instVarNames sorted
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> workingDirectory [
 	^ workingDirectory
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkSettings >> workingDirectory: aFileReference [
 	"Set the working directory where the runtime environment is installed.
 	This must be changed after the platform has been set."

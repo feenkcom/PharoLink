@@ -1,13 +1,13 @@
 Class {
-	#name : 'PharoLinkRequestSignal',
-	#superclass : 'BeaconSignal',
+	#name : #PharoLinkRequestSignal,
+	#superclass : #BeaconSignal,
 	#instVars : [
 		'request'
 	],
 	#category : 'PharoLink-Logging'
 }
 
-{ #category : 'printing' }
+{ #category : #printing }
 PharoLinkRequestSignal >> printOn: stream [ 
 
 	stream 
@@ -28,7 +28,7 @@ PharoLinkRequestSignal >> printOn: stream [
 			cr ].
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 PharoLinkRequestSignal >> printOneLineContentsOn: stream [ 
 
 	request ifNil: [ ^ self printOn: stream ].
@@ -38,14 +38,14 @@ PharoLinkRequestSignal >> printOneLineContentsOn: stream [
 		<< (request at: #type)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRequestSignal >> request [
 	<return: #Dictionary>
 
 	^ request
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRequestSignal >> request: anObject [
 	request := anObject
 ]

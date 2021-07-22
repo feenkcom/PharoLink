@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkStubMessage',
-	#superclass : 'LanguageLinkSyncMessage',
+	#name : #LanguageLinkStubMessage,
+	#superclass : #LanguageLinkSyncMessage,
 	#instVars : [
 		'ivar1',
 		'ivar2'
@@ -8,37 +8,37 @@ Class {
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkStubMessage class >> answerClass [
 	^ LanguageLinkStubAnswer
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkStubMessage class >> type [
 	^ #STUB
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkStubMessage >> ivar1 [
 	^ ivar1
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkStubMessage >> ivar1: anObject [
 	ivar1 := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkStubMessage >> ivar2 [
 	^ ivar2
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkStubMessage >> ivar2: anObject [
 	ivar2 := anObject
 ]
 
-{ #category : 'encode' }
+{ #category : #encode }
 LanguageLinkStubMessage >> privateEncode: aDict [
 	super privateEncode: aDict.
 	aDict at: #ivar1 put: ivar1.

@@ -1,10 +1,10 @@
 Class {
-	#name : 'PharoLinkErrorHandling',
-	#superclass : 'PharoLinkApplicationTest',
+	#name : #PharoLinkErrorHandling,
+	#superclass : #PharoLinkApplicationTest,
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkErrorHandling >> testMNUError [
 
 	self

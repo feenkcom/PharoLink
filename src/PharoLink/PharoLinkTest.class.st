@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkTest',
-	#superclass : 'TestCase',
+	#name : #PharoLinkTest,
+	#superclass : #TestCase,
 	#instVars : [
 		'application',
 		'commandFactory'
@@ -8,7 +8,7 @@ Class {
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkTest >> replace: variableDictionary in: pharoExpressionString [
 	"Map the variable names in variableDictionary to their registry expression"
 	| rewriter |
@@ -22,7 +22,7 @@ PharoLinkTest >> replace: variableDictionary in: pharoExpressionString [
 	^ rewriter tree formattedCode
 ]
 
-{ #category : 'running' }
+{ #category : #running }
 PharoLinkTest >> setUp [
 
 	super setUp.

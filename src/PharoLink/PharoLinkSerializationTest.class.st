@@ -1,10 +1,10 @@
 Class {
-	#name : 'PharoLinkSerializationTest',
-	#superclass : 'PharoLinkApplicationTest',
+	#name : #PharoLinkSerializationTest,
+	#superclass : #PharoLinkApplicationTest,
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkSerializationTest >> testSendAndRetrieveFloat [
 	| value |
 
@@ -14,7 +14,7 @@ PharoLinkSerializationTest >> testSendAndRetrieveFloat [
 	self assert: value equals: 2.2.
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkSerializationTest >> testSendAndRetrieveInteger [
 	| value |
 
@@ -24,7 +24,7 @@ PharoLinkSerializationTest >> testSendAndRetrieveInteger [
 	self assert: value equals: 2.
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkSerializationTest >> testSendAndRetrieveNil [
 	| value |
 

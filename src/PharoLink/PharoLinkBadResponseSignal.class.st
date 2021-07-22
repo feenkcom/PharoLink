@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkBadResponseSignal',
-	#superclass : 'BeaconSignal',
+	#name : #PharoLinkBadResponseSignal,
+	#superclass : #BeaconSignal,
 	#instVars : [
 		'request',
 		'response'
@@ -8,7 +8,7 @@ Class {
 	#category : 'PharoLink-Logging'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 PharoLinkBadResponseSignal class >> emitRequest: request response: response [
 
 	^ self new
@@ -17,7 +17,7 @@ PharoLinkBadResponseSignal class >> emitRequest: request response: response [
 		emit
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 PharoLinkBadResponseSignal >> printOneLineContentsOn: stream [
 
 	stream 
@@ -27,22 +27,22 @@ PharoLinkBadResponseSignal >> printOneLineContentsOn: stream [
 		print: response status.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkBadResponseSignal >> request [
 	^ request
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkBadResponseSignal >> request: anObject [
 	request := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkBadResponseSignal >> response [
 	^ response
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkBadResponseSignal >> response: anObject [
 	response := anObject
 ]

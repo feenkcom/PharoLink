@@ -1,6 +1,6 @@
-Extension { #name : 'SequenceableCollection' }
+Extension { #name : #SequenceableCollection }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 SequenceableCollection >> isLanguageLinkValue [
 	^ true
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkEvalCommand',
-	#superclass : 'Object',
+	#name : #PharoLinkEvalCommand,
+	#superclass : #Object,
 	#instVars : [
 		'blockString',
 		'bindings',
@@ -9,10 +9,10 @@ Class {
 		'responseHost',
 		'registry'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 PharoLinkEvalCommand class >> source: aString bindings: aDictionary id: anIdString [
 
 	^ self new
@@ -22,27 +22,27 @@ PharoLinkEvalCommand class >> source: aString bindings: aDictionary id: anIdStri
 		yourself.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> bindings [
 	^ bindings
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> bindings: anObject [
 	bindings := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> blockString [
 	^ blockString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> blockString: anObject [
 	blockString := anObject
 ]
 
-{ #category : 'running' }
+{ #category : #running }
 PharoLinkEvalCommand >> execute: globalsDictionary [
 	| receiver |
 
@@ -60,7 +60,7 @@ PharoLinkEvalCommand >> execute: globalsDictionary [
 			do: [ :ex | self notifyError: ex ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> gtViewedObjectClass [
 	"Answer the class used to server gtViews.
 	WARNING: This method is part of the GToolkit-RemotePharo package.  It shouldn't be confused with the extension method defined in TBD"
@@ -68,28 +68,28 @@ PharoLinkEvalCommand >> gtViewedObjectClass [
 
 	env := self class environment.
 	(env includesKey: #GtViewedObject) ifTrue: [ ^ env at: #GtViewedObject ].
-	(env includesKey: #GtPharoViewedObject) ifTrue: [ ^ env at: #GtPharoViewedObject ].
+	(env includesKey: #GtRemotePhlowViewedObject) ifTrue: [ ^ env at: #GtRemotePhlowViewedObject ].
 	self error: 'Unable to find Gt view server'.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> id [
 	^ id
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> id: anObject [
 	id := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkEvalCommand >> initialize [
 
 	super initialize.
 	responseHost := 'localhost'.
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkEvalCommand >> notify: anObject command: commandIdString observer: observerIdString [
 	| data |
 
@@ -102,7 +102,7 @@ PharoLinkEvalCommand >> notify: anObject command: commandIdString observer: obse
 	^ (PharoLinkServerSerializer deserialize: (self sendResponse: data) contents registry: registry) at: #value.
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkEvalCommand >> notify: anObject id: anIdString [ 
 	| data |
 
@@ -114,7 +114,7 @@ PharoLinkEvalCommand >> notify: anObject id: anIdString [
 	^ self sendResponse: data.
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkEvalCommand >> notifyError: error [
 	"Notify the client of the error encountered during evaluation"
 	| data |
@@ -133,7 +133,7 @@ PharoLinkEvalCommand >> notifyError: error [
 	^ self sendResponse: data.
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkEvalCommand >> notifyImmediate: anObject id: anIdString [ 
 	| data |
 
@@ -145,37 +145,37 @@ PharoLinkEvalCommand >> notifyImmediate: anObject id: anIdString [
 	^ self sendResponse: data.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> registry [
 	^ registry
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> registry: anObject [
 	registry := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> responseHost [
 	^ responseHost
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> responseHost: anObject [
 	responseHost := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> responsePort [
 	^ responsePort
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> responsePort: anObject [
 	responsePort := anObject
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkEvalCommand >> sendResponse: data [
 	| url entity response |
 
@@ -202,7 +202,7 @@ PharoLinkEvalCommand >> sendResponse: data [
 	^ response
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkEvalCommand >> stackString [
 
 	^ String streamContents: [ :stream |

@@ -1,10 +1,10 @@
 Class {
-	#name : 'PharoLinkProxyObject',
-	#superclass : 'LanguageLinkProxyObject',
+	#name : #PharoLinkProxyObject,
+	#superclass : #LanguageLinkProxyObject,
 	#category : 'PharoLink-Pharo-Platform'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
 	| proxyClass |
 
@@ -21,7 +21,7 @@ PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	app
 		application: aLLApplication
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkProxyObject class >> remoteClassName [
 
 	^ self subclassResponsibility 

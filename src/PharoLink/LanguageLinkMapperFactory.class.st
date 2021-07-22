@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkMapperFactory',
-	#superclass : 'Object',
+	#name : #LanguageLinkMapperFactory,
+	#superclass : #Object,
 	#instVars : [
 		'executionHandler',
 		'serializationMappings',
@@ -11,26 +11,26 @@ Class {
 	#category : 'PharoLink-Serialization'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 LanguageLinkMapperFactory class >> forExecutionHandler: handler [
 	^ self new
 		executionHandler: handler;
 		yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkMapperFactory >> deserializer [
 	^ deserializerClass
 				mappings: serializationMappings
 				executionHandler: executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapperFactory >> executionHandler [
 	^ executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapperFactory >> executionHandler: anObject [
 
 	executionHandler := anObject.
@@ -38,21 +38,21 @@ LanguageLinkMapperFactory >> executionHandler: anObject [
 	deserializerClass := self settings deserializerClass.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkMapperFactory >> initialize [
 	super initialize.
 	serializationMappings := OrderedCollection new.
 	deserializationMappings := OrderedCollection new 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkMapperFactory >> serializer [
 	^ serializerClass 
 				mappings: serializationMappings
 				executionHandler: executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkMapperFactory >> settings [ 
 
 	^ executionHandler settings

@@ -1,10 +1,10 @@
 Class {
-	#name : 'LanguageLinkDropQueue',
-	#superclass : 'LanguageLinkErrorHandlingAction',
+	#name : #LanguageLinkDropQueue,
+	#superclass : #LanguageLinkErrorHandlingAction,
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkDropQueue >> actionSymbol [
 	^ #'DROP_QUEUE'
 ]

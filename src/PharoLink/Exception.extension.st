@@ -1,6 +1,6 @@
-Extension { #name : 'Exception' }
+Extension { #name : #Exception }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 Exception >> isPharoLinkNotification [
 	"Answer a boolean indicating whether this exception is a PharoLink notification"
 

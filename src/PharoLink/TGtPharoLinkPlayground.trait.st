@@ -1,12 +1,12 @@
 Trait {
-	#name : 'TGtPharoLinkPlayground',
+	#name : #TGtPharoLinkPlayground,
 	#instVars : [
 		'gtPlaygroundFilename'
 	],
 	#category : 'PharoLink-UI'
 }
 
-{ #category : 'ui - accessing' }
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundFilename [
 	"Answer the filename containing the receiver's source.
 	If no action has been performed, use the last saved code.
@@ -17,7 +17,7 @@ TGtPharoLinkPlayground >> gtPlaygroundFilename [
 
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 TGtPharoLinkPlayground >> gtPlaygroundFor: aView [
 	<gtView>
 
@@ -38,7 +38,7 @@ TGtPharoLinkPlayground >> gtPlaygroundFor: aView [
 
 ]
 
-{ #category : 'ui - accessing' }
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundSaveSource: aString [ 
 	"Save the supplied source code"
 
@@ -55,7 +55,7 @@ TGtPharoLinkPlayground >> gtPlaygroundSaveSource: aString [
 				write
 ]
 
-{ #category : 'ui - accessing' }
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundString [
 	"Answer the string to be initially displayed in the playground"
 	| sourceFile xDoc |
@@ -70,14 +70,14 @@ TGtPharoLinkPlayground >> gtPlaygroundString [
 
 ]
 
-{ #category : 'ui - accessing' }
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundText [
 	"Answer the formatted text to be initially displayed in the playground"
 
 	^ self gtPlaygroundString asRopedText attributesBuilder
 ]
 
-{ #category : 'ui - accessing' }
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundXDocStoreKey [
 	"Answer the key to be used for storing documents.
 	The base class should override this to use a custom key"
@@ -85,7 +85,7 @@ TGtPharoLinkPlayground >> gtPlaygroundXDocStoreKey [
 	^ self class name
 ]
 
-{ #category : 'ui - accessing' }
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundXdocStore [
 	"Answer the XDoc store for the receiver."
 

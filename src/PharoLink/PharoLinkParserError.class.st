@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkParserError',
-	#superclass : 'Error',
+	#name : #PharoLinkParserError,
+	#superclass : #Error,
 	#instVars : [
 		'source',
 		'position',
@@ -9,32 +9,32 @@ Class {
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkParserError >> parser [
 	^ parser
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkParserError >> parser: anObject [
 	parser := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkParserError >> position [
 	^ position
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkParserError >> position: anObject [
 	position := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkParserError >> source [
 	^ source
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkParserError >> source: anObject [
 	source := anObject
 ]

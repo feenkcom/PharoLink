@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkCommandFactory',
-	#superclass : 'Object',
+	#name : #LanguageLinkCommandFactory,
+	#superclass : #Object,
 	#traits : 'TGtPharoLinkPlayground',
 	#classTraits : 'TGtPharoLinkPlayground classTrait',
 	#instVars : [
@@ -14,59 +14,59 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkCommandFactory class >> application: aLLApplication [
 
 	^ self new application: aLLApplication
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 LanguageLinkCommandFactory >> << anLLStatement [
 	instructions add: anLLStatement
 ]
 
-{ #category : 'bindings' }
+{ #category : #bindings }
 LanguageLinkCommandFactory >> addBinding: aBinding [
 	bindingsDictionary at: aBinding key put: aBinding object.
 	^ aBinding
 ]
 
-{ #category : 'observers' }
+{ #category : #observers }
 LanguageLinkCommandFactory >> addObserver: anObserver [
 	observers add: anObserver.
 	^ anObserver
 ]
 
-{ #category : 'streaming' }
+{ #category : #streaming }
 LanguageLinkCommandFactory >> append: aPythonStatement [
 	instructions add: aPythonStatement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandFactory >> application [
 	^ application
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandFactory >> application: aLLApplication [
 
 	application := aLLApplication.
 	self reset.
 ]
 
-{ #category : 'bindings' }
+{ #category : #bindings }
 LanguageLinkCommandFactory >> bindingAt: varName put: anObject [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'bindings' }
+{ #category : #bindings }
 LanguageLinkCommandFactory >> bindingWrap: anObject [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'send' }
+{ #category : #send }
 LanguageLinkCommandFactory >> buildCommand [
 	| finishedCommand |
 	finishedCommand := command
@@ -79,14 +79,14 @@ LanguageLinkCommandFactory >> buildCommand [
 	^ finishedCommand
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandFactory >> decorateTransform: aBlock [
 	| previousBlock |
 	previousBlock := transformBlock.
 	^ transformBlock := [ :obj | aBlock value: (previousBlock value: obj) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandFactory >> instructionsWithNotifyAtEnd [
 	| instructionsCopy |
 
@@ -101,7 +101,7 @@ LanguageLinkCommandFactory >> instructionsWithNotifyAtEnd [
 	^ instructionsCopy
 ]
 
-{ #category : 'observers' }
+{ #category : #observers }
 LanguageLinkCommandFactory >> observerFromCallback: aBlock [
 	| observer |
 	observer := (LanguageLinkObserver callback: aBlock)
@@ -110,7 +110,7 @@ LanguageLinkCommandFactory >> observerFromCallback: aBlock [
 	^ self addObserver: observer
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkCommandFactory >> reset [
 
 	instructions := OrderedCollection new.
@@ -120,53 +120,53 @@ LanguageLinkCommandFactory >> reset [
 	transformBlock := #yourself
 ]
 
-{ #category : 'send' }
+{ #category : #send }
 LanguageLinkCommandFactory >> send [
 	^ self sendCommand
 ]
 
-{ #category : 'send' }
+{ #category : #send }
 LanguageLinkCommandFactory >> send: aStatement [
 
 	self << aStatement.
 	^ self sendCommand
 ]
 
-{ #category : 'send' }
+{ #category : #send }
 LanguageLinkCommandFactory >> sendAndWait [
 	^ self sendCommand waitForValue
 ]
 
-{ #category : 'send' }
+{ #category : #send }
 LanguageLinkCommandFactory >> sendAndWait: aStatement [
 
 	self << aStatement.
 	^ self sendCommand waitForValue
 ]
 
-{ #category : 'send' }
+{ #category : #send }
 LanguageLinkCommandFactory >> sendCommand [
 	^ self application send: self buildCommand
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkCommandFactory >> setNotifyImmediateToInstruction: aJSgInstruction [
 	^ 'notify_immediate' asJSGIdentifier 
 			jsCallWith: (Array with: aJSgInstruction with: command id)
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkCommandFactory >> setNotifyToInstruction: aP3gInstruction [
 	^ 'notify' asJSGIdentifier 
 			jsCallWith: (Array with: aP3gInstruction with: command id)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandFactory >> transformBlock [
 	^ transformBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandFactory >> transformBlock: anObject [
 	transformBlock := anObject
 ]

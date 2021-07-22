@@ -4,12 +4,12 @@ This class contains tests.
 #testSimpleLambda and #testSimpleMapping from JSLink / PythonBridge are not yet implemented as it isn't clear yet what the best way to implement lambdas is.
 "
 Class {
-	#name : 'PharoLinkSimpleApplicationTest',
-	#superclass : 'PharoLinkApplicationTest',
+	#name : #PharoLinkSimpleApplicationTest,
+	#superclass : #PharoLinkApplicationTest,
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkSimpleApplicationTest >> testDoubleRetrieveValue [
 	| promise cf |
 
@@ -22,7 +22,7 @@ PharoLinkSimpleApplicationTest >> testDoubleRetrieveValue [
 	self assert: promise waitForValue equals: 12
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkSimpleApplicationTest >> testSimpleLambda [
 	"PharoLink doesn't yet have first class support for BlockClosures.
 	Simulate by assigning to a variable and binding."

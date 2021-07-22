@@ -1,21 +1,21 @@
 Class {
-	#name : 'PharoLinkCommandFactory',
-	#superclass : 'LanguageLinkCommandFactory',
+	#name : #PharoLinkCommandFactory,
+	#superclass : #LanguageLinkCommandFactory,
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'bindings' }
+{ #category : #bindings }
 PharoLinkCommandFactory >> bindingAt: varName put: anObject [
 	bindingsDictionary at: varName put: anObject.
 	^ PharoLinkBinding key: varName wrap: anObject
 ]
 
-{ #category : 'bindings' }
+{ #category : #bindings }
 PharoLinkCommandFactory >> bindingWrap: anObject [
 	^ self addBinding: (PharoLinkBinding wrap: anObject)
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkCommandFactory >> setNotifyToInstruction: aLLInstruction [
 	| node notifyNode |
 
@@ -36,7 +36,7 @@ PharoLinkCommandFactory >> setNotifyToInstruction: aLLInstruction [
 	^ notifyNode
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkCommandFactory >> setNotifyToInstructionSequence: aRBSequenceNode [
 	| lastStatement replacementStatement |
 
@@ -53,7 +53,7 @@ PharoLinkCommandFactory >> setNotifyToInstructionSequence: aRBSequenceNode [
 	^ aRBSequenceNode 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkCommandFactory >> setNotifyToInstructionStatement: aLLInstruction [
 
 	^ RBParser parseExpression: (String streamContents: [ :stream |
