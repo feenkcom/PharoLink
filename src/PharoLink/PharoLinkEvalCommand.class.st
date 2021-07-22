@@ -68,7 +68,7 @@ PharoLinkEvalCommand >> gtViewedObjectClass [
 
 	env := self class environment.
 	(env includesKey: #GtViewedObject) ifTrue: [ ^ env at: #GtViewedObject ].
-	(env includesKey: #GtPharoViewedObject) ifTrue: [ ^ env at: #GtPharoViewedObject ].
+	(env includesKey: #GtRemotePhlowViewedObject) ifTrue: [ ^ env at: #GtRemotePhlowViewedObject ].
 	self error: 'Unable to find Gt view server'.
 ]
 
