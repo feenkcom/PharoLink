@@ -19,11 +19,22 @@ Class {
 		'serverDebugMode',
 		'workingDirectory'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #'instance creation' }
 LanguageLinkSettings class >> pharoDefaultSettings [
+	| aVmExecutable aServerImage |
+	
+	aVmExecutable := self
+		forPharo8: [ FileLocator vmBinary resolve ]
+		forPharo9: [ FileLocator vmBinary resolve parent / (FileLocator vmBinary resolve  basename, '-cli') ].
+	
+	aServerImage := self
+		forPharo8: [ FileLocator image resolve. ]
+		forPharo9: [
+			Smalltalk saveAsNewVersion.
+			FileLocator image resolve ].
 
 	^ self new 
 		clientSocketAddress: (LanguageLinkSocketAddress 
@@ -32,8 +43,8 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 				ipOrName: 'localhost' port: (6900 + 99 atRandom));
 		messageBrokerStrategy: LanguageLinkHttpMessageBroker;
 		serverProcessClass: PharoLinkPharoProcess;
-		serverExecutable: FileLocator vmBinary resolve;
-		serverImage: FileLocator image resolve;
+		serverExecutable: aVmExecutable;
+		serverImage: aServerImage;
 		platform: PharoLinkPharoPlatform new;
 		commandFactoryClass: PharoLinkCommandFactory;
 		commandClass: PharoLinkCommand;
