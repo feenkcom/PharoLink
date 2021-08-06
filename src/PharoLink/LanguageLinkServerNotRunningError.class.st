@@ -1,18 +1,18 @@
 Class {
-	#name : #LanguageLinkServerNotRunningError,
-	#superclass : #LanguageLinkError,
+	#name : 'LanguageLinkServerNotRunningError',
+	#superclass : 'LanguageLinkError',
 	#instVars : [
 		'application'
 	],
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkServerNotRunningError >> application [
 	^ application
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkServerNotRunningError >> application: anObject [
 	application := anObject
 ]

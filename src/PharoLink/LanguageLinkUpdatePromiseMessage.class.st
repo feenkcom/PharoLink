@@ -1,6 +1,6 @@
 Class {
-	#name : #LanguageLinkUpdatePromiseMessage,
-	#superclass : #LanguageLinkRAsyncMessage,
+	#name : 'LanguageLinkUpdatePromiseMessage',
+	#superclass : 'LanguageLinkRAsyncMessage',
 	#instVars : [
 		'promiseId',
 		'value'
@@ -8,24 +8,24 @@ Class {
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkUpdatePromiseMessage class >> type [
 	^ #EVAL
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 LanguageLinkUpdatePromiseMessage >> privateDecode: dict [
 	super privateDecode: dict.
 	promiseId := dict at: #id.
 	value := dict at: #value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkUpdatePromiseMessage >> promiseId [
 	^ promiseId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkUpdatePromiseMessage >> value [
 	^ value
 ]

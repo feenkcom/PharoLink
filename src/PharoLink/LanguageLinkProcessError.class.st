@@ -2,8 +2,8 @@
 A LanguageLinkProcessError is used to signal failure of an external process run with {{gtClass:GtUnixSubprocess}}.
 "
 Class {
-	#name : #LanguageLinkProcessError,
-	#superclass : #Error,
+	#name : 'LanguageLinkProcessError',
+	#superclass : 'Error',
 	#instVars : [
 		'application',
 		'process'
@@ -11,24 +11,24 @@ Class {
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProcessError >> application [
 	^ application
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProcessError >> application: anObject [
 	application := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProcessError >> description [ 
 
 	^ String streamContents: [ :stream |
 		self printOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LanguageLinkProcessError >> printOn: aStream [
 
 	aStream
@@ -44,12 +44,12 @@ LanguageLinkProcessError >> printOn: aStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProcessError >> process [
 	^ process
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkProcessError >> process: anObject [
 	process := anObject
 ]

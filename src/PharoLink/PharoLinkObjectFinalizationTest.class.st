@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkObjectFinalizationTest,
-	#superclass : #PharoLinkApplicationTest,
+	#name : 'PharoLinkObjectFinalizationTest',
+	#superclass : 'PharoLinkApplicationTest',
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoLinkObjectFinalizationTest >> testGCSimpleObj [
 	| obj obj2 id inRegistry |
 

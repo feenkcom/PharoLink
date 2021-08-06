@@ -1,10 +1,10 @@
 Class {
-	#name : #LanguageLinkRAnswer,
-	#superclass : #LanguageLinkAbstractAnswer,
+	#name : 'LanguageLinkRAnswer',
+	#superclass : 'LanguageLinkAbstractAnswer',
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkRAnswer >> encode [
 	| dict |
 	dict := Dictionary new.
@@ -13,12 +13,12 @@ LanguageLinkRAnswer >> encode [
 	^ dict
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkRAnswer >> privateEncode: dict [
 	dict at: #__sync put: self syncId
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 LanguageLinkRAnswer >> syncId [
 	^ message syncId
 ]

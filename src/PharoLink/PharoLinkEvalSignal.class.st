@@ -1,13 +1,13 @@
 Class {
-	#name : #PharoLinkEvalSignal,
-	#superclass : #BeaconSignal,
+	#name : 'PharoLinkEvalSignal',
+	#superclass : 'BeaconSignal',
 	#instVars : [
 		'command'
 	],
 	#category : 'PharoLink-Logging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PharoLinkEvalSignal class >> emitCommand: aPharoLinkEvalCommand [
 
 	^ self new
@@ -15,23 +15,23 @@ PharoLinkEvalSignal class >> emitCommand: aPharoLinkEvalCommand [
 		emit.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkEvalSignal >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkEvalSignal >> command: anObject [
 	command := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkEvalSignal >> firstLineOf: aString [
 
 	aString linesDo: [ :line | ^line ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PharoLinkEvalSignal >> printOn: stream [ 
 
 	stream 
@@ -45,7 +45,7 @@ PharoLinkEvalSignal >> printOn: stream [
 	stream << command blockString.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PharoLinkEvalSignal >> printOneLineContentsOn: stream [ 
 
 	command ifNil: [ ^stream << '<no command>' ].

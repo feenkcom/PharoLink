@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkSendCommandTest,
-	#superclass : #PharoLinkApplicationTest,
+	#name : 'PharoLinkSendCommandTest',
+	#superclass : 'PharoLinkApplicationTest',
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoLinkSendCommandTest >> testAddBinding [
 	| array binding result |
 
@@ -17,7 +17,7 @@ PharoLinkSendCommandTest >> testAddBinding [
 	self assert: result equals: #((2) 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoLinkSendCommandTest >> testAddObserver [
 	| cf observer callbackExecuted promiseSem promise |
 
@@ -37,7 +37,7 @@ PharoLinkSendCommandTest >> testAddObserver [
 	self assert: callbackExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoLinkSendCommandTest >> testCallbackReturnValue [
 	| cf observer callbackExecuted promiseSem promise |
 
@@ -58,7 +58,7 @@ PharoLinkSendCommandTest >> testCallbackReturnValue [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoLinkSendCommandTest >> testInvalidCallbackReturn [
 	| cf observer callbackExecuted promiseSem promise |
 
@@ -78,7 +78,7 @@ PharoLinkSendCommandTest >> testInvalidCallbackReturn [
 	self assert: callbackExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoLinkSendCommandTest >> testSendAssignAsLastMessage [
 	| meaning |
 

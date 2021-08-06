@@ -1,20 +1,20 @@
 Class {
-	#name : #PharoLinkPharoPlatform,
-	#superclass : #PharoLinkPlatform,
+	#name : 'PharoLinkPharoPlatform',
+	#superclass : 'PharoLinkPlatform',
 	#category : 'PharoLink-Pharo-Platform'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkPharoPlatform class >> uiManagerClass [
 	^ LanguageLinkPharoUiManager
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 PharoLinkPharoPlatform class >> weakRegistryClass [
 	^ LanguageLinkPharoWeakRegistry
 ]
 
-{ #category : #'private - symlinks' }
+{ #category : 'private - symlinks' }
 PharoLinkPharoPlatform >> createSymlinkFor: originalFile on: targetFile [
 	OSSUnixSubprocess new
 				command: '/bin/ln';
@@ -26,23 +26,23 @@ PharoLinkPharoPlatform >> createSymlinkFor: originalFile on: targetFile [
 				runAndWaitOnExitDo: [ :command | ^ self ].
 ]
 
-{ #category : #utils }
+{ #category : 'utils' }
 PharoLinkPharoPlatform >> ensureEnvironmentForApp: anApplication [
 	" Currently assumes the current environment, so nothing to do"
 ]
 
-{ #category : #utils }
+{ #category : 'utils' }
 PharoLinkPharoPlatform >> folderForApplication [
 
 	^ FileLocator imageDirectory
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 PharoLinkPharoPlatform >> newRandomName [
 	^ 'pb' , UUID new asString36
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkPharoPlatform >> signalInstallEnvFailed [
 	"The attempt to install all the required packages with npm failed for some reason"
 

@@ -1,10 +1,10 @@
 Class {
-	#name : #PharoLinkApplication,
-	#superclass : #LanguageLinkApplication,
+	#name : 'PharoLinkApplication',
+	#superclass : 'LanguageLinkApplication',
 	#category : 'PharoLink-Global'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkApplication >> initializeHandlers [
 
 	loggingHandler := PharoLinkLoggingHandler application: self.
@@ -13,7 +13,7 @@ PharoLinkApplication >> initializeHandlers [
 	executionHandler := PharoLinkExecutionHandler application: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkApplication >> platformClass [
 
 	^ PharoLinkPlatform

@@ -1,30 +1,30 @@
 Class {
-	#name : #LanguageLinkCommunicationHandler,
-	#superclass : #LanguageLinkHandler,
+	#name : 'LanguageLinkCommunicationHandler',
+	#superclass : 'LanguageLinkHandler',
 	#instVars : [
 		'messageBroker'
 	],
 	#category : 'PharoLink-Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 LanguageLinkCommunicationHandler >> addHandler: aBlock forMessageClass: messageClass [
 	^ messageBroker addCallback: aBlock messageClass: messageClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkCommunicationHandler >> initializeHandler [
 	super initializeHandler.
 	messageBroker := self application settings messageBroker
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkCommunicationHandler >> isRunning [ 
 
 	^ messageBroker isRunning
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkCommunicationHandler >> isServerReady [
 	| semaphore ans |
 	semaphore := Semaphore new.
@@ -37,17 +37,17 @@ LanguageLinkCommunicationHandler >> isServerReady [
 	^ ans notNil and: ans
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 LanguageLinkCommunicationHandler >> sendMessage: aMessage [
 	^ messageBroker sendMessage: aMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationHandler >> start [
 	^ messageBroker start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationHandler >> stop [
 	^ messageBroker stop
 ]

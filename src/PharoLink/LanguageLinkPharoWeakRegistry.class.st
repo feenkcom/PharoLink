@@ -1,24 +1,24 @@
 Class {
-	#name : #LanguageLinkPharoWeakRegistry,
-	#superclass : #LanguageLinkAbstractWeakRegistry,
+	#name : 'LanguageLinkPharoWeakRegistry',
+	#superclass : 'LanguageLinkAbstractWeakRegistry',
 	#instVars : [
 		'weakRegistry'
 	],
 	#category : 'PharoLink-Pharo-Platform'
 }
 
-{ #category : #registration }
+{ #category : 'registration' }
 LanguageLinkPharoWeakRegistry >> destroy [
 	weakRegistry removeAll
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkPharoWeakRegistry >> initialize [
 	super initialize.
 	weakRegistry := WeakRegistry new.
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 LanguageLinkPharoWeakRegistry >> registerObject: anObject finalizer: finalizer [
 	weakRegistry 
 		add: anObject

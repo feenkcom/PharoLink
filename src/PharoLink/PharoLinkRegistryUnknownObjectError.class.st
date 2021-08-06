@@ -1,13 +1,13 @@
 Class {
-	#name : #PharoLinkRegistryUnknownObjectError,
-	#superclass : #PharoLinkRegistryError,
+	#name : 'PharoLinkRegistryUnknownObjectError',
+	#superclass : 'PharoLinkRegistryError',
 	#instVars : [
 		'objId'
 	],
 	#category : 'PharoLink-Registry'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 PharoLinkRegistryUnknownObjectError class >> signalId: objId [
 
 	^ self new 
@@ -17,12 +17,12 @@ PharoLinkRegistryUnknownObjectError class >> signalId: objId [
 		signal.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRegistryUnknownObjectError >> objId [
 	^ objId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRegistryUnknownObjectError >> objId: anObject [
 	objId := anObject
 ]

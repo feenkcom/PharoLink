@@ -1,6 +1,6 @@
 Class {
-	#name : #PharoLinkRemoteError,
-	#superclass : #PharoLinkRemoteNotification,
+	#name : 'PharoLinkRemoteError',
+	#superclass : 'PharoLinkRemoteNotification',
 	#instVars : [
 		'command',
 		'errorMessage',
@@ -11,60 +11,60 @@ Class {
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> application [
 	^ application
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> application: anObject [
 	application := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> command: anObject [
 	command := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError-defaultAction)"
 
 	^ self application settings platform uiManager spawnDebuggerOnException: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkRemoteError >> defaultProceedAction [
 	^ LanguageLinkDropQueue new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> errorMessage [
 	^ errorMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkRemoteError >> initialize [
 	super initialize.
 	proceedAction := self defaultProceedAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> isResumable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> messageText [ 
 
 	(messageText isNil or: [ messageText isEmpty ]) ifTrue: 
@@ -72,22 +72,22 @@ PharoLinkRemoteError >> messageText [
 	^ super messageText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> proceedAction [
 	^ proceedAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkRemoteError >> proceedAction: anObject [
 	proceedAction := anObject
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 PharoLinkRemoteError >> trace [
 	^ trace
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 PharoLinkRemoteError >> trace: aTrace [
 	trace := aTrace
 ]
