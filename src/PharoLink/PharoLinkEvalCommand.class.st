@@ -9,7 +9,7 @@ Class {
 		'responseHost',
 		'registry'
 	],
-	#category : #'PharoLink-Server'
+	#category : 'PharoLink-Server'
 }
 
 { #category : #'as yet unclassified' }
@@ -130,7 +130,14 @@ PharoLinkEvalCommand >> notifyError: error [
 		at: 'errMsg' put: error printString;
 		at: 'commandId' put: self id;
 		at: 'trace' put: self stackString.
-	^ self sendResponse: data.
+	^ [ self sendResponse: data ]
+		on: ConnectionTimedOut 
+		do: [ :ex | | commsError |
+			commsError := LanguageLinkCommunicationsSignal new
+				originalException: error;
+				commandId: self id;
+				stackString: self stackString.
+			commsError emit ].
 ]
 
 { #category : #private }

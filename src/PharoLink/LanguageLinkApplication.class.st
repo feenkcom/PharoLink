@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }
@@ -180,6 +180,17 @@ LanguageLinkApplication >> debugMode: aBoolean [
 LanguageLinkApplication >> errorMessage [
 	"Fetch the error message from the stderr stream, from the processhander"
 	^ processHandler errorMessage
+]
+
+{ #category : #evaluating }
+LanguageLinkApplication >> evaluateAndWait: aString [
+	| cf |
+
+	cf := self newCommandFactory.
+	^ cf 
+		<< aString;
+		sendAndWait.
+
 ]
 
 { #category : #accessing }

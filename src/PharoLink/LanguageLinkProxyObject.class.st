@@ -43,6 +43,17 @@ LanguageLinkProxyObject >> application: anObject [
 	application := anObject
 ]
 
+{ #category : #evaluating }
+LanguageLinkProxyObject >> evaluateAndWait: aString [
+	| cf |
+
+	cf := self newCommandFactory.
+	^ cf 
+		<< aString;
+		sendAndWait.
+
+]
+
 { #category : #comparing }
 LanguageLinkProxyObject >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
@@ -99,13 +110,10 @@ LanguageLinkProxyObject >> printOn: str [
 		<< ')'
 ]
 
-{ #category : #'message performing' }
+{ #category : #evaluating }
 LanguageLinkProxyObject >> proxyPerform: aSymbol [
-	"Evaluate the supplied selector on the remote"
 
-	^ self newCommandFactory
-		<< ('self ', aSymbol);
-		sendAndWait
+	^ self evaluateAndWait: 'self ', aSymbol
 ]
 
 { #category : #'message performing' }
