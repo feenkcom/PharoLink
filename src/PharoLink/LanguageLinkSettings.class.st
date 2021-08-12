@@ -24,34 +24,31 @@ Class {
 
 { #category : #'instance creation' }
 LanguageLinkSettings class >> pharoDefaultSettings [
-	| aVmExecutable aServerImage |
-	
-	aVmExecutable := self
-		forPharo8: [ FileLocator vmBinary resolve ]
-		forPharo9: [ FileLocator vmBinary resolve parent / (FileLocator vmBinary resolve  basename, '-cli') ].
-	
-	aServerImage := self
-		forPharo8: [ FileLocator image resolve. ]
-		forPharo9: [
-			Smalltalk saveAsNewVersion.
-			FileLocator image resolve ].
 
-	^ self new 
-		clientSocketAddress: (LanguageLinkSocketAddress 
-				ipOrName: 'localhost' port: (7000 + 99 atRandom));
-		serverSocketAddress: (LanguageLinkSocketAddress 
-				ipOrName: 'localhost' port: (6900 + 99 atRandom));
-		messageBrokerStrategy: LanguageLinkHttpMessageBroker;
-		serverProcessClass: PharoLinkPharoProcess;
-		serverExecutable: aVmExecutable;
-		serverImage: aServerImage;
-		platform: PharoLinkPharoPlatform new;
-		commandFactoryClass: PharoLinkCommandFactory;
-		commandClass: PharoLinkCommand;
-		serializerClass: LanguageLinkSerializer;
-		deserializerClass: PharoLinkDeserializer;
-		parserClass: StParser;
-		yourself
+	| aVmExecutable |
+	aVmExecutable := self
+		                 forPharo8: [ FileLocator vmBinary resolve ]
+		                 forPharo9: [ 
+			                 FileLocator vmBinary resolve parent
+			                 / (FileLocator vmBinary resolve basename , '-cli') ].
+	^ self new
+		  clientSocketAddress: (LanguageLinkSocketAddress
+				   ipOrName: 'localhost'
+				   port: 7000 + 99 atRandom);
+		  serverSocketAddress: (LanguageLinkSocketAddress
+				   ipOrName: 'localhost'
+				   port: 6900 + 99 atRandom);
+		  messageBrokerStrategy: LanguageLinkHttpMessageBroker;
+		  serverProcessClass: PharoLinkPharoProcess;
+		  serverExecutable: aVmExecutable;
+		  serverImage: FileLocator image resolve;
+		  platform: PharoLinkPharoPlatform new;
+		  commandFactoryClass: PharoLinkCommandFactory;
+		  commandClass: PharoLinkCommand;
+		  serializerClass: LanguageLinkSerializer;
+		  deserializerClass: PharoLinkDeserializer;
+		  parserClass: StParser;
+		  yourself
 ]
 
 { #category : #accessing }
