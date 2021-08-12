@@ -123,5 +123,7 @@ PharoLinkPharoProcess >> stop [
 	[process queryExitStatus ifNil: [ process terminate ]] 
 		on: Error 
 		do: [ :e | "Do nothing."].
-	process closeAndCleanStreams
+	process closeAndCleanStreams.
+	"nil to allow restart"
+	process := nil
 ]
