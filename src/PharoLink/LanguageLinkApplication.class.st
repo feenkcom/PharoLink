@@ -182,6 +182,17 @@ LanguageLinkApplication >> errorMessage [
 	^ processHandler errorMessage
 ]
 
+{ #category : #evaluating }
+LanguageLinkApplication >> evaluateAndWait: aString [
+	| cf |
+
+	cf := self newCommandFactory.
+	^ cf 
+		<< aString;
+		sendAndWait.
+
+]
+
 { #category : #accessing }
 LanguageLinkApplication >> executionHandler [
 	^ executionHandler
