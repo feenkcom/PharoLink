@@ -19,7 +19,7 @@ BaselineOfPharoLink >> baseline: spec [
 				spec repository: 'github://msgpack/msgpack-smalltalk:v1.3.1/repository' ].
 		spec
 			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon:e0669184913a76cfffca4eaecb7de025a3e65861/repository' ].
+				spec repository: 'github://feenkcom/pharo-beacon:a119e739bc378ca2a95883e074090d90fed4edeb/repository' ].
 
 		spec package: 'PharoLink'.
 	]
