@@ -1,6 +1,6 @@
 Class {
-	#name : #LanguageLinkCommunicationsSignal,
-	#superclass : #BeaconSignal,
+	#name : 'LanguageLinkCommunicationsSignal',
+	#superclass : 'BeaconSignal',
 	#instVars : [
 		'originalException',
 		'commandId',
@@ -9,31 +9,31 @@ Class {
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationsSignal >> commandId [
 
 	^ commandId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationsSignal >> commandId: anObject [
 
 	commandId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationsSignal >> originalException [
 
 	^ originalException
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationsSignal >> originalException: anObject [
 
 	originalException := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LanguageLinkCommunicationsSignal >> printOneLineContentsOn: stream [
 
 	stream 
@@ -43,13 +43,13 @@ LanguageLinkCommunicationsSignal >> printOneLineContentsOn: stream [
 		print: originalException
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationsSignal >> stackString [
 
 	^ stackString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkCommunicationsSignal >> stackString: anObject [
 
 	stackString := anObject

@@ -1,22 +1,22 @@
 Class {
-	#name : #LanguageLinkMessage,
-	#superclass : #LanguageLinkAbstractMessage,
+	#name : 'LanguageLinkMessage',
+	#superclass : 'LanguageLinkAbstractMessage',
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkMessage class >> isReverseMessage [
 	"Reverse messages corresponds to messages that start on Python to Pharo. In other words
 	in reverse direction from normal messages."
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkMessage class >> type [
 	^ #MSG
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkMessage >> encode [
 	| dict |
 	dict := Dictionary new.
@@ -25,11 +25,11 @@ LanguageLinkMessage >> encode [
 	^ dict
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkMessage >> isSync [
 	self subclassResponsibility
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 LanguageLinkMessage >> privateEncode: dict [
 ]

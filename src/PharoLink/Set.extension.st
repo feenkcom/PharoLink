@@ -1,6 +1,6 @@
-Extension { #name : #Set }
+Extension { #name : 'Set' }
 
-{ #category : #'*PharoLink' }
+{ #category : '*PharoLink' }
 Set >> isLanguageLinkValue [
 	^ true
 ]

@@ -1,15 +1,15 @@
 Class {
-	#name : #LanguageLinkRAsyncMessage,
-	#superclass : #LanguageLinkRMessage,
+	#name : 'LanguageLinkRAsyncMessage',
+	#superclass : 'LanguageLinkRMessage',
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkRAsyncMessage class >> type [
 	^ #RASYNC
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkRAsyncMessage >> isSync [
 	^ false
 ]

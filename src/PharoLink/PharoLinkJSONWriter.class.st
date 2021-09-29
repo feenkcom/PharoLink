@@ -12,15 +12,15 @@ Primitives, which are Integers, Strings and Arrays, are returned immediately.  A
 
 "
 Class {
-	#name : #PharoLinkJSONWriter,
-	#superclass : #NeoJSONWriter,
+	#name : 'PharoLinkJSONWriter',
+	#superclass : 'NeoJSONWriter',
 	#instVars : [
 		'registry'
 	],
 	#category : 'PharoLink-Server'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 PharoLinkJSONWriter class >> toString: object registry: registry [
 
 	^ String streamContents: [ :stream |
@@ -29,7 +29,7 @@ PharoLinkJSONWriter class >> toString: object registry: registry [
 				nextPut: object ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 PharoLinkJSONWriter class >> toStringPretty: object registry: registry [ 
 
 	^ String streamContents: [ :stream |
@@ -39,18 +39,18 @@ PharoLinkJSONWriter class >> toStringPretty: object registry: registry [
 				nextPut: object ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkJSONWriter >> registry [ 
 
 	^ registry "ifNil: [ registry := PharoLinkRegistry default ]"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkJSONWriter >> registry: anObject [
 	registry := anObject
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 PharoLinkJSONWriter >> writeList: collection [ 
 
 	^collection isArray
@@ -58,7 +58,7 @@ PharoLinkJSONWriter >> writeList: collection [
 		ifFalse: [ self writeObject: collection ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 PharoLinkJSONWriter >> writeMap: keyValueCollection [
 
 	^ (keyValueCollection at: #'__pharolinkImmediate' ifAbsent: [ false ])
@@ -66,7 +66,7 @@ PharoLinkJSONWriter >> writeMap: keyValueCollection [
 		ifFalse: [ self writeObject: keyValueCollection ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 PharoLinkJSONWriter >> writeObject: anObject [
 
 	^ 	self writeMapStreamingDo: [ :jsonMapWriter |

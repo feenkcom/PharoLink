@@ -1,6 +1,6 @@
 Class {
-	#name : #PharoLinkPharoProcess,
-	#superclass : #LanguageLinkAbstractProcess,
+	#name : 'PharoLinkPharoProcess',
+	#superclass : 'LanguageLinkAbstractProcess',
 	#instVars : [
 		'process',
 		'environmentVariables'
@@ -9,17 +9,17 @@ Class {
 		'NodejsPath',
 		'PipenvPath'
 	],
-	#category : #'PharoLink-Pharo-Processes'
+	#category : 'PharoLink-Pharo-Processes'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkPharoProcess class >> resolveServerExecutable [
 	"Use the same executable as the receiver"
 
 	^ FileLocator vmBinary resolve
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> environmentVariables [
 	"Answer the environment variables for the receiver.
 	If the receiver's VM is being used, pass the environment varibales unchanged.
@@ -31,51 +31,55 @@ PharoLinkPharoProcess >> environmentVariables [
 			ifFalse: [ self settings platform class subProcessEnvironmentDictionary ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> errorMessage [
 	^ process stderrStream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> exitCode [ 
 
 	^ process exitCode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoLinkPharoProcess >> hasProcess [
 	"Answer a boolean indicating whether the receiver has a process object"
 
 	^ process isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoLinkPharoProcess >> isRunning [
 	^ process
 		ifNil: [ false ]
 		ifNotNil: [ process isRunning ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkPharoProcess >> newProcess [
+
 	| newProcess |
-	newProcess := GtUnixSubprocess new
-				command: self settings serverExecutable fullName;
-				arguments: self processArguments;
-				workingDirectory: self workingDirectory resolve fullName;
-				terminateOnShutdown;
-				yourself.
-	self environmentVariables associationsDo: [ :assoc |
+	newProcess := (Smalltalk platform isWindows
+		               ifTrue: [ GtWinSubprocess new ]
+		               ifFalse: [ GtUnixSubprocess new ])
+		              command: self settings serverExecutable fullName;
+		              arguments: self processArguments;
+		              workingDirectory:
+			              self workingDirectory resolve fullName;
+		              terminateOnShutdown;
+		              yourself.
+	self environmentVariables associationsDo: [ :assoc | 
 		newProcess environmentAt: assoc key put: assoc value ].
 	^ newProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> process [
 	^ process
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoLinkPharoProcess >> processArguments [
 	| args |
 
@@ -91,13 +95,13 @@ PharoLinkPharoProcess >> processArguments [
 	^ args
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> serverPath [
 
 	^ self settings serverExecutable
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 PharoLinkPharoProcess >> start [
 
 	self assert: process isNil.
@@ -105,19 +109,19 @@ PharoLinkPharoProcess >> start [
 	process run.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> stderr [
 
 	^ process stderr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoLinkPharoProcess >> stdout [ 
 
 	^ process stdout
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 PharoLinkPharoProcess >> stop [
 	process ifNil: [ ^ self ].
 	[process queryExitStatus ifNil: [ process terminate ]] 

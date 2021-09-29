@@ -1,6 +1,6 @@
 Class {
-	#name : #LanguageLinkPromise,
-	#superclass : #Object,
+	#name : 'LanguageLinkPromise',
+	#superclass : 'Object',
 	#instVars : [
 		'id',
 		'semaphore',
@@ -11,24 +11,24 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise class >> id: id [
 	^ self new
 			id: id;
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise >> id [
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkPromise >> initialize [
 	super initialize.
 	semaphore := Semaphore new.
@@ -36,12 +36,12 @@ LanguageLinkPromise >> initialize [
 	transformBlock := #yourself
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 LanguageLinkPromise >> isSignaled [
 	^ semaphore isSignaled
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 LanguageLinkPromise >> setWaitAgain [ 
 	"Flag that the promise should wait for the real value to be returned from the server"
 
@@ -49,33 +49,33 @@ LanguageLinkPromise >> setWaitAgain [
 	semaphore consumeAllSignals.
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 LanguageLinkPromise >> signalAll [
 	1 to: semaphore size + 20 do: [ :s | semaphore signal ]
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 LanguageLinkPromise >> signalWithValue: anObject [
 	value := transformBlock value: anObject.
 	self signalAll.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise >> transformBlock [
 	^ transformBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise >> transformBlock: anObject [
 	transformBlock := anObject
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 LanguageLinkPromise >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise >> waitAgain [
 	"Answer a boolean indicating whether the promise should wait again for a value.
 	This is typically used if an exception was raised by the server, e.g. PharoLinkDebuggerPaused, and the exception has been resolved and the server will later return the result of the original request."
@@ -84,13 +84,13 @@ LanguageLinkPromise >> waitAgain [
 	^ waitAgain
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkPromise >> waitAgain: aBoolean [
 
 	waitAgain := aBoolean
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 LanguageLinkPromise >> waitForValue [
 	"Wait for the server to supply the result and answer it.
 	If the value is an exception, the issue may be resolved and the promise flagged to wait for the new value to come through (waitAgain)."

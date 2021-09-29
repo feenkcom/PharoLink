@@ -1,50 +1,50 @@
 Class {
-	#name : #LanguageLinkSyncMessage,
-	#superclass : #LanguageLinkMessage,
+	#name : 'LanguageLinkSyncMessage',
+	#superclass : 'LanguageLinkMessage',
 	#instVars : [
 		'syncId'
 	],
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkSyncMessage class >> answerClass [
 	^ LanguageLinkAnswer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkSyncMessage class >> type [
 	^ #SYNC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkSyncMessage >> answerClass [
 	^ self class answerClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LanguageLinkSyncMessage >> createAnswer [
 	^ self answerClass answerFor: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LanguageLinkSyncMessage >> initializeWith: aLLApplication [
 
 	syncId := aLLApplication settings platform newRandomName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LanguageLinkSyncMessage >> isSync [
 	^ true
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 LanguageLinkSyncMessage >> privateEncode: aDict [
 	super privateEncode: aDict.
 	aDict at: #__sync put: self syncId
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 LanguageLinkSyncMessage >> syncId [
 	^ syncId
 ]

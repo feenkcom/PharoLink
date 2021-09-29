@@ -1,32 +1,32 @@
 Class {
-	#name : #PharoLinkPromiseRegistryTest,
-	#superclass : #TestCase,
+	#name : 'PharoLinkPromiseRegistryTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'registry'
 	],
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkPromiseRegistryTest >> setUp [
 	registry := LanguageLinkPromiseRegistry new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkPromiseRegistryTest >> testAddPromise [
 	registry addPromise: (LanguageLinkPromise id: '123').
 	self assert: registry promiseTable size equals: 1.
 	self assert: registry promiseTable anyOne id equals: '123'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkPromiseRegistryTest >> testRemovePromiseId [
 	registry addPromise: (LanguageLinkPromise id: '123').
 	registry removePromiseId: '123'.
 	self assert: registry promiseTable size equals: 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkPromiseRegistryTest >> testSignalPromise [
 	| semaphore flag promise |
 	semaphore := Semaphore new.
@@ -42,7 +42,7 @@ PharoLinkPromiseRegistryTest >> testSignalPromise [
 	self assert: flag
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoLinkPromiseRegistryTest >> testSignalPromiseWithTransformBlock [
 	| semaphore flag promise |
 	semaphore := Semaphore new.
