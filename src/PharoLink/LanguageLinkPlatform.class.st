@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkPlatform',
-	#superclass : 'Object',
+	#name : #LanguageLinkPlatform,
+	#superclass : #Object,
 	#instVars : [
 		'msgBrokerStrategy',
 		'processStrategy'
@@ -8,7 +8,7 @@ Class {
 	#category : 'PharoLink-Platform'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkPlatform class >> subProcessEnvironmentDictionary [
 	"Answer the dictionary to be used when running subprocesses.
 	On linux, Pharo adds the VM directory to the path, which contains non-standard versions of libssl and libcrypto.  Other applications, such as nodejs and npm, should use the default installation."
@@ -27,42 +27,42 @@ LanguageLinkPlatform class >> subProcessEnvironmentDictionary [
 	^dict
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 LanguageLinkPlatform class >> uiManagerClass [
 	self subclassResponsibility
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 LanguageLinkPlatform class >> weakRegistryClass [
 	self subclassResponsibility
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 LanguageLinkPlatform >> ensureEnvironmentForApp: anApplication [
 	self subclassResponsibility
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 LanguageLinkPlatform >> folderForApplication [
 	self subclassResponsibility
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 LanguageLinkPlatform >> newRandomName [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing modules' }
+{ #category : #'accessing modules' }
 LanguageLinkPlatform >> serializer [
 	^ self messageBrokerStrategy serializer
 ]
 
-{ #category : 'module creation' }
+{ #category : #'module creation' }
 LanguageLinkPlatform >> uiManager [
 	^ self class uiManagerClass new
 ]
 
-{ #category : 'module creation' }
+{ #category : #'module creation' }
 LanguageLinkPlatform >> weakRegistry [
 	^ self class weakRegistryClass new
 ]

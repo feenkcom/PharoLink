@@ -1,15 +1,15 @@
 Class {
-	#name : 'LanguageLinkErrorHandlingAction',
-	#superclass : 'Object',
+	#name : #LanguageLinkErrorHandlingAction,
+	#superclass : #Object,
 	#category : 'PharoLink-ErrorHandling'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkErrorHandlingAction >> actionSymbol [
 	self subclassResponsibility
 ]
 
-{ #category : 'encoding' }
+{ #category : #encoding }
 LanguageLinkErrorHandlingAction >> encodeAsDictionary [
 	^ { #action -> self actionSymbol } asDictionary
 ]

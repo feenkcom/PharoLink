@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkRegistryFinalizer',
-	#superclass : 'LanguageLinkAbstractFinalizer',
+	#name : #LanguageLinkRegistryFinalizer,
+	#superclass : #LanguageLinkAbstractFinalizer,
 	#instVars : [
 		'executionHandler',
 		'proxyObjectId'
@@ -8,7 +8,7 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkRegistryFinalizer class >> javaScriptVariable: aPythonVariable executionHandler: executionHandler [
 	^ self new
 		proxyObjectId: aPythonVariable;
@@ -16,23 +16,23 @@ LanguageLinkRegistryFinalizer class >> javaScriptVariable: aPythonVariable execu
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkRegistryFinalizer >> application [ 
 
 	^ executionHandler application
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkRegistryFinalizer >> executionHandler [
 	^ executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkRegistryFinalizer >> executionHandler: anObject [
 	executionHandler := anObject
 ]
 
-{ #category : 'finalization' }
+{ #category : #finalization }
 LanguageLinkRegistryFinalizer >> finalize [
 	| cf |
 	self application isRunning ifFalse: 
@@ -48,12 +48,12 @@ LanguageLinkRegistryFinalizer >> finalize [
 			self application isRunning ifTrue: [ ex pass ] ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkRegistryFinalizer >> proxyObjectId [
 	^ proxyObjectId
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkRegistryFinalizer >> proxyObjectId: anObject [
 	proxyObjectId := anObject
 ]

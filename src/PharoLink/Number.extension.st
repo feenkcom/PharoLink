@@ -1,6 +1,6 @@
-Extension { #name : 'Number' }
+Extension { #name : #Number }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 Number >> pharoLinkFormattedCode [
 
 	^ self asString

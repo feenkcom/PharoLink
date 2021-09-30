@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkCommand',
-	#superclass : 'Object',
+	#name : #LanguageLinkCommand,
+	#superclass : #Object,
 	#instVars : [
 		'id',
 		'instructions',
@@ -12,28 +12,28 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkCommand class >> forApplication: aLLApplication [ 
 
 	^ self new initializeWith: aLLApplication 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> bindings [
 	^ bindings
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> bindings: bindingCol [
 	bindings := bindingCol
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> bindingsDictionary [
 	^ self bindings asDictionary
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> codeForRemote [
 	| py3CodeStream |
 	py3CodeStream := String new writeStream.
@@ -48,22 +48,22 @@ LanguageLinkCommand >> codeForRemote [
 	^ py3CodeStream contents
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> getObserver: observerId [
 	^ observers detect: [ :obs | obs id = observerId ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> id [
 	^ id
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> id: anObject [
 	id := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkCommand >> initializeWith: aLLApplication [
 
 	id := aLLApplication settings platform newRandomName.
@@ -73,34 +73,34 @@ LanguageLinkCommand >> initializeWith: aLLApplication [
 	transformBlock := #yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> instructions [
 	^ instructions
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> instructions: anObject [
 	instructions := anObject
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkCommand >> isValid [
 	^ [ self id isString and: [ 
 			(self bindings associations allSatisfy: [ :assoc | assoc key isString ]) and: [ 
 				self observers allSatisfy: [ :obs | obs callback isBlock ] ] ] ] on: Error do: [ false ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> observers [
 	^ observers
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> observers: anObject [
 	observers := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 LanguageLinkCommand >> printOn: aStream [
 
 	super printOn: aStream.
@@ -110,22 +110,22 @@ LanguageLinkCommand >> printOn: aStream [
 		<< ')'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> promise [
 	^ promise
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> promise: anObject [
 	promise := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> transformBlock [
 	^ transformBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommand >> transformBlock: anObject [
 	transformBlock := anObject
 ]

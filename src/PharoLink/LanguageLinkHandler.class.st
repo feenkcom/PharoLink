@@ -1,13 +1,13 @@
 Class {
-	#name : 'LanguageLinkHandler',
-	#superclass : 'Object',
+	#name : #LanguageLinkHandler,
+	#superclass : #Object,
 	#instVars : [
 		'application'
 	],
 	#category : 'PharoLink-Core'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 LanguageLinkHandler class >> application: anApplication [
 	^ self new
 		application: anApplication;
@@ -15,41 +15,41 @@ LanguageLinkHandler class >> application: anApplication [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkHandler >> application [
 	^ application
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkHandler >> application: anObject [
 	application := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkHandler >> debugMode [ 
 
 	^ application debugMode
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkHandler >> initializeHandler [
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkHandler >> isRunning [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkHandler >> settings [ 
 
 	^ self application settings
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkHandler >> start [
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkHandler >> stop [
 ]

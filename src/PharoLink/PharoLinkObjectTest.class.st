@@ -2,12 +2,12 @@
 It is possible there's a race condition in LanguageLinkRegistryFinalizer that means that the application is still flagged as running when in fact it has gone.  This causes the attempt to remove an object from the registry to fail, failing the test.  See {{gtMethod:LanguageLinkRegistryFinalizer>>#finalize}}.
 "
 Class {
-	#name : 'PharoLinkObjectTest',
-	#superclass : 'PharoLinkApplicationTest',
+	#name : #PharoLinkObjectTest,
+	#superclass : #PharoLinkApplicationTest,
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkObjectTest >> testProxyIdentity [
 	| obj cf |
 
@@ -21,7 +21,7 @@ PharoLinkObjectTest >> testProxyIdentity [
 	self assert: cf sendAndWait equals: obj
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PharoLinkObjectTest >> testSimpleProxy [
 	| obj hasId |
 

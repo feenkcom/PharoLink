@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkApplicationTestResource',
-	#superclass : 'TestResource',
+	#name : #PharoLinkApplicationTestResource,
+	#superclass : #TestResource,
 	#instVars : [
 		'application',
 		'commandFactory'
@@ -8,17 +8,17 @@ Class {
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkApplicationTestResource >> application [
 	^ application
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkApplicationTestResource >> commandFactory [
 	^ commandFactory
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkApplicationTestResource >> setUp [
 	super setUp.
 	application := PharoLinkApplication newWith: LanguageLinkSettings pharoDefaultSettings.
@@ -28,7 +28,7 @@ PharoLinkApplicationTestResource >> setUp [
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkApplicationTestResource >> tearDown [
 	application stop.
 	super tearDown.

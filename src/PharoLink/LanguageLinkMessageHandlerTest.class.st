@@ -1,10 +1,10 @@
 Class {
-	#name : 'LanguageLinkMessageHandlerTest',
-	#superclass : 'TestCase',
+	#name : #LanguageLinkMessageHandlerTest,
+	#superclass : #TestCase,
 	#category : 'PharoLink-Platform'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 LanguageLinkMessageHandlerTest >> testAsyncMessage [
 	| flag msg handler |
 	flag := false.
@@ -21,7 +21,7 @@ LanguageLinkMessageHandlerTest >> testAsyncMessage [
 	self should: [ handler answer ] raise: Error
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 LanguageLinkMessageHandlerTest >> testRAsyncMessage [
 	| flag msg handler |
 	flag := false.
@@ -38,7 +38,7 @@ LanguageLinkMessageHandlerTest >> testRAsyncMessage [
 	self should: [ handler answer ] raise: Error
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 LanguageLinkMessageHandlerTest >> testRSyncMessage [
 	| flag msg handler ans |
 	flag := false.
@@ -57,7 +57,7 @@ LanguageLinkMessageHandlerTest >> testRSyncMessage [
 	self assert: handler answer equals: ans
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 LanguageLinkMessageHandlerTest >> testSyncMessage [
 	| flag msg handler ans |
 	flag := false.

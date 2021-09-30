@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkApplication',
-	#superclass : 'Object',
+	#name : #LanguageLinkApplication,
+	#superclass : #Object,
 	#traits : 'TGtPharoLinkPlayground',
 	#classTraits : 'TGtPharoLinkPlayground classTrait',
 	#instVars : [
@@ -13,16 +13,16 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'PharoLink-Global'
+	#category : #'PharoLink-Global'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication class >> defaultSettings [
 
 	^ LanguageLinkSettings pharoDefaultSettings
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkApplication class >> do: aBlockClosure [ 
 	| retVal |
 	self isRunning ifTrue: [ ^ aBlockClosure value ].
@@ -34,12 +34,12 @@ LanguageLinkApplication class >> do: aBlockClosure [
 	^ retVal
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkApplication class >> isRunning [
 	^ uniqueInstance notNil and: [ uniqueInstance isRunning ]
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkApplication class >> killAll [
 	"Stop ALL instances of the receiver and kill any server processes that may still be running."
 	| allInstances firstApplication wd proc error |
@@ -63,30 +63,30 @@ LanguageLinkApplication class >> killAll [
 	^ proc stdout
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkApplication class >> module [
 	^ self uniqueInstance module
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkApplication class >> newWith: aLLSettings [
 	"Answer a new instance initialised with the supplied settings"
 
 	^ self new initializeWith: aLLSettings 
 ]
 
-{ #category : 'pipenv setup' }
+{ #category : #'pipenv setup' }
 LanguageLinkApplication class >> platform [
 
 	^ self defaultSettings platform
 ]
 
-{ #category : 'python hooks file' }
+{ #category : #'python hooks file' }
 LanguageLinkApplication class >> repositoryFileReference [
 	^ self platform folderForApplication
 ]
 
-{ #category : 'instructions' }
+{ #category : #instructions }
 LanguageLinkApplication class >> resetUniqueInstance [
 	uniqueInstance ifNotNil: [ 
 		[ uniqueInstance stop ] 
@@ -95,19 +95,19 @@ LanguageLinkApplication class >> resetUniqueInstance [
 	uniqueInstance := nil
 ]
 
-{ #category : 'instructions' }
+{ #category : #instructions }
 LanguageLinkApplication class >> send: obj [
 	self assert: self isRunning.
 	^ self uniqueInstance send: obj
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkApplication class >> start [
 
 	^ self startWith: LanguageLinkSettings pharoDefaultSettings.
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkApplication class >> startWith: settings [
 
 	self isRunning ifTrue: [ ^ uniqueInstance ].
@@ -117,14 +117,14 @@ LanguageLinkApplication class >> startWith: settings [
 	^ uniqueInstance.
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkApplication class >> stop [
 	uniqueInstance ifNotNil: [ 
 		uniqueInstance stop. ].
 	uniqueInstance := nil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkApplication class >> test [ 
 	self assert: (self do: [ :app |
 		app commandFactory << (JSGBinaryOperator new
@@ -136,53 +136,53 @@ LanguageLinkApplication class >> test [
 	  ]) = 3
 ]
 
-{ #category : 'instructions' }
+{ #category : #instructions }
 LanguageLinkApplication class >> uniqueInstance [
 	^ uniqueInstance
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication class >> uniqueInstance: anObject [
 	uniqueInstance := anObject
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkApplication class >> withDefaultSettings [
 	"Answer a new instance configured with default settings"
 
 	^ self newWith: self defaultSettings
 ]
 
-{ #category : 'utils' }
+{ #category : #utils }
 LanguageLinkApplication >> addMapping: jsType to: mapFunction [
 
 		^ self subclassResponsibility 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> communicationHandler [
 	^ communicationHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> debugMode [
 
 	^ settings debugMode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> debugMode: aBoolean [
 
 	settings debugMode: aBoolean
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> errorMessage [
 	"Fetch the error message from the stderr stream, from the processhander"
 	^ processHandler errorMessage
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 LanguageLinkApplication >> evaluateAndWait: aString [
 	| cf |
 
@@ -193,12 +193,12 @@ LanguageLinkApplication >> evaluateAndWait: aString [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> executionHandler [
 	^ executionHandler
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 LanguageLinkApplication >> gtSettingsFor: aView [
 	<gtView>
 
@@ -209,7 +209,7 @@ LanguageLinkApplication >> gtSettingsFor: aView [
 		view: #gtSettingsFor:
 ]
 
-{ #category : 'ui' }
+{ #category : #ui }
 LanguageLinkApplication >> gtStatusFor: aView [
 	<gtView>
 
@@ -219,7 +219,7 @@ LanguageLinkApplication >> gtStatusFor: aView [
 		text: [ self serverStatus asRopedText glamorousCodeFont ]
 ]
 
-{ #category : 'handlers' }
+{ #category : #handlers }
 LanguageLinkApplication >> handlers [
 	^ Array
 		with: loggingHandler
@@ -228,88 +228,88 @@ LanguageLinkApplication >> handlers [
 		with: executionHandler
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkApplication >> initializeHandlers [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkApplication >> initializeWith: aLLSettings [
 
 	settings := aLLSettings.
 	self initializeHandlers.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkApplication >> isRunning [
 	^ self handlers allSatisfy: #isRunning
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkApplication >> isServerReady [
 	"Ensures python webserver is ready for receiving commands"
 	^ self communicationHandler isServerReady
 ]
 
-{ #category : 'logging' }
+{ #category : #logging }
 LanguageLinkApplication >> log: aLog [
 	self loggingHandler log: aLog
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> loggingHandler [
 	^ loggingHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> module [
 	self subclassResponsibility
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkApplication >> newCommand [
 
 	^ self settings commandClass forApplication: self.
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkApplication >> newCommandFactory [
 	^ self settings commandFactoryClass new 
 		application: self;
 		yourself
 ]
 
-{ #category : 'instructions' }
+{ #category : #instructions }
 LanguageLinkApplication >> notifyDebuggerPaused: aDebugger [
 	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
 
 	self executionHandler notifyDebuggerPaused: aDebugger.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> platform [ 
 
 	^self settings platform
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> postInitialization [
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> processHandler [
 	^ processHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> registerObject: aProxyObject [
 
 	self executionHandler registerObject: aProxyObject
 ]
 
-{ #category : 'instructions' }
+{ #category : #instructions }
 LanguageLinkApplication >> send: aCommand [
 	self isRunning ifFalse: 
 		[ LanguageLinkServerNotRunningError new
@@ -318,14 +318,14 @@ LanguageLinkApplication >> send: aCommand [
 	^ executionHandler sendCommand: aCommand
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> serverPath [
 	"Answer the file reference to the server's executable"
 
 	^ processHandler serverPath
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 LanguageLinkApplication >> serverStatus [
 	"Answer a string describing the environment and server status.
 	Mostly for problem solving."
@@ -334,7 +334,7 @@ LanguageLinkApplication >> serverStatus [
 		self serverStatusOn: stream process: processHandler ]
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 LanguageLinkApplication >> serverStatusOn: aStream process: process [
 	"Write the environment and server status on the supplied stream.
 	Mostly for problem solving."
@@ -368,17 +368,17 @@ LanguageLinkApplication >> serverStatusOn: aStream process: process [
 			<< process stderr.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> settings [
 	^ settings
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkApplication >> settings: anObject [
 	settings := anObject
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 LanguageLinkApplication >> start [
 	self handlers do: #start.
 	self waitInitialization.
@@ -386,12 +386,24 @@ LanguageLinkApplication >> start [
 	self newCommandFactory send.
 ]
 
-{ #category : 'start-stop' }
+{ #category : #accessing }
+LanguageLinkApplication >> stderr [
+
+	^ processHandler stderr
+]
+
+{ #category : #accessing }
+LanguageLinkApplication >> stdout [
+
+	^ processHandler stdout
+]
+
+{ #category : #'start-stop' }
 LanguageLinkApplication >> stop [
 	self handlers select: #notNil thenDo: #stop
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkApplication >> waitInitialization [
 	"Timeout of 10 seconds and try every 0.5 seconds"
 	1 to: 10 by: 0.5 do: [ :t |

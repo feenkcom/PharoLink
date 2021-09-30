@@ -1,35 +1,35 @@
 Class {
-	#name : 'LanguageLinkLog',
-	#superclass : 'Object',
+	#name : #LanguageLinkLog,
+	#superclass : #Object,
 	#instVars : [
 		'message'
 	],
 	#category : 'PharoLink-Logs'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkLog class >> message: aString [
 	^ self new
 		message: aString;
 		yourself
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkLog >> isError [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkLog >> message [
 	^ message
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkLog >> message: anObject [
 	message := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 LanguageLinkLog >> printOn: str [
 	message
 		ifNil: [ super printOn: str ]

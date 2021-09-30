@@ -1,6 +1,6 @@
-Extension { #name : 'OSWSWinProcess' }
+Extension { #name : #OSWSWinProcess }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 OSWSWinProcess >> isRunning [
 
 	"see https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitforsingleobject for more information"

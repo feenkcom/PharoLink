@@ -1,15 +1,15 @@
 Class {
-	#name : 'LanguageLinkAsyncMessage',
-	#superclass : 'LanguageLinkMessage',
+	#name : #LanguageLinkAsyncMessage,
+	#superclass : #LanguageLinkMessage,
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkAsyncMessage class >> type [
 	^ #ASYNC
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkAsyncMessage >> isSync [
 	^ false
 ]

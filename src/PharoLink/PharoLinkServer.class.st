@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkServer',
-	#superclass : 'Object',
+	#name : #PharoLinkServer,
+	#superclass : #Object,
 	#instVars : [
 		'listenPort',
 		'responsePort',
@@ -13,7 +13,7 @@ Class {
 	#category : 'PharoLink-Server'
 }
 
-{ #category : 'clap' }
+{ #category : #clap }
 PharoLinkServer class >> commandLine [
 	<commandline>
 
@@ -45,7 +45,7 @@ PharoLinkServer class >> commandLine [
 		  Semaphore new wait ]
 ]
 
-{ #category : 'clap' }
+{ #category : #clap }
 PharoLinkServer class >> commandLine8 [
 
 	^ self commandLineCommand8 meaning: [ :args | | logger listenPort responsePort |
@@ -73,7 +73,7 @@ PharoLinkServer class >> commandLine8 [
 		 ].
 ]
 
-{ #category : 'clap' }
+{ #category : #clap }
 PharoLinkServer class >> commandLineCommand [
 
 	SystemVersion current major = 8 ifTrue: 
@@ -91,7 +91,7 @@ PharoLinkServer class >> commandLineCommand [
 		  yourself
 ]
 
-{ #category : 'clap' }
+{ #category : #clap }
 PharoLinkServer class >> commandLineCommand8 [
 
 	^ (ClapCommand withName: 'pharoLinkServer')
@@ -106,12 +106,12 @@ PharoLinkServer class >> commandLineCommand8 [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> debugMode [
 	^ debugMode
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkServer >> handlEnqueue: aZnRequest [
 	"Process the supplied statements"
 	| command dict |
@@ -134,7 +134,7 @@ PharoLinkServer >> handlEnqueue: aZnRequest [
 		yourself
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkServer >> handleIsAlive: aZnRequest [
 	"Respond to the ping request"
 
@@ -143,7 +143,7 @@ PharoLinkServer >> handleIsAlive: aZnRequest [
 		yourself
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkServer >> handleRequest: aZnRequest [
 	"Process a request from the client.
 	Only two types are currently handled:
@@ -160,7 +160,7 @@ PharoLinkServer >> handleRequest: aZnRequest [
 		yourself.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkServer >> initialize [ 
 
 	super initialize.
@@ -171,33 +171,33 @@ PharoLinkServer >> initialize [
 	responseHost := 'localhost'.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 PharoLinkServer >> isRunning [ 
 
 	^ znServer isRunning
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> listenPort [
 	^ listenPort
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> listenPort: anObject [
 	listenPort := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> responseHost [
 	^ responseHost
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> responseHost: anObject [
 	responseHost := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> responseHostPort: aString [
 	"Accept a string of the form [host:]port and set the host and port appropriately"
 	| segments |
@@ -214,24 +214,24 @@ PharoLinkServer >> responseHostPort: aString [
 	responsePort := segments second asNumber.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> responsePort [
 	^ responsePort
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServer >> responsePort: anObject [
 	responsePort := anObject
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 PharoLinkServer >> setDebugMode [
 
 	debugMode := true.
 	znServer ifNotNil: [ znServer debugMode: true ]
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 PharoLinkServer >> start [ 
 	"Start the receiver's ZnServer"
 
@@ -248,7 +248,7 @@ PharoLinkServer >> start [
 	znServer onRequestRespond: [ :req | self handleRequest: req ].
 ]
 
-{ #category : 'start-stop' }
+{ #category : #'start-stop' }
 PharoLinkServer >> stop [
 	"Stop the receiver's ZnServer"
 

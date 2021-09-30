@@ -1,6 +1,6 @@
-Extension { #name : 'True' }
+Extension { #name : #True }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 True >> isLanguageLinkValue [
 	^ true
 ]

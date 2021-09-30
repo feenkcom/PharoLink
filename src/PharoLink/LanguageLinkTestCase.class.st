@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkTestCase',
-	#superclass : 'TestCase',
+	#name : #LanguageLinkTestCase,
+	#superclass : #TestCase,
 	#instVars : [
 		'application',
 		'commandFactory',
@@ -9,29 +9,29 @@ Class {
 	#category : 'PharoLink-Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkTestCase >> app [
 	^ self application
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkTestCase >> application [
 	^ application
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 LanguageLinkTestCase >> assertClass: cls name: aName [
 	self cf << (cls => #__name__).
 	self assert: self cf send waitForValue equals: aName
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 LanguageLinkTestCase >> assertExpression: expr equals: aBlockOrValue [
 	self cf << expr.
 	self assert: self cf send waitForValue equals: aBlockOrValue value
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 LanguageLinkTestCase >> assertInstanceClass: obj name: aName [
 
 	self cf << (obj => #constructor => #name).
@@ -39,33 +39,33 @@ LanguageLinkTestCase >> assertInstanceClass: obj name: aName [
 	self assert: self cf send waitForValue equals: aName
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkTestCase >> cf [
 	^ self commandFactory
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkTestCase >> cfSend [
 	^ promise := self cf send
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkTestCase >> commandFactory [
 	^ commandFactory
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 LanguageLinkTestCase >> newCommand [ 
 
 	^ self application newCommand.
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 LanguageLinkTestCase >> registryExpression [
 	^ #registry jsCallWith: #()
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 LanguageLinkTestCase >> resolveId: anId [
 	^ self registryExpression => #resolve jsCallWith: (Array with: anId)
 ]

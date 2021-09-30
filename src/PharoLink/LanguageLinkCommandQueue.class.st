@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkCommandQueue',
-	#superclass : 'Object',
+	#name : #LanguageLinkCommandQueue,
+	#superclass : #Object,
 	#instVars : [
 		'currentIndex',
 		'innerCollection',
@@ -9,62 +9,62 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue class >> executionHandler: aHandler [
 	^ self new
 			executionHandler: aHandler;
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> cleanIndex: anIndex [
 "	self debugMode ifTrue: [ ^ self ]."
 	currentIndex := currentIndex - 1.
 	innerCollection removeAt: anIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> completedCommands [
 	^ innerCollection first: currentIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> currentCommand [
 	self isFinished ifTrue: [ ^ nil ].
 	^ innerCollection at: currentIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> debugMode [
 	^ executionHandler debugMode
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> enqueueCommand: aCommand [
 	innerCollection add: aCommand
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> excecutionHandler [
 	^ executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> executionHandler [
 	^ executionHandler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> executionHandler: anObject [
 	executionHandler := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> finishCommand: aCommand [
 	^ self finishCommandId: aCommand id
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> finishCommandId: id [
 	| commandIndex |
 	self currentCommand
@@ -89,29 +89,29 @@ LanguageLinkCommandQueue >> finishCommandId: id [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> getCommand: aCommandId [
 	^ innerCollection detect: [ :command | command id = aCommandId ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkCommandQueue >> initialize [
 	super initialize.
 	innerCollection := OrderedCollection new.
 	currentIndex := 1
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> isFinished [
 	^ innerCollection size < currentIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> list [
 	^ innerCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> nextCommand [
 	| nextCommandIndex |
 	nextCommandIndex := currentIndex + 1.
@@ -119,7 +119,7 @@ LanguageLinkCommandQueue >> nextCommand [
 	^ innerCollection at: nextCommandIndex
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 LanguageLinkCommandQueue >> printOn: aStream [
 
 	super printOn: aStream.
@@ -129,12 +129,12 @@ LanguageLinkCommandQueue >> printOn: aStream [
 		<< ' raw items)'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> queue [
 	^ self waitingCommands
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkCommandQueue >> waitingCommands [
 	^ innerCollection allButFirst: currentIndex
 ]

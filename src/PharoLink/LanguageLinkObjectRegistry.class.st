@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkObjectRegistry',
-	#superclass : 'Object',
+	#name : #LanguageLinkObjectRegistry,
+	#superclass : #Object,
 	#instVars : [
 		'objectTable',
 		'semaphore',
@@ -9,35 +9,35 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkObjectRegistry >> hasId: anId [
 	^ semaphore critical: [ idTable includesKey: anId ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObjectRegistry >> idTable [
 	^ idTable
 ]
 
-{ #category : 'initialize-release' }
+{ #category : #'initialize-release' }
 LanguageLinkObjectRegistry >> initialize [
 	super initialize.
 	idTable := WeakValueDictionary new.
 	semaphore := Semaphore forMutualExclusion
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 LanguageLinkObjectRegistry >> registerObject: anObject [
 	semaphore critical: [ 
 		idTable at: anObject id put: anObject ]
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 LanguageLinkObjectRegistry >> resolve: anId [
 	^ semaphore critical: [ idTable at: anId ]
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 LanguageLinkObjectRegistry >> resolve: anId ifAbsent: aBlock [
 	| obj |
 	obj := semaphore critical: [ idTable at: anId ifAbsent: [ nil ] ].
@@ -45,12 +45,12 @@ LanguageLinkObjectRegistry >> resolve: anId ifAbsent: aBlock [
 	
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 LanguageLinkObjectRegistry >> unregisterId: anId [
 	semaphore critical: [ idTable removeKey: anId ]
 ]
 
-{ #category : 'api' }
+{ #category : #api }
 LanguageLinkObjectRegistry >> unregisterObject: anObject [
 	semaphore critical: [ idTable removeKey: anObject id ]
 ]

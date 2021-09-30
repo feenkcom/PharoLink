@@ -1,10 +1,10 @@
 Class {
-	#name : 'LanguageLinkErrorLog',
-	#superclass : 'LanguageLinkLog',
+	#name : #LanguageLinkErrorLog,
+	#superclass : #LanguageLinkLog,
 	#category : 'PharoLink-Logs'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkErrorLog >> isError [
 	^ true
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'LanguageLinkObserver',
-	#superclass : 'Object',
+	#name : #LanguageLinkObserver,
+	#superclass : #Object,
 	#instVars : [
 		'id',
 		'callback',
@@ -9,83 +9,83 @@ Class {
 	#category : 'PharoLink-Execution'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver class >> callback: aBlock [
 	^ self new
 		callback: aBlock;
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver >> callback [
 	^ callback
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver >> callback: anObject [
 	callback := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver >> command [
 	^ command
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver >> command: anObject [
 	command := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver >> id [
 	^ id
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkObserver >> initialize [
 	super initialize.
 	id := LanguageLinkUtils newVariableName
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkObserver >> isJavaScriptGenerable [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkObserver >> isLanguageLinkValue [
 	^ true
 ]
 
-{ #category : 'error handling' }
+{ #category : #'error handling' }
 LanguageLinkObserver >> javaScriptNotify [
 	^ self javaScriptNotify: nil
 ]
 
-{ #category : 'error handling' }
+{ #category : #'error handling' }
 LanguageLinkObserver >> javaScriptNotify: anObject [
 	^ (self jsCallWith: (Array with: anObject))
 		await: true;
 		yourself
 ]
 
-{ #category : 'call' }
+{ #category : #call }
 LanguageLinkObserver >> jsCall [
 	^ self jsCallWith: #()
 ]
 
-{ #category : 'call' }
+{ #category : #call }
 LanguageLinkObserver >> jsCallWith: anArrayOrADictionary [
 	^ anArrayOrADictionary jsgCallArgumentsOf: self
 ]
 
-{ #category : 'error handling' }
+{ #category : #'error handling' }
 LanguageLinkObserver >> notifyWith: anObject [
 
 	^ self pharoLinkFormattedCode, ' value: ', anObject printString.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkObserver >> pharoLinkFormattedCode [
 
 	^ String streamContents: [ :stream |
@@ -97,12 +97,12 @@ LanguageLinkObserver >> pharoLinkFormattedCode [
 			<< ' ]' ]
 ]
 
-{ #category : 'error handling' }
+{ #category : #'error handling' }
 LanguageLinkObserver >> pharoNotify: anObject [
 	^ callback cull: anObject
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 LanguageLinkObserver >> writeJavaScriptOn: aStream [
 	(#observer asJSGI jsCallWith: (Array 
 											with: self command id

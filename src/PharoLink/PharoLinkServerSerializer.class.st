@@ -18,15 +18,15 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : 'PharoLinkServerSerializer',
-	#superclass : 'Object',
+	#name : #PharoLinkServerSerializer,
+	#superclass : #Object,
 	#instVars : [
 		'registry'
 	],
 	#category : 'PharoLink-Server'
 }
 
-{ #category : 'serialization' }
+{ #category : #serialization }
 PharoLinkServerSerializer class >> deserialize: anObject registry: aRegistry [
 
 	^ self new 
@@ -34,7 +34,7 @@ PharoLinkServerSerializer class >> deserialize: anObject registry: aRegistry [
 		deserialize: anObject
 ]
 
-{ #category : 'serialization' }
+{ #category : #serialization }
 PharoLinkServerSerializer class >> serialize: anObject registry: aRegistry [
 
 	^ self new 
@@ -42,23 +42,23 @@ PharoLinkServerSerializer class >> serialize: anObject registry: aRegistry [
 		serialize: anObject
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkServerSerializer >> deserialize: aString [
 
 	^ PharoLinkJSONReader fromString: aString registry: registry
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServerSerializer >> registry [
 	^ registry
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkServerSerializer >> registry: anObject [
 	registry := anObject
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkServerSerializer >> serialize: anObject [
 
 	^ PharoLinkJSONWriter toString: anObject registry: registry

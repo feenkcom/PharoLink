@@ -1,53 +1,53 @@
 Class {
-	#name : 'LanguageLinkPromiseRegistry',
-	#superclass : 'Object',
+	#name : #LanguageLinkPromiseRegistry,
+	#superclass : #Object,
 	#instVars : [
 		'promiseTable',
 		'semaphore'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
-{ #category : 'adding' }
+{ #category : #adding }
 LanguageLinkPromiseRegistry >> addPromise: aPromise [
 	semaphore critical: [ promiseTable at: aPromise id put: aPromise ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkPromiseRegistry >> initialize [
 	super initialize.
 	promiseTable := Dictionary new.
 	semaphore := Semaphore forMutualExclusion
 ]
 
-{ #category : 'instructions' }
+{ #category : #instructions }
 LanguageLinkPromiseRegistry >> notifyDebuggerPaused: aDebugger [
 	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
 	| signal promises |
 
-	signal := PharoLinkDebuggerPaused new dapDebugger: aDebugger.
+	signal := PharoLinkDebuggerPaused new debuggerClient: aDebugger.
 	semaphore critical: [ promises := promiseTable values ].
 	promises do: [ :promise |
 		promise signalWithValue: signal copy ].
 ]
 
-{ #category : 'private - testing' }
+{ #category : #'private - testing' }
 LanguageLinkPromiseRegistry >> promiseTable [
 	^ promiseTable
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 LanguageLinkPromiseRegistry >> removeAndSignalPromiseId: id with: anObject [
 	self signalPromiseId: id with: anObject.
 	self removePromiseId: id
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 LanguageLinkPromiseRegistry >> removePromiseId: id [
 	semaphore critical: [ promiseTable removeKey: id ]
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 LanguageLinkPromiseRegistry >> signalPromiseId: id with: anObject [
 	| promise |
 	semaphore critical: [ 

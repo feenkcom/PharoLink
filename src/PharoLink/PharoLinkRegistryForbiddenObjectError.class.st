@@ -1,13 +1,13 @@
 Class {
-	#name : 'PharoLinkRegistryForbiddenObjectError',
-	#superclass : 'PharoLinkRegistryError',
+	#name : #PharoLinkRegistryForbiddenObjectError,
+	#superclass : #PharoLinkRegistryError,
 	#instVars : [
 		'object'
 	],
 	#category : 'PharoLink-Registry'
 }
 
-{ #category : 'signalling' }
+{ #category : #signalling }
 PharoLinkRegistryForbiddenObjectError class >> signalOject: anObject [
 
 	^ self new 
@@ -17,12 +17,12 @@ PharoLinkRegistryForbiddenObjectError class >> signalOject: anObject [
 		signal.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistryForbiddenObjectError >> object [
 	^ object
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistryForbiddenObjectError >> object: anObject [
 	object := anObject
 ]

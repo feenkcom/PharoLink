@@ -1,6 +1,6 @@
-Extension { #name : 'Fraction' }
+Extension { #name : #Fraction }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 Fraction >> isLanguageLinkValue [
 	^ true
 ]

@@ -1,6 +1,6 @@
-Extension { #name : 'Object' }
+Extension { #name : #Object }
 
-{ #category : '*PharoLink' }
+{ #category : #'*PharoLink' }
 Object >> isBoolean [
 	"Answer a boolean indicating whether the receiver is a boolean"
 

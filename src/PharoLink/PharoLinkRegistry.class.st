@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkRegistry',
-	#superclass : 'Object',
+	#name : #PharoLinkRegistry,
+	#superclass : #Object,
 	#instVars : [
 		'idToObjMap',
 		'objToIdMap'
@@ -11,13 +11,13 @@ Class {
 	#category : 'PharoLink-Registry'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistry class >> default [
 
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 PharoLinkRegistry class >> isPrimitive: anObject [
 	"Answer a boolean indicating whether the supplied object is considered a primitive,
 	i.e. one of Integer, String, Boolean, Array"
@@ -28,20 +28,20 @@ PharoLinkRegistry class >> isPrimitive: anObject [
 		[ anObject isArray ] ] ]
 ]
 
-{ #category : 'registry' }
+{ #category : #registry }
 PharoLinkRegistry >> clean: anObjId [
 
 	^ self deregister: anObjId
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkRegistry >> createNewObjId [
 	"Answer a new object id"
 
 	^ UUIDGenerator next asString
 ]
 
-{ #category : 'registry' }
+{ #category : #registry }
 PharoLinkRegistry >> deregister: anObjId [
 	"Remove the supplied id"
 	| object |
@@ -52,14 +52,14 @@ PharoLinkRegistry >> deregister: anObjId [
 	^ nil.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 PharoLinkRegistry >> includesId: anId [
 	"Answer a boolean indicating if the supplied id is registered"
 
 	^ idToObjMap includesKey: anId
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PharoLinkRegistry >> initialize [ 
 
 	super initialize.
@@ -67,7 +67,7 @@ PharoLinkRegistry >> initialize [
 	objToIdMap := Dictionary new.
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 PharoLinkRegistry >> isPrimitive: anObject [
 	"Answer a boolean indicating whether the supplied object is considered a primitive,
 	i.e. one of Integer, String, Boolean, Array"
@@ -75,7 +75,7 @@ PharoLinkRegistry >> isPrimitive: anObject [
 	^ self class isPrimitive: anObject
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 PharoLinkRegistry >> primRegister: anObject withId: newObjId [
 	"Register the supplied object with the supplied id.
 	anObject must not already be registered, newObjId must be unique"
@@ -85,7 +85,7 @@ PharoLinkRegistry >> primRegister: anObject withId: newObjId [
 	^ newObjId
 ]
 
-{ #category : 'registry' }
+{ #category : #registry }
 PharoLinkRegistry >> register: anObject [
 	"Add anObject to the receiver.
 	If the object is already registered, answer its id."
@@ -99,7 +99,7 @@ PharoLinkRegistry >> register: anObject [
 	^ self primRegister: anObject withId: self createNewObjId.
 ]
 
-{ #category : 'registry' }
+{ #category : #registry }
 PharoLinkRegistry >> register: anObject withId: newObjId [
 	"Register the supplied object with the supplied id.
 	Check that the object is a valid type and isn't registered with a different id"
@@ -117,7 +117,7 @@ PharoLinkRegistry >> register: anObject withId: newObjId [
 	^ newObjId
 ]
 
-{ #category : 'resolving' }
+{ #category : #resolving }
 PharoLinkRegistry >> resolve: objId [
 	"Answer the object with the supplied id"
 

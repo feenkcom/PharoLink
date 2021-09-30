@@ -3,31 +3,31 @@ LanguageLinkLoggingHandler provides a simple store of log messages.  It is easy 
 
 "
 Class {
-	#name : 'LanguageLinkLoggingHandler',
-	#superclass : 'LanguageLinkHandler',
+	#name : #LanguageLinkLoggingHandler,
+	#superclass : #LanguageLinkHandler,
 	#instVars : [
 		'logs'
 	],
 	#category : 'PharoLink-Core'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkLoggingHandler >> errorLogs [
 	^ logs select: #isError
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 LanguageLinkLoggingHandler >> initialize [
 	super initialize.
 	logs := OrderedCollection new
 ]
 
-{ #category : 'log' }
+{ #category : #log }
 LanguageLinkLoggingHandler >> log: aLog [
 	logs add: aLog
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 LanguageLinkLoggingHandler >> logs [
 	^ logs
 ]

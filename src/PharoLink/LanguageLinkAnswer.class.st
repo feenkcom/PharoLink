@@ -1,9 +1,9 @@
 Class {
-	#name : 'LanguageLinkAnswer',
-	#superclass : 'LanguageLinkAbstractAnswer',
+	#name : #LanguageLinkAnswer,
+	#superclass : #LanguageLinkAbstractAnswer,
 	#category : 'PharoLink-Platform-Messages'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 LanguageLinkAnswer >> decode: dict [
 ]

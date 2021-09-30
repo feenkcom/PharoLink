@@ -1,6 +1,6 @@
 Class {
-	#name : 'PharoLinkRegistryDifferentIdError',
-	#superclass : 'PharoLinkRegistryError',
+	#name : #PharoLinkRegistryDifferentIdError,
+	#superclass : #PharoLinkRegistryError,
 	#instVars : [
 		'objId',
 		'object'
@@ -8,7 +8,7 @@ Class {
 	#category : 'PharoLink-Registry'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 PharoLinkRegistryDifferentIdError class >> signalId: objId object: anObject [
 
 	^ self new 
@@ -19,22 +19,22 @@ PharoLinkRegistryDifferentIdError class >> signalId: objId object: anObject [
 		signal.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistryDifferentIdError >> objId [
 	^ objId
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistryDifferentIdError >> objId: anObject [
 	objId := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistryDifferentIdError >> object [
 	^ object
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PharoLinkRegistryDifferentIdError >> object: anObject [
 	object := anObject
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : 'LanguageLinkError',
-	#superclass : 'Error',
+	#name : #LanguageLinkError,
+	#superclass : #Error,
 	#category : 'PharoLink-ErrorHandling'
 }
