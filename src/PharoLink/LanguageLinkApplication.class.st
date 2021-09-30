@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'PharoLink-Global'
+	#category : #'PharoLink-Global'
 }
 
 { #category : #accessing }
@@ -384,6 +384,18 @@ LanguageLinkApplication >> start [
 	self waitInitialization.
 	self postInitialization.
 	self newCommandFactory send.
+]
+
+{ #category : #accessing }
+LanguageLinkApplication >> stderr [
+
+	^ processHandler stderr
+]
+
+{ #category : #accessing }
+LanguageLinkApplication >> stdout [
+
+	^ processHandler stdout
 ]
 
 { #category : #'start-stop' }

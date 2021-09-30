@@ -19,6 +19,15 @@ LanguageLinkPromise class >> id: id [
 ]
 
 { #category : #accessing }
+LanguageLinkPromise >> exception [
+	"Answer the receiver's exception"
+
+	(value isKindOf: Exception) ifFalse:
+		[ self error: 'Promise isn''t broken' ].
+	^ value
+]
+
+{ #category : #accessing }
 LanguageLinkPromise >> id [
 	^ id
 ]
@@ -94,7 +103,7 @@ LanguageLinkPromise >> waitAgain: aBoolean [
 LanguageLinkPromise >> waitForValue [
 	"Wait for the server to supply the result and answer it.
 	If the value is an exception, the issue may be resolved and the promise flagged to wait for the new value to come through (waitAgain)."
-	<dapDebuggerSignal>
+	<remoteDebuggerSignal>
 
 	[ waitAgain := false.
 	self isSignaled ifFalse: [ semaphore wait ].

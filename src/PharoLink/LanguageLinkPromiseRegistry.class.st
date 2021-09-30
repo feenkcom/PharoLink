@@ -25,7 +25,7 @@ LanguageLinkPromiseRegistry >> notifyDebuggerPaused: aDebugger [
 	"Notify all promises that the server debugger has paused in case the Bloc UI process is waiting on one of the promises."
 	| signal promises |
 
-	signal := PharoLinkDebuggerPaused new dapDebugger: aDebugger.
+	signal := PharoLinkDebuggerPaused new debuggerClient: aDebugger.
 	semaphore critical: [ promises := promiseTable values ].
 	promises do: [ :promise |
 		promise signalWithValue: signal copy ].

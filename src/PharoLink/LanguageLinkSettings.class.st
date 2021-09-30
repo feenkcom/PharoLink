@@ -25,12 +25,18 @@ Class {
 { #category : #'instance creation' }
 LanguageLinkSettings class >> pharoDefaultSettings [
 
-	| aVmExecutable |
-	aVmExecutable := self
-		                 forPharo8: [ FileLocator vmBinary resolve ]
-		                 forPharo9: [ 
-			                 FileLocator vmBinary resolve parent
-			                 / (FileLocator vmBinary resolve basename , '-cli') ].
+	| binary |
+	binary := FileLocator vmBinary resolve.
+	self forPharo8: [  ] forPharo9: [ 
+		Smalltalk platform isWindows
+			ifTrue: [ 
+				(binary basename endsWith: '-cli.exe') ifFalse: [ 
+					| parts |
+					parts := '.' split: binary basename.
+					binary := binary parent / (parts first , '-cli.' , parts second) ] ]
+			ifFalse: [ 
+				(binary basename endsWith: '-cli') ifFalse: [ 
+					binary := binary parent / (binary basename , '-cli') ] ] ].
 	^ self new
 		  clientSocketAddress: (LanguageLinkSocketAddress
 				   ipOrName: 'localhost'
@@ -40,7 +46,7 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 				   port: 6900 + 99 atRandom);
 		  messageBrokerStrategy: LanguageLinkHttpMessageBroker;
 		  serverProcessClass: PharoLinkPharoProcess;
-		  serverExecutable: aVmExecutable;
+		  serverExecutable: binary;
 		  serverImage: FileLocator image resolve;
 		  platform: PharoLinkPharoPlatform new;
 		  commandFactoryClass: PharoLinkCommandFactory;
