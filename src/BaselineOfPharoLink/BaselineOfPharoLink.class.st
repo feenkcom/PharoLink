@@ -1,15 +1,19 @@
 Class {
-	#name : 'BaselineOfPharoLink',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfPharoLink'
+	#name : #BaselineOfPharoLink,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfPharoLink
 }
 
-{ #category : 'baseline' }
+{ #category : #baseline }
 BaselineOfPharoLink >> baseline: spec [
 
 	<baseline>
 	| subprocess |
 	spec for: #common do: [ 
+		spec
+			baseline: 'GToolkitExternalProcess'
+			with: [ spec repository: 'github://feenkcom/gtoolkit-external-process:main/src' ].
+	
 		Smalltalk platform isWindows
 			ifTrue: [ 
 				spec
@@ -32,5 +36,5 @@ BaselineOfPharoLink >> baseline: spec [
 			baseline: 'Beacon'
 			with: [ 
 				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
-		spec package: 'PharoLink' ]
+		spec package: 'PharoLink' with: [ spec requires: #('GToolkitExternalProcess') ] ]
 ]
