@@ -10,7 +10,7 @@ BaselineOfPharoLink >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'GToolkitExternalProcess' with: [
-				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.0/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.1/src' ].
 		spec
 			baseline: 'OSSubprocess' with: [
 				spec repository: 'github://feenkcom/OSSubprocess:v1.1.20/repository' ].
