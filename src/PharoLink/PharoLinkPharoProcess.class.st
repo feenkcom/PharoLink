@@ -9,7 +9,7 @@ Class {
 		'NodejsPath',
 		'PipenvPath'
 	],
-	#category : 'PharoLink-Pharo-Processes'
+	#category : #'PharoLink-Pharo-Processes'
 }
 
 { #category : #private }
@@ -58,17 +58,14 @@ PharoLinkPharoProcess >> isRunning [
 
 { #category : #private }
 PharoLinkPharoProcess >> newProcess [
-
 	| newProcess |
-	newProcess := (Smalltalk platform isWindows
-		               ifTrue: [ GtWinSubprocess new ]
-		               ifFalse: [ GtUnixSubprocess new ])
-		              command: self settings serverExecutable fullName;
-		              arguments: self processArguments;
-		              workingDirectory:
-			              self workingDirectory resolve fullName;
-		              terminateOnShutdown;
-		              yourself.
+
+	newProcess := GtUnixSubprocess new
+		command: self settings serverExecutable fullName;
+		arguments: self processArguments;
+		workingDirectory: self workingDirectory resolve fullName;
+		terminateOnShutdown;
+		yourself.
 	self environmentVariables associationsDo: [ :assoc | 
 		newProcess environmentAt: assoc key put: assoc value ].
 	^ newProcess
