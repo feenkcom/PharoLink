@@ -60,7 +60,7 @@ PharoLinkPharoProcess >> isRunning [
 PharoLinkPharoProcess >> newProcess [
 	| newProcess |
 
-	newProcess := GtUnixSubprocess new
+	newProcess := GtSubprocessWithInMemoryOutput new
 		command: self settings serverExecutable fullName;
 		arguments: self processArguments;
 		workingDirectory: self workingDirectory resolve fullName;

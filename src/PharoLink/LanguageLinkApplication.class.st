@@ -51,7 +51,7 @@ LanguageLinkApplication class >> killAll [
 		ifNone: [ allInstances first ].
 	allInstances do: #stop.
 	wd := firstApplication settings workingDirectory.
-	proc := GtUnixSubprocess new command: (wd / 'killservers.sh') fullName.
+	proc := GtSubprocessWithInMemoryOutput new command: (wd / 'killservers.sh') fullName.
 	proc runAndWait.
 	proc isSuccess ifFalse: 
 		[ error:= LanguageLinkProcessError new
