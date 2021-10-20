@@ -8,7 +8,7 @@ Class {
 		'remoteClass',
 		'name'
 	],
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #'instance creation' }
@@ -114,6 +114,48 @@ LanguageLinkProxyObject >> printOn: str [
 LanguageLinkProxyObject >> proxyPerform: aSymbol [
 
 	^ self evaluateAndWait: 'self ', aSymbol
+]
+
+{ #category : #evaluating }
+LanguageLinkProxyObject >> proxyPerform: aSymbol withCopiedArguments: anArrayOfArguments [
+
+	"Copied arguments by serializing with Fuel. Does not serialize the result."
+
+	| message |
+	message := String streamContents: [ :stream | 
+		           stream nextPutAll: '
+						arguments := LanguageLinkUtils base64Decode: '''.
+		           LanguageLinkUtils
+			           base64Encode: anArrayOfArguments
+			           to: stream.
+		           stream nextPutAll: ''' readStream.
+						self perform: '.
+		           aSymbol printOn: stream.
+		           stream nextPutAll: ' withArguments: arguments' ].
+	^ self evaluateSourceSequence: message
+]
+
+{ #category : #evaluating }
+LanguageLinkProxyObject >> proxyPerform: aSymbol withCopiedResultAndArguments: anArrayOfArguments [
+
+	"Copied arguments by serializing with Fuel. Does not serialize the result."
+
+	| message result |
+	message := String streamContents: [ :stream | 
+		           stream nextPutAll: '
+						arguments := LanguageLinkUtils base64Decode: '''.
+		           LanguageLinkUtils
+			           base64Encode: anArrayOfArguments
+			           to: stream.
+		           stream nextPutAll: ''' readStream.
+						result := self perform: '.
+		           aSymbol printOn: stream.
+		           stream nextPutAll: ' withArguments: arguments.
+		           	 message := String streamContents: [ :stream |
+							LanguageLinkUtils base64Encode: result to: stream ].
+						message' ].
+	result := self evaluateSourceSequence: message.
+	^ LanguageLinkUtils base64Decode: result readStream
 ]
 
 { #category : #'message performing' }
