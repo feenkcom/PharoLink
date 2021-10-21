@@ -20,11 +20,12 @@ LanguageLinkPromise class >> id: id [
 
 { #category : #accessing }
 LanguageLinkPromise >> exception [
-	"Answer the receiver's exception"
+	"Answer the receiver's exception, nil if there isn't one"
 
-	(value isKindOf: Exception) ifFalse:
-		[ self error: 'Promise isn''t broken' ].
-	^ value
+	^ (value isKindOf: Exception) 
+		ifTrue: [ value ]
+		ifFalse: [  ].
+
 ]
 
 { #category : #accessing }
