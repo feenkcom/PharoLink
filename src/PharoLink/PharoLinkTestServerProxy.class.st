@@ -78,7 +78,8 @@ PharoLinkTestServerProxy >> initialize [
 	super initialize.
 	announcer := Announcer new.
 	events := OrderedDictionary new.
-	result := TestResult new
+	result := TestResult new.
+	numberOfTests := 0.
 ]
 
 { #category : #accessing }
