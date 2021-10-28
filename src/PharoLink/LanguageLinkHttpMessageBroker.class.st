@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'server'
 	],
-	#category : 'PharoLink-Pharo-MessageBroker'
+	#category : #'PharoLink-Pharo-MessageBroker'
 }
 
 { #category : #accessing }
@@ -21,7 +21,6 @@ LanguageLinkHttpMessageBroker class >> serializerClass [
 LanguageLinkHttpMessageBroker >> handleRMessage: dict [
 	| msgClass |
 	msgClass := self resolveMessageFromType: (dict at: #type).
-	StringSignal emit: 'msgClass = ', msgClass name asString.
 	^ self handle: dict reverseMessageClass: msgClass
 ]
 
