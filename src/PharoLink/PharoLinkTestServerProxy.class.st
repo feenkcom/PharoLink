@@ -17,6 +17,12 @@ PharoLinkTestServerProxy class >> remoteClassName [
 	^ #PharoLinkTestServer
 ]
 
+{ #category : #accessing }
+PharoLinkTestServerProxy >> announcer [
+
+	^ announcer
+]
+
 { #category : #ui }
 PharoLinkTestServerProxy >> gtEventsFor: aView [
 
