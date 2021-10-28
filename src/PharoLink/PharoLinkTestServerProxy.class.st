@@ -121,6 +121,8 @@ PharoLinkTestServerProxy >> run: aSuite [
 						result' ].
 	promise := commandFactory send: message.
 	promise transformBlock: [ :r | 
-		result := LanguageLinkUtils base64Decode: r readStream ].
+		r isString
+			ifTrue: [ result := LanguageLinkUtils base64Decode: r readStream ]
+			ifFalse: [ r ] ].
 	^ promise
 ]
