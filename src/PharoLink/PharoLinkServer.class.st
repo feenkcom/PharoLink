@@ -112,6 +112,15 @@ PharoLinkServer >> debugMode [
 ]
 
 { #category : #private }
+PharoLinkServer >> handleIsAlive: aZnRequest [
+	"Respond to the ping request"
+
+	^ (ZnResponse statusLine: ZnStatusLine ok)
+		entity: (ZnEntity json: '{}');
+		yourself
+]
+
+{ #category : #private }
 PharoLinkServer >> handlEnqueue: aZnRequest [
 	"Process the supplied statements"
 	| command dict |
@@ -129,15 +138,6 @@ PharoLinkServer >> handlEnqueue: aZnRequest [
 		registry: registry.
 "self halt: (dict at: #statements)."
 	[ command execute: globals ] forkAt: Processor userBackgroundPriority.
-	^ (ZnResponse statusLine: ZnStatusLine ok)
-		entity: (ZnEntity json: '{}');
-		yourself
-]
-
-{ #category : #private }
-PharoLinkServer >> handleIsAlive: aZnRequest [
-	"Respond to the ping request"
-
 	^ (ZnResponse statusLine: ZnStatusLine ok)
 		entity: (ZnEntity json: '{}');
 		yourself
