@@ -36,9 +36,7 @@ LanguageLinkRegistryFinalizer >> executionHandler: anObject [
 LanguageLinkRegistryFinalizer >> finalize [
 	| cf |
 	self application isRunning ifFalse: 
-		[ StringSignal emit: 'LanguageLink not finalizing: ', proxyObjectId printString.
-		^ self ].
-	StringSignal emit: 'LanguageLink finalizing: ', proxyObjectId printString.
+		[ ^ self ].
 	cf := executionHandler newCommandFactory.
 	cf << (executionHandler removeId: proxyObjectId).
 	[ cf send ]
