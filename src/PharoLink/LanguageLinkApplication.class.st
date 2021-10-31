@@ -199,6 +199,28 @@ LanguageLinkApplication >> executionHandler [
 ]
 
 { #category : #ui }
+LanguageLinkApplication >> gtPlaygroundFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'Playground' translated;
+		aptitude: BrGlamorousCodeEditorAptitude;
+		priority: 100;
+		text: [ self gtPlaygroundText ];
+		styler: self settings parserClass gtStyler;
+		actionButtonIcon: BrGlamorousVectorIcons playinspect  
+			action: [ :aButton |
+				| statements result |
+				statements := aButton phlow textViewContent asString.
+				self gtPlaygroundSaveSource: statements.
+				result := [ self evaluateSourceSequence: statements ]
+					on: PharoLinkRemoteError, PharoLinkParserError
+					do: [ :ex | ex ].
+				aButton phlow spawnObject: result ].
+
+]
+
+{ #category : #ui }
 LanguageLinkApplication >> gtSettingsFor: aView [
 	<gtView>
 
