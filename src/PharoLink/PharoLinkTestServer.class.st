@@ -44,8 +44,10 @@ PharoLinkTestServer >> run: aSuite notifier: aBlock [
 			          notifier value: (LanguageLinkUtils base64Encode: buffer) ] ].
 	          semaphore signal ] fork.
 	subscription := result announcer
-		                when: PharoLinkTestAnnouncement
-		                do: [ :e | events nextPut: e ].
+		when: PharoLinkTestAnnouncement
+		do: [ :e | 
+			events nextPut: e.
+			StringSignal emit: e printString. ].
 	[ suite run: result ] ensure: [ 
 		finished := true.
 		semaphore wait.

@@ -25,7 +25,12 @@ PharoLinkTestResult >> runCase: aTestCase [
 
 	[ 
 	announcer announce: aTestCase gtTestCaseStart.
-	aTestCase runCaseManaged.
+
+	"Force the test case to be run under the control of the execution environment.
+	This should force timeouts for alternate test frameworks
+	aTestCase runCaseManaged."
+	CurrentExecutionEnvironment runTestCase: aTestCase.
+
 	announcer announce: aTestCase gtTestCasePass.
 	self addPass: aTestCase ]
 		on: self class failure , self class skip , self class warning
