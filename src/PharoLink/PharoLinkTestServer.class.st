@@ -48,7 +48,11 @@ PharoLinkTestServer >> run: aSuite notifier: aBlock [
 		do: [ :e | 
 			events nextPut: e.
 			StringSignal emit: e printString. ].
-	[ suite run: result ] ensure: [ 
+	[ [ suite run: result ] 
+		on: Exception
+		do: [ :ex |
+			StringSignal emit: 'IGNORING: ', ex printString. ]
+	] ensure: [ 
 		finished := true.
 		semaphore wait.
 		result announcer unsubscribe: subscription ].
