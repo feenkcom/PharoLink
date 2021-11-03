@@ -38,6 +38,15 @@ PharoLinkNetworkErrorSignal >> networkError: anObject [
 ]
 
 { #category : #printing }
+PharoLinkNetworkErrorSignal >> printOn: aStream [
+
+	self printOneLineOn: aStream.
+	aStream 
+		<< command blockString;
+		cr.
+]
+
+{ #category : #printing }
 PharoLinkNetworkErrorSignal >> printOneLineContentsOn: stream [
 
 	stream 
