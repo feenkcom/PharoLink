@@ -37,16 +37,22 @@ PharoLinkTestServer >> run: aSuite notifier: aBlock [
 	pusher := [ 
 	          [ finished and: [ events isEmpty ] ] whileFalse: [ 
 		          | buffer |
-		          200 milliSeconds wait.
+		          500 milliSeconds wait.
 		          buffer := OrderedCollection new.
 		          events flush: [ :e | buffer add: e ].
 		          buffer ifNotEmpty: [ 
 			          notifier value: (LanguageLinkUtils base64Encode: buffer) ] ].
 	          semaphore signal ] fork.
 	subscription := result announcer
-		                when: PharoLinkTestAnnouncement
-		                do: [ :e | events nextPut: e ].
-	[ suite run: result ] ensure: [ 
+		when: PharoLinkTestAnnouncement
+		do: [ :e | 
+			events nextPut: e.
+			StringSignal emit: e printString. ].
+	[ [ suite run: result ] 
+		on: Exception
+		do: [ :ex |
+			StringSignal emit: 'IGNORING: ', ex printString. ]
+	] ensure: [ 
 		finished := true.
 		semaphore wait.
 		result announcer unsubscribe: subscription ].

@@ -5,7 +5,7 @@ Class {
 		'command',
 		'networkError'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #'instance creation' }
@@ -35,6 +35,15 @@ PharoLinkNetworkErrorSignal >> networkError [
 { #category : #accessing }
 PharoLinkNetworkErrorSignal >> networkError: anObject [
 	networkError := anObject
+]
+
+{ #category : #printing }
+PharoLinkNetworkErrorSignal >> printOn: aStream [
+
+	self printOneLineOn: aStream.
+	aStream 
+		<< command blockString;
+		cr.
 ]
 
 { #category : #printing }

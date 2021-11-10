@@ -199,6 +199,28 @@ LanguageLinkApplication >> executionHandler [
 ]
 
 { #category : #ui }
+LanguageLinkApplication >> gtPlaygroundFor: aView [
+	<gtView>
+
+	^ aView textEditor
+		title: 'Playground' translated;
+		aptitude: BrGlamorousCodeEditorAptitude;
+		priority: 100;
+		text: [ self gtPlaygroundText ];
+		styler: self settings parserClass gtStyler;
+		actionButtonIcon: BrGlamorousVectorIcons playinspect  
+			action: [ :aButton |
+				| statements result |
+				statements := aButton phlow textViewContent asString.
+				self gtPlaygroundSaveSource: statements.
+				result := [ self evaluateSourceSequence: statements ]
+					on: PharoLinkRemoteError, PharoLinkParserError
+					do: [ :ex | ex ].
+				aButton phlow spawnObject: result ].
+
+]
+
+{ #category : #ui }
 LanguageLinkApplication >> gtSettingsFor: aView [
 	<gtView>
 
@@ -406,7 +428,7 @@ LanguageLinkApplication >> stop [
 { #category : #initialization }
 LanguageLinkApplication >> waitInitialization [
 	"Timeout of 10 seconds and try every 0.5 seconds"
-	1 to: 10 by: 0.5 do: [ :t |
+	1 to: 20 by: 0.5 do: [ :t |
 		self isServerReady 
 				ifTrue: [ ^ self ]
 				ifFalse: [ (Delay forMilliseconds: 500) wait ] ].

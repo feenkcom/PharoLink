@@ -96,10 +96,13 @@ PharoLinkTestServerProxy >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkTestServerProxy >> run: aSuiteString [
+PharoLinkTestServerProxy >> run: aSuite [
 
 	| message promise commandFactory |
 	events := OrderedDictionary new.
+	numberOfTests := SUnitTestsCounter new
+		                 visit: aSuite;
+		                 count.
 	commandFactory := self newCommandFactory.
 	observer := commandFactory observerFromCallback: [ :e | 
 		            | buffer |
@@ -112,16 +115,21 @@ PharoLinkTestServerProxy >> run: aSuiteString [
 			            announcer announce: event ].
 		            0 ].
 	message := String streamContents: [ :stream | 
+		           stream nextPutAll: '
+						object := LanguageLinkUtils base64Decode: '''.
+		           LanguageLinkUtils base64Encode: aSuite to: stream.
 		           stream
-			           nextPutAll: '| object block |
-						object := ';
-			           nextPutAll: aSuiteString;
-			           nextPutAll: '.
+			           nextPutAll: ''' readStream.
 						block := [ :e | self run: e notifier: ';
 			           nextPutAll: observer pharoLinkFormattedCode;
 			           nextPutAll: ' ].
-						block value: object.
-						true' ].
+						result := String streamContents: [ :stream |
+							LanguageLinkUtils base64Encode: (block value: object) to: stream ].
+						result' ].
 	promise := commandFactory send: message.
+	promise transformBlock: [ :r | 
+		r isString
+			ifTrue: [ result := LanguageLinkUtils base64Decode: r readStream ]
+			ifFalse: [ r ] ].
 	^ promise
 ]
