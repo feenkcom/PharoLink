@@ -133,3 +133,34 @@ PharoLinkTestServerProxy >> run: aSuite [
 			ifFalse: [ r ] ].
 	^ promise
 ]
+
+{ #category : #accessing }
+PharoLinkTestServerProxy >> runString: aSuiteString [
+
+	| message promise commandFactory |
+	events := OrderedDictionary new.
+	commandFactory := self newCommandFactory.
+	observer := commandFactory observerFromCallback: [ :e | 
+		            | buffer |
+		            buffer := LanguageLinkUtils base64Decode: e readStream.
+		            buffer do: [ :event | 
+			            events
+				            at: event hash
+				            ifPresent: [ :set | set add: event ]
+				            ifAbsentPut: [ IdentitySet with: event ].
+			            announcer announce: event ].
+		            0 ].
+	message := String streamContents: [ :stream | 
+		           stream
+			           nextPutAll: '| object block |
+						object := ';
+			           nextPutAll: aSuiteString;
+			           nextPutAll: '.
+						block := [ :e | self run: e notifier: ';
+			           nextPutAll: observer pharoLinkFormattedCode;
+			           nextPutAll: ' ].
+						block value: object.
+						true' ].
+	promise := commandFactory send: message.
+	^ promise
+]
