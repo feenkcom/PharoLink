@@ -65,8 +65,15 @@ PharoLinkTestServerProxy >> gtResultsFor: aView [
 	^ aView tree
 		  title: 'Results';
 		  priority: 1;
-		  updateWhen: TestCaseAnnouncement in: [ announcer ];
-		  items: [ #( #passed #failures #errors #skipped ) ];
+		  updateWhen: PharoLinkTestCaseEndAnnouncement in: [ announcer ];
+		  items: [ #( #failures #errors #skipped #passed ) ];
+		  itemText: [ :anItem | 
+			  anItem isSymbol
+				  ifTrue: [ 
+					  '{1} ({2})' format: { 
+								  anItem.
+								  (result perform: anItem) size } ]
+				  ifFalse: [ anItem ] ];
 		  children: [ :anItem | 
 			  anItem isSymbol
 				  ifTrue: [ result perform: anItem ]
@@ -89,13 +96,10 @@ PharoLinkTestServerProxy >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkTestServerProxy >> run: aSuite [
+PharoLinkTestServerProxy >> run: aSuiteString [
 
 	| message promise commandFactory |
 	events := OrderedDictionary new.
-	numberOfTests := SUnitTestsCounter new
-		                 visit: aSuite;
-		                 count.
 	commandFactory := self newCommandFactory.
 	observer := commandFactory observerFromCallback: [ :e | 
 		            | buffer |
@@ -108,19 +112,16 @@ PharoLinkTestServerProxy >> run: aSuite [
 			            announcer announce: event ].
 		            0 ].
 	message := String streamContents: [ :stream | 
-		           stream nextPutAll: '
-						object := LanguageLinkUtils base64Decode: '''.
-		           LanguageLinkUtils base64Encode: aSuite to: stream.
 		           stream
-			           nextPutAll: ''' readStream.
+			           nextPutAll: '| object block |
+						object := ';
+			           nextPutAll: aSuiteString;
+			           nextPutAll: '.
 						block := [ :e | self run: e notifier: ';
 			           nextPutAll: observer pharoLinkFormattedCode;
 			           nextPutAll: ' ].
-						result := String streamContents: [ :stream |
-							LanguageLinkUtils base64Encode: (block value: object) to: stream ].
-						result' ].
+						block value: object.
+						true' ].
 	promise := commandFactory send: message.
-	promise transformBlock: [ :r | 
-		result := LanguageLinkUtils base64Decode: r readStream ].
 	^ promise
 ]

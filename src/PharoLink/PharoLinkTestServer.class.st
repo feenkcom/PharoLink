@@ -37,7 +37,7 @@ PharoLinkTestServer >> run: aSuite notifier: aBlock [
 	pusher := [ 
 	          [ finished and: [ events isEmpty ] ] whileFalse: [ 
 		          | buffer |
-		          500 milliSeconds wait.
+		          200 milliSeconds wait.
 		          buffer := OrderedCollection new.
 		          events flush: [ :e | buffer add: e ].
 		          buffer ifNotEmpty: [ 
