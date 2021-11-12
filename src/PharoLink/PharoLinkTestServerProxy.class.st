@@ -65,8 +65,15 @@ PharoLinkTestServerProxy >> gtResultsFor: aView [
 	^ aView tree
 		  title: 'Results';
 		  priority: 1;
-		  updateWhen: TestCaseAnnouncement in: [ announcer ];
-		  items: [ #( #passed #failures #errors #skipped ) ];
+		  updateWhen: PharoLinkTestCaseEndAnnouncement in: [ announcer ];
+		  items: [ #( #failures #errors #skipped #passed ) ];
+		  itemText: [ :anItem | 
+			  anItem isSymbol
+				  ifTrue: [ 
+					  '{1} ({2})' format: { 
+								  anItem.
+								  (result perform: anItem) size } ]
+				  ifFalse: [ anItem ] ];
 		  children: [ :anItem | 
 			  anItem isSymbol
 				  ifTrue: [ result perform: anItem ]
@@ -124,5 +131,36 @@ PharoLinkTestServerProxy >> run: aSuite [
 		r isString
 			ifTrue: [ result := LanguageLinkUtils base64Decode: r readStream ]
 			ifFalse: [ r ] ].
+	^ promise
+]
+
+{ #category : #accessing }
+PharoLinkTestServerProxy >> runString: aSuiteString [
+
+	| message promise commandFactory |
+	events := OrderedDictionary new.
+	commandFactory := self newCommandFactory.
+	observer := commandFactory observerFromCallback: [ :e | 
+		            | buffer |
+		            buffer := LanguageLinkUtils base64Decode: e readStream.
+		            buffer do: [ :event | 
+			            events
+				            at: event hash
+				            ifPresent: [ :set | set add: event ]
+				            ifAbsentPut: [ IdentitySet with: event ].
+			            announcer announce: event ].
+		            0 ].
+	message := String streamContents: [ :stream | 
+		           stream
+			           nextPutAll: '| object block |
+						object := ';
+			           nextPutAll: aSuiteString;
+			           nextPutAll: '.
+						block := [ :e | self run: e notifier: ';
+			           nextPutAll: observer pharoLinkFormattedCode;
+			           nextPutAll: ' ].
+						block value: object.
+						true' ].
+	promise := commandFactory send: message.
 	^ promise
 ]

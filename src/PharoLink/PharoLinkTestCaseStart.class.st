@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseStart >> addToResult: result [
+
+	
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseStart >> color [
 
 	^ Color blue

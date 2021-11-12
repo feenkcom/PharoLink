@@ -22,7 +22,7 @@ PharoLinkTestCaseEndAnnouncement >> gtTestCaseFor: aView [
 	^ aView forward
 		  title: 'Test case';
 		  priority: 10;
-		  object: [ testCaseClass >> testCaseSelector ];
+		  object: [ testCaseClass lookupSelector: testCaseSelector ];
 		  view: #gtSourceFor:
 ]
 
@@ -36,4 +36,10 @@ PharoLinkTestCaseEndAnnouncement >> initializeShouldPass: aBoolean [
 PharoLinkTestCaseEndAnnouncement >> isEnd [
 
 	^ true
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> shouldPass [
+
+	^ testCaseShouldPass
 ]

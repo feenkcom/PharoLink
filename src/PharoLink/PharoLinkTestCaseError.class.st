@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseError >> addToResult: result [
+	result addError: self
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseError >> color [
 
 	^ Color red

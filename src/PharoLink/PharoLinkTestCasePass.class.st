@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCasePass >> addToResult: result [
+	result addPass: self
+]
+
+{ #category : #accessing }
 PharoLinkTestCasePass >> color [
 
 	^ Color green
