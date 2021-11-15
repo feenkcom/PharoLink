@@ -211,20 +211,21 @@ LanguageLinkApplication >> gtSettingsFor: aView [
 
 { #category : #ui }
 LanguageLinkApplication >> gtStatusFor: aView [
-	<gtView>
 
-	^ aView textEditor 
-		title: 'Status';
-		priority: 50;
-		text: [ self serverStatus asRopedText glamorousCodeFont ]
+	<gtView>
+	^ aView textEditor
+		  title: 'Status';
+		  priority: 50;
+		  text: [ self serverStatus asRopedText glamorousCodeFont ];
+		  actionUpdateButton
 ]
 
 { #category : #handlers }
 LanguageLinkApplication >> handlers [
 	^ Array
 		with: loggingHandler
-		with: communicationHandler
 		with: processHandler
+		with: communicationHandler
 		with: executionHandler
 ]
 

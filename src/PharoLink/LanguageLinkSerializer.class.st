@@ -1,10 +1,18 @@
 Class {
 	#name : #LanguageLinkSerializer,
 	#superclass : #LanguageLinkMapper,
-	#category : 'PharoLink-Serialization'
+	#category : #'PharoLink-Serialization'
 }
 
 { #category : #api }
 LanguageLinkSerializer >> serialize: anObject [
-	^ serializerWrapper serialize: anObject
+	| serializedObject |
+
+	serializedObject := (anObject isKindOf: LanguageLinkProxyObject)
+		ifTrue: [ {
+				'__class__' -> anObject remoteClass.
+				'__registryid__' -> anObject name.
+				} asDictionary ]
+		ifFalse: [ anObject ].
+	^ serializerWrapper serialize: serializedObject
 ]

@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #serialization }
@@ -43,9 +43,18 @@ PharoLinkServerSerializer class >> serialize: anObject registry: aRegistry [
 ]
 
 { #category : #private }
-PharoLinkServerSerializer >> deserialize: aString [
+PharoLinkServerSerializer >> deserialize: aByteArray [
+	| proxyOrObject |
 
-	^ PharoLinkJSONReader fromString: aString registry: registry
+	proxyOrObject := MpDecoder decode: aByteArray.
+	proxyOrObject isDictionary ifFalse: [ ^ proxyOrObject ].
+	^ proxyOrObject size = 2 ifTrue: 
+		[ proxyOrObject 
+			at: '__registryid__'
+			ifPresent: [ :id | registry resolve: id ]
+			ifAbsent: [ proxyOrObject ] ]
+	ifFalse: [ proxyOrObject ].
+
 ]
 
 { #category : #accessing }
@@ -60,6 +69,17 @@ PharoLinkServerSerializer >> registry: anObject [
 
 { #category : #private }
 PharoLinkServerSerializer >> serialize: anObject [
+	| proxyOrObject |
 
-	^ PharoLinkJSONWriter toString: anObject registry: registry
+	proxyOrObject := (anObject isDictionary and: [ anObject at: #'__pharolinkImmediate' ifAbsent: [ false ] ]) ifTrue:
+		[ anObject ]
+	ifFalse:
+		[ (PharoLinkRegistry isPrimitive: anObject) ifTrue:
+			[ anObject ]
+		ifFalse:
+			[ {
+				'__class__' -> anObject class name.
+				'__registryid__' -> (registry register: anObject).
+				} asDictionary ] ].
+	^ MpEncoder encode: proxyOrObject
 ]
