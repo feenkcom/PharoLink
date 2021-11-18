@@ -38,13 +38,10 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 				(binary basename endsWith: '-cli') ifFalse: [ 
 					binary := binary parent / (binary basename , '-cli') ] ] ].
 	^ self new
-		  clientSocketAddress: (LanguageLinkSocketAddress
-				   ipOrName: 'localhost'
-				   port: 7000 + 99 atRandom);
 		  serverSocketAddress: (LanguageLinkSocketAddress
 				   ipOrName: 'localhost'
 				   port: 6900 + 99 atRandom);
-		  messageBrokerStrategy: LanguageLinkHttpMessageBroker;
+		  messageBrokerStrategy: LanguageLinkMsgPackPharoBroker;
 		  serverProcessClass: PharoLinkPharoProcess;
 		  serverExecutable: binary;
 		  serverImage: FileLocator image resolve;
