@@ -43,6 +43,11 @@ LanguageLinkHttpMessageBroker >> isRunning [
 	^ server notNil and: [ server isRunning ]
 ]
 
+{ #category : #accessing }
+LanguageLinkHttpMessageBroker >> port [
+	^ settings clientSocketAddress port
+]
+
 { #category : #private }
 LanguageLinkHttpMessageBroker >> preventTestForkedPDestroyServer [
 	| env |

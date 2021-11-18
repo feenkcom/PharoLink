@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkExecutionHandler,
 	#superclass : #LanguageLinkExecutionHandler,
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #'private protocol' }
@@ -10,7 +10,7 @@ PharoLinkExecutionHandler >> buildMessageFromCommand: command [
 	message := LanguageLinkEnqueueCommandMessage 
 					commandId: command id 
 					statements: command codeForRemote 
-					bindings: command bindings.
+					bindings: (command bindings asDictionary collect: [ :obj | self serialize: obj ]).
 	message addBinding: #pharoCommandId -> (self serialize: command id).
 	^ message
 ]
@@ -40,8 +40,9 @@ PharoLinkExecutionHandler >> notifyCallbackHandler: msg [
 	"Callbacks should only return primitives, the registry is on the server side.
 	Allow Dictionaries?"
 	(PharoLinkRegistry isPrimitive: val) ifFalse: [ val := nil ].
+	serialization := self serialize: val.
 	^ msg createAnswer 
-		value: val;
+		value: serialization;
 		yourself
 ]
 

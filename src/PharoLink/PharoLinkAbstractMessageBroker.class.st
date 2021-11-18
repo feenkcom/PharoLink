@@ -94,7 +94,7 @@ PharoLinkAbstractMessageBroker >> javaScriptUri [
 
 { #category : #accessing }
 PharoLinkAbstractMessageBroker >> port [
-	^ settings clientSocketAddress port
+	^ settings serverSocketAddress port
 ]
 
 { #category : #private }
