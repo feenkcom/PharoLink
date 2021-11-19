@@ -32,7 +32,7 @@ BaselineOfPharoLink >> baseline: spec [
 			with: [ spec repository: 'github://svenvc/NeoJSON:v17/repository' ];
 			baseline: 'MessagePack' with: [ 
 				spec repository:
-						'github://msgpack/msgpack-smalltalk:v1.3.1/repository' ];
+						'github://feenkcom/msgpack-smalltalk:main/repository' ];
 			baseline: 'Beacon'
 			with: [ 
 				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
