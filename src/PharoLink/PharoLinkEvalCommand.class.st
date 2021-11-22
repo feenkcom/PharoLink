@@ -5,11 +5,10 @@ Class {
 		'blockString',
 		'bindings',
 		'id',
-		'responsePort',
-		'responseHost',
+		'connection',
 		'registry'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #'as yet unclassified' }
@@ -40,6 +39,19 @@ PharoLinkEvalCommand >> blockString [
 { #category : #accessing }
 PharoLinkEvalCommand >> blockString: anObject [
 	blockString := anObject
+]
+
+{ #category : #accessing }
+PharoLinkEvalCommand >> connection [
+	<return: #PharoLinkServerConnection>
+
+	^ connection
+]
+
+{ #category : #accessing }
+PharoLinkEvalCommand >> connection: aPharoLinkServerConnection [
+
+	connection := aPharoLinkServerConnection
 ]
 
 { #category : #running }
@@ -82,13 +94,6 @@ PharoLinkEvalCommand >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialization }
-PharoLinkEvalCommand >> initialize [
-
-	super initialize.
-	responseHost := 'localhost'.
-]
-
 { #category : #private }
 PharoLinkEvalCommand >> notify: anObject command: commandIdString observer: observerIdString [
 	| data |
@@ -98,8 +103,8 @@ PharoLinkEvalCommand >> notify: anObject command: commandIdString observer: obse
 		at: 'type' put: 'CALLBACK';
 		at: 'commandId' put: commandIdString;
 		at: 'observerId' put: observerIdString;
-		at: 'value' put: (PharoLinkServerSerializer serialize: anObject registry: registry).
-	^ (PharoLinkServerSerializer deserialize: (self sendResponse: data) contents registry: registry) at: #value.
+		at: 'value' put: (PharoLinkServerSerializer serialize: anObject registry: self registry).
+	^ self sendSyncResponse: data.
 ]
 
 { #category : #private }
@@ -110,8 +115,8 @@ PharoLinkEvalCommand >> notify: anObject id: anIdString [
 	data 	
 		at: 'type' put: 'EVAL';
 		at: 'id' put: anIdString;
-		at: 'value' put: (PharoLinkServerSerializer serialize: anObject registry: registry).
-	^ self sendResponse: data.
+		at: 'value' put: (PharoLinkServerSerializer serialize: anObject registry: self registry).
+	^ self sendAsyncResponse: data.
 ]
 
 { #category : #private }
@@ -130,7 +135,7 @@ PharoLinkEvalCommand >> notifyError: error [
 		at: 'errMsg' put: error printString;
 		at: 'commandId' put: self id;
 		at: 'trace' put: self stackString.
-	^ [ self sendResponse: data ]
+	^ [ self sendSyncResponse: data ]
 		on: ConnectionTimedOut 
 		do: [ :ex | | commsError |
 			commsError := LanguageLinkCommunicationsSignal new
@@ -140,73 +145,24 @@ PharoLinkEvalCommand >> notifyError: error [
 			commsError emit ].
 ]
 
-{ #category : #private }
-PharoLinkEvalCommand >> notifyImmediate: anObject id: anIdString [ 
-	| data |
-
-	data := Dictionary new.
-	data 	
-		at: 'type' put: 'EVAL';
-		at: 'id' put: anIdString;
-		at: 'value' put: (NeoJSONWriter toString: anObject).
-	^ self sendResponse: data.
-]
-
 { #category : #accessing }
 PharoLinkEvalCommand >> registry [
-	^ registry
-]
 
-{ #category : #accessing }
-PharoLinkEvalCommand >> registry: anObject [
-	registry := anObject
-]
-
-{ #category : #accessing }
-PharoLinkEvalCommand >> responseHost [
-	^ responseHost
-]
-
-{ #category : #accessing }
-PharoLinkEvalCommand >> responseHost: anObject [
-	responseHost := anObject
-]
-
-{ #category : #accessing }
-PharoLinkEvalCommand >> responsePort [
-	^ responsePort
-]
-
-{ #category : #accessing }
-PharoLinkEvalCommand >> responsePort: anObject [
-	responsePort := anObject
+	^ connection registry
 ]
 
 { #category : #private }
-PharoLinkEvalCommand >> sendResponse: data [
-	| url entity response |
+PharoLinkEvalCommand >> sendAsyncResponse: data [
 
-	url := ZnUrl new 
-		scheme: 'http';
-		host: responseHost;
-		port: responsePort;
-		addPathSegment: (data at: 'type').
+	^ connection sendAsyncMessage: data.
 
-	data at: '__sync' put: UUIDGenerator next.
-	entity := ZnEntity json: (NeoJSONWriter toString: data).
+]
 
-	response := ZnClient new
-		beOneShot;
-		url: url;
-		entity: entity;
-		logLevel: 0;
-		post;
-		response.
+{ #category : #private }
+PharoLinkEvalCommand >> sendSyncResponse: data [
 
-	response status = 200 ifFalse: 
-		[ PharoLinkBadResponseSignal emitRequest: data response: response ].
+	^ connection sendSyncMessage: data.
 
-	^ response
 ]
 
 { #category : #accessing }

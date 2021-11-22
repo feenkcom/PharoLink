@@ -86,9 +86,7 @@ PharoLinkPharoProcess >> processArguments [
 		add: 'clap';
 		add: 'pharoLinkServer'.
 	self debugMode ifTrue: [ args add: '--log' ].
-	args
-		add: self settings serverSocketAddress port asString;
-		add: self settings clientSocketAddress port asString.
+	args add: self settings serverSocketAddress port asString.
 	^ args
 ]
 

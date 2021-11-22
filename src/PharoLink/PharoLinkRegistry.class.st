@@ -20,12 +20,14 @@ PharoLinkRegistry class >> default [
 { #category : #testing }
 PharoLinkRegistry class >> isPrimitive: anObject [
 	"Answer a boolean indicating whether the supplied object is considered a primitive,
-	i.e. one of Integer, String, Boolean, Array"
+	i.e. one of nil, Integer, String, Boolean, Array"
 
-	^ anObject isInteger or:
+	^ anObject isNil or:
+		[ anObject isInteger or:
 		[ anObject isString or: 
 		[ anObject isBoolean or:
-		[ anObject isArray ] ] ]
+		[ anObject isArray or:
+		[ anObject isFloat ] ] ] ] ]
 ]
 
 { #category : #registry }

@@ -28,7 +28,7 @@ Class {
 		'messageCallbacks',
 		'settings'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ PharoLinkAbstractMessageBroker >> javaScriptUri [
 
 { #category : #accessing }
 PharoLinkAbstractMessageBroker >> port [
-	^ settings clientSocketAddress port
+	^ settings serverSocketAddress port
 ]
 
 { #category : #private }
