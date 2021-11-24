@@ -9,7 +9,6 @@ PharoLinkWorker class >> commandLine [
 
 	<commandline>
 	| application |
-	self flag: 'TODO allow more than just port'.
 	^ self commandLineCommand meaning: [ :args | 
 		  | logger serverSocketAddress |
 		  args
@@ -25,17 +24,15 @@ PharoLinkWorker class >> commandLine [
 			  'Connect server socket address: ' , serverSocketAddress.
 		  application := self newWith: (self defaultSettings
 				                  serverProcessClass: LanguageLinkManualProcess;
-				                  serverSocketAddress: (LanguageLinkSocketAddress
-						                   ipOrName: 'localhost'
-						                   port: serverSocketAddress asInteger);
+				                  serverSocketAddress:
+					                  (LanguageLinkSocketAddress from:
+							                   serverSocketAddress);
 				                  yourself).
 		  StringSignal emit: 'Running'.
 		  application start.
 		  args
 			  at: #taskPollForever
-			  ifPresent: [ application taskPollForever ].
-		  "Wait until the process is killed"
-		  Semaphore new wait ]
+			  ifPresent: [ application taskPollForever ] ]
 ]
 
 { #category : #accessing }
@@ -52,43 +49,57 @@ PharoLinkWorker class >> commandLineCommand [
 ]
 
 { #category : #accessing }
-PharoLinkWorker >> taskDone: aString with: anObject [
+PharoLinkWorker >> do: aBlockString with: anObject [
 
 	| message promise |
 	message := String streamContents: [ :stream | 
-		           stream nextPutAll: '| object |
+		           stream nextPutAll: '
 						object := LanguageLinkUtils base64Decode: '''.
 		           LanguageLinkUtils base64Encode: anObject to: stream.
 		           stream
 			           nextPutAll: ''' readStream.
-						scheduler taskDone: ''';
-			           nextPutAll: aString;
-			           nextPutAll: ''' with: object.
-						true' ].
+						block := ';
+			           nextPutAll: aBlockString;
+			           nextPutAll: '.
+						result := String streamContents: [ :stream |
+							LanguageLinkUtils base64Encode: (block value: object) to: stream ].
+						result' ].
 	promise := self newCommandFactory send: message.
+	promise transformBlock: [ :r | 
+		LanguageLinkUtils base64Decode: r readStream ].
 	^ promise waitForValue
 ]
 
 { #category : #accessing }
-PharoLinkWorker >> taskFailed: aString with: anError [
+PharoLinkWorker >> taskDone: aTask with: anObject [
 
-	| message promise |
-	message := String streamContents: [ :stream | 
-		           stream
-			           nextPutAll: 'scheduler taskFailed: ''';
-			           nextPutAll: aString;
-			           nextPutAll: ''' with: '''.
-		           anError printOn: stream.
-		           stream nextPutAll: '''.
-						true' ].
-	promise := self newCommandFactory send: message.
-	^ promise waitForValue
+	StringSignal emit: ('done {1} with {2}' format: { 
+				 aTask.
+				 anObject }).
+	^ self
+		  do: '[ :e | scheduler taskDone: e first with: e second. true ]'
+		  with: { 
+				  aTask.
+				  anObject }
+]
+
+{ #category : #accessing }
+PharoLinkWorker >> taskFailed: aTask with: anError [
+
+	StringSignal emit: ('failed {1} with {2}' format: { 
+				 aTask.
+				 anError }).
+	^ self
+		  do: '[ :e | scheduler taskFailed: e first with: e second. true ]'
+		  with: { 
+				  aTask.
+				  anError asString }
 ]
 
 { #category : #accessing }
 PharoLinkWorker >> taskPoll [
 
-	^ self newCommandFactory sendAndWait: 'scheduler taskPoll'
+	^ self do: '[ :e | scheduler taskPoll ]' with: nil
 ]
 
 { #category : #accessing }
@@ -97,19 +108,21 @@ PharoLinkWorker >> taskPollForever [
 	[ 
 	| task result error |
 	task := self taskPoll.
-	[ result := self taskRun: (task at: #source) ]
+	StringSignal emit: ('polled {1}' format: { task }).
+	[ result := self taskRun: task source ]
 		on: Error
 		do: [ :e | 
 			e freeze.
 			error := e ].
 	error
-		ifNil: [ self taskDone: (task at: #id) with: result ]
-		ifNotNil: [ self taskFailed: (task at: #id) with: error ] ] repeat
+		ifNil: [ self taskDone: task with: result ]
+		ifNotNil: [ self taskFailed: task with: error ] ] repeat
 ]
 
 { #category : #accessing }
 PharoLinkWorker >> taskRun: aString [
 
+	StringSignal emit: ('run {1}' format: { aString }).
 	^ self class compiler
 		  source: aString;
 		  evaluate

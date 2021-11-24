@@ -25,8 +25,20 @@ PharoLinkWorkerTask >> asDictionary [
 ]
 
 { #category : #accessing }
+PharoLinkWorkerTask >> id [
+
+	^ id
+]
+
+{ #category : #accessing }
 PharoLinkWorkerTask >> initializeSource: anotherString [
 
 	id := 'plw' , UUID new asString36.
 	source := anotherString
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> source [
+
+	^ source
 ]

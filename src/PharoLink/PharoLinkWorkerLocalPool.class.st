@@ -25,6 +25,7 @@ PharoLinkWorkerLocalPool >> initialize [
 	processes := OrderedCollection new.
 	server := PharoLinkWorkerServer new
 		          listenPort: 9000;
+		          setDebugMode;
 		          yourself
 ]
 
@@ -72,4 +73,10 @@ PharoLinkWorkerLocalPool >> stop [
 		do: #terminate;
 		removeAll.
 	server stop
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool >> submit: aTask [
+
+	^ server scheduler taskSubmit: aTask
 ]

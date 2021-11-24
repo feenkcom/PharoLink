@@ -8,6 +8,28 @@ Class {
 	#category : 'PharoLink-Platform'
 }
 
+{ #category : #accessing }
+LanguageLinkSocketAddress class >> from: aString [
+
+	"Parse an address in the form <host>:<port> in to a LanguageLinkSocketAddress"
+
+	| segments hostname port |
+	segments := $: split: aString.
+	segments size > 2 ifFalse: [ 
+		self error:
+			aString printString , ' must be formatted [<host>:]<port>' ].
+	segments size = 1
+		ifTrue: [ 
+			hostname := 'localhost'.
+			port := aString ]
+		ifFalse: [ 
+			hostname := segments first.
+			port := segments second ].
+	(port allSatisfy: #isDigit) ifFalse: [ 
+		self error: aString printString , ' the port must be a number' ].
+	^ self ipOrName: hostname port: port asInteger
+]
+
 { #category : #'as yet unclassified' }
 LanguageLinkSocketAddress class >> ipOrName: ipOrName port: aPort [
 	^ self new

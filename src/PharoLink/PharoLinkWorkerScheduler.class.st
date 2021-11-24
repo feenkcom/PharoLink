@@ -19,27 +19,29 @@ PharoLinkWorkerScheduler >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskDone: aTaskId with: anObject [
+PharoLinkWorkerScheduler >> taskDone: aTask with: anObject [
 
 	| promise |
+	Halt once.
 	self flag: 'TODO fulfill should probably fork, as called in callback'.
-	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
+	promisesMonitor critical: [ promise := promises removeKey: aTask id ].
 	promise fulfillWithValue: anObject
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskFailed: aTaskId with: anObject [
+PharoLinkWorkerScheduler >> taskFailed: aTask with: anObject [
 
 	| promise |
+	Halt once.
 	self flag: 'TODO fulfill should probably fork, as called in callback'.
-	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
+	promisesMonitor critical: [ promise := promises removeKey: aTask id ].
 	promise rejectWithError: anObject
 ]
 
 { #category : #accessing }
 PharoLinkWorkerScheduler >> taskPoll [
 
-	^ queue next asDictionary
+	^ queue next
 ]
 
 { #category : #accessing }
@@ -47,7 +49,7 @@ PharoLinkWorkerScheduler >> taskSubmit: aTask [
 
 	| promise |
 	promise := AsyncPendingPromise new.
-	queue add: aTask.
+	queue nextPut: aTask.
 	promisesMonitor critical: [ promises at: aTask id put: promise ].
 	^ promise
 ]
