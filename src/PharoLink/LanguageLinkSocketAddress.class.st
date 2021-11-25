@@ -15,7 +15,7 @@ LanguageLinkSocketAddress class >> from: aString [
 
 	| segments hostname port |
 	segments := $: split: aString.
-	segments size > 2 ifFalse: [ 
+	segments size > 2 ifTrue: [ 
 		self error:
 			aString printString , ' must be formatted [<host>:]<port>' ].
 	segments size = 1
