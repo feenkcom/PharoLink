@@ -78,15 +78,17 @@ PharoLinkPharoProcess >> process [
 
 { #category : #private }
 PharoLinkPharoProcess >> processArguments [
-	| args |
 
+	| args |
 	args := OrderedCollection new.
-	args 
+	args
 		add: self settings serverImage fullName;
 		add: 'clap';
 		add: 'pharoLinkServer'.
 	self debugMode ifTrue: [ args add: '--log' ].
-	args add: self settings serverSocketAddress port asString.
+	args
+		add: self settings serverSocketAddress port asString;
+		add: '--detachChangesFromFileSystem'.
 	^ args
 ]
 

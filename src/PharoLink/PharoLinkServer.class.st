@@ -154,7 +154,9 @@ PharoLinkServer >> stop [
 	"Stop the receiver"
 
 	listenProcess terminate.
+	listenProcess := nil.
 	serverSocket closeAndDestroy.
 	connections do: #stop.
+	connections removeAll.
 	serverSocket := nil.
 ]
