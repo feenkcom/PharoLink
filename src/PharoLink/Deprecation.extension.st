@@ -1,7 +1,10 @@
 Extension { #name : #Deprecation }
 
 { #category : #'*PharoLink' }
-Deprecation >> gtTestCaseException: aTestCase [
+Deprecation >> gtTestCaseException: aTestCase startTimestamp: aDateAndTime [
 
-	^ PharoLinkTestCaseWarning testCase: aTestCase exception: self
+	^ PharoLinkTestCaseWarning
+		  testCase: aTestCase
+		  startTimestamp: aDateAndTime
+		  exception: self
 ]

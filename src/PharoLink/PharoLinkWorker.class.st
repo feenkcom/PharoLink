@@ -49,38 +49,17 @@ PharoLinkWorker class >> commandLineCommand [
 ]
 
 { #category : #accessing }
-PharoLinkWorker >> do: aBlockString with: anObject [
-
-	| message promise |
-	message := String streamContents: [ :stream | 
-		           stream nextPutAll: '
-						object := LanguageLinkUtils base64Decode: '''.
-		           LanguageLinkUtils base64Encode: anObject to: stream.
-		           stream
-			           nextPutAll: ''' readStream.
-						block := ';
-			           nextPutAll: aBlockString;
-			           nextPutAll: '.
-						result := String streamContents: [ :stream |
-							LanguageLinkUtils base64Encode: (block value: object) to: stream ].
-						result' ].
-	promise := self newCommandFactory send: message.
-	promise transformBlock: [ :r | 
-		LanguageLinkUtils base64Decode: r readStream ].
-	^ promise waitForValue
-]
-
-{ #category : #accessing }
 PharoLinkWorker >> taskDone: aTask with: anObject [
 
 	StringSignal emit: ('done {1} with {2}' format: { 
 				 aTask.
 				 anObject }).
-	^ self
-		  do: '[ :e | scheduler taskDone: e first with: e second. true ]'
-		  with: { 
-				  aTask.
-				  anObject }
+	^ self newCommandFactory
+		  bindingAt: #taskId put: aTask id;
+		  bindingAt: #result
+		  put: (LeJsonV4 uniqueInstance serialize: anObject);
+		  sendAndWait:
+			  'scheduler taskDone: taskId with: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
 ]
 
 { #category : #accessing }
@@ -89,41 +68,41 @@ PharoLinkWorker >> taskFailed: aTask with: anError [
 	StringSignal emit: ('failed {1} with {2}' format: { 
 				 aTask.
 				 anError }).
-	^ self
-		  do: '[ :e | scheduler taskFailed: e first with: e second. true ]'
-		  with: { 
-				  aTask.
-				  anError asString }
+	^ self newCommandFactory
+		  bindingAt: #taskId put: aTask id;
+		  bindingAt: #stackString put: anError stackString;
+		  sendAndWait:
+			  'scheduler taskFailed: taskId with: stackString. true'
 ]
 
 { #category : #accessing }
 PharoLinkWorker >> taskPoll [
 
-	^ self do: '[ :e | scheduler taskPoll ]' with: nil
+	| promise |
+	promise := self newCommandFactory send:
+		           'LeJsonV4 uniqueInstance serialize: scheduler taskPoll'.
+	promise transformBlock: [ :r | 
+		LeJsonV4 uniqueInstance deserialize: r readStream ].
+	^ promise waitForValue
 ]
 
 { #category : #accessing }
 PharoLinkWorker >> taskPollForever [
 
-	[ 
-	| task result error |
-	task := self taskPoll.
-	StringSignal emit: ('polled {1}' format: { task }).
-	[ result := self taskRun: task source ]
+	[ self taskRun: self taskPoll ] repeat
+]
+
+{ #category : #accessing }
+PharoLinkWorker >> taskRun: aTask [
+
+	| result error |
+	StringSignal emit: ('run {1}' format: { aTask }).
+	[ result := aTask run ]
 		on: Error
 		do: [ :e | 
 			e freeze.
 			error := e ].
 	error
-		ifNil: [ self taskDone: task with: result ]
-		ifNotNil: [ self taskFailed: task with: error ] ] repeat
-]
-
-{ #category : #accessing }
-PharoLinkWorker >> taskRun: aString [
-
-	StringSignal emit: ('run {1}' format: { aString }).
-	^ self class compiler
-		  source: aString;
-		  evaluate
+		ifNil: [ self taskDone: aTask with: result ]
+		ifNotNil: [ self taskFailed: aTask with: error ]
 ]

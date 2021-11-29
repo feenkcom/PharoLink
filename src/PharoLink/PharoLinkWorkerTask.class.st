@@ -2,26 +2,15 @@ Class {
 	#name : #PharoLinkWorkerTask,
 	#superclass : #Object,
 	#instVars : [
-		'source',
 		'id'
 	],
 	#category : #'PharoLink-Worker'
 }
 
 { #category : #accessing }
-PharoLinkWorkerTask class >> source: anotherString [
+PharoLinkWorkerTask class >> leJsonV4Name [
 
-	^ self new
-		  initializeSource: anotherString;
-		  yourself
-]
-
-{ #category : #accessing }
-PharoLinkWorkerTask >> asDictionary [
-
-	^ { 
-		  (#id -> id).
-		  (#source -> source) } asDictionary
+	^ #pharoLinkWorkerTask
 ]
 
 { #category : #accessing }
@@ -31,14 +20,20 @@ PharoLinkWorkerTask >> id [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerTask >> initializeSource: anotherString [
+PharoLinkWorkerTask >> id: aString [
 
-	id := 'plw' , UUID new asString36.
-	source := anotherString
+	id := aString
 ]
 
 { #category : #accessing }
-PharoLinkWorkerTask >> source [
+PharoLinkWorkerTask >> initialize [
 
-	^ source
+	super initialize.
+	id := 'plw' , UUID new asString36
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> run [
+
+	self subclassResponsibility
 ]

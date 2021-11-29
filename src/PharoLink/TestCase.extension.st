@@ -1,9 +1,9 @@
 Extension { #name : #TestCase }
 
 { #category : #'*PharoLink' }
-TestCase >> gtTestCasePass [
+TestCase >> gtTestCasePassStartTimestamp: aDateAndTime [
 
-	^ PharoLinkTestCasePass testCase: self
+	^ PharoLinkTestCasePass testCase: self startTimestamp: aDateAndTime
 ]
 
 { #category : #'*PharoLink' }
