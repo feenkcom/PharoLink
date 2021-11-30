@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseStart class >> leJsonV4Name [
+
+	^ #pharoLinkTestCaseStart
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseStart >> addToResult: result [
 
 	

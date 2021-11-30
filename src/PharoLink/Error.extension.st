@@ -1,7 +1,10 @@
 Extension { #name : #Error }
 
 { #category : #'*PharoLink' }
-Error >> gtTestCaseException: aTestCase [
+Error >> gtTestCaseException: aTestCase startTimestamp: aDateAndTime [
 
-	^ PharoLinkTestCaseError testCase: aTestCase exception: self
+	^ PharoLinkTestCaseError
+		  testCase: aTestCase
+		  startTimestamp: aDateAndTime
+		  exception: self
 ]

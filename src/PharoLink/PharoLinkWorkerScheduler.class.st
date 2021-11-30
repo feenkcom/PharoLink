@@ -19,22 +19,20 @@ PharoLinkWorkerScheduler >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskDone: aTask with: anObject [
+PharoLinkWorkerScheduler >> taskDone: aTaskId with: anObject [
 
 	| promise |
-	Halt once.
 	self flag: 'TODO fulfill should probably fork, as called in callback'.
-	promisesMonitor critical: [ promise := promises removeKey: aTask id ].
+	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
 	promise fulfillWithValue: anObject
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskFailed: aTask with: anObject [
+PharoLinkWorkerScheduler >> taskFailed: aTaskId with: anObject [
 
 	| promise |
-	Halt once.
 	self flag: 'TODO fulfill should probably fork, as called in callback'.
-	promisesMonitor critical: [ promise := promises removeKey: aTask id ].
+	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
 	promise rejectWithError: anObject
 ]
 

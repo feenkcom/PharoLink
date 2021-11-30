@@ -6,3 +6,13 @@ Exception >> isPharoLinkNotification [
 
 	^ false
 ]
+
+{ #category : #'*PharoLink' }
+Exception >> stackString [
+
+	^ String streamContents: [ :stream | 
+		  signalContext stack do: [ :stackItem | 
+			  stream
+				  print: stackItem;
+				  cr ] ]
+]

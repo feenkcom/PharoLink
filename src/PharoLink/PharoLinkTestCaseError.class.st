@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseError class >> leJsonV4Name [
+
+	^ #pharoLinkTestCaseError
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseError >> addToResult: result [
 	result addError: self
 ]

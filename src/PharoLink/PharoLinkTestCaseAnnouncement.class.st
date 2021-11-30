@@ -10,6 +10,41 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseAnnouncement class >> isAbstract [
+
+	^ self == PharoLinkTestCaseAnnouncement
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
+
+	^ self new
+		  initializeTestCaseClass: (aDictionary at: #testCaseClass) asClass
+		  selector: (aDictionary at: #testCaseSelector) asSymbol
+		  identityHash: (aDictionary at: #testCaseIdentityHash);
+		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
+
+	super leJsonV4AddMappingsTo: aJsonMapping.
+	aJsonMapping
+		mapProperty: #testCaseClass
+		getter: [ :object | object testCaseClass name ]
+		setter: [ :object :value | 
+			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #testCaseIdentityHash
+		getter: [ :object | object testCaseIdentityHash ]
+		setter: [ :object :value | 
+			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #testCaseSelector
+		getter: [ :object | object testCaseSelector ]
+		setter: [ :object :value | 
+			self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseAnnouncement class >> testCase: aTestCase [
 
 	^ self new
