@@ -10,7 +10,7 @@ BaselineOfPharoLink >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'GToolkitExternalProcess' with: [
-				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.7/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.8/src' ].
 		spec
 			baseline: 'OSSubprocess' with: [
 				spec repository: 'github://feenkcom/OSSubprocess:v1.1.20/repository' ].
@@ -19,10 +19,10 @@ BaselineOfPharoLink >> baseline: spec [
 				spec repository: 'github://svenvc/NeoJSON:v17/repository' ].
 		spec
 			baseline: 'MessagePack' with: [
-				spec repository: 'github://feenkcom/msgpack-smalltalk:v1.3.2/repository' ].
+				spec repository: 'github://feenkcom/msgpack-smalltalk:v1.3.3/repository' ].
 		spec
 			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon:a119e739bc378ca2a95883e074090d90fed4edeb/repository' ].
+				spec repository: 'github://feenkcom/pharo-beacon:89477b28e468d10cb46d61a8c5b8d83ee0b2d592/repository' ].
 
 		spec package: 'PharoLink' with: [
 			spec requires: #('GToolkitExternalProcess') ].
