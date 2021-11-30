@@ -31,7 +31,7 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
 		mapProperty: #exceptionClass
-		getter: [ :object | object exceptionClass ]
+		getter: [ :object | object exceptionClass name ]
 		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #exceptionMessageText
