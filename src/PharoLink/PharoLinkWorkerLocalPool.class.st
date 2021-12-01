@@ -23,16 +23,61 @@ PharoLinkWorkerLocalPool >> initialize [
 	super initialize.
 	size := 2.
 	processes := OrderedCollection new.
-	server := PharoLinkWorkerServer new
-		          listenPort: 9000;
-		          setDebugMode;
-		          yourself
+
 ]
 
 { #category : #accessing }
 PharoLinkWorkerLocalPool >> isRunning [
 
 	^ watchDog isNotNil
+]
+
+{ #category : #private }
+PharoLinkWorkerLocalPool >> newWorkerLocalProcess [
+
+	| settings args |
+	self flag: 'TODO settings should come from outside'.
+	settings := LanguageLinkSettings pharoDefaultSettings.
+	args := OrderedCollection new.
+	args
+		add: settings serverImage fullName;
+		add: 'clap';
+		add: 'pharoLinkWorker'.
+	server debugMode ifTrue: [ args add: '--log' ].
+	args
+		add: '--taskPollForever';
+		add: server listenPort asString;
+		add: '--detachChangesFromFileSystem'.
+	^ GtSubprocessWithInMemoryOutput new
+		  command: settings serverExecutable fullName;
+		  arguments: args;
+		  workingDirectory: settings workingDirectory resolve fullName;
+		  terminateOnShutdown;
+		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool >> server [
+
+	^ server
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool >> server: anObject [
+
+	server := anObject
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool >> size [
+
+	^ size
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool >> size: anObject [
+
+	size := anObject
 ]
 
 { #category : #accessing }
@@ -47,7 +92,7 @@ PharoLinkWorkerLocalPool >> start [
 	            broken := processes reject: #isRunning.
 	            broken do: [ :e | 
 		            | process |
-		            process := server newWorkerLocalProcess.
+		            process := self newWorkerLocalProcess.
 		            process run.
 		            processes
 			            remove: e;
@@ -56,7 +101,7 @@ PharoLinkWorkerLocalPool >> start [
 		            'PharoLinkWorkerPool watch dog'.
 	size timesRepeat: [ 
 		| process |
-		process := server newWorkerLocalProcess.
+		process := self newWorkerLocalProcess.
 		process run.
 		processes add: process ]
 ]
@@ -73,10 +118,4 @@ PharoLinkWorkerLocalPool >> stop [
 		do: #terminate;
 		removeAll.
 	server stop
-]
-
-{ #category : #accessing }
-PharoLinkWorkerLocalPool >> submit: aTask [
-
-	^ server scheduler taskSubmit: aTask
 ]

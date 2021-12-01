@@ -1,5 +1,5 @@
 Class {
-	#name : #PharoLinkWorkerScheduler,
+	#name : #PharoLinkWorkerTaskQueue,
 	#superclass : #Object,
 	#instVars : [
 		'queue',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> initialize [
+PharoLinkWorkerTaskQueue >> initialize [
 
 	super initialize.
 	queue := SharedQueue new.
@@ -19,7 +19,7 @@ PharoLinkWorkerScheduler >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskDone: aTaskId with: anObject [
+PharoLinkWorkerTaskQueue >> taskDone: aTaskId with: anObject [
 
 	| promise |
 	self flag: 'TODO fulfill should probably fork, as called in callback'.
@@ -28,7 +28,7 @@ PharoLinkWorkerScheduler >> taskDone: aTaskId with: anObject [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskFailed: aTaskId with: anObject [
+PharoLinkWorkerTaskQueue >> taskFailed: aTaskId with: anObject [
 
 	| promise |
 	self flag: 'TODO fulfill should probably fork, as called in callback'.
@@ -37,13 +37,13 @@ PharoLinkWorkerScheduler >> taskFailed: aTaskId with: anObject [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskPoll [
+PharoLinkWorkerTaskQueue >> taskPoll [
 
 	^ queue next
 ]
 
 { #category : #accessing }
-PharoLinkWorkerScheduler >> taskSubmit: aTask [
+PharoLinkWorkerTaskQueue >> taskSubmit: aTask [
 
 	| promise |
 	promise := AsyncPendingPromise new.

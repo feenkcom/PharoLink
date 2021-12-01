@@ -2,7 +2,7 @@ Class {
 	#name : #PharoLinkWorkerServer,
 	#superclass : #PharoLinkServer,
 	#instVars : [
-		'scheduler'
+		'taskQueue'
 	],
 	#category : #'PharoLink-Worker'
 }
@@ -11,42 +11,24 @@ Class {
 PharoLinkWorkerServer >> initialize [
 
 	super initialize.
-	self scheduler: PharoLinkWorkerScheduler new
+	self scheduler: PharoLinkWorkerTaskQueue new
+]
+
+{ #category : #'form-scripting' }
+PharoLinkWorkerServer >> submit: aTask [
+
+	^ taskQueue taskSubmit: aTask
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServer >> newWorkerLocalProcess [
+PharoLinkWorkerServer >> taskQueue [
 
-	| settings args |
-	self flag: 'TODO settings should come from outside'.
-	settings := LanguageLinkSettings pharoDefaultSettings.
-	args := OrderedCollection new.
-	args
-		add: settings serverImage fullName;
-		add: 'clap';
-		add: 'pharoLinkWorker'.
-	self debugMode ifTrue: [ args add: '--log' ].
-	args
-		add: '--taskPollForever';
-		add: listenPort asString;
-		add: '--detachChangesFromFileSystem'.
-	^ GtSubprocessWithInMemoryOutput new
-		  command: settings serverExecutable fullName;
-		  arguments: args;
-		  workingDirectory: settings workingDirectory resolve fullName;
-		  terminateOnShutdown;
-		  yourself
+	^ taskQueue
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServer >> scheduler [
+PharoLinkWorkerServer >> taskQueue: aPharoLinkWorkerTaskQueue [
 
-	^ scheduler
-]
-
-{ #category : #accessing }
-PharoLinkWorkerServer >> scheduler: aScheduler [
-
-	scheduler := aScheduler.
-	globals at: #scheduler put: scheduler
+	taskQueue := aPharoLinkWorkerTaskQueue.
+	globals at: #taskQueue put: taskQueue
 ]

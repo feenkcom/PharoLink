@@ -59,7 +59,7 @@ PharoLinkWorker >> taskDone: aTask with: anObject [
 		  bindingAt: #result
 		  put: (LeJsonV4 uniqueInstance serialize: anObject);
 		  sendAndWait:
-			  'scheduler taskDone: taskId with: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
+			  'taskQueue taskDone: taskId with: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
 ]
 
 { #category : #accessing }
@@ -72,7 +72,7 @@ PharoLinkWorker >> taskFailed: aTask with: anError [
 		  bindingAt: #taskId put: aTask id;
 		  bindingAt: #stackString put: anError stackString;
 		  sendAndWait:
-			  'scheduler taskFailed: taskId with: stackString. true'
+			  'taskQueue taskFailed: taskId with: stackString. true'
 ]
 
 { #category : #accessing }
@@ -80,10 +80,8 @@ PharoLinkWorker >> taskPoll [
 
 	| promise |
 	promise := self newCommandFactory send:
-		           'LeJsonV4 uniqueInstance serialize: scheduler taskPoll'.
-	promise transformBlock: [ :r | 
-		LeJsonV4 uniqueInstance deserialize: r readStream ].
-	^ promise waitForValue
+		'LeJsonV4 uniqueInstance serialize: taskQueue taskPoll'.
+	^ LeJsonV4 uniqueInstance deserialize: promise waitForValue readStream
 ]
 
 { #category : #accessing }
