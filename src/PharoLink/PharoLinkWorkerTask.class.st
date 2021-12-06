@@ -2,7 +2,8 @@ Class {
 	#name : #PharoLinkWorkerTask,
 	#superclass : #Object,
 	#instVars : [
-		'id'
+		'id',
+		'results'
 	],
 	#category : #'PharoLink-Worker'
 }
@@ -30,6 +31,18 @@ PharoLinkWorkerTask >> initialize [
 
 	super initialize.
 	id := 'plw' , UUID new asString36
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> results [
+
+	^ results
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> results: anObject [
+
+	results := anObject
 ]
 
 { #category : #accessing }
