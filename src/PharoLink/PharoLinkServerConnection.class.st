@@ -44,7 +44,9 @@ PharoLinkServerConnection >> handlEnqueue: aDictionary [
 	StringSignal emit: 'Enqueue: ', aDictionary printString.
 
 "self halt: (dict at: #statements)."
-	[ command execute: self globals ] forkAt: Processor userSchedulingPriority.
+	[ PharoLinkServerCurrentConnection 
+		value: self
+		during: [ command execute: self globals ] ] forkAt: Processor userSchedulingPriority.
 
 ]
 
@@ -144,14 +146,15 @@ PharoLinkServerConnection >> start [
 
 	stream := LanguageLinkMsgPackSocketStream on: (SocketStream on: socket).
 	listenProcess := 
-		[ [ [ 	self handleRequest: stream next ] repeat ]
-			on: Error 
-			do: [ :ex | LanguageLinkCommunicationsSignal new
-				originalException: ex;
-				stackString: self stackString;
-				emit ] ]
-					forkAt: Processor userSchedulingPriority
-					named: 'PharoLinkServerConnection listenProcess'.
+		[ PharoLinkServerCurrentConnection value: self during:
+			[ [ [ 	self handleRequest: stream next ] repeat ]
+				on: Error 
+				do: [ :ex | LanguageLinkCommunicationsSignal new
+					originalException: ex;
+					stackString: self stackString;
+					emit ] ] ]
+						forkAt: Processor userSchedulingPriority
+						named: 'PharoLinkServerConnection listenProcess'.
 	StringSignal emit: 'PharoLink connection accepted'.
 ]
 
