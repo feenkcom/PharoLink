@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'id',
-		'results'
+		'result'
 	],
 	#category : #'PharoLink-Worker'
 }
@@ -33,23 +33,16 @@ PharoLinkWorkerTask >> initialize [
 	id := 'plw' , UUID new asString36
 ]
 
-{ #category : #copying }
-PharoLinkWorkerTask >> postCopy [
+{ #category : #accessing }
+PharoLinkWorkerTask >> result [
 
-	super postCopy.
-	id := 'plw' , UUID new asString36.
+	^ result
 ]
 
 { #category : #accessing }
-PharoLinkWorkerTask >> results [
+PharoLinkWorkerTask >> result: anObject [
 
-	^ results
-]
-
-{ #category : #accessing }
-PharoLinkWorkerTask >> results: anObject [
-
-	results := anObject
+	result := anObject
 ]
 
 { #category : #accessing }
