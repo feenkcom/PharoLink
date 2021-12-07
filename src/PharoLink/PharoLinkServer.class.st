@@ -1,6 +1,8 @@
 Class {
 	#name : #PharoLinkServer,
 	#superclass : #Object,
+	#traits : 'TGtAnnouncer',
+	#classTraits : 'TGtAnnouncer classTrait',
 	#instVars : [
 		'listenPort',
 		'listenProcess',
@@ -8,7 +10,8 @@ Class {
 		'registry',
 		'globals',
 		'serverSocket',
-		'connections'
+		'connections',
+		'announcer'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -51,6 +54,19 @@ PharoLinkServer class >> commandLineCommand [
 		  yourself
 ]
 
+{ #category : #private }
+PharoLinkServer >> addConnection: aPharoLinkServerConnection [
+
+	connections add: aPharoLinkServerConnection.
+	self announce: (PharoLinkServerConnectionConnectedAnnouncement connection: aPharoLinkServerConnection)
+]
+
+{ #category : #announcer }
+PharoLinkServer >> announcer [
+	<return: #Announcer>
+	^ announcer
+]
+
 { #category : #accessing }
 PharoLinkServer >> debugMode [
 	^ debugMode
@@ -86,6 +102,7 @@ PharoLinkServer >> initialize [
 	globals at: #registry put: registry.
 	debugMode := false.
 	connections := OrderedCollection new.
+	announcer := Announcer new.
 ]
 
 { #category : #testing }
@@ -142,7 +159,7 @@ PharoLinkServer >> start [
 	listenProcess := [	| bindSocket |	
 		[ [ bindSocket isNil ] whileTrue:
 			[ bindSocket := serverSocket waitForAcceptFor: 10 ifTimedOut: [ nil ] ].
-		connections add: (PharoLinkServerConnection server: self socket: bindSocket).
+		self addConnection: (PharoLinkServerConnection server: self socket: bindSocket).
 		bindSocket := nil. ] repeat.
 		] forkAt: Processor lowIOPriority named: 'PharoLinkServer listenProcess'.
 	"self preventTestForkedPDestroyServer"

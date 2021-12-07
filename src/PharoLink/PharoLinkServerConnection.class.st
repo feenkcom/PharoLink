@@ -1,13 +1,16 @@
 Class {
 	#name : #PharoLinkServerConnection,
 	#superclass : #Object,
+	#traits : 'TGtAnnouncer',
+	#classTraits : 'TGtAnnouncer classTrait',
 	#instVars : [
 		'socket',
 		'stream',
 		'debugMode',
 		'server',
 		'listenProcess',
-		'syncRegistry'
+		'syncRegistry',
+		'announcer'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -16,6 +19,12 @@ Class {
 PharoLinkServerConnection class >> server: aPharoLinkServer socket: aSocket [
 
 	^ self new initializeServer: aPharoLinkServer socket: aSocket
+]
+
+{ #category : #announcer }
+PharoLinkServerConnection >> announcer [
+	<return: #Announcer>
+	^ announcer
 ]
 
 { #category : #private }
@@ -86,6 +95,7 @@ PharoLinkServerConnection >> initialize [
 
 	super initialize.
 	syncRegistry := Dictionary new.
+	announcer := Announcer new.
 ]
 
 { #category : #initialization }
@@ -100,6 +110,12 @@ PharoLinkServerConnection >> initializeServer: aPharoLinkServer socket: aSocket 
 PharoLinkServerConnection >> registry [ 
 
 	^ server registry
+]
+
+{ #category : #accessing }
+PharoLinkServerConnection >> remoteAddress [
+
+	^ socket remoteAddress
 ]
 
 { #category : #private }
@@ -165,4 +181,5 @@ PharoLinkServerConnection >> stop [
 	listenProcess ifNotNil: [ listenProcess terminate ].
 	socket := nil.
 	listenProcess := nil.
+	self announce: (PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
 ]
