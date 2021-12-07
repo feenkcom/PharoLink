@@ -33,6 +33,13 @@ PharoLinkWorkerTask >> initialize [
 	id := 'plw' , UUID new asString36
 ]
 
+{ #category : #copying }
+PharoLinkWorkerTask >> postCopy [
+
+	super postCopy.
+	id := 'plw' , UUID new asString36.
+]
+
 { #category : #accessing }
 PharoLinkWorkerTask >> results [
 
