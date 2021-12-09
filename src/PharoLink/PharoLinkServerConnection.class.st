@@ -59,6 +59,28 @@ PharoLinkServerConnection >> handlEnqueue: aDictionary [
 
 ]
 
+{ #category : #'error handling' }
+PharoLinkServerConnection >> handleError: aDictionary [
+
+	PharoLinkErrorRequestSignal new
+		dictionary: aDictionary;
+		emit.
+	aDictionary
+		at: #action
+		ifPresent: [ :anotherDictionary |
+			anotherDictionary
+				at: #action
+				ifPresent: [ :action |
+					action = #DROP_QUEUE ifTrue:
+						[ (syncRegistry at: (aDictionary at: #__sync)) signal ]
+					ifFalse:
+						[ self error: 'Unknown action' ] ]
+				ifAbsent: [ self error: 'Expected an action command' ] ]
+		ifAbsent:
+			[ self error: 'Expected an action' ]
+
+]
+
 { #category : #private }
 PharoLinkServerConnection >> handleIsAlive: aDictionary [
 	"Respond to the ping request"
@@ -77,7 +99,7 @@ PharoLinkServerConnection >> handleRequest: aDictionary [
 	type = #'ENQUEUE' ifTrue: [ ^ self handlEnqueue: aDictionary ].
 	type = #'IS_ALIVE' ifTrue: [ ^ self handleIsAlive: aDictionary ].
 	"ERR should possibly be handled as a general sync message"
-	type = #'ERR' ifTrue: [ "No action for now" ^ self halt ].
+	type = #'ERR' ifTrue: [ ^ self handleError: aDictionary ].
 
 	"The message is expected to be a sync message"
 	aDictionary 
