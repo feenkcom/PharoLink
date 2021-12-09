@@ -115,7 +115,9 @@ PharoLinkServerConnection >> registry [
 { #category : #accessing }
 PharoLinkServerConnection >> remoteAddress [
 
-	^ socket remoteAddress
+	^ socket 
+		ifNil: [ ByteArray new: 4 ]
+		ifNotNil: [ socket remoteAddress ]
 ]
 
 { #category : #private }
