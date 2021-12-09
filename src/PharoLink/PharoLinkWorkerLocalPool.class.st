@@ -11,6 +11,36 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkWorkerLocalPool class >> default [
+
+	^ self port: 8442
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool class >> newServer: anInteger [
+
+	^ PharoLinkServer new
+		  listenPort: anInteger;
+		  setDebugMode;
+		  setTaskQueue;
+		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool class >> port: anInteger [
+
+	^ self server: (self newServer: anInteger)
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool class >> server: aServer [
+
+	^ self new
+		  server: aServer;
+		  yourself
+]
+
+{ #category : #accessing }
 PharoLinkWorkerLocalPool >> finalize [
 
 	self stop.
@@ -22,8 +52,7 @@ PharoLinkWorkerLocalPool >> initialize [
 
 	super initialize.
 	size := 2.
-	processes := OrderedCollection new.
-
+	processes := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -33,10 +62,9 @@ PharoLinkWorkerLocalPool >> isRunning [
 ]
 
 { #category : #private }
-PharoLinkWorkerLocalPool >> newWorkerLocalProcess [
+PharoLinkWorkerLocalPool >> newWorkerProcess [
 
 	| settings args |
-	self flag: 'TODO settings should come from outside'.
 	settings := LanguageLinkSettings pharoDefaultSettings.
 	args := OrderedCollection new.
 	args
@@ -45,6 +73,7 @@ PharoLinkWorkerLocalPool >> newWorkerLocalProcess [
 		add: 'pharoLinkWorker'.
 	server debugMode ifTrue: [ args add: '--log' ].
 	args
+		add: '--registerObserver';
 		add: '--taskPollForever';
 		add: server listenPort asString;
 		add: '--detachChangesFromFileSystem'.
@@ -60,12 +89,6 @@ PharoLinkWorkerLocalPool >> newWorkerLocalProcess [
 PharoLinkWorkerLocalPool >> server [
 
 	^ server
-]
-
-{ #category : #accessing }
-PharoLinkWorkerLocalPool >> server: anObject [
-
-	server := anObject
 ]
 
 { #category : #accessing }
@@ -92,7 +115,7 @@ PharoLinkWorkerLocalPool >> start [
 	            broken := processes reject: #isRunning.
 	            broken do: [ :e | 
 		            | process |
-		            process := self newWorkerLocalProcess.
+		            process := self newWorkerProcess.
 		            process run.
 		            processes
 			            remove: e;
@@ -101,7 +124,7 @@ PharoLinkWorkerLocalPool >> start [
 		            'PharoLinkWorkerPool watch dog'.
 	size timesRepeat: [ 
 		| process |
-		process := self newWorkerLocalProcess.
+		process := self newWorkerProcess.
 		process run.
 		processes add: process ]
 ]

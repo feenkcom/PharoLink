@@ -124,6 +124,12 @@ PharoLinkServer >> setDebugMode [
 
 ]
 
+{ #category : #worker }
+PharoLinkServer >> setTaskQueue [
+
+	globals at: #taskQueue put: PharoLinkWorkerTaskQueue new
+]
+
 { #category : #private }
 PharoLinkServer >> socketBufferSize [
 	"Size in bytes for Sockets and SocketStream IO buffers"
