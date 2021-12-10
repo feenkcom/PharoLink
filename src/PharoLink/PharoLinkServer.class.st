@@ -1,14 +1,16 @@
 Class {
 	#name : #PharoLinkServer,
 	#superclass : #Object,
+	#traits : 'TGtAnnouncer',
+	#classTraits : 'TGtAnnouncer classTrait',
 	#instVars : [
 		'listenPort',
 		'listenProcess',
 		'debugMode',
-		'registry',
 		'globals',
 		'serverSocket',
-		'connections'
+		'connections',
+		'announcer'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -51,15 +53,22 @@ PharoLinkServer class >> commandLineCommand [
 		  yourself
 ]
 
+{ #category : #private }
+PharoLinkServer >> addConnection: aPharoLinkServerConnection [
+
+	connections add: aPharoLinkServerConnection.
+	self announce: (PharoLinkServerConnectionConnectedAnnouncement connection: aPharoLinkServerConnection)
+]
+
+{ #category : #announcer }
+PharoLinkServer >> announcer [
+	<return: #Announcer>
+	^ announcer
+]
+
 { #category : #accessing }
 PharoLinkServer >> debugMode [
 	^ debugMode
-]
-
-{ #category : #private }
-PharoLinkServer >> deserialize: aByteArray [
-
-	^ PharoLinkServerSerializer deserialize: aByteArray registry: registry
 ]
 
 { #category : #accessing }
@@ -81,11 +90,10 @@ PharoLinkServer >> handleIsAlive: aZnRequest [
 PharoLinkServer >> initialize [ 
 
 	super initialize.
-	registry := PharoLinkRegistry new.
 	globals := Dictionary new.
-	globals at: #registry put: registry.
 	debugMode := false.
 	connections := OrderedCollection new.
+	announcer := Announcer new.
 ]
 
 { #category : #testing }
@@ -109,12 +117,6 @@ PharoLinkServer >> listenPort [
 { #category : #accessing }
 PharoLinkServer >> listenPort: anObject [
 	listenPort := anObject
-]
-
-{ #category : #accessing }
-PharoLinkServer >> registry [
-
-	^ registry
 ]
 
 { #category : #'start-stop' }
@@ -142,7 +144,7 @@ PharoLinkServer >> start [
 	listenProcess := [	| bindSocket |	
 		[ [ bindSocket isNil ] whileTrue:
 			[ bindSocket := serverSocket waitForAcceptFor: 10 ifTimedOut: [ nil ] ].
-		connections add: (PharoLinkServerConnection server: self socket: bindSocket).
+		self addConnection: (PharoLinkServerConnection server: self socket: bindSocket).
 		bindSocket := nil. ] repeat.
 		] forkAt: Processor lowIOPriority named: 'PharoLinkServer listenProcess'.
 	"self preventTestForkedPDestroyServer"
