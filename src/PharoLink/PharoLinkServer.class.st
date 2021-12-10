@@ -7,7 +7,6 @@ Class {
 		'listenPort',
 		'listenProcess',
 		'debugMode',
-		'registry',
 		'globals',
 		'serverSocket',
 		'connections',
@@ -72,12 +71,6 @@ PharoLinkServer >> debugMode [
 	^ debugMode
 ]
 
-{ #category : #private }
-PharoLinkServer >> deserialize: aByteArray [
-
-	^ PharoLinkServerSerializer deserialize: aByteArray registry: registry
-]
-
 { #category : #accessing }
 PharoLinkServer >> globals [
 
@@ -97,9 +90,7 @@ PharoLinkServer >> handleIsAlive: aZnRequest [
 PharoLinkServer >> initialize [ 
 
 	super initialize.
-	registry := PharoLinkRegistry new.
 	globals := Dictionary new.
-	globals at: #registry put: registry.
 	debugMode := false.
 	connections := OrderedCollection new.
 	announcer := Announcer new.
@@ -126,12 +117,6 @@ PharoLinkServer >> listenPort [
 { #category : #accessing }
 PharoLinkServer >> listenPort: anObject [
 	listenPort := anObject
-]
-
-{ #category : #accessing }
-PharoLinkServer >> registry [
-
-	^ registry
 ]
 
 { #category : #'start-stop' }

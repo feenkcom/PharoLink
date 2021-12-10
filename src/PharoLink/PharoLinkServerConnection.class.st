@@ -10,7 +10,8 @@ Class {
 		'server',
 		'listenProcess',
 		'syncRegistry',
-		'announcer'
+		'announcer',
+		'registry'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -30,7 +31,7 @@ PharoLinkServerConnection >> announcer [
 { #category : #private }
 PharoLinkServerConnection >> deserialize: aByteArray [
 
-	^ server deserialize: aByteArray
+	^ PharoLinkServerSerializer deserialize: aByteArray registry: registry
 ]
 
 { #category : #accessing }
@@ -118,6 +119,8 @@ PharoLinkServerConnection >> initialize [
 	super initialize.
 	syncRegistry := Dictionary new.
 	announcer := Announcer new.
+	registry := PharoLinkRegistry new.
+
 ]
 
 { #category : #initialization }
@@ -131,7 +134,7 @@ PharoLinkServerConnection >> initializeServer: aPharoLinkServer socket: aSocket 
 { #category : #accessing }
 PharoLinkServerConnection >> registry [ 
 
-	^ server registry
+	^ registry
 ]
 
 { #category : #accessing }

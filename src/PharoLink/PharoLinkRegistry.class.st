@@ -92,7 +92,7 @@ Stdio stdout
 	<< ', id: ';
 	print: newObjId;
 	lf; flush.
-self halt.
+
 	idToObjMap at: newObjId put: anObject.
 	objToIdMap at: anObject put: newObjId.
 	^ newObjId
