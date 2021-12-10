@@ -92,6 +92,21 @@ PharoLinkServerConnection >> handleIsAlive: aDictionary [
 	self sendResponse: response to: aDictionary.
 ]
 
+{ #category : #private }
+PharoLinkServerConnection >> handleNextRequestSafely [
+	"Retrieve the next request and process it,
+	handling connection errors and timeouts"
+
+	^ [ self handleRequest: stream next ]
+		on: ConnectionClosed, ConnectionTimedOut
+		do: [ :ex |
+			"Stop the receiver and announce it.
+			Run from a separate process since we are inside the listen process, and would kill the stop :-)"
+			[ self stop ] fork.
+			"Wait to be terminated"
+			Semaphore new wait ]
+]
+
 { #category : #public }
 PharoLinkServerConnection >> handleRequest: aDictionary [
 	| type syncId registryEntry |
@@ -190,7 +205,7 @@ PharoLinkServerConnection >> start [
 	stream := LanguageLinkMsgPackSocketStream on: (SocketStream on: socket).
 	listenProcess := 
 		[ PharoLinkServerCurrentConnection value: self during:
-			[ [ [ 	self handleRequest: stream next ] repeat ]
+			[ [ [ 	self handleNextRequestSafely ] repeat ]
 				on: Error 
 				do: [ :ex | LanguageLinkCommunicationsSignal new
 					originalException: ex;
