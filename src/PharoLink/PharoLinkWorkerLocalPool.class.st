@@ -17,19 +17,9 @@ PharoLinkWorkerLocalPool class >> default [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerLocalPool class >> newServer: anInteger [
-
-	^ PharoLinkServer new
-		  listenPort: anInteger;
-		  setDebugMode;
-		  setTaskQueue;
-		  yourself
-]
-
-{ #category : #accessing }
 PharoLinkWorkerLocalPool class >> port: anInteger [
 
-	^ self server: (self newServer: anInteger)
+	^ self server: (PharoLinkWorkerServer port: anInteger)
 ]
 
 { #category : #accessing }
@@ -70,11 +60,10 @@ PharoLinkWorkerLocalPool >> newWorkerProcess [
 	args
 		add: settings serverImage fullName;
 		add: 'clap';
-		add: 'pharoLinkWorker'.
+		add: 'pharoLinkWorkerService'.
 	server debugMode ifTrue: [ args add: '--log' ].
 	args
-		add: '--registerObserver';
-		add: '--taskPollForever';
+		add: '--addObserver';
 		add: server listenPort asString;
 		add: '--detachChangesFromFileSystem'.
 	^ GtSubprocessWithInMemoryOutput new
@@ -86,9 +75,21 @@ PharoLinkWorkerLocalPool >> newWorkerProcess [
 ]
 
 { #category : #accessing }
+PharoLinkWorkerLocalPool >> nextPut: aTask [
+
+	^ server nextPut: aTask
+]
+
+{ #category : #accessing }
 PharoLinkWorkerLocalPool >> server [
 
 	^ server
+]
+
+{ #category : #accessing }
+PharoLinkWorkerLocalPool >> server: aServer [
+
+	server := aServer
 ]
 
 { #category : #accessing }
