@@ -33,9 +33,25 @@ PharoLinkWorkerServerConnection >> addObserver: aBlock [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServerConnection >> cancelCurrentTask [
+PharoLinkWorkerServerConnection >> commandPing [
 
-	^ observer value: #CancelCurrentTask
+	"If the worker service responds, it is is there. If something fails, you get an error."
+
+	^ observer value: #Ping
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> commandQuitSmalltalk [
+
+	"Except the connection to close on the worker service end."
+
+	^ observer value: #QuitSmalltalk
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> commandTerminateCurrentTask [
+
+	^ observer value: #TerminateCurrentTask
 ]
 
 { #category : #accessing }
@@ -65,45 +81,6 @@ PharoLinkWorkerServerConnection >> initializeTaskQueue: aTaskQueue [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServerConnection >> next [
-
-	self assert: [ currentTask isNil ].
-	^ currentTask := taskQueue next
-]
-
-{ #category : #accessing }
-PharoLinkWorkerServerConnection >> notifyDoneWith: anObject [
-
-	self assert: [ currentTask isNotNil ].
-	taskQueue notifyDone: currentTask id with: anObject.
-	currentTask := nil
-]
-
-{ #category : #accessing }
-PharoLinkWorkerServerConnection >> notifyFailedWith: anObject [
-
-	self assert: [ currentTask isNotNil ].
-	taskQueue notifyFailed: currentTask id with: anObject.
-	currentTask := nil
-]
-
-{ #category : #accessing }
-PharoLinkWorkerServerConnection >> ping [
-
-	"If the worker service responds, it is is there. If something fails, you get an error."
-
-	^ observer value: #Ping
-]
-
-{ #category : #accessing }
-PharoLinkWorkerServerConnection >> quitSmalltalk [
-
-	"Except the connection to close on the worker service end."
-
-	^ observer value: #QuitSmalltalk
-]
-
-{ #category : #accessing }
 PharoLinkWorkerServerConnection >> removeObserver [
 
 	observerProcess ifNotNil: #terminate.
@@ -118,4 +95,27 @@ PharoLinkWorkerServerConnection >> stop [
 	self hasObserver ifTrue: [ self removeObserver ].
 	currentTask := nil.
 	super stop
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> taskNext [
+
+	self assert: [ currentTask isNil ].
+	^ currentTask := taskQueue next
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> taskNotifyDoneWith: anObject [
+
+	self assert: [ currentTask isNotNil ].
+	taskQueue notifyDone: currentTask id with: anObject.
+	currentTask := nil
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> taskNotifyFailedWith: anObject [
+
+	self assert: [ currentTask isNotNil ].
+	taskQueue notifyFailed: currentTask id with: anObject.
+	currentTask := nil
 ]

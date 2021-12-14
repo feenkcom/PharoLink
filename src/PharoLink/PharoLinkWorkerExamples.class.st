@@ -24,7 +24,20 @@ PharoLinkWorkerExamples >> assert: aBlock signals: aClass [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerExamples >> commandCancelCurrentTask [
+PharoLinkWorkerExamples >> commandPing [
+
+	<gtExample>
+	<after: #stop>
+	| before after |
+	self start.
+	self waitForObservers.
+	"should just not fail"
+	connection commandPing.
+	^ connection
+]
+
+{ #category : #accessing }
+PharoLinkWorkerExamples >> commandTerminateCurrentTask [
 
 	<gtExample>
 	<after: #stop>
@@ -44,25 +57,12 @@ PharoLinkWorkerExamples >> commandCancelCurrentTask [
 			done signal ].
 	self waitForCurrentTask: connection.
 	self assert: [ connection currentTask isNotNil ].
-	self assert: [ connection cancelCurrentTask ].
+	self assert: [ connection commandTerminateCurrentTask ].
 	done wait.
 	self assert: [ success not ].
 	self assert: [ result beginsWith: 'PharoLinkWorkerTaskError' ].
 	self assert: [ connection currentTask isNil ].
-	self assert: [ connection cancelCurrentTask not ].
-	^ connection
-]
-
-{ #category : #accessing }
-PharoLinkWorkerExamples >> commandPing [
-
-	<gtExample>
-	<after: #stop>
-	| before after |
-	self start.
-	self waitForObservers.
-	"should just not fail"
-	connection ping.
+	self assert: [ connection commandTerminateCurrentTask not ].
 	^ connection
 ]
 

@@ -95,16 +95,6 @@ PharoLinkWorkerService >> command: aSelector [
 ]
 
 { #category : #commands }
-PharoLinkWorkerService >> commandCancelCurrentTask [
-
-	"figure out if we need to catch some errors"
-
-	taskWorker currentTaskExecution ifNil: [ ^ false ] ifNotNil: [ :e | 
-		e terminateWithReason: 'received CancelCurrentTask'.
-		^ true ]
-]
-
-{ #category : #commands }
 PharoLinkWorkerService >> commandPing [
 
 	"Note that we must not wait for a response, as this leads to a deadlock"
@@ -114,8 +104,20 @@ PharoLinkWorkerService >> commandPing [
 
 { #category : #commands }
 PharoLinkWorkerService >> commandQuitSmalltalk [
-	
+
+	"Except connection closed."
+
 	Smalltalk image snapshot: false andQuit: true
+]
+
+{ #category : #commands }
+PharoLinkWorkerService >> commandTerminateCurrentTask [
+
+	"figure out if we need to catch some errors"
+
+	^ taskWorker currentTaskExecution ifNil: [ false ] ifNotNil: [ :e | 
+		  e terminateWithReason: 'received TerminateCurrentTask'.
+		  true ]
 ]
 
 { #category : #initialization }
@@ -129,7 +131,8 @@ PharoLinkWorkerService >> initialize [
 PharoLinkWorkerService >> kill [
 
 	super kill.
-	application stop
+	application stop.
+	taskWorker stop
 ]
 
 { #category : #accessing }
@@ -138,55 +141,16 @@ PharoLinkWorkerService >> name [
 	^ 'PharoLinkWorker poll service'
 ]
 
-{ #category : #tasks }
-PharoLinkWorkerService >> next [
-
-	| promise |
-	promise := application newCommandFactory send:
-		'LeJsonV4 uniqueInstance serialize: connection next'.
-	^ LeJsonV4 uniqueInstance deserialize: promise waitForValue readStream
-]
-
-{ #category : #tasks }
-PharoLinkWorkerService >> notifyDone: aTask with: anObject [
-
-	StringSignal emit: ('done {1} with {2}' format: { 
-				 aTask.
-				 anObject }).
-	^ application newCommandFactory
-		  bindingAt: #result
-		  put: (LeJsonV4 uniqueInstance serialize: anObject);
-		  sendAndWait:
-			  'connection notifyDoneWith: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
-]
-
-{ #category : #tasks }
-PharoLinkWorkerService >> notifyFailed: aTask with: anError [
-
-	StringSignal emit: ('failed {1} with {2}' format: { 
-				 aTask.
-				 anError }).
-	^ application newCommandFactory
-		  bindingAt: #stackString put: anError stackString;
-		  sendAndWait: 'connection notifyFailedWith: stackString. true'
-]
-
 { #category : #observer }
 PharoLinkWorkerService >> removeObserver [
 
 	^ application newCommandFactory send: 'connection removeObserver'
 ]
 
-{ #category : #starting }
-PharoLinkWorkerService >> setUp [
-
-	super setUp.
-	taskWorker start
-]
-
 { #category : #accessing }
 PharoLinkWorkerService >> start [
 
+	taskWorker start.
 	application start.
 	super start
 ]
@@ -195,17 +159,51 @@ PharoLinkWorkerService >> start [
 PharoLinkWorkerService >> stepService [
 
 	| task future |
-	task := self next.
+	task := self taskNext.
 	future := taskWorker future: task.
 	future
-		onSuccessDo: [ :result | self notifyDone: task with: result ];
-		onFailureDo: [ :error | self notifyFailed: task with: error ];
+		onSuccessDo: [ :result | self taskNotifyDone: task with: result ];
+		onFailureDo: [ :error | self taskNotifyFailed: task with: error ];
 		waitForCompletion: 1 day
 ]
 
-{ #category : #starting }
-PharoLinkWorkerService >> tearDown [
+{ #category : #accessing }
+PharoLinkWorkerService >> stop [
 
-	taskWorker stop.
-	super tearDown
+	super stop.
+	application stop.
+	taskWorker stop
+]
+
+{ #category : #tasks }
+PharoLinkWorkerService >> taskNext [
+
+	| promise |
+	promise := application newCommandFactory send:
+		'LeJsonV4 uniqueInstance serialize: connection taskNext'.
+	^ LeJsonV4 uniqueInstance deserialize: promise waitForValue readStream
+]
+
+{ #category : #tasks }
+PharoLinkWorkerService >> taskNotifyDone: aTask with: anObject [
+
+	StringSignal emit: ('done {1} with {2}' format: { 
+				 aTask.
+				 anObject }).
+	^ application newCommandFactory
+		  bindingAt: #result
+		  put: (LeJsonV4 uniqueInstance serialize: anObject);
+		  sendAndWait:
+			  'connection taskNotifyDoneWith: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
+]
+
+{ #category : #tasks }
+PharoLinkWorkerService >> taskNotifyFailed: aTask with: anError [
+
+	StringSignal emit: ('failed {1} with {2}' format: { 
+				 aTask.
+				 anError }).
+	^ application newCommandFactory
+		  bindingAt: #stackString put: anError stackString;
+		  sendAndWait: 'connection taskNotifyFailedWith: stackString. true'
 ]
