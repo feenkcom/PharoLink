@@ -139,21 +139,25 @@ LanguageLinkMsgPackPharoBroker >> serverSocketOn: port [
 
 { #category : #'start-stop' }
 LanguageLinkMsgPackPharoBroker >> start [
-	socket := self clientSocket.
-	handlerThread := [
-		msgStream := LanguageLinkMsgPackSocketStream on: (SocketStream on: socket).
-		"This needs appropriate error handling.
-		If the receiver has been told to shut down, errors can probably be ignored."
-		[ self primHandle: msgStream next ] repeat.
-		] forkNamed: 'LanguageLinkMsgPackPharoBroker handlerThread'.
 
+	socket := self clientSocket.
+	handlerThread := [ 
+	                 [ 
+	                 msgStream := LanguageLinkMsgPackSocketStream on:
+		                              (SocketStream on: socket).
+	                 [ self primHandle: msgStream next ] repeat ]
+		                 on: NetworkError
+		                 do: [ :error | 
+		                 Halt once.
+		                 error emit. ] ] forkNamed:
+		                 'LanguageLinkMsgPackPharoBroker handlerThread'
 ]
 
 { #category : #'start-stop' }
 LanguageLinkMsgPackPharoBroker >> stop [
 
-	msgStream ifNotNil: [ msgStream close ].
-	socket ifNotNil: [ socket closeAndDestroy ].
-	handlerThread ifNotNil: [ handlerThread terminate ].
-	msgStream := socket := handlerThread := nil.
+	msgStream ifNotNil: #close.
+	socket ifNotNil: #closeAndDestroy.
+	handlerThread ifNotNil: #terminate.
+	msgStream := socket := handlerThread := nil
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkWorkerTask,
-	#superclass : #Object,
+	#superclass : #TKTTask,
 	#instVars : [
 		'id'
 	],
@@ -36,4 +36,13 @@ PharoLinkWorkerTask >> initialize [
 PharoLinkWorkerTask >> run [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> value [
+
+	^ [ self run ]
+		  on: Exception
+		  do: [ :exception | 
+		  PharoLinkWorkerTaskError signalCausedBy: exception ]
 ]

@@ -3,11 +3,21 @@ Class {
 	#superclass : #PharoLinkServerConnection,
 	#instVars : [
 		'observer',
-		'lastPing',
-		'observerProcess'
+		'observerProcess',
+		'taskQueue',
+		'currentTask'
 	],
 	#category : #'PharoLink-Worker'
 }
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection class >> server: aPharoLinkServer socket: aSocket taskQueue: aTaskQueue [
+
+	^ self new
+		  initializeTaskQueue: aTaskQueue;
+		  initializeServer: aPharoLinkServer socket: aSocket;
+		  yourself
+]
 
 { #category : #accessing }
 PharoLinkWorkerServerConnection >> addObserver: aBlock [
@@ -29,6 +39,12 @@ PharoLinkWorkerServerConnection >> cancelCurrentTask [
 ]
 
 { #category : #accessing }
+PharoLinkWorkerServerConnection >> currentTask [
+
+	^ currentTask
+]
+
+{ #category : #accessing }
 PharoLinkWorkerServerConnection >> globals [
 
 	^ super globals copy
@@ -43,19 +59,38 @@ PharoLinkWorkerServerConnection >> hasObserver [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServerConnection >> lastPing [
+PharoLinkWorkerServerConnection >> initializeTaskQueue: aTaskQueue [
 
-	^ lastPing
+	taskQueue := aTaskQueue
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServerConnection >> notifyPing [
+PharoLinkWorkerServerConnection >> next [
 
-	lastPing := DateAndTime now
+	self assert: [ currentTask isNil ].
+	^ currentTask := taskQueue next
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> notifyDoneWith: anObject [
+
+	self assert: [ currentTask isNotNil ].
+	taskQueue notifyDone: currentTask id with: anObject.
+	currentTask := nil
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServerConnection >> notifyFailedWith: anObject [
+
+	self assert: [ currentTask isNotNil ].
+	taskQueue notifyFailed: currentTask id with: anObject.
+	currentTask := nil
 ]
 
 { #category : #accessing }
 PharoLinkWorkerServerConnection >> ping [
+
+	"If the worker service responds, it is is there. If something fails, you get an error."
 
 	^ observer value: #Ping
 ]
@@ -63,13 +98,15 @@ PharoLinkWorkerServerConnection >> ping [
 { #category : #accessing }
 PharoLinkWorkerServerConnection >> quitSmalltalk [
 
+	"Except the connection to close on the worker service end."
+
 	^ observer value: #QuitSmalltalk
 ]
 
 { #category : #accessing }
 PharoLinkWorkerServerConnection >> removeObserver [
 
-	observerProcess terminate.
+	observerProcess ifNotNil: #terminate.
 	observerProcess := nil.
 	observer := nil.
 	^ true
@@ -79,5 +116,6 @@ PharoLinkWorkerServerConnection >> removeObserver [
 PharoLinkWorkerServerConnection >> stop [
 
 	self hasObserver ifTrue: [ self removeObserver ].
+	currentTask := nil.
 	super stop
 ]

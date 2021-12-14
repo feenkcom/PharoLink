@@ -26,14 +26,16 @@ PharoLinkWorkerServer >> connections [
 PharoLinkWorkerServer >> initialize [
 
 	super initialize.
-	taskQueue := PharoLinkWorkerTaskQueue new.
-	globals at: #taskQueue put: taskQueue
+	taskQueue := PharoLinkWorkerTaskQueue new
 ]
 
 { #category : #accessing }
 PharoLinkWorkerServer >> newConnection: aSocket [
 
-	^ PharoLinkWorkerServerConnection server: self socket: aSocket
+	^ PharoLinkWorkerServerConnection
+		  server: self
+		  socket: aSocket
+		  taskQueue: taskQueue
 ]
 
 { #category : #accessing }

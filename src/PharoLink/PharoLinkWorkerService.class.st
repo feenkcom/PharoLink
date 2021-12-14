@@ -58,6 +58,7 @@ PharoLinkWorkerService class >> newPharoApplication: aString [
 		  (PharoLinkApplication defaultSettings
 			   serverProcessClass: LanguageLinkManualProcess;
 			   serverSocketAddress: (LanguageLinkSocketAddress from: aString);
+			   debugMode: true;
 			   yourself)
 ]
 
@@ -72,9 +73,8 @@ PharoLinkWorkerService >> addObserver [
 
 	| commandFactory observer |
 	commandFactory := application newCommandFactory.
-	observer := commandFactory observerFromCallback: [ :selector | "can be any method named 'command.*'"
-		            self perform: #command , selector.
-		            true ].
+	observer := commandFactory observerFromCallback: [ :selector | 
+		            self command: selector ].
 	"register needs to keep request alive to keep observer alive"
 	^ commandFactory send: ('connection addObserver: {1}' format:
 			   { observer pharoLinkFormattedCode })
@@ -86,11 +86,22 @@ PharoLinkWorkerService >> application: anApplication [
 	application := anApplication
 ]
 
+{ #category : #observer }
+PharoLinkWorkerService >> command: aSelector [
+
+	"can be any method named 'command(aSelector)'"
+
+	^ self perform: #command , aSelector
+]
+
 { #category : #commands }
 PharoLinkWorkerService >> commandCancelCurrentTask [
 
 	"figure out if we need to catch some errors"
-	taskWorker currentTaskExecution cancel
+
+	taskWorker currentTaskExecution ifNil: [ ^ false ] ifNotNil: [ :e | 
+		e terminateWithReason: 'received CancelCurrentTask'.
+		^ true ]
 ]
 
 { #category : #commands }
@@ -98,12 +109,12 @@ PharoLinkWorkerService >> commandPing [
 
 	"Note that we must not wait for a response, as this leads to a deadlock"
 
-	application newCommandFactory send: 'connection notifyPing. true'
+	
 ]
 
 { #category : #commands }
 PharoLinkWorkerService >> commandQuitSmalltalk [
-
+	
 	Smalltalk image snapshot: false andQuit: true
 ]
 
@@ -112,6 +123,13 @@ PharoLinkWorkerService >> initialize [
 
 	super initialize.
 	taskWorker := TKTWorker new
+]
+
+{ #category : #accessing }
+PharoLinkWorkerService >> kill [
+
+	super kill.
+	application stop
 ]
 
 { #category : #accessing }
@@ -125,7 +143,7 @@ PharoLinkWorkerService >> next [
 
 	| promise |
 	promise := application newCommandFactory send:
-		'LeJsonV4 uniqueInstance serialize: taskQueue next'.
+		'LeJsonV4 uniqueInstance serialize: connection next'.
 	^ LeJsonV4 uniqueInstance deserialize: promise waitForValue readStream
 ]
 
@@ -136,11 +154,10 @@ PharoLinkWorkerService >> notifyDone: aTask with: anObject [
 				 aTask.
 				 anObject }).
 	^ application newCommandFactory
-		  bindingAt: #taskId put: aTask id;
 		  bindingAt: #result
 		  put: (LeJsonV4 uniqueInstance serialize: anObject);
 		  sendAndWait:
-			  'taskQueue notifyDone: taskId with: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
+			  'connection notifyDoneWith: (LeJsonV4 uniqueInstance deserialize: result readStream). true'
 ]
 
 { #category : #tasks }
@@ -150,31 +167,14 @@ PharoLinkWorkerService >> notifyFailed: aTask with: anError [
 				 aTask.
 				 anError }).
 	^ application newCommandFactory
-		  bindingAt: #taskId put: aTask id;
 		  bindingAt: #stackString put: anError stackString;
-		  sendAndWait:
-			  'taskQueue notifyFailed: taskId with: stackString. true'
+		  sendAndWait: 'connection notifyFailedWith: stackString. true'
 ]
 
 { #category : #observer }
 PharoLinkWorkerService >> removeObserver [
 
 	^ application newCommandFactory send: 'connection removeObserver'
-]
-
-{ #category : #tasks }
-PharoLinkWorkerService >> run: aTask [
-
-	| result error |
-	StringSignal emit: ('run {1}' format: { aTask }).
-	[ result := aTask run ]
-		on: Error
-		do: [ :e | 
-			e freeze.
-			error := e ].
-	error
-		ifNil: [ self notifyDone: aTask with: result ]
-		ifNotNil: [ self notifyFailed: aTask with: error ]
 ]
 
 { #category : #starting }
@@ -195,21 +195,12 @@ PharoLinkWorkerService >> start [
 PharoLinkWorkerService >> stepService [
 
 	| task future |
-	5 seconds wait.
-	true ifTrue: [ ^ self ].
 	task := self next.
-	future := taskWorker future: [ self run: task ].
-	future onFailureDo: [ :r | Halt once "not sure what to do here" ].
-	[ future waitForCompletion: 5 minutes ]
-		on: TKTTimeoutException
-		do: [ :e | Halt once "...or here" ]
-]
-
-{ #category : #accessing }
-PharoLinkWorkerService >> stop [
-
-	super stop.
-	application stop
+	future := taskWorker future: task.
+	future
+		onSuccessDo: [ :result | self notifyDone: task with: result ];
+		onFailureDo: [ :error | self notifyFailed: task with: error ];
+		waitForCompletion: 1 day
 ]
 
 { #category : #starting }

@@ -163,10 +163,10 @@ PharoLinkServer >> start [
 PharoLinkServer >> stop [
 	"Stop the receiver"
 
-	listenProcess terminate.
+	listenProcess ifNotNil: #terminate.
 	listenProcess := nil.
 	connections do: #stop.
 	connections removeAll.
-	serverSocket closeAndDestroy.
+	serverSocket  ifNotNil: #closeAndDestroy.
 	serverSocket := nil.
 ]

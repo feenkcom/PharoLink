@@ -3,26 +3,66 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'service',
-		'server'
+		'server',
+		'connection'
 	],
 	#category : #'PharoLink-Examples'
 }
 
 { #category : #accessing }
-PharoLinkWorkerExamples >> ping [
+PharoLinkWorkerExamples >> assert: aBlock signals: aClass [
+
+	| signaled |
+	signaled := false.
+	aBlock
+		on: aClass
+		do: [ signaled := true ].
+	self
+		assert: signaled
+		description:
+		('Expected {1} to be signaled, but was not' format: { aClass })
+]
+
+{ #category : #accessing }
+PharoLinkWorkerExamples >> commandCancelCurrentTask [
 
 	<gtExample>
 	<after: #stop>
-	| connection before after |
+	| task promise done success result |
 	self start.
-	service addObserver.
 	self waitForObservers.
-	connection := server connections first.
-	self assert: [ connection lastPing isNil ].
-	before := DateAndTime now.
+	self assert: [ connection currentTask isNil ].
+	done := Semaphore new.
+	(server nextPut: PharoLinkWorkerWaitTask new)
+		then: [ :e | 
+			success := true.
+			result := e.
+			done signal ]
+		otherwise: [ :e | 
+			success := false.
+			result := e.
+			done signal ].
+	self waitForCurrentTask: connection.
+	self assert: [ connection currentTask isNotNil ].
+	self assert: [ connection cancelCurrentTask ].
+	done wait.
+	self assert: [ success not ].
+	self assert: [ result beginsWith: 'PharoLinkWorkerTaskError' ].
+	self assert: [ connection currentTask isNil ].
+	self assert: [ connection cancelCurrentTask not ].
+	^ connection
+]
+
+{ #category : #accessing }
+PharoLinkWorkerExamples >> commandPing [
+
+	<gtExample>
+	<after: #stop>
+	| before after |
+	self start.
+	self waitForObservers.
+	"should just not fail"
 	connection ping.
-	after := DateAndTime now.
-	self assert: [ connection lastPing between: before and: after ].
 	^ connection
 ]
 
@@ -30,30 +70,49 @@ PharoLinkWorkerExamples >> ping [
 PharoLinkWorkerExamples >> start [
 
 	<gtExample>
+	<after: #stop>
 	server := PharoLinkWorkerServer port: 8442.
 	service := PharoLinkWorkerService serverSocketAddress: 8442 asString.
 	server start.
 	service start.
+	connection := server connections first.
 	^ { 
 		  server.
-		  service }
+		  service.
+		  connection }
 ]
 
 { #category : #accessing }
 PharoLinkWorkerExamples >> stop [
 
 	<gtExample>
-	service stop.
-	server stop.
+	connection ifNotNil: #stop.
+	service ifNotNil: #kill.
+	server ifNotNil: #stop.
 	^ { 
+		  connection.
 		  service.
 		  server }
+]
+
+{ #category : #accessing }
+PharoLinkWorkerExamples >> waitForCurrentTask: aConnection [
+
+	| waited |
+	waited := 0.
+	[ aConnection currentTask isNil ] whileTrue: [ 
+		waited > 2000 ifTrue: [ 
+			self error:
+				'waited for two seconds, current task is nil' ].
+		100 milliSeconds wait.
+		waited := waited + 100 ]
 ]
 
 { #category : #accessing }
 PharoLinkWorkerExamples >> waitForObservers [
 
 	| waited |
+	service addObserver.
 	waited := 0.
 	[ 
 	server connections isEmpty or: [ 
