@@ -148,8 +148,8 @@ LanguageLinkMsgPackPharoBroker >> start [
 	                 [ self primHandle: msgStream next ] repeat ]
 		                 on: NetworkError
 		                 do: [ :error | 
-		                 Halt once.
-		                 error emit. ] ] forkNamed:
+			                 self flag: 'TODO log this properly, restart?'.
+			                 error emit ] ] forkNamed:
 		                 'LanguageLinkMsgPackPharoBroker handlerThread'
 ]
 

@@ -39,6 +39,35 @@ PharoLinkWorkerServer >> newConnection: aSocket [
 ]
 
 { #category : #accessing }
+PharoLinkWorkerServer >> newProcess [
+
+	| settings args |
+	settings := LanguageLinkSettings pharoDefaultSettings.
+	args := OrderedCollection new.
+	args
+		add: settings serverImage fullName;
+		add: 'clap';
+		add: 'pharoLinkWorkerService'.
+	debugMode ifTrue: [ args add: '--log' ].
+	args
+		add: '--addObserver';
+		add: listenPort asString;
+		add: '--detachChangesFromFileSystem'.
+	^ GtSubprocessWithInMemoryOutput new
+		  command: settings serverExecutable fullName;
+		  arguments: args;
+		  workingDirectory: settings workingDirectory resolve fullName;
+		  terminateOnShutdown;
+		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServer >> newService [
+
+	^ PharoLinkWorkerService serverSocketAddress: listenPort asString
+]
+
+{ #category : #accessing }
 PharoLinkWorkerServer >> nextPut: aTask [
 
 	^ taskQueue nextPut: aTask

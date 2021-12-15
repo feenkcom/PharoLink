@@ -55,7 +55,7 @@ PharoLinkWorkerExamples >> commandTerminateCurrentTask [
 			success := false.
 			result := e.
 			done signal ].
-	self waitForCurrentTask: connection.
+	self waitForCurrentTask.
 	self assert: [ connection currentTask isNotNil ].
 	self assert: [ connection commandTerminateCurrentTask ].
 	done wait.
@@ -72,7 +72,7 @@ PharoLinkWorkerExamples >> start [
 	<gtExample>
 	<after: #stop>
 	server := PharoLinkWorkerServer port: 8442.
-	service := PharoLinkWorkerService serverSocketAddress: 8442 asString.
+	service := server newService.
 	server start.
 	service start.
 	connection := server connections first.
@@ -85,8 +85,6 @@ PharoLinkWorkerExamples >> start [
 { #category : #accessing }
 PharoLinkWorkerExamples >> stop [
 
-	<gtExample>
-	connection ifNotNil: #stop.
 	service ifNotNil: #kill.
 	server ifNotNil: #stop.
 	^ { 
@@ -96,11 +94,11 @@ PharoLinkWorkerExamples >> stop [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerExamples >> waitForCurrentTask: aConnection [
+PharoLinkWorkerExamples >> waitForCurrentTask [
 
 	| waited |
 	waited := 0.
-	[ aConnection currentTask isNil ] whileTrue: [ 
+	[ connection currentTask isNil ] whileTrue: [ 
 		waited > 2000 ifTrue: [ 
 			self error:
 				'waited for two seconds, current task is nil' ].

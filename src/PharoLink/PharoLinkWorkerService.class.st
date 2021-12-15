@@ -32,7 +32,7 @@ PharoLinkWorkerService class >> commandLine [
 		  service := self serverSocketAddress:
 			             (args at: #serverSocketAddress) value.
 		  service start.
-		  args at: #observer ifPresent: [ service addObserver ].
+		  args at: #addObserver ifPresent: [ service addObserver ].
 		  "wait to keep process alive"
 		  Semaphore new wait ]
 ]
