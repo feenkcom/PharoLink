@@ -26,14 +26,22 @@ LanguageLinkCommunicationHandler >> isRunning [
 
 { #category : #testing }
 LanguageLinkCommunicationHandler >> isServerReady [
-	| semaphore ans |
+
+	| semaphore process ans |
 	semaphore := Semaphore new.
-	[ ans := [self sendMessage: (LanguageLinkIsAliveMessage forApplication: self application).
-				true ] 
-					on: LanguageLinkCommunicationError 
-					do: [ :e | false ].
-	semaphore signal ] forkAt: Processor lowIOPriority.
+	process := [ 
+	           ans := [ 
+	                  self sendMessage:
+		                  (LanguageLinkIsAliveMessage forApplication:
+			                   self application).
+	                  true ]
+		                  on: LanguageLinkCommunicationError
+		                  do: [ :e | false ].
+	           semaphore signal ] forkAt: Processor lowIOPriority.
 	semaphore waitTimeoutMSecs: 100.
+	[ process terminate ]
+		on: ProcessAlreadyTerminating
+		do: [ "noop" ].
 	^ ans notNil and: ans
 ]
 

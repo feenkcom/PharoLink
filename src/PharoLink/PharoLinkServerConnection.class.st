@@ -10,6 +10,7 @@ Class {
 		'server',
 		'listenProcess',
 		'syncRegistry',
+		'processes',
 		'announcer',
 		'registry'
 	],
@@ -42,22 +43,23 @@ PharoLinkServerConnection >> globals [
 
 { #category : #private }
 PharoLinkServerConnection >> handlEnqueue: aDictionary [
+
 	"Process the supplied statements"
+
 	| command |
-
 	command := PharoLinkEvalCommand
-					source: (aDictionary at: #'statements')
-					bindings: ((aDictionary at: #'bindings') asDictionary collect: [ :obj |
-						self deserialize: obj ])
-					id: (aDictionary at: #'commandId').
+		           source: (aDictionary at: #statements)
+		           bindings:
+			           ((aDictionary at: #bindings) asDictionary collect: [ 
+				            :obj | self deserialize: obj ])
+		           id: (aDictionary at: #commandId).
 	command connection: self.
-	StringSignal emit: 'Enqueue: ', aDictionary printString.
-
-"self halt: (dict at: #statements)."
-	[ PharoLinkServerCurrentConnection 
-		value: self
-		during: [ command execute: self globals ] ] forkAt: Processor userSchedulingPriority.
-
+	StringSignal emit: 'Enqueue: ' , aDictionary printString.
+	processes add: ([ 
+		 PharoLinkServerCurrentConnection
+			 value: self
+			 during: [ command execute: self globals ] ] forkAt:
+			 Processor userSchedulingPriority)
 ]
 
 { #category : #'error handling' }
@@ -129,13 +131,13 @@ PharoLinkServerConnection >> handleRequest: aDictionary [
 ]
 
 { #category : #initialization }
-PharoLinkServerConnection >> initialize [ 
+PharoLinkServerConnection >> initialize [
 
 	super initialize.
 	syncRegistry := Dictionary new.
 	announcer := Announcer new.
 	registry := PharoLinkRegistry new.
-
+	processes := WeakIdentitySet new
 ]
 
 { #category : #initialization }
@@ -217,11 +219,17 @@ PharoLinkServerConnection >> start [
 ]
 
 { #category : #'start-stop' }
-PharoLinkServerConnection >> stop [ 
+PharoLinkServerConnection >> stop [
 
-	socket ifNotNil: [ socket closeAndDestroy ].
-	listenProcess ifNotNil: [ listenProcess terminate ].
-	socket := nil.
+	listenProcess ifNotNil: #terminate.
 	listenProcess := nil.
-	self announce: (PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
+	socket ifNotNil: #closeAndDestroy.
+	socket := nil.
+	processes do: [ :e | 
+		[ e terminate ]
+			on: ProcessAlreadyTerminating
+			do: [ "noop" ] ].
+	processes removeAll.
+	self announce:
+		(PharoLinkServerConnectionDisconnectedAnnouncement connection: self)
 ]

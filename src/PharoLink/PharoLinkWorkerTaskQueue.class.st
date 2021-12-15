@@ -19,35 +19,33 @@ PharoLinkWorkerTaskQueue >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkWorkerTaskQueue >> taskDone: aTaskId with: anObject [
-
-	| promise |
-	self flag: 'TODO fulfill should probably fork, as called in callback'.
-	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
-	promise fulfillWithValue: anObject
-]
-
-{ #category : #accessing }
-PharoLinkWorkerTaskQueue >> taskFailed: aTaskId with: anObject [
-
-	| promise |
-	self flag: 'TODO fulfill should probably fork, as called in callback'.
-	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
-	promise rejectWithError: anObject
-]
-
-{ #category : #accessing }
-PharoLinkWorkerTaskQueue >> taskPoll [
+PharoLinkWorkerTaskQueue >> next [
 
 	^ queue next
 ]
 
 { #category : #accessing }
-PharoLinkWorkerTaskQueue >> taskSubmit: aTask [
+PharoLinkWorkerTaskQueue >> nextPut: aTask [
 
 	| promise |
 	promise := AsyncPendingPromise new.
 	queue nextPut: aTask.
 	promisesMonitor critical: [ promises at: aTask id put: promise ].
 	^ promise
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTaskQueue >> notifyDone: aTaskId with: anObject [
+
+	| promise |
+	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
+	promise fulfillWithValue: anObject
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTaskQueue >> notifyFailed: aTaskId with: anObject [
+
+	| promise |
+	promisesMonitor critical: [ promise := promises removeKey: aTaskId ].
+	promise rejectWithError: anObject
 ]

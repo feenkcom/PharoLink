@@ -8,27 +8,67 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkWorkerServer class >> port: anInteger [
+
+	^ self new
+		  listenPort: anInteger;
+		  setDebugMode;
+		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServer >> connections [
+
+	^ connections
+]
+
+{ #category : #accessing }
 PharoLinkWorkerServer >> initialize [
 
 	super initialize.
-	self scheduler: PharoLinkWorkerTaskQueue new
-]
-
-{ #category : #'form-scripting' }
-PharoLinkWorkerServer >> submit: aTask [
-
-	^ taskQueue taskSubmit: aTask
+	taskQueue := PharoLinkWorkerTaskQueue new
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServer >> taskQueue [
+PharoLinkWorkerServer >> newConnection: aSocket [
 
-	^ taskQueue
+	^ PharoLinkWorkerServerConnection
+		  server: self
+		  socket: aSocket
+		  taskQueue: taskQueue
 ]
 
 { #category : #accessing }
-PharoLinkWorkerServer >> taskQueue: aPharoLinkWorkerTaskQueue [
+PharoLinkWorkerServer >> newProcess [
 
-	taskQueue := aPharoLinkWorkerTaskQueue.
-	globals at: #taskQueue put: taskQueue
+	| settings args |
+	settings := LanguageLinkSettings pharoDefaultSettings.
+	args := OrderedCollection new.
+	args
+		add: settings serverImage fullName;
+		add: 'clap';
+		add: 'pharoLinkWorkerService'.
+	debugMode ifTrue: [ args add: '--log' ].
+	args
+		add: '--addObserver';
+		add: listenPort asString;
+		add: '--detachChangesFromFileSystem'.
+	^ GtSubprocessWithInMemoryOutput new
+		  command: settings serverExecutable fullName;
+		  arguments: args;
+		  workingDirectory: settings workingDirectory resolve fullName;
+		  terminateOnShutdown;
+		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServer >> newService [
+
+	^ PharoLinkWorkerService serverSocketAddress: listenPort asString
+]
+
+{ #category : #accessing }
+PharoLinkWorkerServer >> nextPut: aTask [
+
+	^ taskQueue nextPut: aTask
 ]

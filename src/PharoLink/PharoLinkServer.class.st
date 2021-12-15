@@ -120,6 +120,12 @@ PharoLinkServer >> listenPort: anObject [
 ]
 
 { #category : #'start-stop' }
+PharoLinkServer >> newConnection: aSocket [
+
+	^ PharoLinkServerConnection server: self socket: aSocket
+]
+
+{ #category : #'start-stop' }
 PharoLinkServer >> setDebugMode [
 
 	debugMode := true.
@@ -134,31 +140,36 @@ PharoLinkServer >> socketBufferSize [
 ]
 
 { #category : #'start-stop' }
-PharoLinkServer >> start [ 
+PharoLinkServer >> start [
+
 	"Start the receiver's listenProcess.
 	This will accept connections and create a {{gtClass:PharoLinkServerConnection}} for each connection."
 
 	self assert: listenPort isNotNil.
 
 	serverSocket := LanguageLinkMsgPackUtils serverSocketOn: listenPort.
-	listenProcess := [	| bindSocket |	
-		[ [ bindSocket isNil ] whileTrue:
-			[ bindSocket := serverSocket waitForAcceptFor: 10 ifTimedOut: [ nil ] ].
-		self addConnection: (PharoLinkServerConnection server: self socket: bindSocket).
-		bindSocket := nil. ] repeat.
-		] forkAt: Processor lowIOPriority named: 'PharoLinkServer listenProcess'.
+	listenProcess := [ 
+	                 | bindSocket |
+	                 [ 
+	                 [ bindSocket isNil ] whileTrue: [ 
+		                 bindSocket := serverSocket
+			                               waitForAcceptFor: 10
+			                               ifTimedOut: [ nil ] ].
+	                 self addConnection: (self newConnection: bindSocket).
+	                 bindSocket := nil ] repeat ]
+		                 forkAt: Processor lowIOPriority
+		                 named: 'PharoLinkServer listenProcess'
 	"self preventTestForkedPDestroyServer"
-
 ]
 
 { #category : #'start-stop' }
 PharoLinkServer >> stop [
 	"Stop the receiver"
 
-	listenProcess terminate.
+	listenProcess ifNotNil: #terminate.
 	listenProcess := nil.
-	serverSocket closeAndDestroy.
 	connections do: #stop.
 	connections removeAll.
+	serverSocket  ifNotNil: #closeAndDestroy.
 	serverSocket := nil.
 ]
