@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'PharoLink-Registry'
+	#category : #'PharoLink-Registry'
 }
 
 { #category : #accessing }
@@ -47,6 +47,10 @@ PharoLinkRegistry >> createNewObjId [
 PharoLinkRegistry >> deregister: anObjId [
 	"Remove the supplied id"
 	| object |
+Stdio stdout
+	<< 'Deregister: ';
+	print: anObjId;
+	lf;flush.
 
 	object := idToObjMap at: anObjId.
 	idToObjMap removeKey: anObjId.
@@ -81,6 +85,13 @@ PharoLinkRegistry >> isPrimitive: anObject [
 PharoLinkRegistry >> primRegister: anObject withId: newObjId [
 	"Register the supplied object with the supplied id.
 	anObject must not already be registered, newObjId must be unique"
+
+Stdio stdout
+	<< 'Register: ';
+	print: anObject;
+	<< ', id: ';
+	print: newObjId;
+	lf; flush.
 
 	idToObjMap at: newObjId put: anObject.
 	objToIdMap at: anObject put: newObjId.

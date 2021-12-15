@@ -1,14 +1,16 @@
 Class {
 	#name : #PharoLinkServer,
 	#superclass : #Object,
+	#traits : 'TGtAnnouncer',
+	#classTraits : 'TGtAnnouncer classTrait',
 	#instVars : [
 		'listenPort',
 		'listenProcess',
 		'debugMode',
-		'registry',
 		'globals',
 		'serverSocket',
-		'connections'
+		'connections',
+		'announcer'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -51,15 +53,22 @@ PharoLinkServer class >> commandLineCommand [
 		  yourself
 ]
 
+{ #category : #private }
+PharoLinkServer >> addConnection: aPharoLinkServerConnection [
+
+	connections add: aPharoLinkServerConnection.
+	self announce: (PharoLinkServerConnectionConnectedAnnouncement connection: aPharoLinkServerConnection)
+]
+
+{ #category : #announcer }
+PharoLinkServer >> announcer [
+	<return: #Announcer>
+	^ announcer
+]
+
 { #category : #accessing }
 PharoLinkServer >> debugMode [
 	^ debugMode
-]
-
-{ #category : #private }
-PharoLinkServer >> deserialize: aByteArray [
-
-	^ PharoLinkServerSerializer deserialize: aByteArray registry: registry
 ]
 
 { #category : #accessing }
@@ -81,11 +90,10 @@ PharoLinkServer >> handleIsAlive: aZnRequest [
 PharoLinkServer >> initialize [ 
 
 	super initialize.
-	registry := PharoLinkRegistry new.
 	globals := Dictionary new.
-	globals at: #registry put: registry.
 	debugMode := false.
 	connections := OrderedCollection new.
+	announcer := Announcer new.
 ]
 
 { #category : #testing }
@@ -117,12 +125,6 @@ PharoLinkServer >> newConnection: aSocket [
 	^ PharoLinkServerConnection server: self socket: aSocket
 ]
 
-{ #category : #accessing }
-PharoLinkServer >> registry [
-
-	^ registry
-]
-
 { #category : #'start-stop' }
 PharoLinkServer >> setDebugMode [
 
@@ -138,25 +140,21 @@ PharoLinkServer >> socketBufferSize [
 ]
 
 { #category : #'start-stop' }
-PharoLinkServer >> start [
-
+PharoLinkServer >> start [ 
 	"Start the receiver's listenProcess.
 	This will accept connections and create a {{gtClass:PharoLinkServerConnection}} for each connection."
 
 	self assert: listenPort isNotNil.
+
 	serverSocket := LanguageLinkMsgPackUtils serverSocketOn: listenPort.
-	listenProcess := [ 
-	                 | bindSocket |
-	                 [ 
-	                 [ bindSocket isNil ] whileTrue: [ 
-		                 bindSocket := serverSocket
-			                               waitForAcceptFor: 10
-			                               ifTimedOut: [ nil ] ].
-	                 connections add: (self newConnection: bindSocket).
-	                 bindSocket := nil ] repeat ]
-		                 forkAt: Processor lowIOPriority
-		                 named: 'PharoLinkServer listenProcess'
+	listenProcess := [	| bindSocket |	
+		[ [ bindSocket isNil ] whileTrue:
+			[ bindSocket := serverSocket waitForAcceptFor: 10 ifTimedOut: [ nil ] ].
+		self addConnection: (PharoLinkServerConnection server: self socket: bindSocket).
+		bindSocket := nil. ] repeat.
+		] forkAt: Processor lowIOPriority named: 'PharoLinkServer listenProcess'.
 	"self preventTestForkedPDestroyServer"
+
 ]
 
 { #category : #'start-stop' }

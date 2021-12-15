@@ -11,7 +11,7 @@ Class {
 	#category : #'PharoLink-Server'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 PharoLinkEvalCommand class >> source: aString bindings: aDictionary id: anIdString [
 
 	^ self new

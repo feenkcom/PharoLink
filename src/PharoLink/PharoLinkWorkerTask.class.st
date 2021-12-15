@@ -1,8 +1,9 @@
 Class {
 	#name : #PharoLinkWorkerTask,
-	#superclass : #TKTTask,
+	#superclass : #Object,
 	#instVars : [
-		'id'
+		'id',
+		'result'
 	],
 	#category : #'PharoLink-Worker'
 }
@@ -30,6 +31,18 @@ PharoLinkWorkerTask >> initialize [
 
 	super initialize.
 	id := 'plw' , UUID new asString36
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> result [
+
+	^ result
+]
+
+{ #category : #accessing }
+PharoLinkWorkerTask >> result: anObject [
+
+	result := anObject
 ]
 
 { #category : #accessing }
