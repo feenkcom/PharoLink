@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkWorkerTask,
-	#superclass : #Object,
+	#superclass : #TKTTask,
 	#instVars : [
 		'id',
 		'result'
