@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkBadResponseSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'request',
 		'response'

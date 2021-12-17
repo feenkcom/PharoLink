@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkEvalSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'command'
 	],
