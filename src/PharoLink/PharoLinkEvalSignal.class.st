@@ -1,10 +1,10 @@
 Class {
 	#name : #PharoLinkEvalSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'command'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #'instance creation' }

@@ -1,11 +1,11 @@
 Class {
 	#name : #PharoLinkBadResponseSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'request',
 		'response'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #'instance creation' }

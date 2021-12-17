@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkNetworkErrorSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'command',
 		'networkError'

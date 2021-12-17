@@ -1,10 +1,10 @@
 Class {
 	#name : #PharoLinkResponseSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'response'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #printing }
