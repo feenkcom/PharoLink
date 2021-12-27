@@ -40,6 +40,7 @@ PharoLinkWorkerExamples >> commandPing [
 PharoLinkWorkerExamples >> commandTerminateCurrentTask [
 
 	<gtExample>
+	<noTest>
 	<after: #stop>
 	| task promise done success result |
 	self start.
