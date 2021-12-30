@@ -36,7 +36,7 @@ Class {
 		'promiseRegistry',
 		'mapperFactory'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #'private protocol' }
@@ -186,7 +186,7 @@ LanguageLinkExecutionHandler >> safeTriggerDebugger: error [
 LanguageLinkExecutionHandler >> sendCommand: command [
 	| promise |
 	self assert: command isValid.
-	commandQueue enqueueCommand: command.
+	commandQueue addCommand: command.
 	promise := self registerPromiseForCommand: command.
 	self primitiveSendCommand: command.
 	^ promise
