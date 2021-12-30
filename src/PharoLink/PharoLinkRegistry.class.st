@@ -86,13 +86,6 @@ PharoLinkRegistry >> primRegister: anObject withId: newObjId [
 	"Register the supplied object with the supplied id.
 	anObject must not already be registered, newObjId must be unique"
 
-Stdio stdout
-	<< 'Register: ';
-	print: anObject;
-	<< ', id: ';
-	print: newObjId;
-	lf; flush.
-
 	idToObjMap at: newObjId put: anObject.
 	objToIdMap at: anObject put: newObjId.
 	^ newObjId
