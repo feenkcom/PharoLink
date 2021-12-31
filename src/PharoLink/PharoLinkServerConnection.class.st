@@ -148,6 +148,12 @@ PharoLinkServerConnection >> initializeServer: aPharoLinkServer socket: aSocket 
 	self start.
 ]
 
+{ #category : #testing }
+PharoLinkServerConnection >> isConnected [
+
+	^ socket isConnected
+]
+
 { #category : #accessing }
 PharoLinkServerConnection >> registry [ 
 
