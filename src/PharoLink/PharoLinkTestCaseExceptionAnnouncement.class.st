@@ -72,6 +72,17 @@ PharoLinkTestCaseExceptionAnnouncement >> exceptionTrace [
 	^ exceptionTrace
 ]
 
+{ #category : #ui }
+PharoLinkTestCaseExceptionAnnouncement >> gtTraceFor: aView [
+	<gtView>
+
+	exceptionTrace ifNil: [ ^ aView empty ].
+	^ aView textEditor
+		title: 'Trace';
+		priority: 15;
+		text: [ exceptionTrace ]
+]
+
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString [
 
