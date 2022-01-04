@@ -31,7 +31,7 @@ PharoLinkFilesOpener class >> startUp: isStarting [
 	isStarting ifFalse: [ ^ self ].
 	(Smalltalk argumentsInclude: '--detachChangesFromFileSystem') 
 		ifFalse: [ ^ self ].
-	PharoLinkFilesOpener install.
+	self install.
 	EpMonitor current log initializeWith: OmMemoryStore new
 	"(CodeImporter fileStream: virtualChanges readStream)
 		gtReduceToUnsavedChunks;
