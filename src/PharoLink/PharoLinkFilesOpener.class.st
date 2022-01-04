@@ -31,7 +31,7 @@ PharoLinkFilesOpener class >> startUp: isStarting [
 	isStarting ifFalse: [ ^ self ].
 	(Smalltalk argumentsInclude: '--detachChangesFromFileSystem') 
 		ifFalse: [ ^ self ].
-	PharoLinkFilesOpener install.
+	self install.
 	EpMonitor current log initializeWith: OmMemoryStore new
 	"(CodeImporter fileStream: virtualChanges readStream)
 		gtReduceToUnsavedChunks;
@@ -42,7 +42,7 @@ PharoLinkFilesOpener class >> startUp: isStarting [
 PharoLinkFilesOpener >> changesFileOrNil [
 
 	| changes |
-	changes := super changesFileOrNil path asFileReference.
+	changes := self changesName asFileReference.
 	^ (PharoLinkReadFileWriteMemorySourceFile
 		   on: changes
 		   potentialLocations: { changes parent })
@@ -68,7 +68,7 @@ PharoLinkFilesOpener >> initialize [
 PharoLinkFilesOpener >> sourcesFileOrNil [
 
 	| sources |
-	sources := super sourcesFileOrNil path asFileReference.
+	sources := self sourcesName asFileReference.
 	^ (PharoLinkReadFileWriteMemorySourceFile
 		   on: sources
 		   potentialLocations: { sources parent })
