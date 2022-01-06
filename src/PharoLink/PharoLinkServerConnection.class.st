@@ -151,7 +151,7 @@ PharoLinkServerConnection >> initializeServer: aPharoLinkServer socket: aSocket 
 { #category : #testing }
 PharoLinkServerConnection >> isConnected [
 
-	^ socket isConnected
+	^ socket isNotNil and: [ socket isConnected ]
 ]
 
 { #category : #accessing }
