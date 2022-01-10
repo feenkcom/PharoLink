@@ -54,7 +54,6 @@ PharoLinkServerConnection >> handlEnqueue: aDictionary [
 				            :obj | self deserialize: obj ])
 		           id: (aDictionary at: #commandId).
 	command connection: self.
-	StringSignal emit: 'Enqueue: ' , aDictionary printString.
 	processes add: ([ 
 		 PharoLinkServerCurrentConnection
 			 value: self
@@ -171,7 +170,6 @@ PharoLinkServerConnection >> remoteAddress [
 { #category : #private }
 PharoLinkServerConnection >> sendAsyncMessage: msgDictionary [
 
-	StringSignal emit: 'Send async message ', msgDictionary printString.
 	stream nextPut: msgDictionary.
 ]
 
@@ -188,7 +186,6 @@ PharoLinkServerConnection >> sendResponse: responseDictionary to: msgDictionary 
 PharoLinkServerConnection >> sendSyncMessage: msgDictionary [
 	| syncId registryEntry |
 
-	StringSignal emit: 'Send sync message ', msgDictionary printString.
 	syncId := UUIDGenerator next base64Encoded.
 	msgDictionary at: #'__sync' put: syncId.
 	registryEntry := PharoServerSyncRegistryEntry id: syncId.
