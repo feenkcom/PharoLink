@@ -1,8 +1,6 @@
 Class {
 	#name : #PharoLinkServerConnection,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer',
-	#classTraits : 'TGtAnnouncer classTrait',
 	#instVars : [
 		'socket',
 		'stream',
