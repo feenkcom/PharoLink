@@ -69,17 +69,6 @@ PharoLinkServerSerializer >> registry: anObject [
 
 { #category : #private }
 PharoLinkServerSerializer >> serialize: anObject [
-	| proxyOrObject |
 
-	proxyOrObject := (anObject isDictionary and: [ anObject at: #'__pharolinkImmediate' ifAbsent: [ false ] ]) ifTrue:
-		[ anObject ]
-	ifFalse:
-		[ (PharoLinkRegistry isPrimitive: anObject) ifTrue:
-			[ anObject ]
-		ifFalse:
-			[ {
-				'__class__' -> anObject class name.
-				'__registryid__' -> (registry register: anObject).
-				} asDictionary ] ].
-	^ MpEncoder encode: proxyOrObject
+	^ MpEncoder encode: (anObject asPharoLinkObjectRegistry: registry)
 ]
