@@ -30,7 +30,7 @@ To install PharoLink evaluate:
 ```smalltalk
 EpMonitor disableDuring: [ 
 Metacello new
-	repository: 'github://feenkcom/PharoLink/src';
+	repository: 'github://feenkcom/PharoLink:main/src';
 	baseline: 'PharoLink';
 	load ]
 ```

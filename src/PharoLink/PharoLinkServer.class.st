@@ -1,8 +1,6 @@
 Class {
 	#name : #PharoLinkServer,
 	#superclass : #Object,
-	#traits : 'TGtAnnouncer',
-	#classTraits : 'TGtAnnouncer classTrait',
 	#instVars : [
 		'listenPort',
 		'listenProcess',
@@ -61,6 +59,12 @@ PharoLinkServer >> addConnection: aPharoLinkServerConnection [
 ]
 
 { #category : #announcer }
+PharoLinkServer >> announce: anAnnouncement [
+
+	^ self announcer announce: anAnnouncement
+]
+
+{ #category : #announcer }
 PharoLinkServer >> announcer [
 	<return: #Announcer>
 	^ announcer
@@ -84,6 +88,12 @@ PharoLinkServer >> handleIsAlive: aZnRequest [
 	^ (ZnResponse statusLine: ZnStatusLine ok)
 		entity: (ZnEntity json: '{}');
 		yourself
+]
+
+{ #category : #announcer }
+PharoLinkServer >> hasSubscriber: anObject [
+
+	^ self announcer hasSubscriber: anObject
 ]
 
 { #category : #initialization }
@@ -123,6 +133,13 @@ PharoLinkServer >> listenPort: anObject [
 PharoLinkServer >> newConnection: aSocket [
 
 	^ PharoLinkServerConnection server: self socket: aSocket
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> removeSubscription: subscription [
+	"Remove the given subscription from the receiver"
+
+	^ self announcer removeSubscription: subscription
 ]
 
 { #category : #'start-stop' }
@@ -172,4 +189,62 @@ PharoLinkServer >> stop [
 	connections removeAll.
 	serverSocket  ifNotNil: #closeAndDestroy.
 	serverSocket := nil.
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> unsubscribe: anObject [
+	"Unsubscribe all subscriptions of anObject from the receiver"
+
+	^ self announcer unsubscribe: anObject
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> weak [
+	"announcer weak subscribe: foo"
+
+	^ self announcer weak
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> when: anAnnouncementClass do: aValuable [
+	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that ushc method as well as when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
+
+		^ self announcer when: anAnnouncementClass do: aValuable
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
+	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber."
+
+	^ (self when: anAnnouncementClass do: aValuable) subscriber: aSubscriber; yourself.
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> when: anAnnouncementClass doOnce: aValuable for: aSubscriber [
+	"Declare that when anAnnouncementClass is raised, aValuable is executed and define the subscriber.
+	A valuable is executed ONCE, and then a subscriber gets unsubscribed"
+
+	^ self
+		when: anAnnouncementClass
+		do: [ :anAnnouncement |
+			self unsubscribe: aSubscriber.
+			aValuable cull: anAnnouncement ]
+		for: aSubscriber
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> when: anAnnouncementClass send: aSelector to: anObject [
+	"Declare that when anAnnouncementClass is raised, anObject should receive the message aSelector.
+    When the message expects one argument (eg #fooAnnouncement:) the announcement is passed as argument.
+    When the message expects two arguments (eg #fooAnnouncement:announcer:) both the announcement and the announcer 
+    are passed as argument"
+
+		^ self announcer when: anAnnouncementClass send: aSelector to: anObject
+]
+
+{ #category : #'announcer - subscription' }
+PharoLinkServer >> when: anAnnouncementClass send: aSelector to: anObject for: aSubscriber [
+	"Declare that when anAnnouncementClass is raised, anObject should receive the message aSelector."
+
+	^ (self when: anAnnouncementClass send: aSelector to: anObject) subscriber: aSubscriber.
 ]

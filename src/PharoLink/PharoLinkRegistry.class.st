@@ -20,14 +20,14 @@ PharoLinkRegistry class >> default [
 { #category : #testing }
 PharoLinkRegistry class >> isPrimitive: anObject [
 	"Answer a boolean indicating whether the supplied object is considered a primitive,
-	i.e. one of nil, Integer, String, Boolean, Array"
+	i.e. one of nil, Integer, String, Boolean
+	Arrays are a json primitive, but are handled by #asPharoLinkObjectRegistry:"
 
 	^ anObject isNil or:
 		[ anObject isInteger or:
 		[ anObject isString or: 
 		[ anObject isBoolean or:
-		[ anObject isArray or:
-		[ anObject isFloat ] ] ] ] ]
+		[ anObject isFloat ] ] ] ]
 ]
 
 { #category : #registry }
@@ -79,6 +79,16 @@ PharoLinkRegistry >> isPrimitive: anObject [
 	i.e. one of Integer, String, Boolean, Array"
 
 	^ self class isPrimitive: anObject
+]
+
+{ #category : #registry }
+PharoLinkRegistry >> jsonObjectFor: anObject [
+
+	(self isPrimitive: anObject) ifTrue: [ ^ anObject ].
+	^ {
+			'__class__' -> anObject class name.
+			'__registryid__' -> (self register: anObject).
+		} asDictionary
 ]
 
 { #category : #private }

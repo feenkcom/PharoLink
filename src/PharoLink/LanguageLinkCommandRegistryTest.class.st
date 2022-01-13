@@ -74,29 +74,6 @@ LanguageLinkCommandRegistryTest >> testFinishNotFoundCommand [
 ]
 
 { #category : #tests }
-LanguageLinkCommandRegistryTest >> testFinishOutOfSync1Command [
-	| cc1 cc2 |
-	cc1 := self newCommand.
-	cc2 := self newCommand.
-	queue enqueueCommand: cc1.
-	queue enqueueCommand: cc2.
-	self deny: (queue finishCommand: cc2).
-	self assert: queue isFinished
-]
-
-{ #category : #tests }
-LanguageLinkCommandRegistryTest >> testFinishOutOfSync2Command [
-	| cc1 cc2 |
-	cc1 := self newCommand.
-	cc2 := self newCommand.
-	queue enqueueCommand: cc1.
-	queue enqueueCommand: cc2.
-	self deny: (queue finishCommand: cc2).
-	self deny: (queue finishCommand: cc1).
-	self assert: queue isFinished
-]
-
-{ #category : #tests }
 LanguageLinkCommandRegistryTest >> testNotFoundCommand [
 	registry addCommand: LanguageLinkCommand new.
 	self 
