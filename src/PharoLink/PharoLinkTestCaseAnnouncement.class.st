@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'testCaseClass',
 		'testCaseIdentityHash',
-		'testCaseSelector'
+		'testCaseSelector',
+		'testCaseStartTimestamp'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -19,29 +20,34 @@ PharoLinkTestCaseAnnouncement class >> isAbstract [
 PharoLinkTestCaseAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ self new
-		  initializeTestCaseClass: (aDictionary at: #testCaseClass) asClass
-		  selector: (aDictionary at: #testCaseSelector) asSymbol
-		  identityHash: (aDictionary at: #testCaseIdentityHash);
-		  yourself
+		initializeTestCaseClass: (aDictionary at: #testCaseClass) asClass
+			selector: (aDictionary at: #testCaseSelector) asSymbol
+			identityHash: (aDictionary at: #testCaseIdentityHash);
+		testCaseStartTimestamp: (aDictionary at: #testCaseStartTimestamp); 
+		yourself
 ]
 
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
 
-	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
 		mapProperty: #testCaseClass
-		getter: [ :object | object testCaseClass name ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+			getter: [ :object | object testCaseClass name ]
+			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #testCaseIdentityHash
-		getter: [ :object | object testCaseIdentityHash ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+			getter: [ :object | object testCaseIdentityHash ]
+			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #testCaseSelector
-		getter: [ :object | object testCaseSelector ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
+			getter: [ :object | object testCaseSelector ]
+			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #testCaseStartTimestamp
+			getter: [ :object | object testCaseStartTimestamp ]
+			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
+
 ]
 
 { #category : #accessing }
@@ -101,6 +107,26 @@ PharoLinkTestCaseAnnouncement >> shortName [
 	self subclassResponsibility
 ]
 
+{ #category : #ui }
+PharoLinkTestCaseAnnouncement >> summaryAttributes [
+	"Answer a collection of key/value attributes that can simply be listed as a summary of the receiver"
+	| method |
+
+	method := String streamContents: [ :stream |
+		stream
+			<< (testCaseClass
+				ifNil: [ '<None>' ]
+				ifNotNil: [ testCaseClass name ]);
+			<< '>>';
+			<< (testCaseSelector
+				ifNil: [ '<None>' ]
+				ifNotNil: [ testCaseSelector ]) ].
+	^ OrderedCollection new
+		add: 'Method:' -> method;
+		add: 'Start Time:' -> testCaseStartTimestamp;
+		yourself.
+]
+
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> testCaseClass [
 
@@ -117,4 +143,16 @@ PharoLinkTestCaseAnnouncement >> testCaseIdentityHash [
 PharoLinkTestCaseAnnouncement >> testCaseSelector [
 
 	^ testCaseSelector
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement >> testCaseStartTimestamp [
+
+	^ testCaseStartTimestamp
+]
+
+{ #category : #private }
+PharoLinkTestCaseAnnouncement >> testCaseStartTimestamp: anObject [
+
+	testCaseStartTimestamp := anObject
 ]

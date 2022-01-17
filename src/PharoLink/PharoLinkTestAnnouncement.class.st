@@ -1,9 +1,6 @@
 Class {
 	#name : #PharoLinkTestAnnouncement,
 	#superclass : #Announcement,
-	#instVars : [
-		'timestamp'
-	],
 	#category : #'PharoLink-Test-Runner'
 }
 
@@ -13,24 +10,15 @@ PharoLinkTestAnnouncement class >> isAbstract [
 	^ self == PharoLinkTestAnnouncement
 ]
 
-{ #category : #accessing }
-PharoLinkTestAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
+{ #category : #ui }
+PharoLinkTestAnnouncement >> gtSummaryFor: aView [
 
-	aJsonMapping
-		mapProperty: #timestamp
-		getter: [ :object | object timestamp ]
-		setter: [ :object :value | self error: 'Cannot set it' ]
-]
-
-{ #category : #accessing }
-PharoLinkTestAnnouncement >> initialize [
-
-	super initialize.
-	timestamp := DateAndTime now
-]
-
-{ #category : #accessing }
-PharoLinkTestAnnouncement >> timestamp [
-
-	^ timestamp
+	<gtView>
+	^ aView columnedList
+		  title: 'Summary';
+		  priority: 10;
+		  items: [ self summaryAttributes ];
+		  column: #Attribute text: [ :item | item key ];
+		  column: #Value text: [ :item | item value ];
+		  actionUpdateButton
 ]

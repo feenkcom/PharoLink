@@ -98,7 +98,21 @@ PharoLinkTestCaseExceptionAnnouncement >> printOn: aStream [
 
 	aStream
 		nextPut: Character space;
-		nextPutAll: exceptionClass name;
+		nextPutAll: (exceptionClass 
+			ifNil: [ '<unknown>' ]
+			ifNotNil: [ exceptionClass name ]);
 		nextPut: Character space;
-		nextPutAll: exceptionMessageText
+		nextPutAll: (exceptionMessageText
+			ifNil: [ '<none>' ]
+			ifNotNil: [ exceptionMessageText ])
+]
+
+{ #category : #ui }
+PharoLinkTestCaseExceptionAnnouncement >> summaryAttributes [
+	"Answer a collection of key/value attributes that can simply be listed as a summary of the receiver"
+
+	^ super summaryAttributes
+		add: 'Exception Class:' -> exceptionClass;
+		add: 'Message:' -> exceptionMessageText;
+		yourself.
 ]
