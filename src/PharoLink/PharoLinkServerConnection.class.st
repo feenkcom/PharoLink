@@ -177,6 +177,16 @@ PharoLinkServerConnection >> remoteAddress [
 		ifNotNil: [ socket remoteAddress ]
 ]
 
+{ #category : #accessing }
+PharoLinkServerConnection >> remoteAddressString [
+	"Answer the usual dot notation of the supplied IPv4 address"
+
+	socket ifNil: [ ^ '<none>' ].
+
+	^ String streamContents: [ :sStream |
+		self remoteAddress printOn: sStream delimiter: '.' ]
+]
+
 { #category : #'announcer - subscription' }
 PharoLinkServerConnection >> removeSubscription: subscription [
 	"Remove the given subscription from the receiver"

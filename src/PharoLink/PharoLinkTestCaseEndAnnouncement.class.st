@@ -3,7 +3,7 @@ Class {
 	#superclass : #PharoLinkTestCaseAnnouncement,
 	#instVars : [
 		'testCaseShouldPass',
-		'testCaseStartTimestamp'
+		'testCaseEndTimestamp'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -18,9 +18,9 @@ PharoLinkTestCaseEndAnnouncement class >> isAbstract [
 PharoLinkTestCaseEndAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ (super leFromJsonV4Dictionary: aDictionary)
-		  initializeShouldPass: (aDictionary at: #testCaseShouldPass)
-		  startTimestamp: (aDictionary at: #testCaseStartTimestamp);
-		  yourself
+		shouldPass: (aDictionary at: #testCaseShouldPass);
+		testCaseEndTimestamp: (aDictionary at: #testCaseEndTimestamp);
+		yourself
 ]
 
 { #category : #accessing }
@@ -29,22 +29,24 @@ PharoLinkTestCaseEndAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
 	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
 		mapProperty: #testCaseShouldPass
-		getter: [ :object | object shouldPass ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
-		mapProperty: #testCaseStartTimestamp
-		getter: [ :object | object testCaseStartTimestamp ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
+			getter: [ :object | object shouldPass ]
+			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #testCaseEndTimestamp
+			getter: [ :object | object testCaseEndTimestamp ]
+			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
+
 ]
 
 { #category : #accessing }
 PharoLinkTestCaseEndAnnouncement class >> testCase: aTestCase startTimestamp: aDateAndTime [
 
 	^ (super testCase: aTestCase)
-		  initializeShouldPass: aTestCase shouldPass
-		  startTimestamp: aDateAndTime;
-		  yourself
+		initializeShouldPass: aTestCase shouldPass
+			startTimestamp: aDateAndTime
+			endTimestamp: DateAndTime now;
+		yourself
 ]
 
 { #category : #ui }
@@ -59,10 +61,11 @@ PharoLinkTestCaseEndAnnouncement >> gtTestCaseFor: aView [
 ]
 
 { #category : #accessing }
-PharoLinkTestCaseEndAnnouncement >> initializeShouldPass: aBoolean startTimestamp: aDateAndTime [
+PharoLinkTestCaseEndAnnouncement >> initializeShouldPass: aBoolean startTimestamp: startDateAndTime endTimestamp: endDateAndTime [
 
 	testCaseShouldPass := aBoolean.
-	testCaseStartTimestamp := aDateAndTime
+	testCaseStartTimestamp := startDateAndTime.
+	testCaseEndTimestamp := endDateAndTime.
 ]
 
 { #category : #accessing }
@@ -77,8 +80,36 @@ PharoLinkTestCaseEndAnnouncement >> shouldPass [
 	^ testCaseShouldPass
 ]
 
-{ #category : #accessing }
-PharoLinkTestCaseEndAnnouncement >> testCaseStartTimestamp [
+{ #category : #private }
+PharoLinkTestCaseEndAnnouncement >> shouldPass: aBoolean [
 
-	^ testCaseStartTimestamp
+	testCaseShouldPass := aBoolean
+]
+
+{ #category : #ui }
+PharoLinkTestCaseEndAnnouncement >> summaryAttributes [
+	"Answer a collection of key/value attributes that can simply be listed as a summary of the receiver"
+	| attributes duration |
+
+	attributes := super summaryAttributes.
+	(testCaseStartTimestamp isNotNil and: [ testCaseEndTimestamp isNotNil ]) ifTrue:
+		[ duration := testCaseEndTimestamp - testCaseStartTimestamp ].
+	attributes
+		add: 'End Time:' -> testCaseEndTimestamp;
+		add: 'Should Pass:' -> testCaseShouldPass.
+	duration ifNotNil:
+		[ attributes add: 'Duration:' -> duration ].
+	^ attributes
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> testCaseEndTimestamp [
+
+	^ testCaseEndTimestamp
+]
+
+{ #category : #private }
+PharoLinkTestCaseEndAnnouncement >> testCaseEndTimestamp: anObject [
+
+	testCaseEndTimestamp := anObject
 ]

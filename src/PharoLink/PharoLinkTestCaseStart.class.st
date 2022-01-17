@@ -22,6 +22,13 @@ PharoLinkTestCaseStart >> color [
 	^ Color blue
 ]
 
+{ #category : #initialization }
+PharoLinkTestCaseStart >> initialize [
+
+	super initialize.
+	testCaseStartTimestamp := DateAndTime now.
+]
+
 { #category : #accessing }
 PharoLinkTestCaseStart >> isEnd [
 
@@ -32,4 +39,10 @@ PharoLinkTestCaseStart >> isEnd [
 PharoLinkTestCaseStart >> shortName [
 
 	^ #start
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseStart >> timestamp [
+
+	^ testCaseStartTimestamp 
 ]
