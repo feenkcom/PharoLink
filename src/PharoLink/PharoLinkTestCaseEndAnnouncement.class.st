@@ -49,6 +49,17 @@ PharoLinkTestCaseEndAnnouncement class >> testCase: aTestCase startTimestamp: aD
 		yourself
 ]
 
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> duration [
+	"Answer the duration (execution time) of the receiver"
+	<return: #Duration or: nil>
+
+	(testCaseStartTimestamp isNil or: [ testCaseEndTimestamp isNil ]) ifTrue: [ ^ nil ].
+
+	^ testCaseEndTimestamp - testCaseStartTimestamp.
+
+]
+
 { #category : #ui }
 PharoLinkTestCaseEndAnnouncement >> gtTestCaseFor: aView [
 
@@ -89,11 +100,10 @@ PharoLinkTestCaseEndAnnouncement >> shouldPass: aBoolean [
 { #category : #ui }
 PharoLinkTestCaseEndAnnouncement >> summaryAttributes [
 	"Answer a collection of key/value attributes that can simply be listed as a summary of the receiver"
-	| attributes duration |
+	| attributes duration|
 
 	attributes := super summaryAttributes.
-	(testCaseStartTimestamp isNotNil and: [ testCaseEndTimestamp isNotNil ]) ifTrue:
-		[ duration := testCaseEndTimestamp - testCaseStartTimestamp ].
+	duration := self duration.
 	attributes
 		add: 'End Time:' -> testCaseEndTimestamp;
 		add: 'Should Pass:' -> testCaseShouldPass.
