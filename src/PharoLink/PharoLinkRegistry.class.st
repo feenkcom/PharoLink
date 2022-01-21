@@ -73,18 +73,10 @@ PharoLinkRegistry >> initialize [
 	objToIdMap := Dictionary new.
 ]
 
-{ #category : #testing }
-PharoLinkRegistry >> isPrimitive: anObject [
-	"Answer a boolean indicating whether the supplied object is considered a primitive,
-	i.e. one of Integer, String, Boolean, Array"
-
-	^ self class isPrimitive: anObject
-]
-
 { #category : #registry }
 PharoLinkRegistry >> jsonObjectFor: anObject [
+	"Answer the JSON proxy representation for anObject"
 
-	(self isPrimitive: anObject) ifTrue: [ ^ anObject ].
 	^ {
 			'__class__' -> anObject class name.
 			'__registryid__' -> (self register: anObject).
@@ -106,8 +98,8 @@ PharoLinkRegistry >> register: anObject [
 	"Add anObject to the receiver.
 	If the object is already registered, answer its id."
 
-	(anObject isNil or: [ self isPrimitive: anObject ])
-		ifTrue: [ ^nil ].
+	anObject isPharoLinkPrimitive ifTrue: 
+		[ PharoLinkRegistryForbiddenObjectError signal ].
 
 	(objToIdMap includesKey: anObject) ifTrue: 
 		[ ^objToIdMap at: anObject ].
@@ -120,7 +112,7 @@ PharoLinkRegistry >> register: anObject withId: newObjId [
 	"Register the supplied object with the supplied id.
 	Check that the object is a valid type and isn't registered with a different id"
 
-	(anObject isNil or: [ self isPrimitive: anObject ]) ifTrue: 
+	anObject isPharoLinkPrimitive ifTrue: 
 		[ PharoLinkRegistryForbiddenObjectError signal ].
 
 	(objToIdMap includesKey: anObject) ifTrue: 

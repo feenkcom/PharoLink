@@ -162,8 +162,9 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol withCopiedResultAndArguments: a
 LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArrayOfArguments [
 	"Evaluate the supplied selector on the remote with the given arguments"
 	| message keywords |
-	self assert: (anArrayOfArguments allSatisfy: [ :anArgument | 
-		PharoLinkRegistry isPrimitive: anArgument ]).
+
+	self assert: anArrayOfArguments isArray.
+	self assert: anArrayOfArguments canBePharoLinkPrimitive.
 
 	keywords := aSymbol findTokens: $:.
 	self assert: keywords size = anArrayOfArguments size.

@@ -6,3 +6,10 @@ Boolean >> isBoolean [
 
 	^ true
 ]
+
+{ #category : #'*PharoLink' }
+Boolean >> isPharoLinkPrimitive [
+	"Answer a boolean indicating whether the receiver is a PharoLink primitive object"
+
+	^ true
+]

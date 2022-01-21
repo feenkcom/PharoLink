@@ -4,3 +4,10 @@ Extension { #name : #Integer }
 Integer >> isLanguageLinkValue [
 	^ true
 ]
+
+{ #category : #'*PharoLink' }
+Integer >> isPharoLinkPrimitive [
+	"Answer a boolean indicating whether the receiver is a PharoLink primitive object"
+
+	^ true
+]

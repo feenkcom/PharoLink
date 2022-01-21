@@ -62,12 +62,12 @@ PharoLinkEvalCommand >> execute: globalsDictionary [
 	self bindings at: #llCommand put: self.
 	globalsDictionary associationsDo: [ :assoc |
 		self bindings at: assoc key put: assoc value ].
-	receiver := self bindings at: 'self' ifAbsent: [ nil ].
-	[ self class compiler
+	receiver := self bindings at: #self ifAbsent: [ nil ].
+	[ PharoLinkAnswerByValue during: [ self class compiler
 		source: self blockString;
 		bindings: self bindings;
 		receiver: receiver;
-		evaluate ]
+		evaluate ] ]
 			on: Error 
 			do: [ :ex | self notifyError: ex ]
 ]
