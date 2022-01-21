@@ -39,6 +39,7 @@ PharoLinkAnswerByValue class >> flag [
 PharoLinkAnswerByValue class >> setByProxy [
 	"Set the flag to answer by proxy"
 
+	self value ifNil: [ ^ self ].
 	self value value: #never
 ]
 
@@ -46,6 +47,7 @@ PharoLinkAnswerByValue class >> setByProxy [
 PharoLinkAnswerByValue class >> setByValue [
 	"Set the flag to answer by value, replacing entries with proxies if required"
 
+	self value ifNil: [ ^ self ].
 	self value value: #value
 ]
 
@@ -53,5 +55,6 @@ PharoLinkAnswerByValue class >> setByValue [
 PharoLinkAnswerByValue class >> setByValueOnly [
 	"Set the flag to answer by value only"
 
+	self value ifNil: [ ^ self ].
 	self value value: #valueOnly
 ]
