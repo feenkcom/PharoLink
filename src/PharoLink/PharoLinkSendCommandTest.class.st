@@ -12,6 +12,7 @@ PharoLinkSendCommandTest >> testAddBinding [
 	binding := PharoLinkBinding wrap: array.
 	result := application newCommandFactory
 		addBinding: binding;
+		setByValue;
 		<< binding;
 		sendAndWait.
 	self assert: result equals: #((2) 3)

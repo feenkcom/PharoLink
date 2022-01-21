@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'id',
 		'callback',
-		'command'
+		'command',
+		'answerEncoding'
 	],
 	#category : #'PharoLink-Execution'
 }
@@ -44,7 +45,8 @@ LanguageLinkObserver >> id [
 { #category : #initialization }
 LanguageLinkObserver >> initialize [
 	super initialize.
-	id := LanguageLinkUtils newVariableName
+	id := LanguageLinkUtils newVariableName.
+	answerEncoding := #never.
 ]
 
 { #category : #testing }
@@ -90,16 +92,44 @@ LanguageLinkObserver >> pharoLinkFormattedCode [
 
 	^ String streamContents: [ :stream |
 		stream
-			<< '[ :anObject | llCommand notify: anObject command: ';
+			<< '[ :anObject | '.
+		answerEncoding = #never ifFalse:
+			[ stream 
+				<< 'PharoLinkAnswerByValue value: ';
+				print: answerEncoding;
+				<< ' during: [ ' ].
+		stream
+			<< 'llCommand notify: anObject command: ';
 			<< command id printString;
 			<< ' observer: ';
 			<< id printString;
-			<< ' ]' ]
+			<< ' ]'.
+		answerEncoding = #never ifFalse:
+			[ stream << ' ]' ]
+		 ]
 ]
 
 { #category : #'error handling' }
 LanguageLinkObserver >> pharoNotify: anObject [
 	^ callback cull: anObject
+]
+
+{ #category : #encoding }
+LanguageLinkObserver >> setByProxy [
+
+	answerEncoding := #never
+]
+
+{ #category : #encoding }
+LanguageLinkObserver >> setByValue [
+
+	answerEncoding := #value
+]
+
+{ #category : #encoding }
+LanguageLinkObserver >> setByValueOnly [
+
+	answerEncoding := #valueOnly
 ]
 
 { #category : #testing }

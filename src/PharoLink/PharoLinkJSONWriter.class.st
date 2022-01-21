@@ -60,6 +60,7 @@ PharoLinkJSONWriter >> writeList: collection [
 
 { #category : #writing }
 PharoLinkJSONWriter >> writeMap: keyValueCollection [
+	"PharoLinkJSONWriter needs to be updated to use PharoLinkAnswerByValue, instead of the superseeded #'__pharolinkImmediate'"
 
 	^ (keyValueCollection at: #'__pharolinkImmediate' ifAbsent: [ false ])
 		ifTrue: [ super writeMap: keyValueCollection ]

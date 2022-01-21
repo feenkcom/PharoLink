@@ -37,10 +37,11 @@ PharoLinkExecutionHandler >> notifyCallbackHandler: msg [
 	val := self 
 		signalObserver: (self getObserverAtCommandId: msg commandId id: msg observerId) 
 		withValue: (self deserialize: msg value).
-	"Callbacks should only return primitives, the registry is on the server side.
-	Allow Dictionaries?"
-	(PharoLinkRegistry isPrimitive: val) ifFalse: [ val := nil ].
-	serialization := self serialize: val.
+	"Callbacks should only return primitives, the registry is on the server side"
+	val canBePharoLinkPrimitive ifFalse: [ val := nil ].
+	PharoLinkAnswerByValue
+		value: (NewValueHolder value: #value)
+		during: [ serialization := self serialize: val ].
 	^ msg createAnswer 
 		value: serialization;
 		yourself

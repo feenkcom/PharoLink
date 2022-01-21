@@ -15,6 +15,20 @@ PharoLinkCommandFactory >> bindingWrap: anObject [
 	^ self addBinding: (PharoLinkBinding wrap: anObject)
 ]
 
+{ #category : #encoding }
+PharoLinkCommandFactory >> setByValue [
+	"Answer the command result by value if possible"
+
+	self << 'PharoLinkAnswerByValue setByValue.'.
+]
+
+{ #category : #encoding }
+PharoLinkCommandFactory >> setByValueOnly [
+	"Answer the command result by value if possible"
+
+	self << 'PharoLinkAnswerByValue setByValueOnly.'.
+]
+
 { #category : #initialization }
 PharoLinkCommandFactory >> setNotifyToInstruction: aLLInstruction [
 	| node notifyNode |
