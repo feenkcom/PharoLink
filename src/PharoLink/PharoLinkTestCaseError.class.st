@@ -21,6 +21,15 @@ PharoLinkTestCaseError >> color [
 	^ Color red
 ]
 
+{ #category : #'as yet unclassified' }
+PharoLinkTestCaseError >> populateTestResult: aTestResult with: aTestCase [
+
+	testCaseShouldPass
+		ifTrue: [ aTestResult addError: aTestCase ]
+		ifFalse: [ aTestResult addPass: aTestCase ].
+
+]
+
 { #category : #accessing }
 PharoLinkTestCaseError >> shortName [
 

@@ -54,6 +54,17 @@ PharoLinkTestCaseExceptionAnnouncement class >> testCase: aTestCase startTimesta
 		  yourself
 ]
 
+{ #category : #converting }
+PharoLinkTestCaseExceptionAnnouncement >> asTestResult [
+	"Answer the receiver as a SUnit TestResult.
+	Mainly for playing around."
+	| testResult |
+
+	testResult := TestResult new.
+	self populateTestResult: testResult with: (testCaseClass selector: testCaseSelector).
+	^ testResult.
+]
+
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionClass [
 
@@ -89,6 +100,12 @@ PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messa
 	exceptionClass := aClass.
 	exceptionMessageText := aString.
 	exceptionTrace := anotherString
+]
+
+{ #category : #'as yet unclassified' }
+PharoLinkTestCaseExceptionAnnouncement >> populateTestResult: aTestResult with: aTestCase [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
