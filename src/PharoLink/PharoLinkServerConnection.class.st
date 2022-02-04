@@ -250,6 +250,9 @@ PharoLinkServerConnection >> start [
 
 { #category : #'start-stop' }
 PharoLinkServerConnection >> stop [
+	"Stop the receiver.
+	This is called by #handleNextRequestSafely when the connection is closed.
+	Notify the server (which may cause it to quit the image)."
 
 	listenProcess ifNotNil: #terminate.
 	listenProcess := nil.
@@ -261,7 +264,8 @@ PharoLinkServerConnection >> stop [
 			do: [ "noop" ] ].
 	processes removeAll.
 	self announce:
-		(PharoLinkServerConnectionDisconnectedAnnouncement connection: self)
+		(PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
+	server onConnectionStopped.
 ]
 
 { #category : #'announcer - subscription' }

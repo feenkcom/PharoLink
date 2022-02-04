@@ -8,7 +8,8 @@ Class {
 		'globals',
 		'serverSocket',
 		'connections',
-		'announcer'
+		'announcer',
+		'oneShot'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -16,6 +17,7 @@ Class {
 { #category : #clap }
 PharoLinkServer class >> commandLine [
 	<commandline>
+	| server oneShot |
 
 	^ self commandLineCommand meaning: [ :args | 
 		  | logger listenPort |
@@ -28,9 +30,12 @@ PharoLinkServer class >> commandLine [
 			  logger := RestartingStreamLogger stdout.
 			  logger start ].
 
+			server := self new.
 		  listenPort := (args at: #listenPort) value asNumber.
+		oneShot := args at: #oneShot ifPresent: 
+			[ server beOneShot ].
 		  StringSignal emit: 'Listen Port: ' , listenPort printString.
-		  self new
+		  server
 			  listenPort: listenPort;
 			  start.
 		  StringSignal emit: 'Running'.
@@ -46,6 +51,7 @@ PharoLinkServer class >> commandLineCommand [
 		  description: 'Run the PharoLink Server';
 		  add: ClapFlag forHelp;
 		  add: ((ClapFlag id: 'log') description: 'Enable logging to stdout');
+		add: ((ClapFlag id: 'oneShot') description: 'Exit after a client disconnects');
 		  add: ((ClapPositional id: 'listenPort') description:
 					   'The port number on which to listen for requests');
 		  yourself
@@ -68,6 +74,13 @@ PharoLinkServer >> announce: anAnnouncement [
 PharoLinkServer >> announcer [
 	<return: #Announcer>
 	^ announcer
+]
+
+{ #category : #initialization }
+PharoLinkServer >> beOneShot [
+	"Configure the server to exit after a client disconnects"
+
+	oneShot := true.
 ]
 
 { #category : #accessing }
@@ -104,6 +117,7 @@ PharoLinkServer >> initialize [
 	debugMode := false.
 	connections := OrderedCollection new.
 	announcer := Announcer new.
+	oneShot := false.
 ]
 
 { #category : #testing }
@@ -133,6 +147,15 @@ PharoLinkServer >> listenPort: anObject [
 PharoLinkServer >> newConnection: aSocket [
 
 	^ PharoLinkServerConnection server: self socket: aSocket
+]
+
+{ #category : #'start-stop' }
+PharoLinkServer >> onConnectionStopped [
+	"A connection has been closed (stopped).
+	Quit the image if we are oneShort"
+
+	oneShot ifTrue:
+		[ Smalltalk snapshot: false andQuit: true ].
 ]
 
 { #category : #'announcer - subscription' }
