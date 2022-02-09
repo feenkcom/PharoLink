@@ -11,7 +11,7 @@ PharoLinkTestCaseStart class >> leJsonV4Name [
 ]
 
 { #category : #accessing }
-PharoLinkTestCaseStart >> addToResult: result [
+PharoLinkTestCaseStart >> addToTestResult: result [
 
 	
 ]

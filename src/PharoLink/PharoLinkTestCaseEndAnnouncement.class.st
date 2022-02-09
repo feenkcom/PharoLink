@@ -49,6 +49,31 @@ PharoLinkTestCaseEndAnnouncement class >> testCase: aTestCase startTimestamp: aD
 		yourself
 ]
 
+{ #category : #adding }
+PharoLinkTestCaseEndAnnouncement >> addToTestResult: aTestResult [
+
+	self subclassResponsibility
+]
+
+{ #category : #converting }
+PharoLinkTestCaseEndAnnouncement >> asTestCase [
+	"Answer a test case matching the receiver"
+
+	^ testCaseClass selector: testCaseSelector
+]
+
+{ #category : #converting }
+PharoLinkTestCaseEndAnnouncement >> asTestResult [
+	"Answer a TestResult matching the receiver"
+	| result |
+
+	result := TestResult new.
+	result timeStamp: testCaseEndTimestamp.
+	self addToTestResult: result.
+	^ result
+		
+]
+
 { #category : #accessing }
 PharoLinkTestCaseEndAnnouncement >> duration [
 	"Answer the duration (execution time) of the receiver"

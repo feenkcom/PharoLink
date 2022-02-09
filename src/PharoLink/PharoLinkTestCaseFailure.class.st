@@ -11,8 +11,8 @@ PharoLinkTestCaseFailure class >> leJsonV4Name [
 ]
 
 { #category : #accessing }
-PharoLinkTestCaseFailure >> addToResult: result [
-	result addFailure: self
+PharoLinkTestCaseFailure >> addToTestResult: result [
+	result addFailure: self asTestCase
 ]
 
 { #category : #accessing }

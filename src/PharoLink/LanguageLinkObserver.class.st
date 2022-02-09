@@ -121,6 +121,12 @@ LanguageLinkObserver >> setByProxy [
 ]
 
 { #category : #encoding }
+LanguageLinkObserver >> setBySerialized [
+
+	answerEncoding := #serialized
+]
+
+{ #category : #encoding }
 LanguageLinkObserver >> setByValue [
 
 	answerEncoding := #value

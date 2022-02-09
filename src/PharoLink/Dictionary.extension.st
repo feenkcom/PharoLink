@@ -34,24 +34,3 @@ Dictionary >> canBePharoLinkPrimitive [
 Dictionary >> isLanguageLinkValue [
 	^ true
 ]
-
-{ #category : #'*PharoLink' }
-Dictionary >> isPharoLinkPrimitiveSuperseeded [
-	"Answer a boolean indicating whether the receiver is a PharoLink primitive object"
-	| answerFlag canBePrimitive |
-	
-	answerFlag := PharoLinkAnswerByValue flag.
-
-	"If PharoLinkAnswerByValue is never, always be answered as a proxy"
-	answerFlag = #never ifTrue: [ ^ false ].
-
-	canBePrimitive := (self allSatisfy: #isPharoLinkPrimitive) and:
-		[ self keys allSatisfy: #isPharoLinkPrimitive ].
-
-	"If PharoLinkAnswerByValue is if possible, use the calculated value."	
-	answerFlag = #valueIfPossible ifTrue: [ ^ canBePrimitive ].
-
-	"If PharoLinkAnswerByValue is by value only, raise an error if it can't be serialised"
-	canBePrimitive ifFalse: [ self error: 'Must be a primitive' ].
-	^ true.
-]

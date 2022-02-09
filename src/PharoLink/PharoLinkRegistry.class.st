@@ -47,10 +47,6 @@ PharoLinkRegistry >> createNewObjId [
 PharoLinkRegistry >> deregister: anObjId [
 	"Remove the supplied id"
 	| object |
-Stdio stdout
-	<< 'Deregister: ';
-	print: anObjId;
-	lf;flush.
 
 	object := idToObjMap at: anObjId.
 	idToObjMap removeKey: anObjId.
@@ -80,6 +76,16 @@ PharoLinkRegistry >> jsonObjectFor: anObject [
 	^ {
 			'__class__' -> anObject class name.
 			'__registryid__' -> (self register: anObject).
+		} asDictionary
+]
+
+{ #category : #registry }
+PharoLinkRegistry >> jsonSerializationFor: anObject [
+	"Answer the JSON serialisation representation for anObject"
+
+	^ {
+			'__class__' -> anObject class name.
+			'__serialized__' -> (LeJsonV4 uniqueInstance serialize: anObject).
 		} asDictionary
 ]
 

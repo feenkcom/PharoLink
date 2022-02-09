@@ -3,6 +3,11 @@ Extension { #name : #Object }
 { #category : #'*PharoLink' }
 Object >> asPharoLinkObjectRegistry: aPharoLinkRegistry [
 	"Answer the receiver with non-primitive objects represented as proxies"
+	| answerFlag |
+
+	answerFlag := PharoLinkAnswerByValue flag.
+	(answerFlag = #serialized and: [ LeJsonV4 uniqueInstance canSerialize: self ]) ifTrue: 
+		[ ^ aPharoLinkRegistry jsonSerializationFor: self ].
 
 	^ self isPharoLinkPrimitive 
 		ifTrue: [ self ]

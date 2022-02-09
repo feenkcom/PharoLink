@@ -11,8 +11,8 @@ PharoLinkTestCaseWarning class >> leJsonV4Name [
 ]
 
 { #category : #accessing }
-PharoLinkTestCaseWarning >> addToResult: result [
-	result addWarning: self
+PharoLinkTestCaseWarning >> addToTestResult: result [
+	result addWarning: self asTestCase
 ]
 
 { #category : #accessing }

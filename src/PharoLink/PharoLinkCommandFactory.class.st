@@ -16,6 +16,13 @@ PharoLinkCommandFactory >> bindingWrap: anObject [
 ]
 
 { #category : #encoding }
+PharoLinkCommandFactory >> setBySerialized [
+	"Answer the command result by serialized value if possible"
+
+	self << 'PharoLinkAnswerByValue setBySerialized.'.
+]
+
+{ #category : #encoding }
 PharoLinkCommandFactory >> setByValue [
 	"Answer the command result by value if possible"
 
