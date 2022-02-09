@@ -11,8 +11,8 @@ PharoLinkTestCaseSkip class >> leJsonV4Name [
 ]
 
 { #category : #accessing }
-PharoLinkTestCaseSkip >> addToResult: result [
-	result addSkip: self
+PharoLinkTestCaseSkip >> addToTestResult: result [
+	result addSkip: self asTestCase
 ]
 
 { #category : #accessing }

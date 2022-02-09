@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkDeserializer,
 	#superclass : #LanguageLinkMapper,
-	#category : 'PharoLink-Serialization'
+	#category : #'PharoLink-Serialization'
 }
 
 { #category : #'private protocol' }
@@ -34,12 +34,12 @@ LanguageLinkDeserializer >> objectRegistry [
 { #category : #'private protocol' }
 LanguageLinkDeserializer >> privateDeserialize: rawObj [
 	rawObj isCollection ifFalse: [ ^ rawObj ].
-	rawObj isDictionary and: [ (rawObj includesKey: #__registryid__) 
+	rawObj isDictionary and: [ (rawObj includesKey: #__class__) 
 		ifTrue: [ ^ self reifyProxyFor: rawObj ] ].
 	^ rawObj collect: [ :elem | self privateDeserialize: elem ]
 ]
 
 { #category : #'private protocol' }
 LanguageLinkDeserializer >> reifyProxyFor: rawObj [
-	^ self objectRegistry resolve: (rawObj at: #__registryid__) ifAbsent: [ self buildProxyFor: rawObj ]
+	^ self objectRegistry resolveEncodedObject: rawObj ifAbsent: [ self buildProxyFor: rawObj ]
 ]

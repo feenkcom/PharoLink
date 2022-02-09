@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #'instance creation' }
@@ -21,12 +21,21 @@ PharoLinkJSONReader >> parseMap [
 	| map |
 
 	map := super parseMap.
-	^ map size = 2 ifTrue: 
-		[ map 
-			at: '__registryid__'
-			ifPresent: [ :id | registry resolve: id ]
-			ifAbsent: [ map ] ]
-	ifFalse: [ map ]
+	(map size = 2 and: [ map includesKey: #'__class__' ]) ifFalse:
+		[ ^ map ].
+ 
+	map 
+		at: #'__registryid__'
+		ifPresent: [ :id | ^ registry resolve: id ].
+
+	map
+		at: #'__serialized__'
+		ifPresent: [ :string | | anObject |
+			anObject := LeJsonV4 uniqueInstance deserialize: string readStream.
+			self assert: anObject class name = (map at: #'__class__').
+			^ anObject ].
+
+	self error: 'Unknown object representation'.
 ]
 
 { #category : #accessing }

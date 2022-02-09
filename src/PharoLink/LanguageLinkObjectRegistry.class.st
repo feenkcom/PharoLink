@@ -6,7 +6,7 @@ Class {
 		'semaphore',
 		'idTable'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #testing }
@@ -43,6 +43,48 @@ LanguageLinkObjectRegistry >> resolve: anId ifAbsent: aBlock [
 	obj := semaphore critical: [ idTable at: anId ifAbsent: [ nil ] ].
 	^ obj ifNil: aBlock.
 	
+]
+
+{ #category : #api }
+LanguageLinkObjectRegistry >> resolveEncodedObject: rawObj [
+
+	self assert: rawObj size = 2.
+	self assert: (rawObj includesKey: #__class__).
+
+	rawObj
+		at: #__registryid__
+		ifPresent: [ :anId | ^ semaphore critical: [ idTable at: anId ] ].
+
+	rawObj
+		at: #__serialized__
+		ifPresent: [ :string | | anObject |
+			anObject := LeJsonV4 uniqueInstance deserialize: string.
+			self assert: anObject class name = (rawObj at: #'__class__').
+			^ anObject ].
+
+	self error: 'Unknown object representation'.
+]
+
+{ #category : #api }
+LanguageLinkObjectRegistry >> resolveEncodedObject: rawObj ifAbsent: absentBlock [
+
+	self assert: rawObj size = 2.
+	self assert: (rawObj includesKey: #__class__).
+
+	rawObj
+		at: #__registryid__
+		ifPresent: [ :anId | | obj |
+			obj := semaphore critical: [ idTable at: anId ifAbsent: [ nil ] ].
+			^ obj ifNil: absentBlock ].
+
+	rawObj
+		at: #__serialized__
+		ifPresent: [ :string | | anObject |
+			anObject := LeJsonV4 uniqueInstance deserialize: string readStream.
+			self assert: anObject class name = (rawObj at: #'__class__').
+			^ anObject ].
+
+	self error: 'Unknown object representation'.
 ]
 
 { #category : #api }

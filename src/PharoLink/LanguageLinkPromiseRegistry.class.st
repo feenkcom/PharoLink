@@ -38,6 +38,7 @@ LanguageLinkPromiseRegistry >> promiseTable [
 
 { #category : #adding }
 LanguageLinkPromiseRegistry >> removeAndSignalPromiseId: id with: anObject [
+
 	self signalPromiseId: id with: anObject.
 	self removePromiseId: id
 ]

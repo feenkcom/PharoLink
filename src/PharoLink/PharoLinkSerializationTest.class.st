@@ -32,6 +32,26 @@ PharoLinkSerializationTest >> testSendAndRetrieveArray [
 ]
 
 { #category : #tests }
+PharoLinkSerializationTest >> testSendAndRetrieveDateAndTime [
+	| value |
+
+	"DateAndTimes are answered by proxy by default."
+	value := application newCommandFactory
+		<< 'DateAndTime now.';
+		sendAndWait.
+	self assert: (value isKindOf: PharoLinkProxyObject).
+
+	"Answer serialized"
+	value := application newCommandFactory
+		setBySerialized;
+		<< 'DateAndTime now.';
+		sendAndWait.
+	self assert: value class equals: DateAndTime.
+
+	^ value
+]
+
+{ #category : #tests }
 PharoLinkSerializationTest >> testSendAndRetrieveDictionary [
 	| value |
 
