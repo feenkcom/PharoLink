@@ -179,7 +179,7 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArray
 				<< keyword;
 				<< $:;
 				<< ' '.
-			stream << argumentValue printString ] ].
+			stream print: argumentValue ] ].
 	^ self evaluateSourceSequence: message
 ]
 
