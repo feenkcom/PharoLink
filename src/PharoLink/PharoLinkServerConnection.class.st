@@ -258,6 +258,7 @@ PharoLinkServerConnection >> stop [
 	listenProcess := nil.
 	socket ifNotNil: #closeAndDestroy.
 	socket := nil.
+	syncRegistry valuesDo: [ :entry | entry signalConnectionLost ].
 	processes do: [ :e | 
 		[ e terminate ]
 			on: ProcessAlreadyTerminating

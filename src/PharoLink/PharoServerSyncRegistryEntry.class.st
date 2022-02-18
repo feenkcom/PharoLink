@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'id',
 		'semaphore',
-		'result'
+		'result',
+		'exception'
 	],
 	#category : #'PharoLink-Server'
 }
@@ -57,8 +58,16 @@ PharoServerSyncRegistryEntry >> signal [
 	semaphore signal
 ]
 
+{ #category : #signalling }
+PharoServerSyncRegistryEntry >> signalConnectionLost [
+
+	exception := PharoLinkServerConnectionLost new.
+	self signal.
+]
+
 { #category : #waiting }
 PharoServerSyncRegistryEntry >> wait [
 
 	semaphore wait.
+	exception ifNotNil: [ exception signal ].
 ]
