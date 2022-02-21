@@ -5,7 +5,7 @@ Class {
 		'application',
 		'commandFactory'
 	],
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #private }
@@ -20,13 +20,4 @@ PharoLinkTest >> replace: variableDictionary in: pharoExpressionString [
 			with: 'llCommand registry resolve: ', proxyObject id printString ].
 	rewriter executeTree: (RBParser parseExpression: pharoExpressionString).
 	^ rewriter tree formattedCode
-]
-
-{ #category : #running }
-PharoLinkTest >> setUp [
-
-	super setUp.
-	application := PharoLinkApplication newWith: LanguageLinkSettings pharoDefaultSettings.
-	commandFactory := application newCommandFactory.
-
 ]
