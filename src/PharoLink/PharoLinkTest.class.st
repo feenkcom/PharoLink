@@ -21,12 +21,3 @@ PharoLinkTest >> replace: variableDictionary in: pharoExpressionString [
 	rewriter executeTree: (RBParser parseExpression: pharoExpressionString).
 	^ rewriter tree formattedCode
 ]
-
-{ #category : #running }
-PharoLinkTest >> setUp [
-
-	super setUp.
-	application := PharoLinkApplication newWith: LanguageLinkSettings pharoDefaultSettings.
-	commandFactory := application newCommandFactory.
-
-]
