@@ -27,31 +27,8 @@ LanguageLinkCommandRegistry >> addCommand: aCommand [
 ]
 
 { #category : #accessing }
-LanguageLinkCommandRegistry >> cleanIndex: anIndex [
-"	self debugMode ifTrue: [ ^ self ]."
-	currentIndex := currentIndex - 1.
-	innerCollection removeAt: anIndex
-]
-
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> completedCommands [
-	^ innerCollection first: currentIndex
-]
-
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> currentCommand [
-	self isFinished ifTrue: [ ^ nil ].
-	^ innerCollection at: currentIndex
-]
-
-{ #category : #accessing }
 LanguageLinkCommandRegistry >> debugMode [
 	^ executionHandler debugMode
-]
-
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> enqueueCommand: aCommand [
-	innerCollection add: aCommand
 ]
 
 { #category : #accessing }
@@ -96,25 +73,6 @@ LanguageLinkCommandRegistry >> isEmpty [
 	^ dictionary isEmpty
 ]
 
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> isFinished [
-	^ innerCollection size < currentIndex
-]
-
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> list [
-	^ innerCollection
-]
-
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> nextCommand [
-	| nextCommandIndex |
-self halt.
-	nextCommandIndex := currentIndex + 1.
-	innerCollection size < nextCommandIndex ifTrue: [ ^ nil ].
-	^ innerCollection at: nextCommandIndex
-]
-
 { #category : #printing }
 LanguageLinkCommandRegistry >> printOn: aStream [
 
@@ -134,10 +92,4 @@ LanguageLinkCommandRegistry >> queue [
 LanguageLinkCommandRegistry >> size [
 
 	^ dictionary size
-]
-
-{ #category : #accessing }
-LanguageLinkCommandRegistry >> waitingCommands [
-self halt.
-	^ innerCollection allButFirst: currentIndex
 ]
