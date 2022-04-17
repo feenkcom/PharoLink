@@ -81,7 +81,7 @@ PharoLinkReadFileWriteMemoryStreamExamples >> writeMemoryReadMemory [
 
 	<gtExample>
 	<after: #cleanUp>
-	| source method size sources changes streamsBefore streamsAfter streamsClosed |
+	| source method size sources changes streamsBefore streamsAfter |
 	size := SourceFiles changesFileStream size.
 	source := 'blub
 		| named |

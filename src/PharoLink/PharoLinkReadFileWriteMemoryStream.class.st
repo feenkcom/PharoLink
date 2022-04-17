@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'readWrite',
 		'readOnly',
-		'readOnlyLimit'
+		'readOnlyLimit',
+		'position'
 	],
 	#category : #'PharoLink-Global'
 }
@@ -22,20 +23,28 @@ PharoLinkReadFileWriteMemoryStream class >> readOnly: aStream readOnlyLimit: anI
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> atEnd [
 
-	^ readOnly position = readOnlyLimit and: [ readWrite atEnd ]
+	^ position >= readOnlyLimit and: [ readWrite atEnd ]
 ]
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> close [
 
 	readOnly close.
-	readWrite close
+	readWrite close.
+	position := 0.
 ]
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> closed [
 
 	^ readOnly closed and: [ readWrite closed ]
+]
+
+{ #category : #accessing }
+PharoLinkReadFileWriteMemoryStream >> collectionSpecies [
+	^ self isBinary
+		ifTrue: [ ByteArray ]
+		ifFalse: [ String ]
 ]
 
 { #category : #accessing }
@@ -56,7 +65,8 @@ PharoLinkReadFileWriteMemoryStream >> initializeReadOnly: aStream readOnlyLimit:
 
 	readOnly := aStream.
 	readOnlyLimit := anInteger.
-	readWrite := anotherStream
+	readWrite := anotherStream.
+	position := 0.
 ]
 
 { #category : #accessing }
@@ -67,16 +77,38 @@ PharoLinkReadFileWriteMemoryStream >> isBinary [
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> next [
+	| ch |
+	
+	ch := position < readOnlyLimit 
+		ifTrue: [ readOnly next ]
+		ifFalse: [ readWrite next ].
+	ch ifNotNil: [ position := position + 1 ].
+	^ ch
+]
 
-	self position < readOnlyLimit ifTrue: [ ^ readOnly next ].
-	^ readWrite next
+{ #category : #accessing }
+PharoLinkReadFileWriteMemoryStream >> next: aQuantity [
+
+	| read collection |
+
+	collection := self collectionSpecies new: aQuantity.	
+
+	read := self 
+		readInto: collection 
+		startingAt: 1 
+		count: aQuantity.
+
+	^ read = aQuantity 
+		ifTrue: [ collection ]
+		ifFalse: [ collection copyFrom: 1 to: read - 1 ]    
 ]
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> next: anInteger putAll: aCollection startingAt: startIndex [
-
+	"Write anInteger characters/bytes from aCollection starting at startIndex."
 	| offset |
-	offset := readOnlyLimit - readOnly position max: 0.
+
+	offset := readOnlyLimit - position max: 0.
 	offset > 0 ifTrue: [ 
 		| read written |
 		read := readOnly next: offset.
@@ -84,6 +116,7 @@ PharoLinkReadFileWriteMemoryStream >> next: anInteger putAll: aCollection starti
 			           copyFrom: startIndex
 			           to: startIndex + offset - 1.
 		read = written ifFalse: [ self error: 'readOnly is immutable' ] ].
+	position := position + anInteger - offset.
 	^ readWrite
 		  next: anInteger - offset
 		  putAll: aCollection
@@ -91,15 +124,30 @@ PharoLinkReadFileWriteMemoryStream >> next: anInteger putAll: aCollection starti
 ]
 
 { #category : #accessing }
+PharoLinkReadFileWriteMemoryStream >> nextPutAll: aCollection [
+
+	^ self next: aCollection size putAll: aCollection startingAt: 1.
+]
+
+{ #category : #accessing }
+PharoLinkReadFileWriteMemoryStream >> peek [
+
+	position < readOnlyLimit ifTrue: [ ^ readOnly peek ].
+	^ readWrite peek
+]
+
+{ #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> position [
 
-	readOnly position < readOnlyLimit ifTrue: [ ^ readOnly position ].
-	^ readOnlyLimit + readWrite position
+	^ position
+	"readOnly position < readOnlyLimit ifTrue: [ ^ readOnly position ].
+	^ readOnlyLimit + readWrite position"
 ]
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> position: anInteger [
 
+	position := anInteger.
 	anInteger < readOnlyLimit
 		ifTrue: [ 
 			readOnly position: anInteger.
@@ -111,11 +159,11 @@ PharoLinkReadFileWriteMemoryStream >> position: anInteger [
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> readInto: aCollection startingAt: startIndex count: n [
-
 	| max read |
-	max := self size - self position min: n.
+
+	max := self size - position min: n.
 	read := 0.
-	readOnly position < readOnlyLimit ifTrue: [ 
+	position < readOnlyLimit ifTrue: [ 
 		read := readOnly
 			        readInto: aCollection
 			        startingAt: startIndex
@@ -125,11 +173,24 @@ PharoLinkReadFileWriteMemoryStream >> readInto: aCollection startingAt: startInd
 			         readInto: aCollection
 			         startingAt: startIndex + read
 			         count: max - read) ].
+	position := position + read.
 	^ read
+]
+
+{ #category : #positioning }
+PharoLinkReadFileWriteMemoryStream >> setToEnd [
+
+	self position: self size.
 ]
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemoryStream >> size [
 
 	^ readOnlyLimit + readWrite size
+]
+
+{ #category : #accessing }
+PharoLinkReadFileWriteMemoryStream >> upToEnd [
+
+	^ self next: self size - position.
 ]
