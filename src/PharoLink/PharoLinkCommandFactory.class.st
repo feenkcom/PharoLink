@@ -7,7 +7,7 @@ Class {
 { #category : #bindings }
 PharoLinkCommandFactory >> bindingAt: varName put: anObject [
 	bindingsDictionary at: varName put: anObject.
-	^ PharoLinkBinding key: varName wrap: anObject
+	^ anObject
 ]
 
 { #category : #bindings }
