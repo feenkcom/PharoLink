@@ -13,20 +13,7 @@ BaselineOfPharoLink >> baseline: spec [
 		spec
 			baseline: 'GToolkitExternalProcess'
 			with: [ spec repository: 'github://feenkcom/gtoolkit-external-process:main/src' ].
-	
-		Smalltalk platform isWindows
-			ifTrue: [ 
-				spec
-					baseline: 'OSWinSubprocess'
-					with: [ 
-					spec repository: 'github://pharo-contributions/OSWinSubprocess' ].
-				subprocess := 'OSWinSubprocess' ]
-			ifFalse: [ 
-				spec
-					baseline: 'OSSubprocess'
-					with: [ 
-					spec repository: 'github://feenkcom/OSSubprocess:main/repository' ].
-				subprocess := 'OSSubprocess' ].
+
 		spec
 			baseline: 'NeoJSON'
 			with: [ spec repository: 'github://svenvc/NeoJSON:v17/repository' ];
