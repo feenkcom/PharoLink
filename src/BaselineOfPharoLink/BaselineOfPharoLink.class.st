@@ -12,9 +12,6 @@ BaselineOfPharoLink >> baseline: spec [
 			baseline: 'GToolkitExternalProcess' with: [
 				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.31/src' ].
 		spec
-			baseline: 'OSSubprocess' with: [
-				spec repository: 'github://feenkcom/OSSubprocess:v1.1.21/repository' ].
-		spec
 			baseline: 'NeoJSON' with: [
 				spec repository: 'github://svenvc/NeoJSON:v17/repository' ].
 		spec
