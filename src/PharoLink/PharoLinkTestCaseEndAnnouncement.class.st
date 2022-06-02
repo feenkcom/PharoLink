@@ -56,13 +56,6 @@ PharoLinkTestCaseEndAnnouncement >> addToTestResult: aTestResult [
 ]
 
 { #category : #converting }
-PharoLinkTestCaseEndAnnouncement >> asTestCase [
-	"Answer a test case matching the receiver"
-
-	^ testCaseClass selector: testCaseSelector
-]
-
-{ #category : #converting }
 PharoLinkTestCaseEndAnnouncement >> asTestResult [
 	"Answer a TestResult matching the receiver"
 	| result |

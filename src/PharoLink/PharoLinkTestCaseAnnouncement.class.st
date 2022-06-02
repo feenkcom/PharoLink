@@ -71,6 +71,13 @@ PharoLinkTestCaseAnnouncement >> = anObject [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseAnnouncement >> asTestCase [
+	"Answer a test case matching the receiver"
+
+	^ testCaseClass selector: testCaseSelector
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseAnnouncement >> hash [
 
 	^ testCaseIdentityHash
@@ -88,6 +95,11 @@ PharoLinkTestCaseAnnouncement >> initializeTestCaseClass: aClass selector: aSele
 PharoLinkTestCaseAnnouncement >> isEnd [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement >> method [
+	^ self asTestCase gtCompiledMethod
 ]
 
 { #category : #accessing }
