@@ -21,6 +21,12 @@ PharoLinkTestCasePass >> color [
 	^ Color green
 ]
 
+{ #category : #'as yet unclassified' }
+PharoLinkTestCasePass >> populateTestResult: aTestResult with: aTestCase [
+
+	aTestResult addPass: aTestCase
+]
+
 { #category : #accessing }
 PharoLinkTestCasePass >> shortName [
 
