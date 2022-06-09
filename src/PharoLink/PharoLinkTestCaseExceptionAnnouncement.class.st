@@ -91,6 +91,12 @@ PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messa
 	exceptionTrace := anotherString
 ]
 
+{ #category : #'as yet unclassified' }
+PharoLinkTestCaseExceptionAnnouncement >> populateTestResult: aTestResult with: aTestCase [
+
+	^ self subclassResponsibility 
+]
+
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> printOn: aStream [
 
