@@ -191,12 +191,22 @@ PharoLinkServer >> start [
 	listenProcess := [ 
 	                 | bindSocket |
 	                 [ 
-	                 [ bindSocket isNil ] whileTrue: [ 
+	                 [ bindSocket isNil and: [ serverSocket isValid ] ] whileTrue: [ 
 		                 bindSocket := serverSocket
 			                               waitForAcceptFor: 10
-			                               ifTimedOut: [ nil ] ].
+			                               ifTimedOut: [ nil ].
+Stdio stdout
+	lf;
+	<< 'PharoLinkServer listen inner loop';
+	lf.
+ ].
 	                 self addConnection: (self newConnection: bindSocket).
-	                 bindSocket := nil ] repeat ]
+	                 bindSocket := nil.
+Stdio stdout
+	lf;
+	<< 'PharoLinkServer listen loop';
+	lf.
+ ] doWhileTrue: [ serverSocket isValid ] ]
 		                 forkAt: Processor lowIOPriority
 		                 named: 'PharoLinkServer listenProcess'
 	"self preventTestForkedPDestroyServer"
