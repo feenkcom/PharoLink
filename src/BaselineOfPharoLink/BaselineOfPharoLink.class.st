@@ -8,7 +8,6 @@ Class {
 BaselineOfPharoLink >> baseline: spec [
 
 	<baseline>
-	| subprocess |
 	spec for: #common do: [ 
 		spec
 			baseline: 'GToolkitExternalProcess'
