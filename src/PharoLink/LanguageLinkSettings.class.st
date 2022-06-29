@@ -27,16 +27,16 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 
 	| binary |
 	binary := FileLocator vmBinary resolve.
-	self forPharo8: [  ] forPharo9: [ 
-		Smalltalk platform isWindows
-			ifTrue: [ 
-				(binary basename endsWith: '-cli.exe') ifFalse: [ 
-					| parts |
-					parts := '.' split: binary basename.
-					binary := binary parent / (parts first , '-cli.' , parts second) ] ]
-			ifFalse: [ 
-				(binary basename endsWith: '-cli') ifFalse: [ 
-					binary := binary parent / (binary basename , '-cli') ] ] ].
+	 
+	Smalltalk platform isWindows
+		ifTrue: [ 
+			(binary basename endsWith: '-cli.exe') ifFalse: [ 
+				| parts |
+				parts := '.' split: binary basename.
+				binary := binary parent / (parts first , '-cli.' , parts second) ] ]
+		ifFalse: [ 
+			(binary basename endsWith: '-cli') ifFalse: [ 
+				binary := binary parent / (binary basename , '-cli') ] ] .
 	^ self new
 		  serverSocketAddress: (LanguageLinkSocketAddress
 				   ipOrName: 'localhost'
