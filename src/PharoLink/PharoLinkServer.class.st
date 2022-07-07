@@ -94,6 +94,20 @@ PharoLinkServer >> globals [
 	^ globals
 ]
 
+{ #category : #'gt - extensions' }
+PharoLinkServer >> gtViewConnectionsFor: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Connections';
+		items: [ connections ];
+		column: 'Local Address' text: [ :aConnection | 
+			aConnection localAddressWithPortString ];
+		column: 'Remote Address' text: [ :aConnection | 
+			aConnection remoteAddressWithPortString ];
+		column: 'Connected' text: [ :aConnection | aConnection isConnected ] 
+]
+
 { #category : #private }
 PharoLinkServer >> handleIsAlive: aZnRequest [
 	"Respond to the ping request"
