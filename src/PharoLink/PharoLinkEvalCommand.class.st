@@ -166,6 +166,15 @@ PharoLinkEvalCommand >> sendSyncResponse: data [
 ]
 
 { #category : #accessing }
+PharoLinkEvalCommand >> stackArray [
+	"Answer an array of strings representing the stack"
+
+	^ thisContext stack 
+		collect: [ :stackItem | 	stackItem printString ]
+		as: Array
+]
+
+{ #category : #accessing }
 PharoLinkEvalCommand >> stackString [
 
 	^ String streamContents: [ :stream |
