@@ -164,6 +164,17 @@ PharoLinkServerConnection >> isConnected [
 ]
 
 { #category : #accessing }
+PharoLinkServerConnection >> localAddressWithPortString [
+	socket ifNil: [ ^ '<none>' ].
+
+	^ String streamContents: [ :aStream |
+		socket localAddress printOn: aStream delimiter: '.'.
+		aStream 
+			<< ':';
+			print: socket localPort  ]
+]
+
+{ #category : #accessing }
 PharoLinkServerConnection >> registry [ 
 
 	^ registry
@@ -183,8 +194,19 @@ PharoLinkServerConnection >> remoteAddressString [
 
 	socket ifNil: [ ^ '<none>' ].
 
-	^ String streamContents: [ :sStream |
-		self remoteAddress printOn: sStream delimiter: '.' ]
+	^ String streamContents: [ :aStream |
+		self remoteAddress printOn: aStream delimiter: '.' ]
+]
+
+{ #category : #accessing }
+PharoLinkServerConnection >> remoteAddressWithPortString [
+	socket ifNil: [ ^ '<none>' ].
+
+	^ String streamContents: [ :aStream |
+		self remoteAddress printOn: aStream delimiter: '.'.
+		aStream 
+			<< ':';
+			print: socket remotePort  ]
 ]
 
 { #category : #'announcer - subscription' }

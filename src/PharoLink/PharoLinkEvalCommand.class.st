@@ -72,6 +72,30 @@ PharoLinkEvalCommand >> execute: globalsDictionary [
 			do: [ :ex | self notifyError: ex ]
 ]
 
+{ #category : #'gt - extensions' }
+PharoLinkEvalCommand >> gtViewCommandBindingsFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Bindings';
+		object: [ self bindings ];
+		view: #gtItemsFor:
+]
+
+{ #category : #'gt - extensions' }
+PharoLinkEvalCommand >> gtViewCommandStringFor: aView [
+	<gtView>
+	
+	^ aView textEditor
+		aptitude: BrGlamorousCodeEditorAptitude;
+		styler: (BrRBTextStyler new
+				   isForWorkspace: true;
+				   yourself);
+		title: 'Block String' translated;
+		text: [ self blockString ];
+		priority: 15
+]
+
 { #category : #accessing }
 PharoLinkEvalCommand >> gtViewedObjectClass [
 	"Answer the class used to server gtViews.

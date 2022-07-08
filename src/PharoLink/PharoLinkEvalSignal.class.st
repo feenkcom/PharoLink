@@ -31,6 +31,32 @@ PharoLinkEvalSignal >> firstLineOf: aString [
 	aString linesDo: [ :line | ^line ]
 ]
 
+{ #category : #accessing }
+PharoLinkEvalSignal >> gtViewCommandBindingsFor: aView [
+	<gtView>
+	
+	self command ifNil: [
+		^ aView empty ].
+	
+	^ aView forward
+		title: 'Command Bindings';
+		object: [ self command ];
+		view: #gtViewCommandBindingsFor:
+]
+
+{ #category : #accessing }
+PharoLinkEvalSignal >> gtViewCommandStringFor: aView [
+	<gtView>
+	
+	self command ifNil: [
+		^ aView empty ].
+	
+	^ aView forward
+		title: 'Command String';
+		object: [ self command ];
+		view: #gtViewCommandStringFor:
+]
+
 { #category : #printing }
 PharoLinkEvalSignal >> printOn: stream [ 
 
