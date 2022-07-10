@@ -142,7 +142,7 @@ PharoLinkTestCaseAnnouncement >> summaryAttributes [
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> testCaseClass [
 
-	^ testCaseClass
+	^ self class environment at: testCaseClassName asSymbol.
 ]
 
 { #category : #accessing }
