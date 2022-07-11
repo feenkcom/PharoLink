@@ -2,10 +2,10 @@ Class {
 	#name : #PharoLinkTestCaseAnnouncement,
 	#superclass : #PharoLinkTestAnnouncement,
 	#instVars : [
-		'testCaseClass',
 		'testCaseIdentityHash',
 		'testCaseSelector',
-		'testCaseStartTimestamp'
+		'testCaseStartTimestamp',
+		'testCaseClassName'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -20,7 +20,7 @@ PharoLinkTestCaseAnnouncement class >> isAbstract [
 PharoLinkTestCaseAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ self new
-		initializeTestCaseClass: (aDictionary at: #testCaseClass) asClass
+		initializeTestCaseClassName: (aDictionary at: #testCaseClass)
 			selector: (aDictionary at: #testCaseSelector) asSymbol
 			identityHash: (aDictionary at: #testCaseIdentityHash);
 		testCaseStartTimestamp: (aDictionary at: #testCaseStartTimestamp); 
@@ -32,7 +32,7 @@ PharoLinkTestCaseAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
 
 	aJsonMapping
 		mapProperty: #testCaseClass
-			getter: [ :object | object testCaseClass name ]
+			getter: [ :object | object testCaseClassName ]
 			setter: [ :object :value | 
 				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #testCaseIdentityHash
@@ -54,7 +54,7 @@ PharoLinkTestCaseAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
 PharoLinkTestCaseAnnouncement class >> testCase: aTestCase [
 
 	^ self new
-		  initializeTestCaseClass: aTestCase class
+		  initializeTestCaseClassName: aTestCase class name
 		  selector: aTestCase selector
 		  identityHash: aTestCase identityHash;
 		  yourself
@@ -74,7 +74,7 @@ PharoLinkTestCaseAnnouncement >> = anObject [
 PharoLinkTestCaseAnnouncement >> asTestCase [
 	"Answer a test case matching the receiver"
 
-	^ testCaseClass selector: testCaseSelector
+	^ self testCaseClass selector: testCaseSelector
 ]
 
 { #category : #accessing }
@@ -86,7 +86,15 @@ PharoLinkTestCaseAnnouncement >> hash [
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> initializeTestCaseClass: aClass selector: aSelector identityHash: anInteger [
 
-	testCaseClass := aClass.
+	testCaseClassName := aClass name.
+	testCaseSelector := aSelector.
+	testCaseIdentityHash := anInteger
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement >> initializeTestCaseClassName: aClassName selector: aSelector identityHash: anInteger [
+
+	testCaseClassName := aClassName.
 	testCaseSelector := aSelector.
 	testCaseIdentityHash := anInteger
 ]
@@ -108,7 +116,7 @@ PharoLinkTestCaseAnnouncement >> printOn: aStream [
 	aStream
 		nextPutAll: self shortName;
 		nextPut: Character space;
-		nextPutAll: testCaseClass name;
+		nextPutAll: testCaseClassName asString;
 		nextPutAll: '>>#';
 		nextPutAll: testCaseSelector
 ]
@@ -126,9 +134,9 @@ PharoLinkTestCaseAnnouncement >> summaryAttributes [
 
 	method := String streamContents: [ :stream |
 		stream
-			<< (testCaseClass
+			<< (testCaseClassName
 				ifNil: [ '<None>' ]
-				ifNotNil: [ testCaseClass name ]);
+				ifNotNil: [ testCaseClassName ]);
 			<< '>>';
 			<< (testCaseSelector
 				ifNil: [ '<None>' ]
@@ -143,6 +151,12 @@ PharoLinkTestCaseAnnouncement >> summaryAttributes [
 PharoLinkTestCaseAnnouncement >> testCaseClass [
 
 	^ self class environment at: testCaseClassName asSymbol.
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement >> testCaseClassName [
+
+	^ testCaseClassName
 ]
 
 { #category : #accessing }
