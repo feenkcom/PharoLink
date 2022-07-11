@@ -48,7 +48,7 @@ PharoLinkRegistry >> deregister: anObjId [
 	"Remove the supplied id"
 	| object |
 
-	object := idToObjMap at: anObjId.
+	object := idToObjMap at: anObjId ifAbsent: [ ^ nil ].
 	idToObjMap removeKey: anObjId.
 	objToIdMap removeKey: object.
 	^ nil.

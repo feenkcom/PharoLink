@@ -160,7 +160,7 @@ PharoLinkEvalCommand >> notifyError: error [
 		at: 'commandId' put: self id;
 		at: 'trace' put: self stackString.
 	^ [ self sendSyncResponse: data ]
-		on: ConnectionTimedOut 
+		on: ConnectionTimedOut, PharoLinkServerConnectionLost 
 		do: [ :ex | | commsError |
 			commsError := LanguageLinkCommunicationsSignal new
 				originalException: error;
