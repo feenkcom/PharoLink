@@ -33,6 +33,11 @@ LanguageLinkProxyObject >> = anObject [
 				and: [ name = anObject name ] ]
 ]
 
+{ #category : #initialize }
+LanguageLinkProxyObject >> actOnProxyObjectInitialized [
+	"Callback that subclasses can use to automatically perform actions after the proxy object if fully initialized."
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> application [
 	^ application
@@ -65,6 +70,15 @@ LanguageLinkProxyObject >> hash [
 LanguageLinkProxyObject >> id [ 
 
 	^ name
+]
+
+{ #category : #initialize }
+LanguageLinkProxyObject >> initalizeWithRemoteClass: aRemoteClassName name: aRegistryId application: anApplication [
+	self 
+		remoteClass: aRemoteClassName;
+		name: aRegistryId;
+		application: anApplication.
+	self actOnProxyObjectInitialized.
 ]
 
 { #category : #accessing }

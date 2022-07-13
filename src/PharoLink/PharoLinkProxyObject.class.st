@@ -16,8 +16,8 @@ PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	app
 				ifFalse: [ self ] ].
 
 	^ proxyClass new
-		remoteClass: remoteClassName;
-		name: registryId;
+		initalizeWithRemoteClass: remoteClassName
+		name: registryId
 		application: aLLApplication
 ]
 
