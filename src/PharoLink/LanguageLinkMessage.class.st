@@ -25,6 +25,16 @@ LanguageLinkMessage >> encode [
 	^ dict
 ]
 
+{ #category : #'gt - extensions' }
+LanguageLinkMessage >> gtViewEncodedMessageFor: aView [ 
+	<gtView>
+	
+	^ aView forward 
+		title: 'Encoded';
+		object: [ self encode ];
+		view: #gtItemsFor:
+]
+
 { #category : #testing }
 LanguageLinkMessage >> isSync [
 	self subclassResponsibility

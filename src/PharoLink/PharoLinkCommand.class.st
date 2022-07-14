@@ -14,3 +14,17 @@ PharoLinkCommand >> codeForRemote [
 				<< '.';
 				cr. ] ].
 ]
+
+{ #category : #accessing }
+PharoLinkCommand >> gtViewCodeForRemoteFor: aView [ 
+	<gtView>
+	
+	^ aView textEditor
+		aptitude: BrGlamorousCodeEditorAptitude;
+		styler: (BrRBTextStyler new
+				   isForWorkspace: true;
+				   yourself);
+		title: 'Command String' translated;
+		text: [ self codeForRemote ];
+		priority: 15
+]
