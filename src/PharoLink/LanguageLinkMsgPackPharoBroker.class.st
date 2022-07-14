@@ -43,6 +43,16 @@ LanguageLinkMsgPackPharoBroker >> clientSocket [
 	^ newSocket
 ]
 
+{ #category : #'gt - extensions' }
+LanguageLinkMsgPackPharoBroker >> gtViewBrokerSettingsFor: aView [
+	<gtView>
+	 
+	^ aView forward
+		title: 'Settings';
+		object: [ settings ];
+		view: #gtSettingsFor:
+]
+
 { #category : #private }
 LanguageLinkMsgPackPharoBroker >> handleAnswerMessage: dict [
 	| assoc message semaphore |

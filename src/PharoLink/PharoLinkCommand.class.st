@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkCommand,
 	#superclass : #LanguageLinkCommand,
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #accessing }
@@ -13,4 +13,18 @@ PharoLinkCommand >> codeForRemote [
 				<< instr pharoLinkFormattedCode;
 				<< '.';
 				cr. ] ].
+]
+
+{ #category : #accessing }
+PharoLinkCommand >> gtViewCodeForRemoteFor: aView [ 
+	<gtView>
+	
+	^ aView textEditor
+		aptitude: BrGlamorousCodeEditorAptitude;
+		styler: (BrRBTextStyler new
+				   isForWorkspace: true;
+				   yourself);
+		title: 'Command String' translated;
+		text: [ self codeForRemote ];
+		priority: 15
 ]

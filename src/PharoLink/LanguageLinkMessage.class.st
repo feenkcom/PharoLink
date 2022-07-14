@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkMessage,
 	#superclass : #LanguageLinkAbstractMessage,
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #testing }
@@ -23,6 +23,16 @@ LanguageLinkMessage >> encode [
 	dict at: #type put: self type. 
 	self privateEncode: dict.
 	^ dict
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkMessage >> gtViewEncodedMessageFor: aView [ 
+	<gtView>
+	
+	^ aView forward 
+		title: 'Encoded';
+		object: [ self encode ];
+		view: #gtItemsFor:
 ]
 
 { #category : #testing }
