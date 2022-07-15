@@ -34,8 +34,9 @@ LanguageLinkProxyObject >> = anObject [
 ]
 
 { #category : #initialize }
-LanguageLinkProxyObject >> actOnProxyObjectInitialized [
-	"Callback that subclasses can use to automatically perform actions after the proxy object if fully initialized."
+LanguageLinkProxyObject >> actOnProxyObjectCreated [
+	"Callback that subclasses can use to automatically perform actions after the proxy object is created.
+	There should be no calls here that perform remote calls. It leads to deadlocks."
 ]
 
 { #category : #accessing }
@@ -78,7 +79,7 @@ LanguageLinkProxyObject >> initalizeWithRemoteClass: aRemoteClassName name: aReg
 		remoteClass: aRemoteClassName;
 		name: aRegistryId;
 		application: anApplication.
-	self actOnProxyObjectInitialized.
+	self actOnProxyObjectCreated.
 ]
 
 { #category : #accessing }
