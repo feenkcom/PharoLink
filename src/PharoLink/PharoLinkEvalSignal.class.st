@@ -28,7 +28,7 @@ PharoLinkEvalSignal >> command: anObject [
 { #category : #private }
 PharoLinkEvalSignal >> firstLineOf: aString [
 
-	aString linesDo: [ :line | ^line ]
+	aString linesDo: [ :line | ^ line ]
 ]
 
 { #category : #accessing }

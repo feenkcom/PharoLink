@@ -61,6 +61,11 @@ LanguageLinkExecutionHandler >> deserialize: anObject [
 ]
 
 { #category : #'private protocol' }
+LanguageLinkExecutionHandler >> emitSendCommandSignalFor: aCommand [ 
+	LanguageLinkSendCommandSignal emitCommand: aCommand
+]
+
+{ #category : #'private protocol' }
 LanguageLinkExecutionHandler >> getObserverAtCommandId: commandId id: observerId [
 	^ (commandQueue getCommand: commandId) getObserver: observerId
 ]
@@ -186,6 +191,8 @@ LanguageLinkExecutionHandler >> safeTriggerDebugger: error [
 LanguageLinkExecutionHandler >> sendCommand: command [
 	| promise |
 	self assert: command isValid.
+	self emitSendCommandSignalFor: command.
+	
 	commandQueue addCommand: command.
 	promise := self registerPromiseForCommand: command.
 	self primitiveSendCommand: command.
