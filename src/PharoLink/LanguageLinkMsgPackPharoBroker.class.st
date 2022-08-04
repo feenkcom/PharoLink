@@ -63,6 +63,19 @@ LanguageLinkMsgPackPharoBroker >> handleAnswerMessage: dict [
 	semaphore signal
 ]
 
+{ #category : #accessing }
+LanguageLinkMsgPackPharoBroker >> handleMessages [
+	"This needs appropriate error handling.
+	If the receiver has been told to shut down, errors can probably be ignored."
+
+	[ [ self primHandle: msgStream next ] repeat ]
+		on: PrimitiveFailed
+		do: [ :ex |
+			LanguageLinkSocketErrorSignal new
+				message: 'LanguageLinkMsgPackPharoBroker: exiting message handling';
+				emit ].
+]
+
 { #category : #initialization }
 LanguageLinkMsgPackPharoBroker >> initialize [
 	super initialize.
@@ -152,9 +165,7 @@ LanguageLinkMsgPackPharoBroker >> start [
 	socket := self clientSocket.
 	handlerThread := [
 		msgStream := LanguageLinkMsgPackSocketStream on: (SocketStream on: socket).
-		"This needs appropriate error handling.
-		If the receiver has been told to shut down, errors can probably be ignored."
-		[ self primHandle: msgStream next ] repeat.
+		self handleMessages.
 		] forkNamed: 'LanguageLinkMsgPackPharoBroker handlerThread'.
 
 ]
