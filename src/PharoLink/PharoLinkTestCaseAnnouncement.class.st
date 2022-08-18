@@ -105,6 +105,21 @@ PharoLinkTestCaseAnnouncement >> isEnd [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+PharoLinkTestCaseAnnouncement >> isGtExample [
+
+	^ ((self class environment at: testCaseClassName) lookupSelector: testCaseSelector) isGTExampleMethod.
+]
+
+{ #category : #testing }
+PharoLinkTestCaseAnnouncement >> isSUnitTestCase [
+	| testClass |
+
+	testClass := self class environment at: testCaseClassName asSymbol.
+	(testClass inheritsFrom: TestCase) ifFalse: [ ^ false ].
+	^ (testCaseSelector beginsWith: 'test') and: [testCaseSelector numArgs isZero].
+]
+
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> method [
 	^ self asTestCase gtCompiledMethod
