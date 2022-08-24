@@ -154,6 +154,11 @@ PharoLinkServerConnection >> initializeServer: aPharoLinkServer socket: aSocket 
 
 	server := aPharoLinkServer.
 	socket := aSocket.
+	Stdio stdout 
+		lf; 
+		<< 'SO_KEEPALIVE: ';
+		<< (socket setOption: #SO_KEEPALIVE value: 1) printString;
+		lf.
 	self start.
 ]
 
