@@ -21,6 +21,13 @@ PharoLinkTestCasePass >> color [
 	^ Color green
 ]
 
+{ #category : #accessing }
+PharoLinkTestCasePass >> isPassAnnouncement [
+	"Answer a boolean indicating whether the receiver has passed."
+
+	^ true.
+]
+
 { #category : #'as yet unclassified' }
 PharoLinkTestCasePass >> populateTestResult: aTestResult with: aTestCase [
 
