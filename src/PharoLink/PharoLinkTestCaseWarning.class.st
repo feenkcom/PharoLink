@@ -21,6 +21,12 @@ PharoLinkTestCaseWarning >> color [
 	^ Color orange
 ]
 
+{ #category : #testing }
+PharoLinkTestCaseWarning >> isWarning [
+
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 PharoLinkTestCaseWarning >> populateTestResult: aTestResult with: aTestCase [
 

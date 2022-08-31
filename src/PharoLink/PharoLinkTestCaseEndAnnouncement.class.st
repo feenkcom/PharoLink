@@ -104,10 +104,40 @@ PharoLinkTestCaseEndAnnouncement >> isEnd [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> isError [
+
+	^ false
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> isFailure [
+
+	^ false
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseEndAnnouncement >> isPassAnnouncement [
 	"Answer a boolean indicating whether the receiver has passed."
 
 	^ false.
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> isSkipped [
+
+	^ false
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> isSuccess [
+
+	^ false
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> isWarning [
+
+	^ false
 ]
 
 { #category : #accessing }
