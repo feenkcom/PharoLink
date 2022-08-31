@@ -21,6 +21,12 @@ PharoLinkTestCasePass >> color [
 	^ Color green
 ]
 
+{ #category : #testing }
+PharoLinkTestCasePass >> isSuccess [
+
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 PharoLinkTestCasePass >> populateTestResult: aTestResult with: aTestCase [
 

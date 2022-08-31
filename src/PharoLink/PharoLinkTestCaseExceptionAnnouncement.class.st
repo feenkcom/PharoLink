@@ -9,7 +9,7 @@ Class {
 	#category : #'PharoLink-Test-Runner'
 }
 
-{ #category : #accessing }
+{ #category : #testing }
 PharoLinkTestCaseExceptionAnnouncement class >> isAbstract [
 
 	^ self == PharoLinkTestCaseExceptionAnnouncement

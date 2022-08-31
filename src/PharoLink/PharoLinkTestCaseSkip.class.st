@@ -21,6 +21,12 @@ PharoLinkTestCaseSkip >> color [
 	^ Color gray
 ]
 
+{ #category : #testing }
+PharoLinkTestCaseSkip >> isSkipped [
+
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 PharoLinkTestCaseSkip >> populateTestResult: aTestResult with: aTestCase [
 

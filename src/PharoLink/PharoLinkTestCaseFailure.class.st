@@ -21,6 +21,12 @@ PharoLinkTestCaseFailure >> color [
 	^ Color yellow
 ]
 
+{ #category : #testing }
+PharoLinkTestCaseFailure >> isFailure [
+
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 PharoLinkTestCaseFailure >> populateTestResult: aTestResult with: aTestCase [
 
