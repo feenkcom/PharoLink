@@ -202,20 +202,14 @@ PharoLinkServer >> start [
 	self assert: listenPort isNotNil.
 
 	serverSocket := LanguageLinkMsgPackUtils serverSocketOn: listenPort.
-	listenProcess := [ 
-	                 | bindSocket |
+	listenProcess := [ | bindSocket |
 	                 [ [ bindSocket isNil and: [ serverSocket isValid ] ] whileTrue: [ 
 		                 bindSocket := serverSocket
 			                               waitForAcceptFor: 10
 			                               ifTimedOut: [ nil ] ].
  					bindSocket ifNotNil:
 	                 	[ self addConnection: (self newConnection: bindSocket) ].
-	                 bindSocket := nil.
-Stdio stdout
-	lf;
-	<< 'PharoLinkServer listen loop';
-	lf.
- ] doWhileTrue: [ serverSocket isValid ] ]
+	                 bindSocket := nil ] doWhileTrue: [ serverSocket isValid ] ]
 		                 forkAt: Processor lowIOPriority
 		                 named: 'PharoLinkServer listenProcess'
 	"self preventTestForkedPDestroyServer"
