@@ -91,7 +91,7 @@ PharoLinkTestCaseAnnouncement >> isEnd [
 { #category : #testing }
 PharoLinkTestCaseAnnouncement >> isGtExample [
 
-	^ ((self class environment at: testCaseClassName) lookupSelector: testCaseSelector) isGTExampleMethod.
+	^ ((self class environment at: testCaseClassName asSymbol) lookupSelector: testCaseSelector asSymbol) isGTExampleMethod.
 ]
 
 { #category : #testing }
