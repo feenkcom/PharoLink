@@ -204,17 +204,12 @@ PharoLinkServer >> start [
 	serverSocket := LanguageLinkMsgPackUtils serverSocketOn: listenPort.
 	listenProcess := [ 
 	                 | bindSocket |
-	                 [ 
-	                 [ bindSocket isNil and: [ serverSocket isValid ] ] whileTrue: [ 
+	                 [ [ bindSocket isNil and: [ serverSocket isValid ] ] whileTrue: [ 
 		                 bindSocket := serverSocket
 			                               waitForAcceptFor: 10
-			                               ifTimedOut: [ nil ].
-Stdio stdout
-	lf;
-	<< 'PharoLinkServer listen inner loop';
-	lf.
- ].
-	                 self addConnection: (self newConnection: bindSocket).
+			                               ifTimedOut: [ nil ] ].
+ 					bindSocket ifNotNil:
+	                 	[ self addConnection: (self newConnection: bindSocket) ].
 	                 bindSocket := nil.
 Stdio stdout
 	lf;
