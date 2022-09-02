@@ -23,18 +23,22 @@ LanguageLinkMsgPackPharoBroker class >> serializerClass [
 
 { #category : #'private - utils' }
 LanguageLinkMsgPackPharoBroker >> clientSocket [
-	| socketAddress newSocket retryDelay retryCount |
+	| socketAddress newSocket retryDelay retryCount serverIP |
 
 	socketAddress := self settings serverSocketAddress.
-	(newSocket := Socket newTCP)
+	retryCount := 3.
+	retryDelay := 500 milliSeconds.
+	serverIP := NetNameResolver addressForName: socketAddress ipOrName timeout: 20.
+	[ [ (newSocket := Socket newTCP)
 		setOption: 'TCP_NODELAY' value: 1;
 		setOption: 'SO_SNDBUF' value: LanguageLinkMsgPackUtils socketBufferSize;
 		setOption: 'SO_RCVBUF' value: LanguageLinkMsgPackUtils socketBufferSize .
-	retryCount := 20.
-	retryDelay := 500 milliSeconds.
-	[ [ newSocket connectToHostNamed: socketAddress ipOrName port: socketAddress port ]
-		on: ConnectionTimedOut
-		do: [].
+	newSocket 
+		connectTo: serverIP
+		port: socketAddress port
+		waitForConnectionFor: 10 ]
+			on: ConnectionTimedOut
+			do: [].
 	newSocket isConnected or: [ retryCount = 0 ] ] whileFalse:
 		[ retryDelay wait.
 		retryCount := retryCount - 1 ].
