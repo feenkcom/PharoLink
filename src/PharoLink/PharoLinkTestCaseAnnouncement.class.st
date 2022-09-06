@@ -120,6 +120,11 @@ PharoLinkTestCaseAnnouncement >> printOn: aStream [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseAnnouncement >> providerClass [
+	^ self testCaseClass
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseAnnouncement >> shortName [
 
 	self subclassResponsibility
