@@ -18,8 +18,8 @@ PharoLinkTestCaseEndAnnouncement class >> isAbstract [
 PharoLinkTestCaseEndAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ (super leFromJsonV4Dictionary: aDictionary)
-		shouldPass: (aDictionary at: #testCaseShouldPass);
-		testCaseEndTimestamp: (aDictionary at: #testCaseEndTimestamp);
+		shouldPass: (aDictionary at: #testCaseShouldPass ifAbsent: []);
+		testCaseEndTimestamp: (aDictionary at: #testCaseEndTimestamp ifAbsent: []);
 		yourself
 ]
 

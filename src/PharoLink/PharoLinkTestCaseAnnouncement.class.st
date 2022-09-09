@@ -20,9 +20,11 @@ PharoLinkTestCaseAnnouncement class >> isAbstract [
 PharoLinkTestCaseAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ self new
-		initializeTestCaseClassName: (aDictionary at: #testCaseClass)
-			selector: (aDictionary at: #testCaseSelector) asSymbol;
-		testCaseStartTimestamp: (aDictionary at: #testCaseStartTimestamp); 
+		initializeTestCaseClassName: (aDictionary at: #testCaseClass ifAbsent: [])
+			selector: (aDictionary at: #testCaseSelector
+							ifPresent: [ :symbol | symbol asSymbol]
+							ifAbsent: [ ]);
+		testCaseStartTimestamp: (aDictionary at: #testCaseStartTimestamp ifAbsent: []); 
 		yourself
 ]
 
