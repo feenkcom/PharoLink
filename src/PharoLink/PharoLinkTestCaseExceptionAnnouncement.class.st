@@ -19,9 +19,12 @@ PharoLinkTestCaseExceptionAnnouncement class >> isAbstract [
 PharoLinkTestCaseExceptionAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ (super leFromJsonV4Dictionary: aDictionary)
-		  initializeExceptionClass: (aDictionary at: #exceptionClass) asClass
-		  messageText: (aDictionary at: #exceptionMessageText)
-		  trace: (aDictionary at: #exceptionTrace);
+		  initializeExceptionClass: (aDictionary 
+		  	at: #exceptionClass
+		  	ifPresent: #asClass
+		  	ifAbsent: [])
+		  messageText: (aDictionary at: #exceptionMessageText ifAbsent: [])
+		  trace: (aDictionary at: #exceptionTrace ifAbsent: []);
 		  yourself
 ]
 
@@ -31,7 +34,7 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
 		mapProperty: #exceptionClass
-		getter: [ :object | object exceptionClass name ]
+		getter: [ :object | object exceptionClass ifNotNil: #name ]
 		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #exceptionMessageText
