@@ -176,26 +176,16 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol withCopiedResultAndArguments: a
 { #category : #'message performing' }
 LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArrayOfArguments [
 	"Evaluate the supplied selector on the remote with the given arguments"
-	| message keywords |
 
 	self assert: anArrayOfArguments isArray.
 	self assert: anArrayOfArguments canBePharoLinkPrimitive.
 
-	keywords := aSymbol findTokens: $:.
-	self assert: keywords size = anArrayOfArguments size.
-	
-	message := String streamContents: [ :stream |
-		stream 
-			<< 'self '.
-		keywords withIndexDo: [ :keyword :index |
-			| argumentValue |
-			argumentValue := anArrayOfArguments at: index.
-			stream 
-				<< keyword;
-				<< $:;
-				<< ' '.
-			stream print: argumentValue ] ].
-	^ self evaluateSourceSequence: message
+	self assert: (aSymbol findTokens: $:) size = anArrayOfArguments size.
+
+	^ self newCommandFactory
+		bindingAt: #argArray put: anArrayOfArguments;
+		<< ('self perform: #', aSymbol, ' withArguments: argArray');
+		sendAndWait.
 ]
 
 { #category : #accessing }
