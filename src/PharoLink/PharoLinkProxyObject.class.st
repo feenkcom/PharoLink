@@ -27,6 +27,18 @@ PharoLinkProxyObject class >> remoteClassName [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #converting }
+PharoLinkProxyObject >> asGtBareProxyObject [
+
+	^ GtPlBareProxy forProxyObject: self
+]
+
+{ #category : #converting }
+PharoLinkProxyObject >> asGtProxyObject [ 
+
+	^ self
+]
+
 { #category : #accessing }
 PharoLinkProxyObject >> getSerialized [
 	"Answer the receiver as a local object, i.e. copy it from the server.

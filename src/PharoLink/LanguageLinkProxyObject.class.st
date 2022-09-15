@@ -177,6 +177,11 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol withCopiedResultAndArguments: a
 LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArrayOfArguments [
 	"Evaluate the supplied selector on the remote with the given arguments"
 
+	aSymbol isUnary ifTrue:
+		[ anArrayOfArguments
+			ifEmpty: [ ^ self proxyPerform: aSymbol ]
+			ifNotEmpty: [ self error: 'Unary selector with arguments' ] ].
+
 	self assert: anArrayOfArguments isArray.
 	self assert: anArrayOfArguments canBePharoLinkPrimitive.
 
