@@ -28,6 +28,20 @@ LanguageLinkSendCommandSignal >> command: aCommand [
 	command := aCommand
 ]
 
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> extractSelector [
+	| targetInstruction instructionCode|
+	targetInstruction := self command instructions last.
+	instructionCode := targetInstruction sourceCode.
+	(instructionCode beginsWith: 'llCommand') ifFalse: [ ^ '-'].
+	
+	^ ((instructionCode 
+		copyFrom: (instructionCode findString: 'notify:') + 7
+		to: (instructionCode findString: 'id:') -1) trimBoth
+			removePrefix: '(')
+			removeSuffix: ')'
+]
+
 { #category : #utils }
 LanguageLinkSendCommandSignal >> firstLineOf: aString [
 
@@ -47,6 +61,14 @@ LanguageLinkSendCommandSignal >> gtViewCommandStringFor: aView [
 		view: #gtViewCodeForRemoteFor:
 ]
 
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> isSerializedCall [
+	| targetInstruction|
+	targetInstruction := self command instructions first.
+	^ targetInstruction isString and: [
+		targetInstruction includesSubstring: 'PharoLinkAnswerByValue setBySerialized.' ] 
+]
+
 { #category : #printing }
 LanguageLinkSendCommandSignal >> printOn: stream [ 
 
@@ -56,9 +78,11 @@ LanguageLinkSendCommandSignal >> printOn: stream [
 		nextPutAll: self class name;
 		space.
 	command ifNil: [ ^stream << '<no command>' ].
-	command blockString ifNil: [ ^stream << '<no source>' ].
+	command codeForRemote 
+		ifNil: [ ^stream << '<no source>' ]
+		ifNotNil: [ :aString |
+			stream << aString ]
 	
-	stream << command blockString.
 ]
 
 { #category : #printing }

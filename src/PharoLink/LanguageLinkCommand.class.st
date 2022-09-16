@@ -9,7 +9,7 @@ Class {
 		'promise',
 		'transformBlock'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #'instance creation' }
@@ -51,6 +51,28 @@ LanguageLinkCommand >> codeForRemote [
 { #category : #accessing }
 LanguageLinkCommand >> getObserver: observerId [
 	^ observers detect: [ :obs | obs id = observerId ]
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkCommand >> gtViewBindigsFor: aView [ 
+	<gtView>
+	
+	^ aView forward 
+		title: 'Bindings';
+		priority: 20;
+		object: [ self bindings ];
+		view: #gtItemsFor:
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkCommand >> gtViewInstructionsFor: aView [ 
+	<gtView>
+	
+	^ aView forward 
+		title: 'Instructions';
+		priority: 25;
+		object: [ self instructions ];
+		view: #gtItemsFor:
 ]
 
 { #category : #accessing }
