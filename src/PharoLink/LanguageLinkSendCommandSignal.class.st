@@ -96,3 +96,27 @@ LanguageLinkSendCommandSignal >> printOneLineContentsOn: stream [
 		<< (self firstLineOf: codeForRemote);
 		<< '...'
 ]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> remoteReceiverDescription [
+	^ self command bindings 
+		at: 'self' 
+		ifPresent: [ :anObject | 
+			
+				'a '
+				,anObject class remoteClassName
+				, ' (' 
+				, anObject name
+				, ') ['
+				, anObject identityHash asString
+				, ']' ]
+		ifAbsent: [nil]
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> remoteReceiverIdentityHash [
+	^ self command bindings 
+		at: 'self' 
+		ifPresent: [ :anObject | anObject identityHash ]
+		ifAbsent: [nil]
+]
