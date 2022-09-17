@@ -193,6 +193,17 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArray
 		sendAndWait.
 ]
 
+{ #category : #evaluating }
+LanguageLinkProxyObject >> proxyPerformSerialized: aSymbol [
+	| cf |
+
+	cf := self newCommandFactory.
+	^ cf 
+		setBySerialized;
+		<< ('self ', aSymbol);
+		sendAndWait
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> remoteClass [
 	^ remoteClass
