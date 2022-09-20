@@ -86,6 +86,22 @@ LanguageLinkCommandFactory >> decorateTransform: aBlock [
 	^ transformBlock := [ :obj | aBlock value: (previousBlock value: obj) ]
 ]
 
+{ #category : #logging }
+LanguageLinkCommandFactory >> emitSendCommandCompletedSignalWithInstructions: currentInstructions andBindings: currentBindings [
+	(LanguageLinkSendCommandCompletedSignal forCommandFactory:  self) 
+		instructions: currentInstructions;
+		bindingsDictionary: currentBindings;
+		emit
+]
+
+{ #category : #logging }
+LanguageLinkCommandFactory >> emitSendCommandInitiatedSignal [
+	(LanguageLinkSendCommandInitiatedSignal forCommandFactory:  self)
+		instructions: instructions;
+		bindingsDictionary: bindingsDictionary;
+		emit
+]
+
 { #category : #accessing }
 LanguageLinkCommandFactory >> instructionsWithNotifyAtEnd [
 	| instructionsCopy |
@@ -110,6 +126,22 @@ LanguageLinkCommandFactory >> observerFromCallback: aBlock [
 	^ self addObserver: observer
 ]
 
+{ #category : #send }
+LanguageLinkCommandFactory >> performSendWithLogging: aBlock [
+	| commandResult currentInstructions currentBindings |
+	
+	currentInstructions := instructions.
+	currentBindings := bindingsDictionary.
+	
+	self emitSendCommandInitiatedSignal.
+	commandResult := aBlock value.
+	self 
+		emitSendCommandCompletedSignalWithInstructions: currentInstructions 
+		andBindings: currentBindings.
+	
+	^ commandResult 
+]
+
 { #category : #initialization }
 LanguageLinkCommandFactory >> reset [
 
@@ -122,26 +154,26 @@ LanguageLinkCommandFactory >> reset [
 
 { #category : #send }
 LanguageLinkCommandFactory >> send [
-	^ self sendCommand
+	^ self performSendWithLogging: [ self sendCommand ]
 ]
 
 { #category : #send }
 LanguageLinkCommandFactory >> send: aStatement [
 
 	self << aStatement.
-	^ self sendCommand
+	^ self performSendWithLogging: [ self sendCommand ]
 ]
 
 { #category : #send }
 LanguageLinkCommandFactory >> sendAndWait [
-	^ self sendCommand waitForValue
+	^ self performSendWithLogging: [ self sendCommand waitForValue ]
 ]
 
 { #category : #send }
 LanguageLinkCommandFactory >> sendAndWait: aStatement [
 
 	self << aStatement.
-	^ self sendCommand waitForValue
+	^ self performSendWithLogging: [ self sendCommand waitForValue ]
 ]
 
 { #category : #send }
@@ -159,6 +191,11 @@ LanguageLinkCommandFactory >> setNotifyImmediateToInstruction: aJSgInstruction [
 LanguageLinkCommandFactory >> setNotifyToInstruction: aP3gInstruction [
 	^ 'notify' asJSGIdentifier 
 			jsCallWith: (Array with: aP3gInstruction with: command id)
+]
+
+{ #category : #accessing }
+LanguageLinkCommandFactory >> settings [ 
+	^ self application settings
 ]
 
 { #category : #accessing }
