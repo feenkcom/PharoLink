@@ -14,7 +14,7 @@ LanguageLinkSendCommandEventsGroup >> gtCommandsFor: aView [
 		items: [ self ];
 		column: 'Timestamp' text: #timestamp  width: 200;
 		column: 'Process' text: #processId width: 150;
-		column: 'REceiver' text: [ :aEvent |
+		column: 'Receiver' text: [ :aEvent |
 			aEvent remoteReceiverDescription ifNil: [ '-' ] ];
 		column: 'Command String' text: [ :anEvent | anEvent commandString ];
 		column: 'Duration' 

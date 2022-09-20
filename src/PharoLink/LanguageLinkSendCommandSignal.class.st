@@ -66,6 +66,12 @@ LanguageLinkSendCommandSignal >> gtViewInstructionsFor: aView [
 		view: #gtItemsFor:
 ]
 
+{ #category : #testing }
+LanguageLinkSendCommandSignal >> hasCommandString [
+	^ self instructions notNil and: [ 
+		self instructions notEmpty ]
+]
+
 { #category : #accessing }
 LanguageLinkSendCommandSignal >> instructions [
 

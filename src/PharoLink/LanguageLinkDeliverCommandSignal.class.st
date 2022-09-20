@@ -71,6 +71,12 @@ LanguageLinkDeliverCommandSignal >> firstLineOf: aString [
 	aString linesDo: [ :line | ^ line ]
 ]
 
+{ #category : #testing }
+LanguageLinkDeliverCommandSignal >> hasCommandString [
+	^ self command instructions notNil and: [ 
+		self command instructions notEmpty ]
+]
+
 { #category : #initialization }
 LanguageLinkDeliverCommandSignal >> initialize [
 	super initialize.

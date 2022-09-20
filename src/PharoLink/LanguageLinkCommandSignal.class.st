@@ -43,6 +43,11 @@ LanguageLinkCommandSignal >> gtViewCommandStringFor: aView [
 				   yourself)
 ]
 
+{ #category : #accessing }
+LanguageLinkCommandSignal >> hasCommandString [
+	self subclassResponsibility
+]
+
 { #category : #testing }
 LanguageLinkCommandSignal >> isEndSignalType [
 	^ eventType = #endSignal
