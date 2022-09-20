@@ -88,7 +88,8 @@ LanguageLinkCommandFactory >> decorateTransform: aBlock [
 
 { #category : #logging }
 LanguageLinkCommandFactory >> emitSendCommandCompletedSignalWithInstructions: currentInstructions andBindings: currentBindings [
-	(LanguageLinkSendCommandCompletedSignal forCommandFactory:  self) 
+	(LanguageLinkSendCommandSignal forCommandFactory:  self) 
+		markAsEndSignal;
 		instructions: currentInstructions;
 		bindingsDictionary: currentBindings;
 		emit
@@ -96,7 +97,8 @@ LanguageLinkCommandFactory >> emitSendCommandCompletedSignalWithInstructions: cu
 
 { #category : #logging }
 LanguageLinkCommandFactory >> emitSendCommandInitiatedSignal [
-	(LanguageLinkSendCommandInitiatedSignal forCommandFactory:  self)
+	(LanguageLinkSendCommandSignal forCommandFactory:  self)
+		markAsStartSignal;
 		instructions: instructions;
 		bindingsDictionary: bindingsDictionary;
 		emit

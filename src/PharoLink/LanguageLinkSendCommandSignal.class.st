@@ -1,6 +1,6 @@
 Class {
 	#name : #LanguageLinkSendCommandSignal,
-	#superclass : #LanguageLinkSignal,
+	#superclass : #LanguageLinkCommandSignal,
 	#instVars : [
 		'commandFactory',
 		'instructions',
@@ -8,6 +8,11 @@ Class {
 	],
 	#category : #'PharoLink-Logging'
 }
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal class >> eventType [
+	^ LanguageLinkSendCommandEvent
+]
 
 { #category : #'instance creation' }
 LanguageLinkSendCommandSignal class >> forCommandFactory: aCommandFactory [ 
@@ -48,37 +53,6 @@ LanguageLinkSendCommandSignal >> commandString [
 ]
 
 { #category : #'gt - extensions' }
-LanguageLinkSendCommandSignal >> gtViewBindingsFor: aView [
-	<gtView>
-	
-	self bindingsDictionary ifNil: [
-		^ aView empty ].
-	
-	^ aView forward
-		title: 'Bindings';
-		priority: 25;
-		object: [ self bindingsDictionary ];
-		view: #gtItemsFor:
-]
-
-{ #category : #'gt - extensions' }
-LanguageLinkSendCommandSignal >> gtViewCommandStringFor: aView [
-	<gtView>
-	
-	self instructions ifNil: [
-		^ aView empty ].
-	
-	^ aView textEditor
-		aptitude: BrGlamorousCodeEditorAptitude;
-		styler: (BrRBTextStyler new
-				   isForWorkspace: true;
-				   yourself);
-		title: 'Command String' translated;
-		text: [ self commandString ];
-		priority: 14
-]
-
-{ #category : #'gt - extensions' }
 LanguageLinkSendCommandSignal >> gtViewInstructionsFor: aView [
 	<gtView>
 	
@@ -90,6 +64,12 @@ LanguageLinkSendCommandSignal >> gtViewInstructionsFor: aView [
 		priority: 20;
 		object: [ self instructions ];
 		view: #gtItemsFor:
+]
+
+{ #category : #testing }
+LanguageLinkSendCommandSignal >> hasCommandString [
+	^ self instructions notNil and: [ 
+		self instructions notEmpty ]
 ]
 
 { #category : #accessing }
@@ -112,28 +92,4 @@ LanguageLinkSendCommandSignal >> printOneLineContentsOn: aStream [
 	aStream << instructions first.
 	instructions size > 1 ifTrue: [
 		aStream << '...' ]
-]
-
-{ #category : #accessing }
-LanguageLinkSendCommandSignal >> remoteReceiverDescription [
-	^ self bindingsDictionary
-		at: 'self' 
-		ifPresent: [ :anObject | 
-			
-				'a '
-				,anObject class remoteClassName
-				, ' (' 
-				, anObject name
-				, ') ['
-				, anObject identityHash asString
-				, ']' ]
-		ifAbsent: [nil]
-]
-
-{ #category : #accessing }
-LanguageLinkSendCommandSignal >> remoteReceiverIdentityHash [
-	^ self bindingsDictionary 
-		at: 'self' 
-		ifPresent: [ :anObject | anObject identityHash ]
-		ifAbsent: [nil]
 ]
