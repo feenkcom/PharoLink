@@ -2,7 +2,6 @@ Class {
 	#name : #PharoLinkTestCaseAnnouncement,
 	#superclass : #PharoLinkTestAnnouncement,
 	#instVars : [
-		'testCaseIdentityHash',
 		'testCaseSelector',
 		'testCaseStartTimestamp',
 		'testCaseClassName'
