@@ -2,104 +2,121 @@ Class {
 	#name : #LanguageLinkSendCommandSignal,
 	#superclass : #LanguageLinkSignal,
 	#instVars : [
-		'command'
+		'commandFactory',
+		'instructions',
+		'bindingsDictionary'
 	],
 	#category : #'PharoLink-Logging'
 }
 
-{ #category : #logging }
-LanguageLinkSendCommandSignal class >> emitCommand: aCommand [ 
-	(self forCommand:  aCommand) emit
-]
-
 { #category : #'instance creation' }
-LanguageLinkSendCommandSignal class >> forCommand: aCommand [ 
+LanguageLinkSendCommandSignal class >> forCommandFactory: aCommandFactory [ 
 	^ self new 
-		command: aCommand
+		commandFactory: aCommandFactory
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> command [
-	^ command
+LanguageLinkSendCommandSignal >> bindingsDictionary [
+
+	^ bindingsDictionary
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> command: aCommand [ 
-	command := aCommand
+LanguageLinkSendCommandSignal >> bindingsDictionary: anObject [
+
+	bindingsDictionary := anObject
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> extractSelector [
-	| targetInstruction instructionCode|
-	targetInstruction := self command instructions last.
-	instructionCode := targetInstruction sourceCode.
-	(instructionCode beginsWith: 'llCommand') ifFalse: [ ^ '-'].
-	
-	^ ((instructionCode 
-		copyFrom: (instructionCode findString: 'notify:') + 7
-		to: (instructionCode findString: 'id:') -1) trimBoth
-			removePrefix: '(')
-			removeSuffix: ')'
-]
+LanguageLinkSendCommandSignal >> commandFactory [
 
-{ #category : #utils }
-LanguageLinkSendCommandSignal >> firstLineOf: aString [
-
-	aString linesDo: [ :line | ^ line ]
+	^ commandFactory
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> gtViewCommandStringFor: aView [
+LanguageLinkSendCommandSignal >> commandFactory: anObject [
+
+	commandFactory := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> commandString [
+	^ String streamContents:  [ :aStream | 
+		self instructions 
+			asStringOn: aStream 
+			delimiter: String cr ]
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkSendCommandSignal >> gtViewBindingsFor: aView [
 	<gtView>
 	
-	self command ifNil: [
+	self bindingsDictionary ifNil: [
 		^ aView empty ].
 	
 	^ aView forward
-		title: 'Command String';
-		object: [ self command ];
-		view: #gtViewCodeForRemoteFor:
+		title: 'Bindings';
+		priority: 25;
+		object: [ self bindingsDictionary ];
+		view: #gtItemsFor:
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkSendCommandSignal >> gtViewCommandStringFor: aView [
+	<gtView>
+	
+	self instructions ifNil: [
+		^ aView empty ].
+	
+	^ aView textEditor
+		aptitude: BrGlamorousCodeEditorAptitude;
+		styler: (BrRBTextStyler new
+				   isForWorkspace: true;
+				   yourself);
+		title: 'Command String' translated;
+		text: [ self commandString ];
+		priority: 14
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkSendCommandSignal >> gtViewInstructionsFor: aView [
+	<gtView>
+	
+	self instructions ifNil: [
+		^ aView empty ].
+	
+	^ aView forward
+		title: 'Instructions';
+		priority: 20;
+		object: [ self instructions ];
+		view: #gtItemsFor:
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> isSerializedCall [
-	| targetInstruction|
-	targetInstruction := self command instructions first.
-	^ targetInstruction isString and: [
-		targetInstruction includesSubstring: 'PharoLinkAnswerByValue setBySerialized.' ] 
+LanguageLinkSendCommandSignal >> instructions [
+
+	^ instructions
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> instructions: anObject [
+
+	instructions := anObject
 ]
 
 { #category : #printing }
-LanguageLinkSendCommandSignal >> printOn: stream [ 
-
-	stream 
-		nextPutAll: self timestamp asString;
-		space;
-		nextPutAll: self class name;
-		space.
-	command ifNil: [ ^stream << '<no command>' ].
-	command codeForRemote 
-		ifNil: [ ^stream << '<no source>' ]
-		ifNotNil: [ :aString |
-			stream << aString ]
+LanguageLinkSendCommandSignal >> printOneLineContentsOn: aStream [ 
+	instructions ifNil: [ ^aStream << '<no instructions>' ].
+	instructions ifEmpty: [ ^aStream << '<no instructions>' ].
 	
-]
-
-{ #category : #printing }
-LanguageLinkSendCommandSignal >> printOneLineContentsOn: stream [ 
-	| codeForRemote |
-	codeForRemote := command codeForRemote.
-	command ifNil: [ ^stream << '<no command>' ].
-	codeForRemote ifNil: [ ^stream << '<no source>' ].
-	
-	stream
-		<< (self firstLineOf: codeForRemote);
-		<< '...'
+	aStream << instructions first.
+	instructions size > 1 ifTrue: [
+		aStream << '...' ]
 ]
 
 { #category : #accessing }
 LanguageLinkSendCommandSignal >> remoteReceiverDescription [
-	^ self command bindings 
+	^ self bindingsDictionary
 		at: 'self' 
 		ifPresent: [ :anObject | 
 			
@@ -115,7 +132,7 @@ LanguageLinkSendCommandSignal >> remoteReceiverDescription [
 
 { #category : #accessing }
 LanguageLinkSendCommandSignal >> remoteReceiverIdentityHash [
-	^ self command bindings 
+	^ self bindingsDictionary 
 		at: 'self' 
 		ifPresent: [ :anObject | anObject identityHash ]
 		ifAbsent: [nil]
