@@ -17,6 +17,5 @@ LanguageLinkSendCommandEventsGrouper >> gtCommandsFor: aView [
 		title: 'Commands';
 		priority: 7;
 		object: [ self rootEvents ];
-		updateWhen: Announcement in: [ self announcer ];
 		view: #gtCommandsFor:
 ]

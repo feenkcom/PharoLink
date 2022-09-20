@@ -15,22 +15,6 @@ LanguageLinkSendCommandEvent >> codeForRemote [
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandEvent >> commandString [ 
-	^ self signalStartedEvent commandString
-]
-
-{ #category : #accessing }
-LanguageLinkSendCommandEvent >> gtViewCommandStringFor: aView [
-	<gtView>
-	
-	^ aView forward 
-		title: 'Command String';
-		priority: 5;
-		object: [ self signalCompletedEvent ];
-		view: #gtViewCommandStringFor:
-]
-
-{ #category : #accessing }
 LanguageLinkSendCommandEvent >> gtViewRemoteCodeFor: aView [
 	<gtView>
 	
@@ -42,19 +26,4 @@ LanguageLinkSendCommandEvent >> gtViewRemoteCodeFor: aView [
 		styler: (BrRBTextStyler new
 				   isForWorkspace: true;
 				   yourself)
-]
-
-{ #category : #accessing }
-LanguageLinkSendCommandEvent >> processId [
-	^ self signalStartedEvent processId
-]
-
-{ #category : #accessing }
-LanguageLinkSendCommandEvent >> remoteReceiverDescription [
-	^ self signalStartedEvent remoteReceiverDescription
-]
-
-{ #category : #accessing }
-LanguageLinkSendCommandEvent >> remoteReceiverIdentityHash [
-	^ self signalStartedEvent remoteReceiverIdentityHash
 ]

@@ -1,9 +1,8 @@
 Class {
 	#name : #LanguageLinkDeliverCommandSignal,
-	#superclass : #LanguageLinkSignal,
+	#superclass : #LanguageLinkCommandSignal,
 	#instVars : [
-		'command',
-		'eventType'
+		'command'
 	],
 	#category : #'PharoLink-Logging'
 }
@@ -29,6 +28,12 @@ LanguageLinkDeliverCommandSignal class >> eventType [
 LanguageLinkDeliverCommandSignal class >> forCommand: aCommand [ 
 	^ self new 
 		command: aCommand
+]
+
+{ #category : #accessing }
+LanguageLinkDeliverCommandSignal >> bindingsDictionary [
+
+	^ self command bindings
 ]
 
 { #category : #accessing }
@@ -66,19 +71,6 @@ LanguageLinkDeliverCommandSignal >> firstLineOf: aString [
 	aString linesDo: [ :line | ^ line ]
 ]
 
-{ #category : #accessing }
-LanguageLinkDeliverCommandSignal >> gtViewCommandStringFor: aView [
-	<gtView>
-	
-	self command ifNil: [
-		^ aView empty ].
-	
-	^ aView forward
-		title: 'Command String';
-		object: [ self command ];
-		view: #gtViewCodeForRemoteFor:
-]
-
 { #category : #initialization }
 LanguageLinkDeliverCommandSignal >> initialize [
 	super initialize.
@@ -87,31 +79,11 @@ LanguageLinkDeliverCommandSignal >> initialize [
 ]
 
 { #category : #accessing }
-LanguageLinkDeliverCommandSignal >> isEndSignalType [
-	^ eventType = #endSignal
-]
-
-{ #category : #accessing }
 LanguageLinkDeliverCommandSignal >> isSerializedCall [
-	| targetInstruction|
+	| targetInstruction |
 	targetInstruction := self command instructions first.
 	^ targetInstruction isString and: [
 		targetInstruction includesSubstring: 'PharoLinkAnswerByValue setBySerialized.' ] 
-]
-
-{ #category : #accessing }
-LanguageLinkDeliverCommandSignal >> isStartSignalType [
-	^ eventType = #startSignal
-]
-
-{ #category : #initialization }
-LanguageLinkDeliverCommandSignal >> markAsEndSignal [
-	eventType := #endSignal
-]
-
-{ #category : #initialization }
-LanguageLinkDeliverCommandSignal >> markAsStartSignal [
-	eventType := #startSignal
 ]
 
 { #category : #printing }
@@ -140,28 +112,4 @@ LanguageLinkDeliverCommandSignal >> printOneLineContentsOn: stream [
 	stream
 		<< (self firstLineOf: codeForRemote);
 		<< '...'
-]
-
-{ #category : #accessing }
-LanguageLinkDeliverCommandSignal >> remoteReceiverDescription [
-	^ self command bindings 
-		at: 'self' 
-		ifPresent: [ :anObject | 
-			
-				'a '
-				,anObject class remoteClassName
-				, ' (' 
-				, anObject name
-				, ') ['
-				, anObject identityHash asString
-				, ']' ]
-		ifAbsent: [nil]
-]
-
-{ #category : #accessing }
-LanguageLinkDeliverCommandSignal >> remoteReceiverIdentityHash [
-	^ self command bindings 
-		at: 'self' 
-		ifPresent: [ :anObject | anObject identityHash ]
-		ifAbsent: [nil]
 ]
