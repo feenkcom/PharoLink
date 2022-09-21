@@ -67,7 +67,7 @@ PharoLinkTestCaseAnnouncement >> = anObject [
 PharoLinkTestCaseAnnouncement >> asTestCase [
 	"Answer a test case matching the receiver"
 
-	^ self testCaseClass setTestSelector: testCaseSelector
+	^ self testCaseClass new setTestSelector: testCaseSelector
 ]
 
 { #category : #accessing }
