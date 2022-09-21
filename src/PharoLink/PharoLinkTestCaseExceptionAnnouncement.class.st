@@ -52,7 +52,7 @@ PharoLinkTestCaseExceptionAnnouncement class >> testCase: aTestCase startTimesta
 
 	^ (self testCase: aTestCase startTimestamp: aDateAndTime)
 		  initializeExceptionClass: anException class
-		  messageText: anException messageText
+		  messageText: (anException messageText ifEmpty: [ anException class name ])
 		  trace: anException stackString;
 		  yourself
 ]

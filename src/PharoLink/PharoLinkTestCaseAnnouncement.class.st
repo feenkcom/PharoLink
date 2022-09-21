@@ -2,7 +2,6 @@ Class {
 	#name : #PharoLinkTestCaseAnnouncement,
 	#superclass : #PharoLinkTestAnnouncement,
 	#instVars : [
-		'testCaseIdentityHash',
 		'testCaseSelector',
 		'testCaseStartTimestamp',
 		'testCaseClassName'
@@ -68,7 +67,7 @@ PharoLinkTestCaseAnnouncement >> = anObject [
 PharoLinkTestCaseAnnouncement >> asTestCase [
 	"Answer a test case matching the receiver"
 
-	^ self testCaseClass selector: testCaseSelector
+	^ self testCaseClass setTestSelector: testCaseSelector
 ]
 
 { #category : #accessing }
@@ -107,7 +106,7 @@ PharoLinkTestCaseAnnouncement >> isSUnitTestCase [
 
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> method [
-	^ self asTestCase gtCompiledMethod
+	^ self testCaseClass lookupSelector: testCaseSelector.
 ]
 
 { #category : #accessing }
