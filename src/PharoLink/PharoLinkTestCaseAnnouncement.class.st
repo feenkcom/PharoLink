@@ -153,8 +153,12 @@ PharoLinkTestCaseAnnouncement >> summaryAttributes [
 
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> testCaseClass [
+	| className |
 
-	^ self class environment at: testCaseClassName asSymbol.
+	className := (testCaseClassName endsWith: ' class')
+		ifTrue: [ testCaseClassName copyFrom: 1 to: testCaseClassName size - 6 ]
+		ifFalse: [ testCaseClassName ].
+	^ self class environment at: className asSymbol.
 ]
 
 { #category : #accessing }
