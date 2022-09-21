@@ -1,74 +1,95 @@
 Class {
 	#name : #LanguageLinkSendCommandSignal,
-	#superclass : #LanguageLinkSignal,
+	#superclass : #LanguageLinkCommandSignal,
 	#instVars : [
-		'command'
+		'commandFactory',
+		'instructions',
+		'bindingsDictionary'
 	],
 	#category : #'PharoLink-Logging'
 }
 
-{ #category : #logging }
-LanguageLinkSendCommandSignal class >> emitCommand: aCommand [ 
-	(self forCommand:  aCommand) emit
+{ #category : #accessing }
+LanguageLinkSendCommandSignal class >> eventType [
+	^ LanguageLinkSendCommandEvent
 ]
 
 { #category : #'instance creation' }
-LanguageLinkSendCommandSignal class >> forCommand: aCommand [ 
+LanguageLinkSendCommandSignal class >> forCommandFactory: aCommandFactory [ 
 	^ self new 
-		command: aCommand
+		commandFactory: aCommandFactory
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> command [
-	^ command
+LanguageLinkSendCommandSignal >> bindingsDictionary [
+
+	^ bindingsDictionary
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> command: aCommand [ 
-	command := aCommand
-]
+LanguageLinkSendCommandSignal >> bindingsDictionary: anObject [
 
-{ #category : #utils }
-LanguageLinkSendCommandSignal >> firstLineOf: aString [
-
-	aString linesDo: [ :line | ^ line ]
+	bindingsDictionary := anObject
 ]
 
 { #category : #accessing }
-LanguageLinkSendCommandSignal >> gtViewCommandStringFor: aView [
+LanguageLinkSendCommandSignal >> commandFactory [
+
+	^ commandFactory
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> commandFactory: anObject [
+
+	commandFactory := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> commandString [
+	^ String streamContents:  [ :aStream | 
+		self instructions 
+			asStringOn: aStream 
+			delimiter: String cr ]
+]
+
+{ #category : #'gt - extensions' }
+LanguageLinkSendCommandSignal >> gtViewInstructionsFor: aView [
 	<gtView>
 	
-	self command ifNil: [
+	self instructions ifNil: [
 		^ aView empty ].
 	
 	^ aView forward
-		title: 'Command String';
-		object: [ self command ];
-		view: #gtViewCodeForRemoteFor:
+		title: 'Instructions';
+		priority: 20;
+		object: [ self instructions ];
+		view: #gtItemsFor:
+]
+
+{ #category : #testing }
+LanguageLinkSendCommandSignal >> hasCommandString [
+	^ self instructions notNil and: [ 
+		self instructions notEmpty ]
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> instructions [
+
+	^ instructions
+]
+
+{ #category : #accessing }
+LanguageLinkSendCommandSignal >> instructions: anObject [
+
+	instructions := anObject
 ]
 
 { #category : #printing }
-LanguageLinkSendCommandSignal >> printOn: stream [ 
-
-	stream 
-		nextPutAll: self timestamp asString;
-		space;
-		nextPutAll: self class name;
-		space.
-	command ifNil: [ ^stream << '<no command>' ].
-	command blockString ifNil: [ ^stream << '<no source>' ].
+LanguageLinkSendCommandSignal >> printOneLineContentsOn: aStream [ 
+	instructions ifNil: [ ^aStream << '<no instructions>' ].
+	instructions ifEmpty: [ ^aStream << '<no instructions>' ].
 	
-	stream << command blockString.
-]
-
-{ #category : #printing }
-LanguageLinkSendCommandSignal >> printOneLineContentsOn: stream [ 
-	| codeForRemote |
-	codeForRemote := command codeForRemote.
-	command ifNil: [ ^stream << '<no command>' ].
-	codeForRemote ifNil: [ ^stream << '<no source>' ].
-	
-	stream
-		<< (self firstLineOf: codeForRemote);
-		<< '...'
+	aStream << instructions first.
+	instructions size > 1 ifTrue: [
+		aStream << '...' ]
 ]
