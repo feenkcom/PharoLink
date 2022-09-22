@@ -70,6 +70,18 @@ PharoLinkTestCaseAnnouncement >> asTestCase [
 	^ self testCaseClass new setTestSelector: testCaseSelector
 ]
 
+{ #category : #ui }
+PharoLinkTestCaseAnnouncement >> gtActionInspectCheckFor: anAction [
+	<gtAction>
+
+	(testCaseClassName isNil or: [ testCaseSelector isNil ]) ifTrue: [ ^ anAction noAction ].
+
+	^ anAction button
+		label: 'View';
+		action: [ :button | button phlow spawnObject: self method ].
+
+]
+
 { #category : #accessing }
 PharoLinkTestCaseAnnouncement >> hash [
 
