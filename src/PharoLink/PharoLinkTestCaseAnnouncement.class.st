@@ -67,7 +67,19 @@ PharoLinkTestCaseAnnouncement >> = anObject [
 PharoLinkTestCaseAnnouncement >> asTestCase [
 	"Answer a test case matching the receiver"
 
-	^ self testCaseClass setTestSelector: testCaseSelector
+	^ self testCaseClass new setTestSelector: testCaseSelector
+]
+
+{ #category : #ui }
+PharoLinkTestCaseAnnouncement >> gtActionInspectCheckFor: anAction [
+	<gtAction>
+
+	(testCaseClassName isNil or: [ testCaseSelector isNil ]) ifTrue: [ ^ anAction noAction ].
+
+	^ anAction button
+		label: 'View';
+		action: [ :button | button phlow spawnObject: self method ].
+
 ]
 
 { #category : #accessing }

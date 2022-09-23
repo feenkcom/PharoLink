@@ -75,7 +75,7 @@ LanguageLinkCommandSignal >> remoteReceiverDescription [
 		ifPresent: [ :anObject | 
 			
 				'a '
-				,anObject class remoteClassName
+				,anObject remoteClass asString
 				, ' (' 
 				, anObject name
 				, ') ['
