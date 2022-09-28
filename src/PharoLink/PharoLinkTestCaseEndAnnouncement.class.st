@@ -37,6 +37,10 @@ PharoLinkTestCaseEndAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
 		mapProperty: #testCaseEndTimestamp
 			getter: [ :object | object testCaseEndTimestamp ]
 			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #resourceReport
+			getter: [ :object | object resourceReport ]
+			setter: [ :object :value | 
 				self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
 
 ]
