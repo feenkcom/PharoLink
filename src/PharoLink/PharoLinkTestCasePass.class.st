@@ -16,6 +16,14 @@ PharoLinkTestCasePass >> addToTestResult: result [
 ]
 
 { #category : #accessing }
+PharoLinkTestCasePass >> asGtExampleResult [
+	"Answer the receiver wrapped in the appropriate GtExampleResultX class."
+
+	^ GtExampleResultSuccessValue new
+		value: self
+]
+
+{ #category : #accessing }
 PharoLinkTestCasePass >> color [
 
 	^ Color green

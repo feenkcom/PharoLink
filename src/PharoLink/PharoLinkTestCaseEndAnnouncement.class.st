@@ -57,6 +57,13 @@ PharoLinkTestCaseEndAnnouncement >> addToTestResult: aTestResult [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> asGtExampleResult [
+	"Answer the receiver wrapped in the appropriate GtExampleResultX class."
+
+	^ self subclassResponsibility.
+]
+
 { #category : #converting }
 PharoLinkTestCaseEndAnnouncement >> asTestResult [
 	"Answer a TestResult matching the receiver"
