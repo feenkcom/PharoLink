@@ -86,6 +86,13 @@ LanguageLinkPromise >> value [
 ]
 
 { #category : #accessing }
+LanguageLinkPromise >> wait [
+	"Wait for the promise to be fulfiller, but don't process the result"
+
+	semaphore wait.
+]
+
+{ #category : #accessing }
 LanguageLinkPromise >> waitAgain [
 	"Answer a boolean indicating whether the promise should wait again for a value.
 	This is typically used if an exception was raised by the server, e.g. PharoLinkDebuggerPaused, and the exception has been resolved and the server will later return the result of the original request."

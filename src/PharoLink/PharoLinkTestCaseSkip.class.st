@@ -16,6 +16,13 @@ PharoLinkTestCaseSkip >> addToTestResult: result [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseSkip >> asGtExampleResult [
+	"Answer the receiver wrapped in the appropriate GtExampleResultX class."
+
+	^ GtExampleResultNoValue new.
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseSkip >> color [
 
 	^ Color gray

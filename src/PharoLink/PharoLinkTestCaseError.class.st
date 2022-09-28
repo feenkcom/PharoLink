@@ -17,6 +17,15 @@ PharoLinkTestCaseError >> addToTestResult: result [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseError >> asGtExampleResult [
+	"Answer the receiver wrapped in the appropriate GtExampleResultX class."
+
+	^ GtExampleResultErrorValue new exception: (GtRrErrorDetails new
+		errorMessage: exceptionMessageText;
+		trace: exceptionTrace).
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseError >> color [
 
 	^ Color red
