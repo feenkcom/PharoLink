@@ -22,22 +22,33 @@ PharoLinkTestResult >> initialize [
 
 { #category : #accessing }
 PharoLinkTestResult >> runCase: aTestCase [
+	| start resourceStart resourceEnd announcement |
 
-	| start |
 	start := aTestCase gtTestCaseStart.
 	announcer announce: start.
+	resourceStart := GtVmStatisticsReport new recordReportStatistics.
 	[ "Force the test case to be run under the control of the execution environment.
 	This should force timeouts for alternate test frameworks
 	aTestCase runCaseManaged."
 	CurrentExecutionEnvironment runTestCase: aTestCase.
 
-	announcer announce:
-		(aTestCase gtTestCasePassStartTimestamp: start timestamp).
+	resourceEnd := GtVmStatisticsReport new recordReportStatistics.
+	announcement := aTestCase gtTestCasePassStartTimestamp: start timestamp.
+	announcement resourceReport: (GtVmStatisticsReportsDiff new
+		sourceReport: resourceStart;
+		targetReport: resourceEnd;
+		yourself).
+	announcer announce: announcement.
 	self addPass: aTestCase ]
 		on: self class failure , self class skip , self class warning
 			, self class error
 		do: [ :e | 
+			resourceEnd := GtVmStatisticsReport new recordReportStatistics.
 			e sunitAnnounce: aTestCase toResult: self.
-			announcer announce:
-				(e gtTestCaseException: aTestCase startTimestamp: start timestamp) ]
+			announcement := e gtTestCaseException: aTestCase startTimestamp: start timestamp.
+			announcement resourceReport: (GtVmStatisticsReportsDiff new
+				sourceReport: resourceStart;
+				targetReport: resourceEnd;
+				yourself).
+			announcer announce: announcement ].
 ]

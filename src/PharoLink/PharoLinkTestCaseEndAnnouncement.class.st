@@ -3,7 +3,8 @@ Class {
 	#superclass : #PharoLinkTestCaseAnnouncement,
 	#instVars : [
 		'testCaseShouldPass',
-		'testCaseEndTimestamp'
+		'testCaseEndTimestamp',
+		'resourceReport'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -20,6 +21,7 @@ PharoLinkTestCaseEndAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 	^ (super leFromJsonV4Dictionary: aDictionary)
 		shouldPass: (aDictionary at: #testCaseShouldPass ifAbsent: []);
 		testCaseEndTimestamp: (aDictionary at: #testCaseEndTimestamp ifAbsent: []);
+		resourceReport: (aDictionary at: #resourceReport ifAbsent: []);
 		yourself
 ]
 
@@ -131,6 +133,18 @@ PharoLinkTestCaseEndAnnouncement >> isSuccess [
 PharoLinkTestCaseEndAnnouncement >> isWarning [
 
 	^ false
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> resourceReport [
+
+	^ resourceReport
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> resourceReport: anObject [
+
+	resourceReport := anObject
 ]
 
 { #category : #accessing }
