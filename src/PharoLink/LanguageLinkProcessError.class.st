@@ -8,7 +8,7 @@ Class {
 		'application',
 		'process'
 	],
-	#category : 'PharoLink-ErrorHandling'
+	#category : #'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }
@@ -32,7 +32,7 @@ LanguageLinkProcessError >> description [
 LanguageLinkProcessError >> printOn: aStream [
 
 	aStream
-		<< 'Exteranl process error'; cr;
+		<< 'External process error'; cr;
 		<< '======================'; cr;
 		cr.
 	messageText ifNotNil: 
