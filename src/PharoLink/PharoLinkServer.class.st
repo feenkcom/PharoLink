@@ -144,7 +144,7 @@ PharoLinkServer >> isRunning [
 PharoLinkServer >> listenBacklogSize [
 	"Server socket backlog size (number of pending connection waiting to be accepted)"
 	
-	^ 32
+	^ 1024
 ]
 
 { #category : #accessing }

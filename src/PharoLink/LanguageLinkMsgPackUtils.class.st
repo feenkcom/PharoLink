@@ -11,7 +11,7 @@ Class {
 LanguageLinkMsgPackUtils class >> listenBacklogSize [
 	"Server socket backlog size (number of pending connection waiting to be accepted)"
 	
-	^ 32
+	^ 1024
 ]
 
 { #category : #'socket creation' }
