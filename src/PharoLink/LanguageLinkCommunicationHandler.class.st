@@ -43,6 +43,12 @@ LanguageLinkCommunicationHandler >> isServerReady [
 	^ ans notNil and: ans
 ]
 
+{ #category : #accessing }
+LanguageLinkCommunicationHandler >> remoteAddressString [
+
+	^ messageBroker remoteAddressString.
+]
+
 { #category : #adding }
 LanguageLinkCommunicationHandler >> sendMessage: aMessage [
 	^ messageBroker sendMessage: aMessage
