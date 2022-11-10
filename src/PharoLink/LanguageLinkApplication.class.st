@@ -332,6 +332,12 @@ LanguageLinkApplication >> registerObject: aProxyObject [
 	self executionHandler registerObject: aProxyObject
 ]
 
+{ #category : #accessing }
+LanguageLinkApplication >> remoteAddressString [
+
+	^ communicationHandler remoteAddressString.
+]
+
 { #category : #instructions }
 LanguageLinkApplication >> send: aCommand [
 	self isRunning ifFalse: 

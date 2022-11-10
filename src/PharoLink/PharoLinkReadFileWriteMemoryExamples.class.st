@@ -97,6 +97,18 @@ PharoLinkReadFileWriteMemoryExamples >> readReadWrite [
 ]
 
 { #category : #private }
+PharoLinkReadFileWriteMemoryExamples >> readWriteStreamOn: aCharacterReadStream [
+	| virtual |
+
+	virtual := PharoLinkSourcesReadWriteStream empty.
+	^ SourceFileBufferedReadWriteStream on:
+		(PharoLinkReadFileWriteMemoryStream
+			readOnly: aCharacterReadStream
+			readOnlyLimit: aCharacterReadStream size
+			readWrite: virtual)
+]
+
+{ #category : #private }
 PharoLinkReadFileWriteMemoryExamples >> sampleStream [ 
 	"Answer a stream with known readOnly contents"
 	<gtExample>
@@ -132,4 +144,112 @@ PharoLinkReadFileWriteMemoryExamples >> string64 [
 	"Answer a 64 character long string with known content"
 
 	^ String withAll: ($A to: $Z) , ($a to: $z) , ($0 to: $9) , #($+ $/).
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testBuffering [
+	<gtExample>
+	| stream |
+	stream := self readWriteStreamOn: '01234567890123456789' readStream.
+	stream sizeBuffer: 8.
+	self deny: stream atEnd.
+	self assert: (stream next: 10) equals: '0123456789'.
+	self deny: stream atEnd.
+	self assert: (stream next: 10) equals: '0123456789'.
+	self assert: stream atEnd	
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testReadInto [
+	<gtExample>
+	| stream buffer count |
+	stream := self readWriteStreamOn: '0123456789' readStream.
+	stream sizeBuffer: 8.
+	buffer := String new: 6 withAll: Character space.
+	stream skip: 1.
+	stream readInto: buffer startingAt: 4 count: 3.
+	self assert: buffer equals: '   123'.
+	stream readInto: buffer startingAt: 1 count: 3.
+	self assert: buffer equals: '456123'.
+	count := stream readInto: buffer startingAt: 1 count: 100.
+	self assert: count equals: 3.
+	self assert: buffer equals: '789123'	 
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testReadIntoLarger [
+	<gtExample>
+	| stream buffer count |
+	stream := self readWriteStreamOn: '0123456789' readStream.
+	stream sizeBuffer: 4.
+	buffer := String new: 10.
+	count := stream readInto: buffer startingAt: 1 count: 10.
+	self assert: count equals: 10.
+	self assert: buffer equals: '0123456789'	 
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testReadUpTo [
+	<gtExample>
+	| stream |
+	stream := self readWriteStreamOn: '0123456789' readStream.
+	stream sizeBuffer: 8.
+	self assert: (stream upTo: $5) equals: '01234'.
+	self assert: stream upToEnd equals: '6789'.
+	self assert: stream atEnd
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testReadUpToEnd [
+	<gtExample>
+	| stream |
+	stream := self readWriteStreamOn: '0123456789' readStream.
+	stream sizeBuffer: 4.
+	stream next: 2.
+	self assert: stream upToEnd equals: '23456789'.
+	self assert: stream atEnd
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testSetAtEnd [
+	<gtExample>
+	| stream |
+
+	stream := self readWriteStreamOn: '0123456789' utf8Encoded readStream.
+	stream setToEnd.
+	stream nextPut: $A asciiValue.
+	stream flush.
+	stream position: 0.
+	
+	self assert: stream upToEnd utf8Decoded equals: '0123456789A'.
+
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testWriting [
+	<gtExample>
+	| bufferedStream |
+
+	bufferedStream := self readWriteStreamOn: ByteArray new readStream.
+	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) asciiValue ].
+	bufferedStream flush.
+	bufferedStream position: 0.
+
+	self assert: bufferedStream upToEnd utf8Decoded equals: '0123456789'
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteMemoryExamples >> testWritingOverflow [
+	<gtExample>
+	| bufferedStream |
+	
+	bufferedStream := self readWriteStreamOn: ByteArray new writeStream.
+	bufferedStream sizeBuffer: 8.
+	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) asciiValue ].
+	bufferedStream nextPutAll: '0123' utf8Encoded; nextPutAll: '4567' utf8Encoded; nextPutAll: '89' utf8Encoded.
+	bufferedStream nextPutAll: '0123456789' utf8Encoded; nextPutAll: '0123456789' utf8Encoded.
+	bufferedStream flush.
+	bufferedStream position: 0.
+		
+	self assert: bufferedStream upToEnd equals: '0123456789012345678901234567890123456789' utf8Encoded
 ]

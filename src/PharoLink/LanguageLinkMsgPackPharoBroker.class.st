@@ -127,6 +127,16 @@ LanguageLinkMsgPackPharoBroker >> registerSemaphoreForMessage: message [
 	^ semaphore
 ]
 
+{ #category : #accessing }
+LanguageLinkMsgPackPharoBroker >> remoteAddressString [
+
+	^ String streamContents: [ :stream |
+		socket remoteAddress printOn: stream delimiter: '.'.
+		stream
+			nextPut: $:;
+			print: socket remotePort ]
+]
+
 { #category : #private }
 LanguageLinkMsgPackPharoBroker >> retrieveAnswerForSyncId: syncId [
 	| msgAnswer |
