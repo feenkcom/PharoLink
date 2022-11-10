@@ -55,13 +55,8 @@ PharoLinkFilesOpener >> changesFileOrNil [
 PharoLinkFilesOpener >> initialize [
 	super initialize.
 
-	fileSystem := FileSystem memory.
-	sourcesVirtual := fileSystem workingDirectory
-	                  / UUIDGenerator next asString.
-	sourcesVirtual createFile.
-	changesVirtual := fileSystem workingDirectory
-	                  / UUIDGenerator next asString.
-	changesVirtual createFile.
+	sourcesVirtual := PharoLinkSourcesReadWriteStream empty.
+	changesVirtual := PharoLinkSourcesReadWriteStream empty.
 ]
 
 { #category : #accessing }

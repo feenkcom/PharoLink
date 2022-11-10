@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : #accessing }
-PharoLinkReadFileWriteMemorySourceFile >> initializeVirtual: aFile readOnlyLimit: anInteger [
+PharoLinkReadFileWriteMemorySourceFile >> initializeVirtual: aReadWriteStream readOnlyLimit: anInteger [
 
-	virtual := aFile.
+	virtual := aReadWriteStream.
 	readOnlyLimit := anInteger
 ]
 
@@ -26,30 +26,27 @@ PharoLinkReadFileWriteMemorySourceFile >> readOnlyCopy [
 
 { #category : #accessing }
 PharoLinkReadFileWriteMemorySourceFile >> tryOpenReadOnly: readOnly [
-
 	| basename |
+
 	basename := path asFileReference basename.
 	"Open a read write stream only if read only access was not requested.
 	We need to create the encoding and buffering streams manually because we need a read write stream."
 	readOnly ifFalse: [ 
 		potentialLocations do: [ :each | 
 			stream := SourceFileCharacterReadWriteStream
-				          on:
-					          (SourceFileBufferedReadWriteStream on:
-						           (PharoLinkReadFileWriteMemoryStream
-							            readOnly:
-							            (each asFileReference / basename) binaryReadStream
-							            readOnlyLimit: readOnlyLimit
-							            readWrite: virtual unbufferedBinaryWriteStream))
-				          encoding: 'utf8'.
+				on: (SourceFileBufferedReadWriteStream on:
+					(PharoLinkReadFileWriteMemoryStream
+						readOnly: (each asFileReference / basename) binaryReadStream
+						readOnlyLimit: readOnlyLimit
+						readWrite: virtual))
+				encoding: 'utf8'.
 			^ self ] ].
 	potentialLocations do: [ :each | 
 		stream := ZnCharacterReadStream
-			          on: (PharoLinkReadFileWriteMemoryStream
-					           readOnly:
-					           (each asFileReference / basename) binaryReadStream
-					           readOnlyLimit: readOnlyLimit
-					           readWrite: virtual binaryReadStream)
-			          encoding: 'utf8'.
+			on: (PharoLinkReadFileWriteMemoryStream
+				readOnly: (each asFileReference / basename) binaryReadStream
+				readOnlyLimit: readOnlyLimit
+				readWrite: virtual)
+			encoding: 'utf8'.
 		^ self ]
 ]
