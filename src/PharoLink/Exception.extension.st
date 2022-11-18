@@ -10,6 +10,7 @@ Exception >> isPharoLinkNotification [
 { #category : #'*PharoLink' }
 Exception >> stackString [
 
+	signalContext ifNil: [ ^ '' ].
 	^ String streamContents: [ :stream | 
 		  signalContext stack do: [ :stackItem | 
 			  stream
