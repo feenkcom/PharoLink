@@ -1,8 +1,12 @@
+"
+nil
+"
 Class {
 	#name : #PharoLinkTestResult,
 	#superclass : #TestResult,
 	#instVars : [
-		'announcer'
+		'announcer',
+		'debugMode'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -14,31 +18,57 @@ PharoLinkTestResult >> announcer [
 ]
 
 { #category : #accessing }
+PharoLinkTestResult >> debugMode [
+
+	^ debugMode
+]
+
+{ #category : #accessing }
+PharoLinkTestResult >> debugMode: anObject [
+
+	debugMode := anObject
+]
+
+{ #category : #accessing }
 PharoLinkTestResult >> initialize [
 
 	super initialize.
-	announcer := Announcer new
+	announcer := Announcer new.
+	debugMode := false.
 ]
 
 { #category : #accessing }
 PharoLinkTestResult >> runCase: aTestCase [
-	| start resourceReport announcement |
+	| start resourceReport |
 
 	start := aTestCase gtTestCaseStart.
 	announcer announce: start.
 	resourceReport := GtRrCheckResourcesReport new.
 	resourceReport recordSourceReport.
 	
-	[ "Force the test case to be run under the control of the execution environment.
-	This should force timeouts for alternate test frameworks
-	aTestCase runCaseManaged."
+	debugMode
+		ifTrue: [ self runCaseDebug: aTestCase start: start report: resourceReport ]
+		ifFalse: [ self runCaseNoDebug: aTestCase start: start report: resourceReport ]
+]
+
+{ #category : #accessing }
+PharoLinkTestResult >> runCaseDebug: aTestCase start: start report: resourceReport [
+	| announcement |
+
 	CurrentExecutionEnvironment runTestCase: aTestCase.
 
 	resourceReport recordTargetReport.
 	announcement := aTestCase gtTestCasePassStartTimestamp: start timestamp.
 	announcement resourceReport: resourceReport.
 	announcer announce: announcement.
-	self addPass: aTestCase ]
+	self addPass: aTestCase.
+]
+
+{ #category : #accessing }
+PharoLinkTestResult >> runCaseNoDebug: aTestCase start: start report: resourceReport [
+	| announcement |
+
+	[ self runCaseDebug: aTestCase start: start report: resourceReport ]
 		on: self class failure , self class skip , self class warning
 			, self class error
 		do: [ :e | 
@@ -47,4 +77,10 @@ PharoLinkTestResult >> runCase: aTestCase [
 			announcement := e gtTestCaseException: aTestCase startTimestamp: start timestamp.
 			announcement resourceReport: resourceReport.
 			announcer announce: announcement ].
+]
+
+{ #category : #accessing }
+PharoLinkTestResult >> setDebugMode [
+
+	debugMode := true
 ]
