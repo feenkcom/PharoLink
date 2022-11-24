@@ -1,5 +1,8 @@
 "
-nil
+PharoLinkTestResult extends the test execution capabilities of TestResult to:
+
+- record detailed execution and resource usage information.
+- be able to set a debug flag allowing a suite of tests to be run using the standard call sequence.
 "
 Class {
 	#name : #PharoLinkTestResult,
