@@ -61,8 +61,8 @@ LanguageLinkDeliverCommandSignal >> extractSelector [
 	^ ((instructionCode 
 		copyFrom: (instructionCode findString: 'notify:') + 7
 		to: (instructionCode findString: 'id:') -1) trimBoth
-			removePrefix: '(')
-			removeSuffix: ')'
+			withoutPrefix: '(')
+			withoutSuffix: ')'
 ]
 
 { #category : #utils }
