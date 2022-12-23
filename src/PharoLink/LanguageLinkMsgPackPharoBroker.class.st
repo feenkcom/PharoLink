@@ -72,12 +72,8 @@ LanguageLinkMsgPackPharoBroker >> handleMessages [
 	"This needs appropriate error handling.
 	If the receiver has been told to shut down, errors can probably be ignored."
 
-	[ [ self primHandle: msgStream next ] repeat ]
-		on: PrimitiveFailed
-		do: [ :ex |
-			LanguageLinkSocketErrorSignal new
-				message: 'LanguageLinkMsgPackPharoBroker: exiting message handling';
-				emit ].
+	settings connectionExceptionHandler handleExceptionsDuring:
+		[ [ self primHandle: msgStream next ] repeat ].
 ]
 
 { #category : #initialization }

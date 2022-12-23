@@ -17,9 +17,10 @@ Class {
 		'deserializerClass',
 		'parserClass',
 		'serverDebugMode',
-		'workingDirectory'
+		'workingDirectory',
+		'connectionExceptionHandler'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #'instance creation' }
@@ -42,6 +43,7 @@ LanguageLinkSettings class >> pharoDefaultSettings [
 				   ipOrName: 'localhost'
 				   port: 6900 + 99 atRandom);
 		  messageBrokerStrategy: LanguageLinkMsgPackPharoBroker;
+		  connectionExceptionHandler: PharoLinkConnectionExceptionHandler new;
 		  serverProcessClass: PharoLinkPharoProcess;
 		  serverExecutable: binary;
 		  serverImage: FileLocator image resolve;
@@ -82,6 +84,18 @@ LanguageLinkSettings >> commandFactoryClass [
 { #category : #accessing }
 LanguageLinkSettings >> commandFactoryClass: anObject [
 	commandFactoryClass := anObject
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> connectionExceptionHandler [
+
+	^ connectionExceptionHandler
+]
+
+{ #category : #accessing }
+LanguageLinkSettings >> connectionExceptionHandler: anObject [
+
+	connectionExceptionHandler := anObject
 ]
 
 { #category : #accessing }
