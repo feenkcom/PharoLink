@@ -38,6 +38,7 @@ PharoLinkApplicationTestResource >> setUp [
 		add: '--log';
 		add: port asString;
 		add: '--detachChangesFromFileSystem';
+		add: '--epiceaMemoryStore';
 		add: '--noGtImageUpdate'.
 	process := GtSubprocessWithInMemoryOutput new
 		command: settings serverExecutable fullName;
