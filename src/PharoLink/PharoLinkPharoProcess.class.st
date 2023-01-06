@@ -89,6 +89,7 @@ PharoLinkPharoProcess >> processArguments [
 	args
 		add: self settings serverSocketAddress port asString;
 		add: '--detachChangesFromFileSystem';
+		add: '--epiceaMemoryStore';
 		add: '--noGtImageUpdate'.
 	^ args
 ]
