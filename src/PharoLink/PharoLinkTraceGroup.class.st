@@ -35,7 +35,7 @@ PharoLinkTraceGroup >> populateTree [
 PharoLinkTraceGroup >> traceStrings: aCollection [
 
 	self traces: (aCollection collect: [ :string |
-		LwTestPharoLinkTrace new traceString: string ]).
+		PharoLinkTrace new traceString: string ]).
 
 ]
 
