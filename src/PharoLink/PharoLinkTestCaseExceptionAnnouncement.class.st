@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'exceptionClass',
 		'exceptionMessageText',
-		'exceptionTrace'
+		'exceptionTrace',
+		'exceptionAdditionalData'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -24,7 +25,8 @@ PharoLinkTestCaseExceptionAnnouncement class >> leFromJsonV4Dictionary: aDiction
 		  	ifPresent: #asClass
 		  	ifAbsent: [])
 		  messageText: (aDictionary at: #exceptionMessageText ifAbsent: [])
-		  trace: (aDictionary at: #exceptionTrace ifAbsent: []);
+		  trace: (aDictionary at: #exceptionTrace ifAbsent: [])
+		  additionalData: (aDictionary at: #exceptionAdditionalData ifAbsent: []);
 		  yourself
 ]
 
@@ -44,6 +46,10 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 		mapProperty: #exceptionTrace
 		getter: [ :object | object exceptionTrace ]
 		setter: [ :object :value | 
+			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #exceptionAdditionalData
+		getter: [ :object | object exceptionAdditionalData ]
+		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
 ]
 
@@ -53,8 +59,14 @@ PharoLinkTestCaseExceptionAnnouncement class >> testCase: aTestCase startTimesta
 	^ (self testCase: aTestCase startTimestamp: aDateAndTime)
 		  initializeExceptionClass: anException class
 		  messageText: (anException messageText ifEmpty: [ anException class name ])
-		  trace: anException stackString;
+		  trace: anException stackString
+		  additionalData: anException pharoLinkAdditionalData;
 		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> exceptionAdditionalData [
+	^ exceptionAdditionalData
 ]
 
 { #category : #accessing }
@@ -86,12 +98,21 @@ PharoLinkTestCaseExceptionAnnouncement >> gtTraceFor: aView [
 		text: [ exceptionTrace ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString [
 
 	exceptionClass := aClass.
 	exceptionMessageText := aString.
 	exceptionTrace := anotherString
+]
+
+{ #category : #initialization }
+PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString additionalData:  additionalData [
+ 
+	exceptionClass := aClass.
+	exceptionMessageText := aString.
+	exceptionTrace := anotherString.
+	exceptionAdditionalData := additionalData 
 ]
 
 { #category : #'as yet unclassified' }

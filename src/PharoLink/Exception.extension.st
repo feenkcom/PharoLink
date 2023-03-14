@@ -8,6 +8,11 @@ Exception >> isPharoLinkNotification [
 ]
 
 { #category : #'*PharoLink' }
+Exception >> pharoLinkAdditionalData [
+	^  nil
+]
+
+{ #category : #'*PharoLink' }
 Exception >> stackString [
 
 	signalContext ifNil: [ ^ '' ].
