@@ -1,16 +1,31 @@
 Extension { #name : #OutOfMemory }
 
 { #category : #'*PharoLink' }
-OutOfMemory >> pharoLinkAdditionalData [
-	| sizeRequested |
-	sizeRequested := self signalerContext 
+OutOfMemory >> description [
+
+	^ String streamContents: [ :stream |
+		stream 
+			<< self class name;
+			<< ': size requested: ';
+			<< self isqByteSizeRequested ]
+]
+
+{ #category : #'*PharoLink' }
+OutOfMemory >> isqByteSizeRequested [
+	<return: #String>
+
+	^ self signalerContext 
 		ifNil: [ ^ 'context is nil' ]
-		ifNotNil: [ self signalerContext stack
+		ifNotNil: [ :context | context stack
 			detect: [:aContext | 
 				aContext selector = #handleFailingBasicNew:]
 			ifFound: [:aContext | 
-				aContext tempNamed: #sizeRequested ]
+				(aContext tempNamed: #sizeRequested) humanReadableIsqByteSize ]
 			ifNone: ['context not found'] ].
+]
+
+{ #category : #'*PharoLink' }
+OutOfMemory >> pharoLinkAdditionalData [
 	
-	^ {#sizeRequested -> sizeRequested} asDictionary.
+	^ {#sizeRequested -> self isqByteSizeRequested} asDictionary.
 ]
