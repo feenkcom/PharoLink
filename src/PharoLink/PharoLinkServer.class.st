@@ -105,7 +105,8 @@ PharoLinkServer >> gtViewConnectionsFor: aView [
 			aConnection localAddressWithPortString ];
 		column: 'Remote Address' text: [ :aConnection | 
 			aConnection remoteAddressWithPortString ];
-		column: 'Connected' text: [ :aConnection | aConnection isConnected ] 
+		column: 'Connected' text: [ :aConnection | aConnection isConnected ] ;
+		actionUpdateButton
 ]
 
 { #category : #private }
