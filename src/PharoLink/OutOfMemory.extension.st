@@ -19,8 +19,8 @@ OutOfMemory >> isqByteSizeRequested [
 		ifNotNil: [ :context | context stack
 			detect: [:aContext | 
 				aContext selector = #handleFailingBasicNew:]
-			ifFound: [:aContext | 
-				(aContext tempNamed: #sizeRequested) humanReadableIsqByteSize ]
+			ifFound: [:aContext |
+				(aContext receiver byteSizeOfInstanceOfSize: (aContext tempNamed: #sizeRequested)) humanReadableIsqByteSize ]
 			ifNone: ['context not found'] ].
 ]
 
