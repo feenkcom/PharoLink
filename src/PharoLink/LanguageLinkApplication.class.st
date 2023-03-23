@@ -429,7 +429,7 @@ LanguageLinkApplication >> stdout [
 
 { #category : #'start-stop' }
 LanguageLinkApplication >> stop [
-	self handlers select: #notNil thenDo: #stop
+	self handlers reversed select: #notNil thenDo: #stop
 ]
 
 { #category : #initialization }
