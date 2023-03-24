@@ -72,8 +72,9 @@ LanguageLinkMsgPackPharoBroker >> handleMessages [
 	"This needs appropriate error handling.
 	If the receiver has been told to shut down, errors can probably be ignored."
 
-	settings connectionExceptionHandler handleExceptionsDuring:
-		[ [ self primHandle: msgStream next ] repeat ].
+	settings connectionExceptionHandler 
+		handleExceptionsDuring: [ [ self primHandle: msgStream next ] repeat ]
+		for: self.
 ]
 
 { #category : #initialization }
