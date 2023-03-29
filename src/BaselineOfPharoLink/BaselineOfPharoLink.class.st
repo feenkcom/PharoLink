@@ -15,7 +15,7 @@ BaselineOfPharoLink >> baseline: spec [
 
 		spec
 			baseline: 'NeoJSON'
-			with: [ spec repository: 'github://svenvc/NeoJSON:v17/repository' ];
+			with: [ spec repository: 'github://svenvc/NeoJSON:master/repository' ];
 			baseline: 'MessagePack' with: [ 
 				spec repository:
 						'github://feenkcom/msgpack-smalltalk:main/repository' ];
