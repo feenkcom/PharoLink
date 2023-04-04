@@ -10,7 +10,7 @@ BaselineOfPharoLink >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'GToolkitExternalProcess' with: [
-				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.78/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.79/src' ].
 		spec
 			baseline: 'NeoJSON' with: [
 				spec repository: 'github://svenvc/NeoJSON:a18a783fbd2465ce7bbdd041ee2042f711f304eb/repository' ].
