@@ -21,3 +21,15 @@ Array >> canBePharoLinkPrimitive [
 
 	^ self allSatisfy: #canBePharoLinkPrimitive
 ]
+
+{ #category : #'*PharoLink' }
+Array >> languageLinkSerializable [
+
+	^ self collect: [ :each | each languageLinkSerializable ]
+]
+
+{ #category : #'*PharoLink' }
+Array >> pharoLinkUnencodeWith: registry [
+
+	^ self collect: [ :each | each pharoLinkUnencodeWith: registry ]
+]

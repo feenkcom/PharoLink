@@ -40,6 +40,14 @@ PharoLinkProxyObject >> asGtProxyObject [
 ]
 
 { #category : #accessing }
+PharoLinkProxyObject >> canBePharoLinkPrimitive [
+	"Answer a boolean indicating whether the receiver can be a PharoLink primitive object,
+	i.e. it can be completely encoded in JSON format."
+
+	^ true
+]
+
+{ #category : #accessing }
 PharoLinkProxyObject >> getSerialized [
 	"Answer the receiver as a local object, i.e. copy it from the server.
 	This only works for objects that support LeJsonV4 serialization."
@@ -59,4 +67,13 @@ PharoLinkProxyObject >> getValue [
 		setByValue;
 		<< 'self';
 		sendAndWait.
+]
+
+{ #category : #accessing }
+PharoLinkProxyObject >> languageLinkSerializable [
+
+	^ {
+		'__class__' -> remoteClass.
+		'__registryid__' -> name.
+	} asDictionary
 ]

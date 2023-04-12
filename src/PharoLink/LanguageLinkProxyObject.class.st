@@ -82,6 +82,13 @@ LanguageLinkProxyObject >> initalizeWithRemoteClass: aRemoteClassName name: aReg
 	self actOnProxyObjectCreated.
 ]
 
+{ #category : #testing }
+LanguageLinkProxyObject >> isLanguageLinkProxyObject [
+	"Answer a boolean indicating whether the receiver is a LanuageLink proxy object."
+	
+	^ true
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> name [
 	^ name

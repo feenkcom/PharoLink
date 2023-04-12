@@ -8,6 +8,12 @@ String >> isPharoLinkPrimitive [
 ]
 
 { #category : #'*PharoLink' }
+String >> languageLinkSerializable [
+
+	^ self
+]
+
+{ #category : #'*PharoLink' }
 String >> pharoLinkFormattedCode [
 	"Answer the string representation of the receiver for sending to the remote server"
 

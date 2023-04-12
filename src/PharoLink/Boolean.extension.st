@@ -13,3 +13,9 @@ Boolean >> isPharoLinkPrimitive [
 
 	^ true
 ]
+
+{ #category : #'*PharoLink' }
+Boolean >> languageLinkSerializable [
+
+	^ self
+]
