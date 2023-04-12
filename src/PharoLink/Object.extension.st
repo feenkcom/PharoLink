@@ -36,8 +36,27 @@ Object >> isBoolean [
 ]
 
 { #category : #'*PharoLink' }
+Object >> isLanguageLinkProxyObject [
+	"Answer a boolean indicating whether the receiver is a LanuageLink proxy object."
+	
+	^ false
+]
+
+{ #category : #'*PharoLink' }
 Object >> isPharoLinkPrimitive [
 	"Answer a boolean indicating whether the receiver is a PharoLink primitive object"
 
 	^ false
+]
+
+{ #category : #'*PharoLink' }
+Object >> languageLinkSerializable [
+
+	self error: 'Unable to serialize: ', self printString.
+]
+
+{ #category : #'*PharoLink' }
+Object >> pharoLinkUnencodeWith: registry [
+
+	^ self
 ]

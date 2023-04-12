@@ -11,3 +11,9 @@ Float >> isPharoLinkPrimitive [
 
 	^ true
 ]
+
+{ #category : #'*PharoLink' }
+Float >> languageLinkSerializable [
+
+	^ self
+]

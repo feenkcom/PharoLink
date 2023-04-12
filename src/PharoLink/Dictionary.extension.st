@@ -34,3 +34,20 @@ Dictionary >> canBePharoLinkPrimitive [
 Dictionary >> isLanguageLinkValue [
 	^ true
 ]
+
+{ #category : #'*PharoLink' }
+Dictionary >> languageLinkSerializable [
+
+	self assert: (self keys allSatisfy: #canBePharoLinkPrimitive).
+	^ self collect: [ :each | each languageLinkSerializable ].
+]
+
+{ #category : #'*PharoLink' }
+Dictionary >> pharoLinkUnencodeWith: registry [
+
+	self size = 2 ifTrue: 
+		[ self 
+			at: '__registryid__'
+			ifPresent: [ :id | ^ registry resolve: id ] ].
+	^ self collect: [ :each | each pharoLinkUnencodeWith: registry ]
+]

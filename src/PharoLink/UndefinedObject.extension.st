@@ -13,6 +13,12 @@ UndefinedObject >> isPharoLinkPrimitive [
 ]
 
 { #category : #'*PharoLink' }
+UndefinedObject >> languageLinkSerializable [
+
+	^ self
+]
+
+{ #category : #'*PharoLink' }
 UndefinedObject >> pharoLinkFormattedCode [
 	"Answer the string representation of the receiver for sending to the remote server"
 

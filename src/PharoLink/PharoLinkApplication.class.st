@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkApplication,
 	#superclass : #LanguageLinkApplication,
-	#category : 'PharoLink-Global'
+	#category : #'PharoLink-Global'
 }
 
 { #category : #initialization }
@@ -17,4 +17,13 @@ PharoLinkApplication >> initializeHandlers [
 PharoLinkApplication >> platformClass [
 
 	^ PharoLinkPlatform
+]
+
+{ #category : #registering }
+PharoLinkApplication >> proxyForObject: anObject [
+
+	^ self newCommandFactory
+		bindingAt: #serializedObject put: (LeJsonV4 uniqueInstance serialize: anObject);
+		<< 'LeJsonV4 uniqueInstance deserialize:  serializedObject readStream';
+		sendAndWait.
 ]

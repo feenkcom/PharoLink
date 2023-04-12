@@ -11,3 +11,9 @@ Integer >> isPharoLinkPrimitive [
 
 	^ true
 ]
+
+{ #category : #'*PharoLink' }
+Integer >> languageLinkSerializable [
+
+	^ self
+]

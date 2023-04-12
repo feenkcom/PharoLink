@@ -44,17 +44,8 @@ PharoLinkServerSerializer class >> serialize: anObject registry: aRegistry [
 
 { #category : #private }
 PharoLinkServerSerializer >> deserialize: aByteArray [
-	| proxyOrObject |
 
-	proxyOrObject := MpDecoder decode: aByteArray.
-	proxyOrObject isDictionary ifFalse: [ ^ proxyOrObject ].
-	^ proxyOrObject size = 2 ifTrue: 
-		[ proxyOrObject 
-			at: '__registryid__'
-			ifPresent: [ :id | registry resolve: id ]
-			ifAbsent: [ proxyOrObject ] ]
-	ifFalse: [ proxyOrObject ].
-
+	^ (MpDecoder decode: aByteArray) pharoLinkUnencodeWith: registry
 ]
 
 { #category : #accessing }
