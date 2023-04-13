@@ -211,6 +211,26 @@ LanguageLinkProxyObject >> proxyPerformSerialized: aSymbol [
 		sendAndWait
 ]
 
+{ #category : #evaluating }
+LanguageLinkProxyObject >> proxyPerformSerialized: aSymbol withPrimitiveArguments: anArrayOfArguments [
+	| cf |
+
+	aSymbol isUnary ifTrue:
+		[ anArrayOfArguments
+			ifEmpty: [ ^ self proxyPerformSerialized: aSymbol ]
+			ifNotEmpty: [ self error: 'Unary selector with arguments' ] ].
+
+	self assert: anArrayOfArguments isArray.
+	self assert: anArrayOfArguments canBePharoLinkPrimitive.
+
+	cf := self newCommandFactory.
+	^ cf
+		bindingAt: #argArray put: anArrayOfArguments; 
+		setBySerialized;
+		<< ('self perform: #', aSymbol, ' withArguments: argArray');
+		sendAndWait
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> remoteClass [
 	^ remoteClass
