@@ -14,14 +14,17 @@ OutOfMemory >> description [
 OutOfMemory >> isqByteSizeRequested [
 	<return: #String>
 
-	^ self signalerContext 
-		ifNil: [ ^ 'context is nil' ]
-		ifNotNil: [ :context | context stack
-			detect: [:aContext | 
-				aContext selector = #handleFailingBasicNew:]
-			ifFound: [:aContext |
-				(aContext receiver byteSizeOfInstanceOfSize: (aContext tempNamed: #sizeRequested)) humanReadableIsqByteSize ]
-			ifNone: ['context not found'] ].
+	^ self signalerContext
+		ifNil: [ 'context is nil' ]
+		ifNotNil: [ :context | [ context stack
+			detect: [ :aContext | aContext selector = #handleFailingBasicNew: ]
+			ifFound: [ :aContext | 
+				(aContext receiver
+					byteSizeOfInstanceOfSize: (aContext tempNamed: #sizeRequested))
+					humanReadableIsqByteSize ]
+			ifNone: [ 'context not found' ] ]
+				on: MessageNotUnderstood
+				do: [ :ex | 'unable to calculate' ] ]
 ]
 
 { #category : #'*PharoLink' }
