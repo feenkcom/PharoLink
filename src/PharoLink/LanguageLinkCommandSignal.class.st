@@ -34,7 +34,7 @@ LanguageLinkCommandSignal >> gtViewCommandStringFor: aView [
 		^ aView empty ].
 	
 	^ aView textEditor
-		title: 'Command String' translated;
+		title: 'Command string' translated;
 		priority: 14;
 		text: [ self commandString ];
 		aptitude: BrGlamorousCodeEditorAptitude;

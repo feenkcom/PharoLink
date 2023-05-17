@@ -39,7 +39,7 @@ PharoLinkEvalSignal >> gtViewCommandBindingsFor: aView [
 		^ aView empty ].
 	
 	^ aView forward
-		title: 'Command Bindings';
+		title: 'Command bindings';
 		object: [ self command ];
 		view: #gtViewCommandBindingsFor:
 ]
@@ -52,7 +52,7 @@ PharoLinkEvalSignal >> gtViewCommandStringFor: aView [
 		^ aView empty ].
 	
 	^ aView forward
-		title: 'Command String';
+		title: 'Command string';
 		object: [ self command ];
 		view: #gtViewCommandStringFor:
 ]

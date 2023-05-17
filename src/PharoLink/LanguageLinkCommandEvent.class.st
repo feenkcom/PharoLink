@@ -14,7 +14,7 @@ LanguageLinkCommandEvent >> gtViewCommandStringFor: aView [
 	<gtView>
 	
 	^ aView forward 
-		title: 'Command String';
+		title: 'Command string';
 		priority: 5;
 		object: [ self eventCompletedSignal ];
 		view: #gtViewCommandStringFor:

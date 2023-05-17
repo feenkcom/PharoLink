@@ -91,7 +91,7 @@ PharoLinkEvalCommand >> gtViewCommandStringFor: aView [
 		styler: (BrRBTextStyler new
 				   isForWorkspace: true;
 				   yourself);
-		title: 'Block String' translated;
+		title: 'Block string' translated;
 		text: [ self blockString ];
 		priority: 15
 ]
