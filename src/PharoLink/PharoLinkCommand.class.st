@@ -24,7 +24,7 @@ PharoLinkCommand >> gtViewCodeForRemoteFor: aView [
 		styler: (BrRBTextStyler new
 				   isForWorkspace: true;
 				   yourself);
-		title: 'Command String' translated;
+		title: 'Command string' translated;
 		text: [ self codeForRemote ];
 		priority: 15
 ]

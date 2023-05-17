@@ -68,7 +68,7 @@ PharoLinkTraceStackFrameWithChildren >> gtChildrenSummaryFor: aView [
 	<gtView>
 
 	^ aView columnedList
-		title: 'Child Summary';
+		title: 'Child summary';
 		priority: 10;
 		items: [ (self withDeepCollect: #children)
 			sorted: [ :a :b | a children size > b children size ] ];

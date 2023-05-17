@@ -19,7 +19,7 @@ LanguageLinkSendCommandEvent >> gtViewRemoteCodeFor: aView [
 	<gtView>
 	
 	^ aView textEditor
-		title: 'Remote Code';
+		title: 'Remote code';
 		priority: 10;
 		text: [ self codeForRemote ];
 		aptitude: BrGlamorousCodeEditorAptitude;
