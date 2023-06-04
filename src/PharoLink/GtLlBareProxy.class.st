@@ -58,6 +58,17 @@ GtLlBareProxy >> doesNotUnderstand: aMessage [
 		ifTrue: [ self performRemotely: aMessage selector withArguments: aMessage arguments ]
 ]
 
+{ #category : #accessing }
+GtLlBareProxy >> gtDefaultInspectorTool [
+	^ GtPhlowCompositeTool new
+		addTool: (proxyObject gtRemoteSideInspectorTool
+			name: 'Remote';
+			withLabelAndIconAptitude);
+		addTool: (super gtDefaultInspectorTool
+			name: 'Proxy';
+			withLabelAndIconAptitude)
+]
+
 { #category : #printing }
 GtLlBareProxy >> gtInspectorTitleString [
 	| limitedString limit |
@@ -88,31 +99,22 @@ GtLlBareProxy >> gtInspectorTitleStringOn: aStream [
 ]
 
 { #category : #'gt inspector' }
-GtLlBareProxy >> gtMetaFor: aView [
-	<gtProxy>
-	^ aView explicit
-		title: 'Meta';
-		priority: 200;
-		stencil: [ (GtPharoBehaviorCoder forObject: self) asElement ]
-]
-
-{ #category : #'gt inspector' }
-GtLlBareProxy >> gtProxyViewsFor: aView [
+GtLlBareProxy >> gtPrintFor: aView [
 	<gtView>
-	^ aView composite
-		title: 'Proxy';
-		priority: 10000;
-		collectorDo: [ :aCollector |
-			aCollector 
-				pragmaName: #gtProxy;
-				fromObject: self ]
+	
+	^ aView textEditor
+		title: 'Print';
+		priority: 110;
+		aptitude: BrGlamorousCodeEditorAptitude;
+		text: [ self gtDisplayString asRopedText ];
+		actionUpdateButton
 ]
 
 { #category : #'gt inspector' }
 GtLlBareProxy >> gtRawFor: aView [
 	"Provide a basic view of the proxy object.
 	This is simpler than the standard Raw view, but avoids many methods that are implemented in Object"
-	<gtProxy>
+	<gtView>
 
 	^ aView columnedList
 		title: 'Raw';
@@ -136,20 +138,16 @@ GtLlBareProxy >> gtRawFor: aView [
 ]
 
 { #category : #'gt inspector' }
-GtLlBareProxy >> gtViewsInContext: aContext [
-	| proxyObjectViews collectedViews |
-	"This collects all views for the current object, both local and remote."
+GtLlBareProxy >> gtRemoteViewSpecificationsFor: aView [
+	<gtView>
 	
-	proxyObjectViews := proxyObject gtViewsInContext: aContext.
-	proxyObjectViews := proxyObjectViews reject: [ :each |
-		#(Proxy) includes: each title ].
+	proxyObject ifNil: [ ^ aView empty ].
 	
-	collectedViews := OrderedCollection new
-		addAll: (super gtViewsInContext: aContext);
-		addAll: proxyObjectViews;
-		yourself.
-	GtPhlowUtility sortByPriority: collectedViews.
-	^ collectedViews
+	^ aView forward
+		title: 'Remote view specifications';
+		priority: 10001;
+		object: [ proxyObject ];
+		view: #gtRemoteViewSpecificationsFor:
 ]
 
 { #category : #comparing }
@@ -172,10 +170,13 @@ GtLlBareProxy >> isProxyObjectActive [
 
 { #category : #'actions - proxy' }
 GtLlBareProxy >> performRemotely: aSelector withArguments: argumentsArray [
-
-	^ proxyObject 
+	| result |
+	
+	result := proxyObject 
 		proxyPerform: aSelector 
-		withPrimitiveArguments: argumentsArray 
+		withPrimitiveArguments: argumentsArray.
+	
+	^ result asGtBareProxyObject
 ]
 
 { #category : #accessing }

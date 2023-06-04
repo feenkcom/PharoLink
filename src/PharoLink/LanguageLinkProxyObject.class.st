@@ -89,6 +89,14 @@ LanguageLinkProxyObject >> isLanguageLinkProxyObject [
 	^ true
 ]
 
+{ #category : #testing }
+LanguageLinkProxyObject >> isProxyObjectActive [
+	^ application 
+		ifNil: [ false ] 
+		ifNotNil: [ :anApplication | 
+			anApplication isRunning ] 
+]
+
 { #category : #accessing }
 LanguageLinkProxyObject >> name [
 	^ name
