@@ -58,7 +58,7 @@ GtLlBareProxy >> doesNotUnderstand: aMessage [
 		ifTrue: [ self performRemotely: aMessage selector withArguments: aMessage arguments ]
 ]
 
-{ #category : #accessing }
+{ #category : #'gt inspector' }
 GtLlBareProxy >> gtDefaultInspectorTool [
 	^ GtPhlowCompositeTool new
 		addTool: (proxyObject gtRemoteSideInspectorTool
