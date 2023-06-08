@@ -34,6 +34,12 @@ Object >> canBePharoLinkPrimitive [
 ]
 
 { #category : #'*PharoLink' }
+Object >> gtPharoProxyInitializeWithSession: aProxyContext [
+	"Provide a callback from initializing proxy objects."
+	^ self
+]
+
+{ #category : #'*PharoLink' }
 Object >> isBoolean [
 	"Answer a boolean indicating whether the receiver is a boolean"
 
