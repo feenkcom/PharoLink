@@ -43,6 +43,11 @@ GtLlBareProxy >> asGtBareProxyObject [
 ]
 
 { #category : #transformation }
+GtLlBareProxy >> asGtBareProxyObjectInSession: aGtGemStoneSession [
+	^ self
+]
+
+{ #category : #transformation }
 GtLlBareProxy >> asGtProxyObject [
 	^ proxyObject
 ]
