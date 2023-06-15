@@ -99,6 +99,11 @@ GtLlBareProxy >> gtInspectorTitleStringOn: aStream [
 ]
 
 { #category : #'gt inspector' }
+GtLlBareProxy >> gtPlaygroundPageStrategy [
+	^ LeInspectorPlaygroundLocalClassPageStrategy new 
+]
+
+{ #category : #'gt inspector' }
 GtLlBareProxy >> gtPrintFor: aView [
 	<gtView>
 	
