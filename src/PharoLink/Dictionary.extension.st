@@ -31,6 +31,14 @@ Dictionary >> canBePharoLinkPrimitive [
 ]
 
 { #category : #'*PharoLink' }
+Dictionary >> gtPharoProxyInitializeWithSession: aSession [
+	"Update the session from the given session".
+	
+	self valuesDo: [ :each |
+		each gtPharoProxyInitializeWithSession: aSession ]
+]
+
+{ #category : #'*PharoLink' }
 Dictionary >> isLanguageLinkValue [
 	^ true
 ]
