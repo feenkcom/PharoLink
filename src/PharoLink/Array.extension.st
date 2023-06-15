@@ -23,6 +23,14 @@ Array >> canBePharoLinkPrimitive [
 ]
 
 { #category : #'*PharoLink' }
+Array >> gtPharoProxyInitializeWithSession: aSession [
+	"Update the session from the given session".
+	
+	self do: [ :each |
+		each gtPharoProxyInitializeWithSession: aSession ]
+]
+
+{ #category : #'*PharoLink' }
 Array >> languageLinkSerializable [
 
 	^ self collect: [ :each | each languageLinkSerializable ]
