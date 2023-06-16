@@ -47,6 +47,13 @@ GtLlBareProxy >> asGtProxyObject [
 	^ proxyObject
 ]
 
+{ #category : #'gt inspector' }
+GtLlBareProxy >> asLink [
+	"This is needed in the proxy object, as LinkedLists used by the inspector call #asLink on the objects that they add."
+
+	^ ValueLink value: self
+]
+
 { #category : #'reflective operations' }
 GtLlBareProxy >> doesNotUnderstand: aMessage [ 
 	"In case the proxy has no remote client or the client is not logged in
@@ -70,6 +77,29 @@ GtLlBareProxy >> gtDefaultInspectorTool [
 ]
 
 { #category : #printing }
+GtLlBareProxy >> gtDisplayOn: aStream [
+	proxyObject ifNil: [ 
+		aStream << 'Bare Proxy on: <not configured>'.
+		^ self ].
+	
+	proxyObject isProxyObjectActive ifFalse: [ 
+		aStream << 'Bare Proxy on: <not connected>'.
+		^ self ].
+	
+	aStream 
+		<< 'Bare Proxy on: ';
+		<< ([proxyObject proxyPerform: #gtDisplayString]
+				on: Error 
+				do: [ :e | 'Error printing'  ])
+]
+
+{ #category : #printing }
+GtLlBareProxy >> gtDisplayText [
+	^ (String streamContents: [ :aStream |
+		self gtDisplayOn:  aStream  ]) asRopedText
+]
+
+{ #category : #printing }
 GtLlBareProxy >> gtInspectorTitleString [
 	| limitedString limit |
 	limit := 1000.
@@ -82,25 +112,7 @@ GtLlBareProxy >> gtInspectorTitleString [
 
 { #category : #printing }
 GtLlBareProxy >> gtInspectorTitleStringOn: aStream [
-	proxyObject ifNil: [ 
-		aStream << 'a GtLlBareProxy'.
-		^ self ].
-	
-	proxyObject isProxyObjectActive ifFalse: [ 
-		aStream << 'Bare Proxy on: <not connected>'.
-		^ self ].
-	
-	aStream 
-		<< 'Bare Proxy on: ';
-		<< ([proxyObject proxyPerform: #gtDisplayString]
-				on: Error 
-				do: [ :e | 'Error printing'  ]) 
-		
-]
-
-{ #category : #'gt inspector' }
-GtLlBareProxy >> gtPlaygroundPageStrategy [
-	^ LeInspectorPlaygroundLocalClassPageStrategy new 
+	self gtDisplayOn: aStream
 ]
 
 { #category : #'gt inspector' }

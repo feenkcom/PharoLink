@@ -13,6 +13,11 @@ GtPlBareProxy class >> forProxyObject: aProxyObject [
 ]
 
 { #category : #private }
+GtPlBareProxy class >> leProxyTypeForPlaygroundPage [
+	^ GtPlBareProxy
+]
+
+{ #category : #private }
 GtPlBareProxy class >> remoteClassMatcher [
 	"Answer the block that matches a given class name"
 
