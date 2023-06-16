@@ -4,6 +4,11 @@ Class {
 	#category : #'PharoLink-Pharo-Platform'
 }
 
+{ #category : #accessing }
+PharoLinkProxyObject class >> leProxyTypeForPlaygroundPage [
+	^ PharoLinkProxyObject
+]
+
 { #category : #'instance creation' }
 PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
 	| proxyClass |
