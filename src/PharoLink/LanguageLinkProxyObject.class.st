@@ -11,6 +11,11 @@ Class {
 	#category : #'PharoLink-Core'
 }
 
+{ #category : #accessing }
+LanguageLinkProxyObject class >> leProxyTypeForPlaygroundPage [
+	^ LanguageLinkProxyObject
+]
+
 { #category : #'instance creation' }
 LanguageLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
 
