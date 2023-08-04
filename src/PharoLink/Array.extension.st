@@ -1,6 +1,20 @@
 Extension { #name : #Array }
 
 { #category : #'*PharoLink' }
+Array >> asGtBareProxyObject [
+
+	^ self collect: #asGtBareProxyObject
+]
+
+{ #category : #'*PharoLink' }
+Array >> asGtProxyObject [
+	"Answer an Array of the receiver's entries converted to proxy objects.
+	Don't rely on Symbol>>value: as it uses #perform: which the bare proxy doesn't understand."
+
+	^ self collect: [ :each | each asGtProxyObject ]
+]
+
+{ #category : #'*PharoLink' }
 Array >> asPharoLinkObjectRegistry: aPharoLinkRegistry [
 	"Answer the receiver with non-primitive objects represented as proxies"
 	| answerFlag canBePrimitive |
