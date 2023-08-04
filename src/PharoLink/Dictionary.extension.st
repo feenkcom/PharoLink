@@ -1,6 +1,13 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*PharoLink' }
+Dictionary >> asGtBareProxyObject [
+
+	^ self collect: #asGtBareProxyObject
+	
+]
+
+{ #category : #'*PharoLink' }
 Dictionary >> asPharoLinkObjectRegistry: aPharoLinkRegistry [
 	"Answer the receiver with non-primitive objects represented as proxies"
 	| proxyDict answerFlag canBePrimitive |

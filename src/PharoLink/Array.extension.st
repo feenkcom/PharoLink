@@ -1,6 +1,12 @@
 Extension { #name : #Array }
 
 { #category : #'*PharoLink' }
+Array >> asGtBareProxyObject [
+
+	^ self collect: #asGtBareProxyObject
+]
+
+{ #category : #'*PharoLink' }
 Array >> asPharoLinkObjectRegistry: aPharoLinkRegistry [
 	"Answer the receiver with non-primitive objects represented as proxies"
 	| answerFlag canBePrimitive |
