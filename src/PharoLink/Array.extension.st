@@ -3,7 +3,7 @@ Extension { #name : #Array }
 { #category : #'*PharoLink' }
 Array >> asGtBareProxyObject [
 
-	^ self collect: #asGtBareProxyObject
+	^ self collect: [ :each | each asGtBareProxyObject ]
 ]
 
 { #category : #'*PharoLink' }
