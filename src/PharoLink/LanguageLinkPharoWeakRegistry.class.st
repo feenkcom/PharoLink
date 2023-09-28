@@ -25,5 +25,8 @@ LanguageLinkPharoWeakRegistry >> initialize [
 
 { #category : #registration }
 LanguageLinkPharoWeakRegistry >> registerObject: anObject finalizer: finalizer [
-	weakRegistry add: anObject finalizer: finalizer
+
+	self
+		forPharo11: [ weakRegistry add: anObject finalizer: finalizer ]
+		forPharo10: [ weakRegistry add: anObject executor: finalizer ]
 ]
