@@ -9,13 +9,18 @@ Class {
 
 { #category : #registration }
 LanguageLinkPharoWeakRegistry >> destroy [
-	weakRegistry := nil
+
+	self
+		forPharo11: [ weakRegistry := nil ]
+		forPharo10: [ weakRegistry removeAll ].
 ]
 
 { #category : #initialization }
 LanguageLinkPharoWeakRegistry >> initialize [
 	super initialize.
-	weakRegistry := FinalizationRegistry new.
+	weakRegistry := self
+		forPharo11: [ FinalizationRegistry new ]
+		forPharo10: [ WeakRegistry new ].
 ]
 
 { #category : #registration }
