@@ -4,23 +4,21 @@ Class {
 	#instVars : [
 		'weakRegistry'
 	],
-	#category : 'PharoLink-Pharo-Platform'
+	#category : #'PharoLink-Pharo-Platform'
 }
 
 { #category : #registration }
 LanguageLinkPharoWeakRegistry >> destroy [
-	weakRegistry removeAll
+	weakRegistry := nil
 ]
 
 { #category : #initialization }
 LanguageLinkPharoWeakRegistry >> initialize [
 	super initialize.
-	weakRegistry := WeakRegistry new.
+	weakRegistry := FinalizationRegistry new.
 ]
 
 { #category : #registration }
 LanguageLinkPharoWeakRegistry >> registerObject: anObject finalizer: finalizer [
-	weakRegistry 
-		add: anObject
-		executor: finalizer
+	weakRegistry add: anObject finalizer: finalizer
 ]
