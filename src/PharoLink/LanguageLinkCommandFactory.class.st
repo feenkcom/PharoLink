@@ -38,8 +38,8 @@ LanguageLinkCommandFactory >> addObserver: anObserver [
 ]
 
 { #category : #streaming }
-LanguageLinkCommandFactory >> append: aPythonStatement [
-	instructions add: aPythonStatement
+LanguageLinkCommandFactory >> append: anLLStatement [
+	instructions add: anLLStatement
 ]
 
 { #category : #accessing }
@@ -120,11 +120,16 @@ LanguageLinkCommandFactory >> instructionsWithNotifyAtEnd [
 ]
 
 { #category : #observers }
+LanguageLinkCommandFactory >> linkObserverClass [
+	^ LanguageLinkObserver
+]
+
+{ #category : #observers }
 LanguageLinkCommandFactory >> observerFromCallback: aBlock [
 	| observer |
-	observer := (LanguageLinkObserver callback: aBlock)
-						command: command;
-						yourself.
+	observer := (self linkObserverClass callback: aBlock)
+			command: command;
+			yourself.
 	^ self addObserver: observer
 ]
 

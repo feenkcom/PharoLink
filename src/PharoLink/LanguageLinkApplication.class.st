@@ -63,11 +63,6 @@ LanguageLinkApplication class >> killAll [
 	^ proc stdout
 ]
 
-{ #category : #testing }
-LanguageLinkApplication class >> module [
-	^ self uniqueInstance module
-]
-
 { #category : #'instance creation' }
 LanguageLinkApplication class >> newWith: aLLSettings [
 	"Answer a new instance initialised with the supplied settings"
@@ -285,11 +280,6 @@ LanguageLinkApplication >> loggingHandler [
 	^ loggingHandler
 ]
 
-{ #category : #accessing }
-LanguageLinkApplication >> module [
-	self subclassResponsibility
-]
-
 { #category : #'instance creation' }
 LanguageLinkApplication >> newCommand [
 
@@ -439,7 +429,7 @@ LanguageLinkApplication >> waitInitialization [
 		self isServerReady 
 				ifTrue: [ ^ self ]
 				ifFalse: [ (Delay forMilliseconds: 500) wait ] ].
-	Error signal: 'The server initialization failed!'.
+	self error: 'The server initialization failed!'.
 	"
 	Print the result of executing the following line:
 	
