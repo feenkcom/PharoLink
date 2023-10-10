@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-LanguageLinkRegistryFinalizer class >> javaScriptVariable: aPythonVariable executionHandler: executionHandler [
+LanguageLinkRegistryFinalizer class >> variable: aPythonVariable executionHandler: executionHandler [
 	^ self new
 		proxyObjectId: aPythonVariable;
 		executionHandler: executionHandler
