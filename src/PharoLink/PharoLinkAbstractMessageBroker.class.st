@@ -26,13 +26,14 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'messageCallbacks',
-		'settings'
+		'settings',
+		'debugMode'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #accessing }
-PharoLinkAbstractMessageBroker class >> javaScriptMethodArg [
+PharoLinkAbstractMessageBroker class >> methodArg [
 	self subclassResponsibility
 ]
 
@@ -124,6 +125,11 @@ PharoLinkAbstractMessageBroker >> sendSyncMessage: aMessage [
 { #category : #accessing }
 PharoLinkAbstractMessageBroker >> serializer [
 	^ self class serializer
+]
+
+{ #category : #accessing }
+PharoLinkAbstractMessageBroker >> setDebugMode [
+	debugMode := true.
 ]
 
 { #category : #accessing }

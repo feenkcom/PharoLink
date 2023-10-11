@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-LanguageLinkMsgPackPharoBroker class >> javaScriptMethodArg [
+LanguageLinkMsgPackPharoBroker class >> methodArg [
 	^ 'msgpack'
 ]
 
