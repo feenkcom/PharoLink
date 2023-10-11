@@ -166,9 +166,8 @@ LanguageLinkCommandFactory >> send [
 
 { #category : #send }
 LanguageLinkCommandFactory >> send: aStatement [
-
 	self << aStatement.
-	^ self performSendWithLogging: [ self sendCommand ]
+	^ self send
 ]
 
 { #category : #send }
@@ -178,9 +177,8 @@ LanguageLinkCommandFactory >> sendAndWait [
 
 { #category : #send }
 LanguageLinkCommandFactory >> sendAndWait: aStatement [
-
 	self << aStatement.
-	^ self performSendWithLogging: [ self sendCommand waitForValue ]
+	^ self sendAndWait
 ]
 
 { #category : #send }

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-LanguageLinkHttpMessageBroker class >> javaScriptMethodArg [
+LanguageLinkHttpMessageBroker class >> methodArg [
 	^ 'http'
 ]
 
