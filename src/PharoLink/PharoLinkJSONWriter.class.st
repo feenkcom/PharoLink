@@ -20,6 +20,20 @@ Class {
 	#category : #'PharoLink-Server'
 }
 
+{ #category : #example }
+PharoLinkJSONWriter class >> exampleCoordinatesCustomWriting [
+	<noTest>
+	<gtExample>
+	"The superclass test doesn't work here"
+]
+
+{ #category : #example }
+PharoLinkJSONWriter class >> exampleCoordinatesGenericWriting [
+	<noTest>
+	<gtExample>
+	"The superclass test doesn't work here"
+]
+
 { #category : #convenience }
 PharoLinkJSONWriter class >> toString: object registry: registry [
 
