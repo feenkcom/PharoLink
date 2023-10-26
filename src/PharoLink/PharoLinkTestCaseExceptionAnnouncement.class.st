@@ -95,7 +95,9 @@ PharoLinkTestCaseExceptionAnnouncement >> gtTraceFor: aView [
 	^ aView textEditor
 		title: 'Trace';
 		priority: 15;
-		text: [ exceptionTrace ]
+		text: [ exceptionTrace ];
+		styler: GtTraceStyler new;
+		aptitude: BrGlamorousCodeEditorAptitude
 ]
 
 { #category : #initialization }
