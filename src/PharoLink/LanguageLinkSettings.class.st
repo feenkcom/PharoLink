@@ -24,20 +24,43 @@ Class {
 }
 
 { #category : #'instance creation' }
-LanguageLinkSettings class >> pharoDefaultSettings [
+LanguageLinkSettings class >> headlessUnixVmFilenameFrom: aFileReference [
+	| gtIndex basename |
 
+	basename := aFileReference basename.
+	(basename includesSubstring: '-cli') ifTrue: [ ^ aFileReference ].
+
+	gtIndex := basename indexOfSubCollection: 'GlamorousToolkit'.
+	gtIndex = 0 ifTrue: [ self error: 'Unrecognised vm executable name' ].
+	^ aFileReference parent /
+		((basename copyFrom: 1 to: gtIndex + 15),
+		'-cli',
+		(basename copyFrom: gtIndex + 16 to: basename size))
+]
+
+{ #category : #'instance creation' }
+LanguageLinkSettings class >> headlessVmFilenameFrom: aFileReference [
+
+	^ Smalltalk platform isWindows
+		ifTrue: [ self headlessWindowsVmFilenameFrom: aFileReference ]
+		ifFalse: [ self headlessUnixVmFilenameFrom: aFileReference ]
+]
+
+{ #category : #'instance creation' }
+LanguageLinkSettings class >> headlessWindowsVmFilenameFrom: aFileReference [
+
+	^ (aFileReference basename endsWith: '-cli.exe') 
+		ifTrue: [ aFileReference ]
+		ifFalse: [ | parts |
+			parts := '.' split: aFileReference basename.
+			aFileReference parent / (parts first , '-cli.' , parts second) ]
+]
+
+{ #category : #'instance creation' }
+LanguageLinkSettings class >> pharoDefaultSettings [
 	| binary |
-	binary := FileLocator vmBinary resolve.
-	 
-	Smalltalk platform isWindows
-		ifTrue: [ 
-			(binary basename endsWith: '-cli.exe') ifFalse: [ 
-				| parts |
-				parts := '.' split: binary basename.
-				binary := binary parent / (parts first , '-cli.' , parts second) ] ]
-		ifFalse: [ 
-			(binary basename endsWith: '-cli') ifFalse: [ 
-				binary := binary parent / (binary basename , '-cli') ] ] .
+
+	binary := self headlessVmFilenameFrom: FileLocator vmBinary resolve.
 	^ self new
 		  serverSocketAddress: (LanguageLinkSocketAddress
 				   ipOrName: 'localhost'
