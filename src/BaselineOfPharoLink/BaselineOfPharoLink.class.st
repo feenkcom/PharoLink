@@ -13,7 +13,7 @@ BaselineOfPharoLink >> baseline: spec [
 				spec repository: 'github://feenkcom/gtoolkit-external-process:v0.6.98/src' ].
 		spec
 			baseline: 'NeoJSON' with: [
-				spec repository: 'github://svenvc/NeoJSON:4e0d822bdadb8854f84a2ceb2b9f4e68c8bd6f56/repository' ].
+				spec repository: 'github://svenvc/NeoJSON:2b0c0d20bc68965c600179f3da16bcace727e8b6/repository' ].
 		spec
 			baseline: 'MessagePack' with: [
 				spec repository: 'github://feenkcom/msgpack-smalltalk:v1.3.5/repository' ].
