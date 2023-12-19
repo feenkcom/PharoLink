@@ -208,3 +208,8 @@ GtLlBareProxy >> proxyObject: aLlProxyObject [
 		Error signal: 'Cannot change the proxy object.' ].
 	proxyObject := aLlProxyObject
 ]
+
+{ #category : #'memory usage' }
+GtLlBareProxy >> sizeInMemory [
+	^ self class byteSizeOfInstance 
+]
