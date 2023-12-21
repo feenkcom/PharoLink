@@ -273,7 +273,7 @@ LanguageLinkSettings >> serverSocketAddress: anObject [
 { #category : #accessing }
 LanguageLinkSettings >> settingNames [
 
-	^ self class instVarNames sorted
+	^ self class allInstVarNames sorted
 ]
 
 { #category : #accessing }
