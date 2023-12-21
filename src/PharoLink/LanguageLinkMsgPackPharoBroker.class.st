@@ -43,7 +43,7 @@ LanguageLinkMsgPackPharoBroker >> clientSocket [
 		[ retryDelay wait.
 		retryCount := retryCount - 1 ].
 	newSocket isConnected
-		ifFalse: [ self error: 'Cannot connect to ', socketAddress printString ].
+		ifFalse: [ ConnectionTimedOut signal: 'Cannot connect to ', socketAddress printString ].
 	^ newSocket
 ]
 
