@@ -25,7 +25,7 @@ LanguageLinkApplication class >> defaultSettings [
 { #category : #'start-stop' }
 LanguageLinkApplication class >> do: aBlockClosure [ 
 	| retVal |
-	self isRunning ifTrue: [ ^ aBlockClosure value ].
+	self isRunning ifTrue: [ ^ aBlockClosure cull: self uniqueInstance ].
 	[
 		self start.
 		retVal := aBlockClosure cull: self uniqueInstance.
