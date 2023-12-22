@@ -193,6 +193,33 @@ LanguageLinkApplication >> executionHandler [
 	^ executionHandler
 ]
 
+{ #category : #accessing }
+LanguageLinkApplication >> gtDetailsFor: aView [
+	<gtView>
+	| formatter |
+	formatter := [ :boolean | boolean asRopedText 
+		foreground: (boolean 
+						ifTrue: BrGlamorousColors successBorderColor 
+						ifFalse: BrGlamorousColors errorBorderColor) ].
+	^ aView columnedList
+		title: 'Details';
+		priority: 30;
+		items: [ {
+			{ 'Client process running'
+				. formatter value: self isRunning 
+				. self isRunning }.
+			{ 'Client socket address' . self settings clientSocketAddress }.
+			{ 'Server process running' 
+				. formatter value: self processHandler isRunning
+				. self processHandler isRunning }.
+			{ 'Server socket address' . self settings serverSocketAddress }.
+			{ 'Server process path' . self serverPath }.
+			{ 'Server process directory' . self settings workingDirectory } } ];
+		column: #key text: #first;
+		column: #value text: #second weight: 3;
+		send: #last
+]
+
 { #category : #ui }
 LanguageLinkApplication >> gtPlaygroundFor: aView [
 	<gtView>
