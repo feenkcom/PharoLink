@@ -24,9 +24,9 @@ LanguageLinkMsgPackPharoBroker class >> serializerClass [
 { #category : #'private - utils' }
 LanguageLinkMsgPackPharoBroker >> clientSocket [
 	| socketAddress newSocket retryDelay retryCount serverIP |
-
 	socketAddress := self settings serverSocketAddress.
-	retryCount := 3.
+	"Wait up to 10 seconds for the server to come up"
+	retryCount := 20.
 	retryDelay := 500 milliSeconds.
 	serverIP := NetNameResolver addressForName: socketAddress ipOrName timeout: 20.
 	[ [ (newSocket := Socket newTCP)
