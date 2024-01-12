@@ -217,7 +217,8 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 			{ 'Server process directory' . self settings workingDirectory } } ];
 		column: #key text: #first;
 		column: #value text: #second weight: 3;
-		send: #last
+		send: #last;
+		actionUpdateButton
 ]
 
 { #category : #ui }
@@ -262,6 +263,16 @@ LanguageLinkApplication >> gtStatusFor: aView [
 		  priority: 50;
 		  text: [ self serverStatus asRopedText glamorousCodeFont ];
 		  actionUpdateButton
+]
+
+{ #category : #accessing }
+LanguageLinkApplication >> gtStopActionFor: anAction [
+	<gtAction>
+	^ anAction button
+		icon: BrGlamorousVectorIcons shutdown;
+		tooltip: 'Stop this language link application';
+		priority: 10;
+		action: [ self stop ]
 ]
 
 { #category : #handlers }
