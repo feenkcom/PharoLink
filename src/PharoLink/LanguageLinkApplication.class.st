@@ -213,7 +213,7 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 				. formatter value: self processHandler isRunning
 				. self processHandler isRunning }.
 			{ 'Server socket address' . self settings serverSocketAddress }.
-			{ 'Server process path' . self serverPath }.
+			{ 'Server process path' . [ self serverPath ] on: MessageNotUnderstood do: [ '' ] }.
 			{ 'Server process directory' . self settings workingDirectory } } ];
 		column: #key text: #first;
 		column: #value text: #second weight: 3;
