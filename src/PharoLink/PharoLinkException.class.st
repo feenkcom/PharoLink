@@ -53,7 +53,7 @@ PharoLinkException >> exceptionAdditionalData: anObject [
 { #category : #accessing }
 PharoLinkException >> exceptionClass [
 
-	^ self class environment at: exceptionClassName
+	^ self class environment at: exceptionClassName asSymbol
 ]
 
 { #category : #accessing }
