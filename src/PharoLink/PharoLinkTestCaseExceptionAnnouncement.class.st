@@ -2,11 +2,8 @@ Class {
 	#name : #PharoLinkTestCaseExceptionAnnouncement,
 	#superclass : #PharoLinkTestCaseEndAnnouncement,
 	#instVars : [
-		'exceptionClass',
-		'exceptionMessageText',
-		'exceptionTrace',
-		'exceptionAdditionalData',
-		'additionalExceptions'
+		'additionalExceptions',
+		'primaryException'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -38,7 +35,8 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
 		mapProperty: #exceptionClass
-		getter: [ :object | object exceptionClass ifNotNil: #name ]
+		getter: [ :object | 
+			object exceptionClassName ifNotNil: [ object exceptionClass ] ]
 		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #exceptionMessageText
@@ -87,61 +85,74 @@ PharoLinkTestCaseExceptionAnnouncement >> additionalExceptions: anObject [
 
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionAdditionalData [
-	^ exceptionAdditionalData
+	^ primaryException ifNotNil: [ primaryException exceptionAdditionalData ]
 ]
 
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionClass [
 
-	^ exceptionClass
+	^ primaryException exceptionClass
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> exceptionClassName [
+
+	^ primaryException ifNotNil: [ primaryException exceptionClassName ]
 ]
 
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionMessageText [
 
-	^ exceptionMessageText
+	^ primaryException ifNotNil: [ primaryException exceptionMessageText ]
 ]
 
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionTrace [
 
-	^ exceptionTrace
+	^ primaryException ifNotNil: [ primaryException exceptionTrace ]
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> exceptionTrace: aString [
+
+	primaryException exceptionTrace: aString
 ]
 
 { #category : #ui }
 PharoLinkTestCaseExceptionAnnouncement >> gtTraceFor: aView [
 	<gtView>
 
-	exceptionTrace ifNil: [ ^ aView empty ].
-	^ aView textEditor
+	primaryException ifNil: [ ^ aView empty ].
+	^ aView forward
 		title: 'Trace';
 		priority: 15;
-		text: [ exceptionTrace ];
-		styler: GtTraceStyler new;
-		aptitude: BrGlamorousCodeEditorAptitude
+		object: [ primaryException ];
+		view: #gtTraceFor:
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> hasAdditionalExceptions [
 
-	^ additionalExceptions notNil and: [ additionalExceptions notEmpty ]
+	^ additionalExceptions isNotNil and: [ additionalExceptions isNotEmpty ]
 ]
 
 { #category : #initialization }
 PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString [
 
-	exceptionClass := aClass.
-	exceptionMessageText := aString.
-	exceptionTrace := anotherString
+ 	primaryException := PharoLinkException new
+ 		exceptionClassName: aClass name;
+ 		exceptionMessageText: aString;
+ 		exceptionTrace: anotherString.
 ]
 
 { #category : #initialization }
 PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString additionalData:  additionalData [
  
-	exceptionClass := aClass.
-	exceptionMessageText := aString.
-	exceptionTrace := anotherString.
-	exceptionAdditionalData := additionalData 
+ 	primaryException := PharoLinkException new
+ 		exceptionClassName: (aClass ifNotNil: #name);
+ 		exceptionMessageText: aString;
+ 		exceptionTrace: anotherString;
+ 		exceptionAdditionalData: additionalData.
 ]
 
 { #category : #'as yet unclassified' }
@@ -157,13 +168,13 @@ PharoLinkTestCaseExceptionAnnouncement >> printOn: aStream [
 
 	aStream
 		nextPut: Character space;
-		nextPutAll: (exceptionClass 
+		nextPutAll: (primaryException
 			ifNil: [ '<unknown>' ]
-			ifNotNil: [ exceptionClass name ]);
+			ifNotNil: [ primaryException exceptionClassName ]);
 		nextPut: Character space;
-		nextPutAll: (exceptionMessageText
+		nextPutAll: (primaryException
 			ifNil: [ '<none>' ]
-			ifNotNil: [ exceptionMessageText ])
+			ifNotNil: [ primaryException exceptionMessageText ])
 ]
 
 { #category : #ui }
@@ -171,8 +182,8 @@ PharoLinkTestCaseExceptionAnnouncement >> summaryAttributes [
 	"Answer a collection of key/value attributes that can simply be listed as a summary of the receiver"
 
 	^ super summaryAttributes
-		add: 'Exception Class:' -> exceptionClass;
-		add: 'Message:' -> exceptionMessageText;
+		add: 'Exception Class:' -> (primaryException ifNil: [ '<unknown>' ] ifNotNil: [ primaryException exceptionClass ]);
+		add: 'Message:' -> (primaryException ifNil: [ '<unknown>' ] ifNotNil: [ primaryException exceptionMessageText ]);
 		add: 'Additional Exceptions:' -> 
 			(additionalExceptions ifNil: [ 0 ] ifNotNil: [ additionalExceptions size ]);
 		yourself.

@@ -102,6 +102,12 @@ PharoLinkTestCaseEndAnnouncement >> gtTestCaseFor: aView [
 		  view: #gtSourceFor:
 ]
 
+{ #category : #testing }
+PharoLinkTestCaseEndAnnouncement >> hasAdditionalExceptions [
+
+	^ false
+]
+
 { #category : #accessing }
 PharoLinkTestCaseEndAnnouncement >> initializeShouldPass: aBoolean startTimestamp: startDateAndTime endTimestamp: endDateAndTime [
 

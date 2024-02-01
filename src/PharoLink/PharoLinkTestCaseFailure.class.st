@@ -30,6 +30,17 @@ PharoLinkTestCaseFailure >> color [
 	^ Color yellow
 ]
 
+{ #category : #accessing }
+PharoLinkTestCaseFailure >> gtAdditionalExceptionsFor: aView [
+	<gtView>
+
+	(additionalExceptions isNil or: [ additionalExceptions isEmpty ]) ifTrue: [ ^ aView empty ].
+	^ aView list
+		title: 'Additional Exceptions';
+		priority: 40;
+		items: [ additionalExceptions ]
+]
+
 { #category : #testing }
 PharoLinkTestCaseFailure >> isFailure [
 
