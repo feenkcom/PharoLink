@@ -18,13 +18,7 @@ PharoLinkTestCaseExceptionAnnouncement class >> isAbstract [
 PharoLinkTestCaseExceptionAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 
 	^ (super leFromJsonV4Dictionary: aDictionary)
-		  initializeExceptionClass: (aDictionary 
-		  	at: #exceptionClass
-		  	ifPresent: #asClass
-		  	ifAbsent: [])
-		  messageText: (aDictionary at: #exceptionMessageText ifAbsent: [])
-		  trace: (aDictionary at: #exceptionTrace ifAbsent: [])
-		  additionalData: (aDictionary at: #exceptionAdditionalData ifAbsent: []);
+		  primaryException: (aDictionary at: #primaryException ifAbsent: []);
 		  additionalExceptions: (aDictionary at: #additionalExceptions ifAbsent: []);
 		  yourself
 ]
@@ -34,21 +28,8 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 
 	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
-		mapProperty: #exceptionClass
-		getter: [ :object | 
-			object exceptionClassName ifNotNil: [ object exceptionClass ] ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
-		mapProperty: #exceptionMessageText
-		getter: [ :object | object exceptionMessageText ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
-		mapProperty: #exceptionTrace
-		getter: [ :object | object exceptionTrace ]
-		setter: [ :object :value | 
-			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
-		mapProperty: #exceptionAdditionalData
-		getter: [ :object | object exceptionAdditionalData ]
+		mapProperty: #primaryException
+		getter: [ :object | object primaryException ]
 		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #additionalExceptions
@@ -155,10 +136,26 @@ PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messa
  		exceptionAdditionalData: additionalData.
 ]
 
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> numberOfExceptions [
+
+	^ 1 + (additionalExceptions ifNil: [ 0 ] ifNotNil: [ additionalExceptions size ])
+]
+
 { #category : #'as yet unclassified' }
 PharoLinkTestCaseExceptionAnnouncement >> populateTestResult: aTestResult with: aTestCase [
 
 	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> primaryException [
+	^ primaryException
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> primaryException: anObject [
+	primaryException := anObject
 ]
 
 { #category : #accessing }
