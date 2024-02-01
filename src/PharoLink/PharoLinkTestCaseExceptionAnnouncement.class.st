@@ -35,7 +35,8 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 	super leJsonV4AddMappingsTo: aJsonMapping.
 	aJsonMapping
 		mapProperty: #exceptionClass
-		getter: [ :object | object exceptionClass ifNotNil: #name ]
+		getter: [ :object | 
+			object exceptionClassName ifNotNil: [ object exceptionClass ] ]
 		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
 		mapProperty: #exceptionMessageText
@@ -84,7 +85,7 @@ PharoLinkTestCaseExceptionAnnouncement >> additionalExceptions: anObject [
 
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionAdditionalData [
-	^ primaryException exceptionAdditionalData
+	^ primaryException ifNotNil: [ primaryException exceptionAdditionalData ]
 ]
 
 { #category : #accessing }
@@ -94,15 +95,21 @@ PharoLinkTestCaseExceptionAnnouncement >> exceptionClass [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> exceptionClassName [
+
+	^ primaryException ifNotNil: [ primaryException exceptionClassName ]
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionMessageText [
 
-	^ primaryException exceptionMessageText
+	^ primaryException ifNotNil: [ primaryException exceptionMessageText ]
 ]
 
 { #category : #accessing }
 PharoLinkTestCaseExceptionAnnouncement >> exceptionTrace [
 
-	^ primaryException exceptionTrace
+	^ primaryException ifNotNil: [ primaryException exceptionTrace ]
 ]
 
 { #category : #accessing }
@@ -142,7 +149,7 @@ PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messa
 PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString additionalData:  additionalData [
  
  	primaryException := PharoLinkException new
- 		exceptionClassName: aClass name;
+ 		exceptionClassName: (aClass ifNotNil: #name);
  		exceptionMessageText: aString;
  		exceptionTrace: anotherString;
  		exceptionAdditionalData: additionalData.
