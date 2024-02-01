@@ -5,7 +5,8 @@ Class {
 		'exceptionClass',
 		'exceptionMessageText',
 		'exceptionTrace',
-		'exceptionAdditionalData'
+		'exceptionAdditionalData',
+		'additionalExceptions'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -27,6 +28,7 @@ PharoLinkTestCaseExceptionAnnouncement class >> leFromJsonV4Dictionary: aDiction
 		  messageText: (aDictionary at: #exceptionMessageText ifAbsent: [])
 		  trace: (aDictionary at: #exceptionTrace ifAbsent: [])
 		  additionalData: (aDictionary at: #exceptionAdditionalData ifAbsent: []);
+		  additionalExceptions: (aDictionary at: #additionalExceptions ifAbsent: []);
 		  yourself
 ]
 
@@ -50,6 +52,10 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 		mapProperty: #exceptionAdditionalData
 		getter: [ :object | object exceptionAdditionalData ]
 		setter: [ :object :value | 
+			self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #additionalExceptions
+		getter: [ :object | object additionalExceptions ]
+		setter: [ :object :value | 
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
 ]
 
@@ -62,6 +68,21 @@ PharoLinkTestCaseExceptionAnnouncement class >> testCase: aTestCase startTimesta
 		  trace: anException stackString
 		  additionalData: anException pharoLinkAdditionalData;
 		  yourself
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> additionalExceptions [
+	"Answer any additional exceptions that were raised while running the test.
+	nil = no information collected.
+	empty = no additional exceptions."
+	<return: #Array or: nil>
+
+	^ additionalExceptions
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseExceptionAnnouncement >> additionalExceptions: anObject [
+	additionalExceptions := anObject
 ]
 
 { #category : #accessing }
@@ -98,6 +119,12 @@ PharoLinkTestCaseExceptionAnnouncement >> gtTraceFor: aView [
 		text: [ exceptionTrace ];
 		styler: GtTraceStyler new;
 		aptitude: BrGlamorousCodeEditorAptitude
+]
+
+{ #category : #testing }
+PharoLinkTestCaseExceptionAnnouncement >> hasAdditionalExceptions [
+
+	^ additionalExceptions notNil and: [ additionalExceptions notEmpty ]
 ]
 
 { #category : #initialization }
@@ -146,5 +173,7 @@ PharoLinkTestCaseExceptionAnnouncement >> summaryAttributes [
 	^ super summaryAttributes
 		add: 'Exception Class:' -> exceptionClass;
 		add: 'Message:' -> exceptionMessageText;
+		add: 'Additional Exceptions:' -> 
+			(additionalExceptions ifNil: [ 0 ] ifNotNil: [ additionalExceptions size ]);
 		yourself.
 ]
