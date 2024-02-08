@@ -2,8 +2,7 @@ Class {
 	#name : #LanguageLinkPlatform,
 	#superclass : #Object,
 	#instVars : [
-		'msgBrokerStrategy',
-		'processStrategy'
+		'msgBrokerStrategy'
 	],
 	#category : #'PharoLink-Platform'
 }
@@ -44,6 +43,11 @@ LanguageLinkPlatform >> ensureEnvironmentForApp: anApplication [
 
 { #category : #hooks }
 LanguageLinkPlatform >> folderForApplication [
+	self subclassResponsibility
+]
+
+{ #category : #'accessing modules' }
+LanguageLinkPlatform >> messageBrokerStrategy [
 	self subclassResponsibility
 ]
 
