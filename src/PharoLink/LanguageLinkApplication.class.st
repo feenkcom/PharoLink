@@ -221,6 +221,25 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 		actionUpdateButton
 ]
 
+{ #category : #accessing }
+LanguageLinkApplication >> gtInternalsFor: aView [
+	<gtView>
+	| formatter |
+	^ aView columnedList
+		title: 'Internals';
+		priority: 70;
+		items: [ {
+			{ 'process handler' . processHandler }.
+			{ 'execution handler' . executionHandler }.
+			{ 'communication handler' . communicationHandler }.
+			{ 'logging handler' . loggingHandler }.
+			{ 'settings' . settings } } ];
+		column: #key text: #first;
+		column: #value text: #second weight: 3;
+		send: #last;
+		actionUpdateButton
+]
+
 { #category : #ui }
 LanguageLinkApplication >> gtPlaygroundFor: aView [
 	<gtView>
