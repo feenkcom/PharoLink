@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'application'
 	],
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #'as yet unclassified' }
@@ -29,6 +29,25 @@ LanguageLinkHandler >> application: anObject [
 LanguageLinkHandler >> debugMode [ 
 
 	^ application debugMode
+]
+
+{ #category : #'gt extensions' }
+LanguageLinkHandler >> gtDetails [
+	^ { 
+		{ #application . application }.
+		{ #running . self isRunning }
+	}
+]
+
+{ #category : #'gt extensions' }
+LanguageLinkHandler >> gtViewDetailsIn: composite [
+	<gtView>
+	^ composite columnedList
+		title: 'Details';
+		items: [ self gtDetails ];
+		column: 'Key' text: #first weight: 0.5;
+		column: 'Value' text: #second;
+		send: #last
 ]
 
 { #category : #initialization }
