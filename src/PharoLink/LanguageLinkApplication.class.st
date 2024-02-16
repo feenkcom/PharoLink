@@ -363,9 +363,11 @@ LanguageLinkApplication >> platform [
 	^self settings platform
 ]
 
-{ #category : #accessing }
+{ #category : #'start-stop' }
 LanguageLinkApplication >> postInitialization [
-	
+	"Hook that is called after all handlers are started and 
+	#waitInitialization found #isServerReady to be true.
+	This means communication with the language server could be established."
 ]
 
 { #category : #accessing }
