@@ -7,7 +7,7 @@ Class {
 	#category : #'PharoLink-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initalization }
 LanguageLinkHandler class >> application: anApplication [
 	^ self new
 		application: anApplication;
@@ -65,10 +65,10 @@ LanguageLinkHandler >> settings [
 	^ self application settings
 ]
 
-{ #category : #accessing }
+{ #category : #'start-stop' }
 LanguageLinkHandler >> start [
 ]
 
-{ #category : #accessing }
+{ #category : #'start-stop' }
 LanguageLinkHandler >> stop [
 ]
