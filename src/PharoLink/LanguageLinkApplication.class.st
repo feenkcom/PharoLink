@@ -218,6 +218,7 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 		column: #key text: #first;
 		column: #value text: #second weight: 3;
 		send: #last;
+		updateWhen: LanguageLinkStartStopSignal in: [ Beacon instance announcer ];
 		actionUpdateButton
 ]
 
@@ -273,6 +274,16 @@ LanguageLinkApplication >> gtSettingsFor: aView [
 		view: #gtSettingsFor:
 ]
 
+{ #category : #accessing }
+LanguageLinkApplication >> gtStartStopActionFor: anAction [
+	<gtAction>
+	^ anAction button
+		icon: BrGlamorousVectorIcons shutdown;
+		tooltip: 'Start/stop this language link application';
+		priority: 10;
+		action: [ self isRunning ifTrue: [ self stop ] ifFalse: [ self start ] ]
+]
+
 { #category : #ui }
 LanguageLinkApplication >> gtStatusFor: aView [
 
@@ -281,17 +292,8 @@ LanguageLinkApplication >> gtStatusFor: aView [
 		  title: 'Status';
 		  priority: 50;
 		  text: [ self serverStatus asRopedText glamorousCodeFont ];
+		  updateWhen: LanguageLinkStartStopSignal in: [ Beacon instance announcer ];
 		  actionUpdateButton
-]
-
-{ #category : #accessing }
-LanguageLinkApplication >> gtStopActionFor: anAction [
-	<gtAction>
-	^ anAction button
-		icon: BrGlamorousVectorIcons shutdown;
-		tooltip: 'Stop this language link application';
-		priority: 10;
-		action: [ self stop ]
 ]
 
 { #category : #handlers }
@@ -462,6 +464,7 @@ LanguageLinkApplication >> start [
 	self waitInitialization.
 	self postInitialization.
 	self newCommandFactory send.
+	LanguageLinkStartSignal new subject: self; emit
 ]
 
 { #category : #accessing }
@@ -478,7 +481,8 @@ LanguageLinkApplication >> stdout [
 
 { #category : #'start-stop' }
 LanguageLinkApplication >> stop [
-	self handlers reversed select: #notNil thenDo: #stop
+	self handlers reversed select: #notNil thenDo: #stop.
+	LanguageLinkStopSignal new subject: self; emit
 ]
 
 { #category : #initialization }
