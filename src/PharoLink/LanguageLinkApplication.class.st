@@ -10,11 +10,19 @@ Class {
 		'executionHandler',
 		'settings'
 	],
+	#classVars : [
+		'announcer'
+	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
 	#category : #'PharoLink-Global'
 }
+
+{ #category : #accessing }
+LanguageLinkApplication class >> announcer [
+	^ announcer ifNil: [ announcer := Announcer new ]
+]
 
 { #category : #accessing }
 LanguageLinkApplication class >> defaultSettings [
@@ -218,7 +226,7 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 		column: #key text: #first;
 		column: #value text: #second weight: 3;
 		send: #last;
-		updateWhen: LanguageLinkStartStopSignal in: [ Beacon instance announcer ];
+		updateWhen: LanguageLinkStartStopAnnouncement in: [ LanguageLinkApplication announcer ];
 		actionUpdateButton
 ]
 
@@ -292,7 +300,7 @@ LanguageLinkApplication >> gtStatusFor: aView [
 		  title: 'Status';
 		  priority: 50;
 		  text: [ self serverStatus asRopedText glamorousCodeFont ];
-		  updateWhen: LanguageLinkStartStopSignal in: [ Beacon instance announcer ];
+		  updateWhen: LanguageLinkStartStopAnnouncement in: [ LanguageLinkApplication announcer ];
 		  actionUpdateButton
 ]
 
@@ -464,7 +472,8 @@ LanguageLinkApplication >> start [
 	self waitInitialization.
 	self postInitialization.
 	self newCommandFactory send.
-	LanguageLinkStartSignal new subject: self; emit
+	self class announcer 
+		announce: (LanguageLinkStartAnnouncement new subject: self; yourself)
 ]
 
 { #category : #accessing }
@@ -482,7 +491,8 @@ LanguageLinkApplication >> stdout [
 { #category : #'start-stop' }
 LanguageLinkApplication >> stop [
 	self handlers reversed select: #notNil thenDo: #stop.
-	LanguageLinkStopSignal new subject: self; emit
+	self class announcer
+		announce: (LanguageLinkStopAnnoucement new subject: self; yourself)
 ]
 
 { #category : #initialization }
