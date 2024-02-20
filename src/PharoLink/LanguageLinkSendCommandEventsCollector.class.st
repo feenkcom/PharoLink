@@ -9,6 +9,11 @@ LanguageLinkSendCommandEventsCollector >> createDefaultEventsGrouper [
 	^ LanguageLinkSendCommandEventsGrouper new
 ]
 
+{ #category : #initialization }
+LanguageLinkSendCommandEventsCollector >> defaultSignalType [
+	^ LanguageLinkSendCommandSignal, LanguageLinkDeliverCommandSignal
+]
+
 { #category : #accessing }
 LanguageLinkSendCommandEventsCollector >> gtCommandsFor: aView [
 	<gtView>
