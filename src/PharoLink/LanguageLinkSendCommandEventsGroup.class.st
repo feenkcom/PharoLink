@@ -30,7 +30,7 @@ LanguageLinkSendCommandEventsGroup >> gtItemsFor: aView [
 		priority: 10;
 		items: [ self ];
 		children: #subEvents;
-		column: 'Event Type' text: [ :anEvent | anEvent class eventLabel ] width: 150;
+		column: 'Event Type' text: [ :anEvent | anEvent eventLabel ] width: 150;
 		column: 'Timestamp' text: #timestamp;
 		column: 'Command String' text: [ :anEvent | anEvent commandString ];
 		column: 'Duration' 
