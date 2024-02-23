@@ -223,8 +223,8 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 			{ 'Server socket address' . self settings serverSocketAddress }.
 			{ 'Server process path' . [ self serverPath ] on: MessageNotUnderstood do: [ '' ] }.
 			{ 'Server process directory' . self settings workingDirectory } } ];
-		column: #key text: #first;
-		column: #value text: #second weight: 3;
+		column: #key text: #first weight: 0.5;
+		column: #value text: #second;
 		send: #last;
 		updateWhen: LanguageLinkStartStopAnnouncement in: [ LanguageLinkApplication announcer ];
 		actionUpdateButton
@@ -271,6 +271,16 @@ LanguageLinkApplication >> gtPlaygroundFor: aView [
 
 ]
 
+{ #category : #accessing }
+LanguageLinkApplication >> gtRestartActionFor: anAction [
+	<gtAction>
+	^ anAction button
+		icon: BrGlamorousVectorIcons refresh;
+		tooltip: 'Restart this language link application';
+		priority: 15;
+		action: [ self restart ]
+]
+
 { #category : #ui }
 LanguageLinkApplication >> gtSettingsFor: aView [
 	<gtView>
@@ -289,7 +299,7 @@ LanguageLinkApplication >> gtStartStopActionFor: anAction [
 		icon: BrGlamorousVectorIcons shutdown;
 		tooltip: 'Start/stop this language link application';
 		priority: 10;
-		action: [ self isRunning ifTrue: [ self stop ] ifFalse: [ self start ] ]
+		action: [ self toggleStartStop ]
 ]
 
 { #category : #ui }
@@ -397,6 +407,13 @@ LanguageLinkApplication >> remoteAddressString [
 	^ communicationHandler remoteAddressString.
 ]
 
+{ #category : #'start-stop' }
+LanguageLinkApplication >> restart [
+	self isRunning ifTrue: [ self stop ].
+	0.5 seconds wait.
+	self start
+]
+
 { #category : #instructions }
 LanguageLinkApplication >> send: aCommand [
 	self isRunning ifFalse: 
@@ -493,6 +510,11 @@ LanguageLinkApplication >> stop [
 	self handlers reversed select: #notNil thenDo: #stop.
 	self class announcer
 		announce: (LanguageLinkStopAnnoucement new subject: self; yourself)
+]
+
+{ #category : #'start-stop' }
+LanguageLinkApplication >> toggleStartStop [
+	self isRunning ifTrue: [ self stop ] ifFalse: [ self start ]
 ]
 
 { #category : #initialization }
