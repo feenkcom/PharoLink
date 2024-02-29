@@ -32,14 +32,15 @@ LanguageLinkApplication class >> defaultSettings [
 
 { #category : #'start-stop' }
 LanguageLinkApplication class >> do: aBlockClosure [ 
-	| retVal |
+	| returnValue |
 	self isRunning ifTrue: [ ^ aBlockClosure cull: self uniqueInstance ].
 	[
 		self start.
-		retVal := aBlockClosure cull: self uniqueInstance.
-		self uniqueInstance commandFactory << nil.
-		self uniqueInstance commandFactory send waitForValue. ] ensure: [ self stop ].
-	^ retVal
+		returnValue := aBlockClosure cull: self uniqueInstance.
+		self uniqueInstance newCommandFactory 
+			<< nil; 
+			sendAndWait ] ensure: [ self stop ].
+	^ returnValue
 ]
 
 { #category : #testing }
@@ -128,15 +129,15 @@ LanguageLinkApplication class >> stop [
 ]
 
 { #category : #testing }
-LanguageLinkApplication class >> test [ 
-	self assert: (self do: [ :app |
-		app commandFactory << (JSGBinaryOperator new
-                     left: 1;
-                     right: 2;
-                     operator: $+;
-                     yourself).
-		app commandFactory send waitForValue
-	  ]) = 3
+LanguageLinkApplication class >> test [
+	self assert: (self do: [ :app | 
+			app newCommandFactory
+				<< (JSGBinaryOperator new
+						left: 1;
+						right: 2;
+						operator: $+;
+						yourself);
+				sendAndWait ]) = 3
 ]
 
 { #category : #instructions }
