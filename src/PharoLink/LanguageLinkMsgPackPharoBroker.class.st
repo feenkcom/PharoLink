@@ -29,7 +29,8 @@ LanguageLinkMsgPackPharoBroker >> clientSocket [
 	retryCount := 20.
 	retryDelay := 500 milliSeconds.
 	serverIP := NetNameResolver addressForName: socketAddress ipOrName timeout: 20.
-	[ [ (newSocket := Socket newTCP)
+	[ LlEsConnectStartingSignal new emit.
+	[ (newSocket := Socket newTCP)
 		setOption: 'TCP_NODELAY' value: 1;
 		setOption: 'SO_SNDBUF' value: LanguageLinkMsgPackUtils socketBufferSize;
 		setOption: 'SO_RCVBUF' value: LanguageLinkMsgPackUtils socketBufferSize .
@@ -38,7 +39,14 @@ LanguageLinkMsgPackPharoBroker >> clientSocket [
 		port: socketAddress port
 		waitForConnectionFor: 10 ]
 			on: ConnectionTimedOut
-			do: [].
+			do: [ :ex | Stdio stdout
+				lf; 
+				<< 'ConnectionTimedOut ex: ';
+				<< ex printString;
+				lf ].
+	LlEsConnectCompletedSignal new
+		isConnected: newSocket isConnected;
+		emit.
 	newSocket isConnected or: [ retryCount = 0 ] ] whileFalse:
 		[ retryDelay wait.
 		retryCount := retryCount - 1 ].
