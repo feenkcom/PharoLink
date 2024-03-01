@@ -522,13 +522,16 @@ LanguageLinkApplication >> toggleStartStop [
 LanguageLinkApplication >> waitInitialization [
 	"Timeout of 10 seconds and try every 0.5 seconds"
 	1 to: 20 by: 0.5 do: [ :t |
-		self isServerReady 
-				ifTrue: [ ^ self ]
-				ifFalse: [ (Delay forMilliseconds: 500) wait ] ].
+		LlEsCheckServerReadyStartingSignal new emit.
+		self isServerReady ifTrue: 
+			[ LlEsCheckServerReadyCompletedSignal new
+				isServerReady: true;
+				emit.
+			^ self ]
+		ifFalse: 
+			[ LlEsCheckServerReadyCompletedSignal new
+				isServerReady: false;
+				emit.
+			(Delay forMilliseconds: 500) wait ] ].
 	self error: 'The server initialization failed!'.
-	"
-	Print the result of executing the following line:
-	
-	self errorMessage
-	"
 ]
