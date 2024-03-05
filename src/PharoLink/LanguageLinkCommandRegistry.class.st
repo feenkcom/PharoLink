@@ -8,7 +8,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'executionHandler',
-		'dictionary'
+		'dictionary',
+		'mutex'
 	],
 	#category : #'PharoLink-Execution'
 }
@@ -23,7 +24,8 @@ LanguageLinkCommandRegistry class >> executionHandler: aHandler [
 { #category : #accessing }
 LanguageLinkCommandRegistry >> addCommand: aCommand [
 
-	dictionary at: aCommand id put: aCommand
+	mutex critical:
+		[ dictionary at: aCommand id put: aCommand ]
 ]
 
 { #category : #accessing }
@@ -49,7 +51,7 @@ LanguageLinkCommandRegistry >> finishCommand: aCommand [
 { #category : #accessing }
 LanguageLinkCommandRegistry >> finishCommandId: id [
 
-	dictionary removeKey: id.
+	mutex critical: [ dictionary removeKey: id ].
 	^ true.
 
 ]
@@ -57,14 +59,14 @@ LanguageLinkCommandRegistry >> finishCommandId: id [
 { #category : #accessing }
 LanguageLinkCommandRegistry >> getCommand: aCommandId [
 
-	^ dictionary at: aCommandId
+	^ mutex critical: [ dictionary at: aCommandId ]
 ]
 
 { #category : #initialization }
 LanguageLinkCommandRegistry >> initialize [
 	super initialize.
 	dictionary := Dictionary new.
-
+	mutex := Mutex new.
 ]
 
 { #category : #testing }
