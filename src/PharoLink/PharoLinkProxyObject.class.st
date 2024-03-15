@@ -64,6 +64,14 @@ PharoLinkProxyObject >> getSerialized [
 ]
 
 { #category : #accessing }
+PharoLinkProxyObject >> getText [
+	^ self newCommandFactory
+		setByValue;
+		<< 'self getText';
+		sendAndWait
+]
+
+{ #category : #accessing }
 PharoLinkProxyObject >> getValue [
 	"Answer the receiver as a local object, i.e. copy it from the server.
 	This only works for objects that support answer by value, e.g. Arrays and Dictionaries.  Other objects will answer the proxy."
