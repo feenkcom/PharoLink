@@ -59,5 +59,5 @@ LanguageLinkMsgPackUtils class >> setReferenceSocketStreamOptions: stream [
 LanguageLinkMsgPackUtils class >> socketBufferSize [
 	"Size in bytes for Sockets and SocketStream IO buffers"
 
-	^ 4096
+	^ 512 * 1024
 ]
