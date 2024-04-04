@@ -44,6 +44,7 @@ LanguageLinkHandler >> gtViewDetailsIn: composite [
 	<gtView>
 	^ composite columnedList
 		title: 'Details';
+		priority: 20;
 		items: [ self gtDetails ];
 		column: 'Key' text: #first weight: 0.5;
 		column: 'Value' text: #second;
