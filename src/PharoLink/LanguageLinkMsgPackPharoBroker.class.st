@@ -23,35 +23,41 @@ LanguageLinkMsgPackPharoBroker class >> serializerClass [
 
 { #category : #'private - utils' }
 LanguageLinkMsgPackPharoBroker >> clientSocket [
-	| socketAddress newSocket retryDelay retryCount serverIP |
+	| socketAddress newSocket retryCount serverIP |
 	socketAddress := self settings serverSocketAddress.
-	"Wait up to 10 seconds for the server to come up"
-	retryCount := 20.
-	retryDelay := 500 milliSeconds.
+	"Wait up to `((25 to: 1 by: -1) collect: [ :each | (5.0 / each) seconds ]) sum` seconds for the server to come up"
+	retryCount := 25.
 	serverIP := NetNameResolver addressForName: socketAddress ipOrName timeout: 20.
-	[ LlEsConnectStartingSignal new emit.
-	[ (newSocket := Socket newTCP)
-		setOption: 'TCP_NODELAY' value: 1;
-		setOption: 'SO_SNDBUF' value: LanguageLinkMsgPackUtils socketBufferSize;
-		setOption: 'SO_RCVBUF' value: LanguageLinkMsgPackUtils socketBufferSize .
-	newSocket 
-		connectTo: serverIP
-		port: socketAddress port
-		waitForConnectionFor: 10 ]
+	[ 
+		LlEsConnectStartingSignal new
+			emit.
+		[ 
+			(newSocket := Socket newTCP)
+				setOption: 'TCP_NODELAY' value: 1;
+				setOption: 'SO_SNDBUF' value: LanguageLinkMsgPackUtils socketBufferSize;
+				setOption: 'SO_RCVBUF' value: LanguageLinkMsgPackUtils socketBufferSize .
+			newSocket 
+				connectTo: serverIP
+				port: socketAddress port
+				waitForConnectionFor: 10 ]
 			on: ConnectionTimedOut
-			do: [ :ex | Stdio stdout
-				lf; 
-				<< 'ConnectionTimedOut ex: ';
-				<< ex printString;
-				lf ].
-	LlEsConnectCompletedSignal new
-		isConnected: newSocket isConnected;
-		emit.
-	newSocket isConnected or: [ retryCount = 0 ] ] whileFalse:
-		[ retryDelay wait.
-		retryCount := retryCount - 1 ].
+			do: [ :ex | 
+				"Ignored by design"
+				"Stdio stdout
+					lf;
+					<< 'LanguageLinkMsgPackPharoBroker>>#clientSocket: ConnectionTimedOut, retries left ';
+					<< retryCount printString;
+					lf" ].
+		LlEsConnectCompletedSignal new
+			isConnected: newSocket isConnected;
+			emit.
+		newSocket isConnected or: [ retryCount < 1 ] ] whileFalse:[ 
+			(5.0 / retryCount) seconds wait.
+			retryCount := retryCount - 1 ].
 	newSocket isConnected
-		ifFalse: [ ConnectionTimedOut signal: 'Cannot connect to ', socketAddress printString ].
+		ifFalse: [ ConnectionTimedOut signal: 
+						('{1} cannot connect to {2}' format: {
+							self class name . socketAddress }) ].
 	^ newSocket
 ]
 
