@@ -174,15 +174,15 @@ LanguageLinkMsgPackPharoBroker >> sendSyncMessage: msg [
 
 { #category : #'private - utils' }
 LanguageLinkMsgPackPharoBroker >> serverSocketOn: port [
-	| socket |
-	(socket := Socket newTCP)
+	| serverSocket |
+	(serverSocket := Socket newTCP)
 		setOption: 'TCP_NODELAY' value: 1;
 		setOption: 'SO_SNDBUF' value: LanguageLinkMsgPackUtils socketBufferSize;
 		setOption: 'SO_RCVBUF' value: LanguageLinkMsgPackUtils socketBufferSize .
-	socket listenOn: port backlogSize: LanguageLinkMsgPackUtils listenBacklogSize.
-	socket isValid
-		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
-	^ socket
+	serverSocket listenOn: port backlogSize: LanguageLinkMsgPackUtils listenBacklogSize.
+	serverSocket isValid
+		ifFalse: [ self error: 'Cannot create server socket on port ', port printString ].
+	^ serverSocket
 ]
 
 { #category : #'start-stop' }
