@@ -168,6 +168,13 @@ PharoLinkServerConnection >> isConnected [
 	^ socket isNotNil and: [ socket isConnected ]
 ]
 
+{ #category : #testing }
+PharoLinkServerConnection >> isRunning [
+
+	^ self isConnected and: [ listenProcess isNotNil and:
+		[ listenProcess isTerminated not ] ]
+]
+
 { #category : #accessing }
 PharoLinkServerConnection >> localAddressWithPortString [
 	socket ifNil: [ ^ '<none>' ].
@@ -293,7 +300,7 @@ PharoLinkServerConnection >> stop [
 	processes removeAll.
 	self announce:
 		(PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
-	server onConnectionStopped.
+	server onConnectionStopped: self.
 ]
 
 { #category : #'announcer - subscription' }
