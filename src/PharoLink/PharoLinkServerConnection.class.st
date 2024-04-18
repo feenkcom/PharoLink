@@ -45,26 +45,6 @@ PharoLinkServerConnection >> globals [
 	^ server globals
 ]
 
-{ #category : #private }
-PharoLinkServerConnection >> handlEnqueue: aDictionary [
-
-	"Process the supplied statements"
-
-	| command |
-	command := PharoLinkEvalCommand
-		           source: (aDictionary at: #statements)
-		           bindings:
-			           ((aDictionary at: #bindings) asDictionary collect: [ 
-				            :obj | self deserialize: obj ])
-		           id: (aDictionary at: #commandId).
-	command connection: self.
-	processes add: ([ 
-		 PharoLinkServerCurrentConnection
-			 value: self
-			 during: [ command execute: self globals ] ] forkAt:
-			 Processor userSchedulingPriority)
-]
-
 { #category : #'error handling' }
 PharoLinkServerConnection >> handleError: aDictionary [
 
@@ -110,6 +90,26 @@ PharoLinkServerConnection >> handleNextRequestSafely [
 			[ self stop ] fork.
 			"Wait to be terminated"
 			Semaphore new wait ]
+]
+
+{ #category : #private }
+PharoLinkServerConnection >> handlEnqueue: aDictionary [
+
+	"Process the supplied statements"
+
+	| command |
+	command := PharoLinkEvalCommand
+		           source: (aDictionary at: #statements)
+		           bindings:
+			           ((aDictionary at: #bindings) asDictionary collect: [ 
+				            :obj | self deserialize: obj ])
+		           id: (aDictionary at: #commandId).
+	command connection: self.
+	processes add: ([ 
+		 PharoLinkServerCurrentConnection
+			 value: self
+			 during: [ command execute: self globals ] ] forkAt:
+			 Processor userSchedulingPriority)
 ]
 
 { #category : #public }
@@ -166,6 +166,13 @@ PharoLinkServerConnection >> initializeServer: aPharoLinkServer socket: aSocket 
 PharoLinkServerConnection >> isConnected [
 
 	^ socket isNotNil and: [ socket isConnected ]
+]
+
+{ #category : #testing }
+PharoLinkServerConnection >> isRunning [
+
+	^ self isConnected and: [ listenProcess isNotNil and:
+		[ listenProcess isTerminated not ] ]
 ]
 
 { #category : #accessing }
@@ -293,7 +300,7 @@ PharoLinkServerConnection >> stop [
 	processes removeAll.
 	self announce:
 		(PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
-	server onConnectionStopped.
+	server onConnectionStopped: self.
 ]
 
 { #category : #'announcer - subscription' }

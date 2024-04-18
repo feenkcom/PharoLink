@@ -173,6 +173,13 @@ PharoLinkServer >> onConnectionStopped [
 		[ Smalltalk snapshot: false andQuit: true ].
 ]
 
+{ #category : #'start-stop' }
+PharoLinkServer >> onConnectionStopped: aPharoLinkServerConnection [
+
+	connections remove: aPharoLinkServerConnection ifAbsent: [].
+	self onConnectionStopped.
+]
+
 { #category : #'announcer - subscription' }
 PharoLinkServer >> removeSubscription: subscription [
 	"Remove the given subscription from the receiver"
