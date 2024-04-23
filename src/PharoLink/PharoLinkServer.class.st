@@ -60,6 +60,9 @@ PharoLinkServer class >> commandLineCommand [
 { #category : #private }
 PharoLinkServer >> addConnection: aPharoLinkServerConnection [
 
+	self assert: [ aPharoLinkServerConnection isNotNil ]
+		description: 'Supplied connection must not be nil'.
+
 	connections add: aPharoLinkServerConnection.
 	self announce: (PharoLinkServerConnectionConnectedAnnouncement connection: aPharoLinkServerConnection)
 ]
@@ -229,7 +232,7 @@ PharoLinkServer >> stop [
 
 	listenProcess ifNotNil: #terminate.
 	listenProcess := nil.
-	connections do: #stop.
+	connections do: [ :connection | connection ifNotNil: [ connection stop ] ].
 	connections removeAll.
 	serverSocket  ifNotNil: #closeAndDestroy.
 	serverSocket := nil.
