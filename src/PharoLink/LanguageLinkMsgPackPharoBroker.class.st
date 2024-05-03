@@ -23,15 +23,19 @@ LanguageLinkMsgPackPharoBroker class >> serializerClass [
 
 { #category : #'private - utils' }
 LanguageLinkMsgPackPharoBroker >> clientSocket [
-	| socketAddress newSocket retryCount serverIP |
+	"Open a socket to serverIP:socketAddress.
+	Signal ConnectionTimedOut on failure."
+	| socketAddress newSocket retryCount retryDelay serverIP startTime diffSeconds |
 	socketAddress := self settings serverSocketAddress.
-	"Wait up to `((25 to: 1 by: -1) collect: [ :each | (5.0 / each) seconds ]) sum` seconds for the server to come up"
-	retryCount := 25.
+	"Spend at most approx. 1 minute attempting to connect."
+	retryCount := 11.
+	retryDelay := 0.25 "seconds".
 	serverIP := NetNameResolver addressForName: socketAddress ipOrName timeout: 20.
 	[ 
 		LlEsConnectStartingSignal new
 			emit.
 		[ 
+			startTime := DateAndTime now.
 			(newSocket := Socket newTCP)
 				setOption: 'TCP_NODELAY' value: 1;
 				setOption: 'SO_SNDBUF' value: LanguageLinkMsgPackUtils socketBufferSize;
@@ -39,20 +43,17 @@ LanguageLinkMsgPackPharoBroker >> clientSocket [
 			newSocket 
 				connectTo: serverIP
 				port: socketAddress port
-				waitForConnectionFor: 10 ]
+				waitForConnectionFor: retryDelay ]
 			on: ConnectionTimedOut
-			do: [ :ex | 
-				"Ignored by design"
-				"Stdio stdout
-					lf;
-					<< 'LanguageLinkMsgPackPharoBroker>>#clientSocket: ConnectionTimedOut, retries left ';
-					<< retryCount printString;
-					lf" ].
+			do: [ :ex | "nothing now, the status is checked below" ].
 		LlEsConnectCompletedSignal new
 			isConnected: newSocket isConnected;
 			emit.
 		newSocket isConnected or: [ retryCount < 1 ] ] whileFalse:[ 
-			(5.0 / retryCount) seconds wait.
+			diffSeconds := retryDelay - (DateAndTime now - startTime) totalSeconds.
+			diffSeconds > 0.1 ifTrue:
+				[ diffSeconds seconds wait ].
+			retryDelay < 7 ifTrue: [ retryDelay := retryDelay * 2 ].
 			retryCount := retryCount - 1 ].
 	newSocket isConnected
 		ifFalse: [ ConnectionTimedOut signal: 
