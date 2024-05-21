@@ -2,7 +2,8 @@ Extension { #name : #OutOfMemory }
 
 { #category : #'*PharoLink' }
 OutOfMemory >> description [
-
+	<gtPharoPatch: #Pharo>
+	
 	^ String streamContents: [ :stream |
 		stream 
 			<< self class name;
