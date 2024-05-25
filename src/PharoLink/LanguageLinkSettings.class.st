@@ -154,7 +154,8 @@ LanguageLinkSettings >> gtSettingsFor: aView [
 			width: 170;
 		column: #Value 
 			text: [ :item | item value: self ];
-		send: [ :item | item value: self ]
+		send: [ :item | item value: self ];
+		actionUpdateButton
 ]
 
 { #category : #initialization }
