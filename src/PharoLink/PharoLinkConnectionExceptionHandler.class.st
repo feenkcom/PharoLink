@@ -11,7 +11,7 @@ Class {
 PharoLinkConnectionExceptionHandler >> handleExceptionsDuring: aBlock for: msgBroker [
 
 	aBlock
-		on: PrimitiveFailed, NetworkError
+		on: PrimitiveFailed, SocketError, NetworkError
 		do: [ :ex |
 			"If the client has been told to stop, give it time to register"
 			1 second wait.
