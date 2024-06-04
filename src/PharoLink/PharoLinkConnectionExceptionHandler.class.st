@@ -11,7 +11,9 @@ Class {
 PharoLinkConnectionExceptionHandler >> handleExceptionsDuring: aBlock for: msgBroker [
 
 	aBlock
-		on: PrimitiveFailed, SocketError, NetworkError
+		"Sockets signal SocketError instead of PrimitiveFailed in Pharo 11, 
+		PrimitiveFailed should be removed from here when Pharo 10 compatibility is dropped"
+		on: (ExceptionSet withClassNames: #(#PrimitiveFailed #SocketError #NetworkError))
 		do: [ :ex |
 			"If the client has been told to stop, give it time to register"
 			1 second wait.
