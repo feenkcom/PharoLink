@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'testCaseShouldPass',
 		'testCaseEndTimestamp',
-		'resourceReport'
+		'resourceReport',
+		'additionalProperties'
 	],
 	#category : #'PharoLink-Test-Runner'
 }
@@ -22,6 +23,7 @@ PharoLinkTestCaseEndAnnouncement class >> leFromJsonV4Dictionary: aDictionary [
 		shouldPass: (aDictionary at: #testCaseShouldPass ifAbsent: []);
 		testCaseEndTimestamp: (aDictionary at: #testCaseEndTimestamp ifAbsent: []);
 		resourceReport: (aDictionary at: #resourceReport ifAbsent: []);
+		additionalProperties: (aDictionary at: #additionalProperties ifAbsent: []);
 		yourself
 ]
 
@@ -41,6 +43,10 @@ PharoLinkTestCaseEndAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapping [
 		mapProperty: #resourceReport
 			getter: [ :object | object resourceReport ]
 			setter: [ :object :value | 
+				self error: 'Cannot set it, use leFromJsonV4Dictionary' ];
+		mapProperty: #additionalProperties
+			getter: [ :object | object additionalProperties ]
+			setter: [ :object :value | 
 				self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
 
 ]
@@ -59,6 +65,16 @@ PharoLinkTestCaseEndAnnouncement class >> testCase: aTestCase startTimestamp: aD
 PharoLinkTestCaseEndAnnouncement >> addToTestResult: aTestResult [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> additionalProperties [
+	^ additionalProperties
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> additionalProperties: aDictionary [
+	^ additionalProperties := aDictionary
 ]
 
 { #category : #accessing }
@@ -89,6 +105,12 @@ PharoLinkTestCaseEndAnnouncement >> duration [
 
 	^ testCaseEndTimestamp - testCaseStartTimestamp.
 
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> ensureAdditionalProperties [
+	additionalProperties ifNil: [
+		additionalProperties := Dictionary new ]
 ]
 
 { #category : #ui }
@@ -150,6 +172,18 @@ PharoLinkTestCaseEndAnnouncement >> isSuccess [
 PharoLinkTestCaseEndAnnouncement >> isWarning [
 
 	^ false
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> messageTallyReport [
+	self ensureAdditionalProperties.
+	^ additionalProperties at: #messageTallyReport ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> messageTallyReport: aMessageTallyReport [
+	self ensureAdditionalProperties.
+	additionalProperties at: #messageTallyReport put: aMessageTallyReport.
 ]
 
 { #category : #accessing }

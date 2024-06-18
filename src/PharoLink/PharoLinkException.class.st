@@ -95,6 +95,18 @@ PharoLinkException >> gtDisplayOn: aStream [
 ]
 
 { #category : #ui }
+PharoLinkException >> gtLoopAnalysisFor: aView [
+	<gtView>
+	
+	(exceptionAdditionalData class = PharoLinkAdditionalData) ifFalse: [ ^ aView empty ].
+	^ aView forward
+		title: 'Loop Analysis';
+		priority: 40;
+		object: [ exceptionAdditionalData ];
+		view: #gtLoopAnalysisFor:
+]
+
+{ #category : #ui }
 PharoLinkException >> gtSummaryFor: aView [
 
 	<gtView>
