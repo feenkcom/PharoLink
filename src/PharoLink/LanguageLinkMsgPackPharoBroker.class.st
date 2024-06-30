@@ -116,19 +116,35 @@ LanguageLinkMsgPackPharoBroker >> preventTestForkedPDestroyServer [
 { #category : #private }
 LanguageLinkMsgPackPharoBroker >> primHandle: dict [
 	| msgClass |
+	LanguageLinkBrokerHandleMessage new
+		message: dict;
+		markAsStartSignal;
+		emit.
 	msgClass := self resolveMessageFromType: (dict at: #type).
 	msgClass isReverseMessage
 		ifTrue: [ | handler |
 			handler := self handle: dict reverseMessageClass: msgClass.
 			handler shouldAnswer ifTrue: [ self primSendMessage: handler answer encode ] ]
 		ifFalse: [ 
-			self handleAnswerMessage: dict ]
+			self handleAnswerMessage: dict ].
+	LanguageLinkBrokerHandleMessage new
+		message: dict;
+		markAsEndSignal;
+		emit
 ]
 
 { #category : #private }
 LanguageLinkMsgPackPharoBroker >> primSendMessage: dict [
+	LanguageLinkBrokerSendMessage new
+		message: dict;
+		markAsStartSignal;
+		emit.
 	msgStream ifNil: [ LanguageLinkCommunicationError signal ].
-	msgStream nextPut: dict
+	msgStream nextPut: dict.
+	LanguageLinkBrokerSendMessage new
+		message: dict;
+		markAsEndSignal;
+		emit
 ]
 
 { #category : #private }
