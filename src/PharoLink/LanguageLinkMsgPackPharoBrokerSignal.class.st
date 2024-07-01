@@ -9,6 +9,11 @@ Class {
 	#category : #'PharoLink-Logging'
 }
 
+{ #category : #accessing }
+LanguageLinkMsgPackPharoBrokerSignal class >> eventType [
+	^ LanguageLinkMsgPackPharoBrokerEvent
+]
+
 { #category : #'gt extensions' }
 LanguageLinkMsgPackPharoBrokerSignal >> gtDetails [
 	^ {
