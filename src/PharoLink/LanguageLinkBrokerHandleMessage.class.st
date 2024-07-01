@@ -6,10 +6,17 @@ Class {
 
 { #category : #'gt extensions' }
 LanguageLinkBrokerHandleMessage >> gtDetails [
-	^ super gtDetails , {
-		{ 'CommandId' . self message at: #id ifAbsent: [ '' ] }.
+	| details |
+	details := super gtDetails , {
+		{ 'CommandId' . self message at: #id ifAbsent: [ self message at: #commandId ifAbsent: [ '' ] ] }.
 		{ 'Value' . (self message at: #value ifPresent: [ :value | MpDecoder decode: value ]) }.
-	}
+	}.
+	self message at: #type ifPresent: [ :msgType | 
+		msgType = 'ERR'
+			ifTrue: [
+				message at: #errMsg ifPresent: [ :errorMsg |
+					details := details , { { 'ErrorMessage' . errorMsg } } ] ] ].
+	^ details
 ]
 
 { #category : #accessing }
