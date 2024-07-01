@@ -11,3 +11,8 @@ LanguageLinkBrokerHandleMessage >> gtDetails [
 		{ 'Value' . (self message at: #value ifPresent: [ :value | MpDecoder decode: value ]) }.
 	}
 ]
+
+{ #category : #accessing }
+LanguageLinkBrokerHandleMessage >> signalTypeLabel [
+	^ 'BrokerHandleMessage'
+]

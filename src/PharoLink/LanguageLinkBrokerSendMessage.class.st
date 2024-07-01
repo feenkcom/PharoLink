@@ -22,3 +22,8 @@ LanguageLinkBrokerSendMessage >> gtDetails [
 		{ 'Statements' . self message at: #statements ifAbsent: [ '' ] }.
 	}
 ]
+
+{ #category : #accessing }
+LanguageLinkBrokerSendMessage >> signalTypeLabel [
+	^ 'BrokerSendMessage'
+]
