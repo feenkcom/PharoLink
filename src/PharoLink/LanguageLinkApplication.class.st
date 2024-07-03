@@ -315,6 +315,26 @@ LanguageLinkApplication >> gtStatusFor: aView [
 		  actionUpdateButton
 ]
 
+{ #category : #ui }
+LanguageLinkApplication >> gtStderrFor: aView [
+	<gtView>
+	^ aView textEditor
+		title: 'Stderr';
+		priority: 55;
+		text: [ processHandler stderr ];
+		actionUpdateButton
+]
+
+{ #category : #ui }
+LanguageLinkApplication >> gtStdoutFor: aView [
+	<gtView>
+	^ aView textEditor
+		title: 'Stdout';
+		priority: 55;
+		text: [ processHandler stdout ];
+		actionUpdateButton
+]
+
 { #category : #handlers }
 LanguageLinkApplication >> handlers [
 	^ Array
