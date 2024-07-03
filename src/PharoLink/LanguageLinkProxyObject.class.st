@@ -214,6 +214,17 @@ LanguageLinkProxyObject >> proxyPerform: aSymbol withPrimitiveArguments: anArray
 ]
 
 { #category : #evaluating }
+LanguageLinkProxyObject >> proxyPerformByValue: aSymbol [
+	| cf |
+
+	cf := self newCommandFactory.
+	^ cf 
+		setByValue;
+		<< ('self ', aSymbol);
+		sendAndWait.
+]
+
+{ #category : #evaluating }
 LanguageLinkProxyObject >> proxyPerformSerialized: aSymbol [
 	| cf |
 
