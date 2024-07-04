@@ -11,7 +11,7 @@ Class {
 LanguageLinkPharoWeakRegistry >> destroy [
 
 	self
-		forPharo11AndPharo12: [ weakRegistry := nil ]
+		forPharo11AndPharo12: [ weakRegistry := FinalizationRegistry new ]
 		forPharo10: [ weakRegistry removeAll ].
 ]
 
