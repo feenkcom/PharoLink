@@ -214,16 +214,17 @@ LanguageLinkApplication >> gtDetailsFor: aView [
 		title: 'Details';
 		priority: 30;
 		items: [ {
-			{ 'Client process running'
-				. formatter value: self isRunning 
-				. self isRunning }.
-			{ 'Client socket address' . self settings clientSocketAddress }.
 			{ 'Server process running' 
 				. formatter value: self processHandler isRunning
 				. self processHandler isRunning }.
 			{ 'Server socket address' . self settings serverSocketAddress }.
 			{ 'Server process path' . [ self serverPath ] on: MessageNotUnderstood do: [ '' ] }.
-			{ 'Server process directory' . self settings workingDirectory } } ];
+			{ 'Server process directory' . self settings workingDirectory }.
+			{ 'Client process running'
+				. formatter value: self isRunning 
+				. self isRunning }.
+			{ 'Client socket address' . self settings clientSocketAddress }.
+		} ];
 		column: #key text: #first weight: 0.5;
 		column: #value text: #second;
 		send: #last;
@@ -239,10 +240,10 @@ LanguageLinkApplication >> gtInternalsFor: aView [
 		title: 'Internals';
 		priority: 70;
 		items: [ {
-			{ 'process handler' . processHandler }.
-			{ 'execution handler' . executionHandler }.
-			{ 'communication handler' . communicationHandler }.
 			{ 'logging handler' . loggingHandler }.
+			{ 'process handler' . processHandler }.
+			{ 'communication handler' . communicationHandler }.
+			{ 'execution handler' . executionHandler }.
 			{ 'settings' . settings } } ];
 		column: #key text: #first;
 		column: #value text: #second weight: 3;
@@ -430,8 +431,10 @@ LanguageLinkApplication >> remoteAddressString [
 
 { #category : #'start-stop' }
 LanguageLinkApplication >> restart [
-	self isRunning ifTrue: [ self stop ].
-	0.5 seconds wait.
+	self isRunning
+		ifTrue: [ 
+			self stop.
+			0.5 seconds wait ].
 	self start
 ]
 
