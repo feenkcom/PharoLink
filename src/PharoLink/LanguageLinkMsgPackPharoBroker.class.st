@@ -135,11 +135,11 @@ LanguageLinkMsgPackPharoBroker >> primHandle: dict [
 
 { #category : #private }
 LanguageLinkMsgPackPharoBroker >> primSendMessage: dict [
+	msgStream ifNil: [ LanguageLinkCommunicationError signal ].
 	LanguageLinkBrokerSendMessage new
 		message: dict;
 		markAsStartSignal;
 		emit.
-	msgStream ifNil: [ LanguageLinkCommunicationError signal ].
 	msgStream nextPut: dict.
 	LanguageLinkBrokerSendMessage new
 		message: dict;
