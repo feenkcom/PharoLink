@@ -236,3 +236,9 @@ PharoLinkTestCaseEndAnnouncement >> testCaseEndTimestamp: anObject [
 
 	testCaseEndTimestamp := anObject
 ]
+
+{ #category : #'accessing - gc details' }
+PharoLinkTestCaseEndAnnouncement >> totalGcTime [
+	^ resourceReport ifNotNil: [ :aReport |
+		aReport totalGcTime ]
+]
