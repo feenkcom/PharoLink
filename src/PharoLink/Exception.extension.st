@@ -10,6 +10,16 @@ Exception >> gtTestCaseException: aTestCase startTimestamp: aDateAndTime [
 ]
 
 { #category : #'*PharoLink' }
+Exception >> gtTestCaseException: aTestCase startTimestamp: aDateAndTime additionalData:  additionalData [
+
+	^ PharoLinkTestCaseError
+		  testCase: aTestCase
+		  startTimestamp: aDateAndTime
+		  exception: self
+		  additionalData:  additionalData
+]
+
+{ #category : #'*PharoLink' }
 Exception >> isPharoLinkNotification [
 	"Answer a boolean indicating whether this exception is a PharoLink notification"
 

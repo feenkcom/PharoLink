@@ -38,14 +38,24 @@ PharoLinkTestCaseExceptionAnnouncement class >> leJsonV4AddMappingsTo: aJsonMapp
 			self error: 'Cannot set it, use leFromJsonV4Dictionary' ]
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 PharoLinkTestCaseExceptionAnnouncement class >> testCase: aTestCase startTimestamp: aDateAndTime exception: anException [
+
+	^ self 
+		testCase: aTestCase 
+		startTimestamp: aDateAndTime 
+		exception: anException 
+		additionalData: anException pharoLinkAdditionalData
+]
+
+{ #category : #'instance creation' }
+PharoLinkTestCaseExceptionAnnouncement class >> testCase: aTestCase startTimestamp: aDateAndTime exception: anException additionalData:  additionalData [
 
 	^ (self testCase: aTestCase startTimestamp: aDateAndTime)
 		  initializeExceptionClass: anException class
 		  messageText: (anException messageText ifEmpty: [ anException class name ])
 		  trace: anException stackString
-		  additionalData: anException pharoLinkAdditionalData;
+		  additionalData: additionalData;
 		  yourself
 ]
 
