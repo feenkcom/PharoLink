@@ -26,11 +26,20 @@ PharoLinkException class >> from: anException [
 { #category : #'instance creation' }
 PharoLinkException class >> from: anException trace: aString [
 
+	^ self 
+		from: anException 
+		trace: aString 
+		additionalData:  anException pharoLinkAdditionalData.
+]
+
+{ #category : #'instance creation' }
+PharoLinkException class >> from: anException trace: aString additionalData: anExceptionAdditionalData [
+
 	^ self new
 		exceptionClassName: anException class name;
 		exceptionMessageText: anException messageText;
 		exceptionTrace: aString;
-		exceptionAdditionalData: anException pharoLinkAdditionalData.
+		exceptionAdditionalData: anExceptionAdditionalData.
 ]
 
 { #category : #lejsonv4 }

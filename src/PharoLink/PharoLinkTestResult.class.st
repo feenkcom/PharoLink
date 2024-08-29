@@ -77,7 +77,10 @@ PharoLinkTestResult >> runCaseNoDebug: aTestCase start: start report: resourceRe
 		do: [ :e | 
 			resourceReport recordTargetReport.
 			e sunitAnnounce: aTestCase toResult: self.
-			announcement := e gtTestCaseException: aTestCase startTimestamp: start timestamp.
+			announcement := e 
+				gtTestCaseException: aTestCase 
+				startTimestamp: start timestamp
+				additionalData: e pharoLinkAdditionalData.
 			announcement resourceReport: resourceReport.
 			announcer announce: announcement ].
 ]
