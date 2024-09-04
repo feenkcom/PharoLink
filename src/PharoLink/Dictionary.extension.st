@@ -3,8 +3,8 @@ Extension { #name : #Dictionary }
 { #category : #'*PharoLink' }
 Dictionary >> asGtBareProxyObject [
 
-	^ self collect: #asGtBareProxyObject
-	
+	^ self collect: [ :each |
+		each asGtBareProxyObject ]
 ]
 
 { #category : #'*PharoLink' }
@@ -13,7 +13,6 @@ Dictionary >> asGtProxyObject [
 	Don't rely on Symbol>>value: as it uses #perform: which the bare proxy doesn't understand."
 
 	^ self collect: [ :each | each asGtProxyObject ]
-	
 ]
 
 { #category : #'*PharoLink' }
