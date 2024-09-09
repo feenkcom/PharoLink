@@ -53,6 +53,11 @@ LanguageLinkAbstractProcess >> application: anObject [
 	application := anObject
 ]
 
+{ #category : #'start-stop' }
+LanguageLinkAbstractProcess >> applicationReady [
+	"A notification sent by our application when startup has completed successfully"
+]
+
 { #category : #accessing }
 LanguageLinkAbstractProcess >> debugMode [
 
