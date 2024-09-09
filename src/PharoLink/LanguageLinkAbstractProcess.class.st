@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'serverExecutable'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #accessing }
@@ -51,6 +51,11 @@ LanguageLinkAbstractProcess >> application [
 { #category : #accessing }
 LanguageLinkAbstractProcess >> application: anObject [
 	application := anObject
+]
+
+{ #category : #'start-stop' }
+LanguageLinkAbstractProcess >> applicationReady [
+	"A notification sent by our application when startup has completed successfully"
 ]
 
 { #category : #accessing }
