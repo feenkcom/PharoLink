@@ -176,6 +176,13 @@ GtLlBareProxy >> hash [
 
 ]
 
+{ #category : #pinning }
+GtLlBareProxy >> isPinnedInMemory [
+	"Copied from Object>>isPinnedInMemory"
+	<primitive: 183 error: ec>
+	^self primitiveFailed
+]
+
 { #category : #testing }
 GtLlBareProxy >> isProxyObjectActive [
 
