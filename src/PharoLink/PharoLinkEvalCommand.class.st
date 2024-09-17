@@ -149,8 +149,8 @@ PharoLinkEvalCommand >> notifyError: error [
 	| data |
 
 	"NetworkErrors typically mean that the client has gone away, just log and move on"
-	(error isKindOf: NetworkError) ifTrue: 
-		[ PharoLinkNetworkErrorSignal emitCommand: self error: error.
+	(error isKindOf: NetworkError) ifTrue: [ 
+		PharoLinkNetworkErrorSignal emitCommand: self error: error.
 		^ self ].
 
 	data := Dictionary new.

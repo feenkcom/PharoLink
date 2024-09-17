@@ -108,6 +108,7 @@ PharoLinkServerConnection >> handleNextRequestSafely [
 			"Stop the receiver and announce it.
 			Run from a separate process since we are inside the listen process, and would kill the stop :-)"
 			[ self stop ] fork.
+			
 			"Wait to be terminated"
 			Semaphore new wait ]
 ]
@@ -271,14 +272,17 @@ PharoLinkServerConnection >> start [
 	stream := LanguageLinkMsgPackSocketStream on: (SocketStream on: socket).
 	listenProcess := 
 		[ PharoLinkServerCurrentConnection value: self during:
-			[ [ [ 	self handleNextRequestSafely ] repeat ]
+			[ [ [ self handleNextRequestSafely ] repeat ]
 				on: Error 
-				do: [ :ex | LanguageLinkCommunicationsSignal new
-					originalException: ex;
-					stackString: self stackString;
-					emit ] ] ]
-						forkAt: Processor userSchedulingPriority
-						named: 'PharoLinkServerConnection listenProcess'.
+				do: [ :ex | 
+					ex logStackToFile.
+					LanguageLinkCommunicationsSignal new
+						originalException: ex;
+						stackString: self stackString;
+						emit ] ] ]
+							forkAt: Processor userSchedulingPriority
+							named: 'PharoLinkServerConnection listenProcess'.
+							
 	StringSignal emit: 'PharoLink connection accepted'.
 ]
 
