@@ -6,7 +6,8 @@ Class {
 		'semaphore',
 		'transformBlock',
 		'value',
-		'waitAgain'
+		'waitAgain',
+		'timeout'
 	],
 	#category : #'PharoLink-Execution'
 }
@@ -71,6 +72,16 @@ LanguageLinkPromise >> signalWithValue: anObject [
 ]
 
 { #category : #accessing }
+LanguageLinkPromise >> timeout [
+	^ timeout
+]
+
+{ #category : #accessing }
+LanguageLinkPromise >> timeout: aDuration [
+	timeout := aDuration
+]
+
+{ #category : #accessing }
 LanguageLinkPromise >> transformBlock [
 	^ transformBlock
 ]
@@ -89,7 +100,9 @@ LanguageLinkPromise >> value [
 LanguageLinkPromise >> wait [
 	"Wait for the promise to be fulfiller, but don't process the result"
 
-	semaphore wait.
+	timeout ifNil: [ semaphore wait. ^ self ].
+	(semaphore waitTimeoutMSecs: timeout asMilliSeconds) ifTrue:
+		[ TimedOut signal ].
 ]
 
 { #category : #accessing }
@@ -114,7 +127,7 @@ LanguageLinkPromise >> waitForValue [
 	<remoteDebuggerSignal>
 
 	[ waitAgain := false.
-	self isSignaled ifFalse: [ semaphore wait ].
+	self isSignaled ifFalse: [ self wait ].
 	(value isKindOf: Exception) ifTrue:
 		[ value isPharoLinkNotification ifTrue: [ value promise: self ].
 		value copy signal ].

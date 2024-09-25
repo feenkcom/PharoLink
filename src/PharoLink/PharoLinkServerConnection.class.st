@@ -98,11 +98,11 @@ PharoLinkServerConnection >> handleIsAlive: aDictionary [
 ]
 
 { #category : #private }
-PharoLinkServerConnection >> handleNextRequestSafely [
+PharoLinkServerConnection >> handleNextRequestConnectionErrors: aRequestDictionary [
 	"Retrieve the next request and process it,
 	handling connection errors and timeouts"
 
-	^ [ self handleRequest: stream next ]
+	^ [ self handleRequest: aRequestDictionary ]
 		on: ConnectionClosed, ConnectionTimedOut
 		do: [ :ex |
 			"Stop the receiver and announce it.
@@ -111,6 +111,18 @@ PharoLinkServerConnection >> handleNextRequestSafely [
 			
 			"Wait to be terminated"
 			Semaphore new wait ]
+]
+
+{ #category : #private }
+PharoLinkServerConnection >> handleNextRequestSafely [
+	"Retrieve the next request and process it.
+	Pass any errors (other than connection related) back to the client"
+	| request |
+
+	^ [ request := stream next.
+		self handleNextRequestConnectionErrors: request ]
+			on: Error
+			do: [ :ex | self notifyError: ex in: request ]
 ]
 
 { #category : #public }
@@ -185,6 +197,32 @@ PharoLinkServerConnection >> localAddressWithPortString [
 		aStream 
 			<< ':';
 			print: socket localPort  ]
+]
+
+{ #category : #private }
+PharoLinkServerConnection >> notifyError: error in: aRequestDictionary [
+	"Notify the client of the error encountered during evaluation"
+	| id data |
+
+	"NetworkErrors typically mean that the client has gone away, just log and move on"
+	(error isKindOf: NetworkError) ifTrue: [ 
+		PharoLinkNetworkErrorSignal emitCommand: self error: error.
+		^ self ].
+	id := aRequestDictionary at: 'commandId' ifAbsent: [ '<unknown>' ].
+	data := Dictionary new.
+	data 	
+		at: 'type' put: 'ERR';
+		at: 'errMsg' put: error printString;
+		at: 'commandId' put: id;
+		at: 'trace' put: self stackString.
+	^ [ self sendSyncMessage: data ]
+		on: Error 
+		do: [ :ex | | commsError |
+			commsError := LanguageLinkCommunicationsSignal new
+				originalException: error;
+				commandId: id;
+				stackString: self stackString.
+			commsError emit ].
 ]
 
 { #category : #accessing }

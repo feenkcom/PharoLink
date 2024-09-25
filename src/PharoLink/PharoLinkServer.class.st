@@ -91,6 +91,21 @@ PharoLinkServer >> debugMode [
 	^ debugMode
 ]
 
+{ #category : #'start-stop' }
+PharoLinkServer >> ensureListenPort [
+	"Check that the listenPort has been set, and if 0, find a free port."
+	 | socket |
+
+	self assert: (listenPort isInteger and: [ listenPort >= 0 ])
+		description: 'PharoLinkServer>>listenPort must be a positive integer'.
+	listenPort > 0 ifTrue: [ ^ self ].
+	[ socket := Socket newTCP listenOn: 0.
+	listenPort := socket localPort ]
+		ensure: [ socket closeAndDestroy ].
+	listenPort > 0 ifFalse:
+		[ self error: 'Failed to get an unallocated port' ].
+]
+
 { #category : #accessing }
 PharoLinkServer >> globals [
 
@@ -210,7 +225,7 @@ PharoLinkServer >> start [
 	"Start the receiver's listenProcess.
 	This will accept connections and create a {{gtClass:PharoLinkServerConnection}} for each connection."
 
-	self assert: listenPort isNotNil.
+	self ensureListenPort.
 
 	serverSocket := LanguageLinkMsgPackUtils serverSocketOn: listenPort.
 	listenProcess := [ | bindSocket |
