@@ -108,9 +108,8 @@ PharoLinkServerConnection >> handleNextRequestConnectionErrors: aRequestDictiona
 			"Stop the receiver and announce it.
 			Run from a separate process since we are inside the listen process, and would kill the stop :-)"
 			[ self stop ] fork.
-			
-			"Wait to be terminated"
-			Semaphore new wait ]
+			"Give the stop a chance to run"
+			1 second wait ]
 ]
 
 { #category : #private }
@@ -204,10 +203,12 @@ PharoLinkServerConnection >> notifyError: error in: aRequestDictionary [
 	"Notify the client of the error encountered during evaluation"
 	| id data |
 
+	self isConnected ifFalse: [ ^ self ].
 	"NetworkErrors typically mean that the client has gone away, just log and move on"
 	(error isKindOf: NetworkError) ifTrue: [ 
 		PharoLinkNetworkErrorSignal emitCommand: self error: error.
 		^ self ].
+
 	id := aRequestDictionary at: 'commandId' ifAbsent: [ '<unknown>' ].
 	data := Dictionary new.
 	data 	
@@ -310,7 +311,8 @@ PharoLinkServerConnection >> start [
 	stream := LanguageLinkMsgPackSocketStream on: (SocketStream on: socket).
 	listenProcess := 
 		[ PharoLinkServerCurrentConnection value: self during:
-			[ [ [ self handleNextRequestSafely ] repeat ]
+			[ [ [ self isConnected ] whileTrue:
+				[ self handleNextRequestSafely ] ]
 				on: Error 
 				do: [ :ex | 
 					ex logStackToFile.
