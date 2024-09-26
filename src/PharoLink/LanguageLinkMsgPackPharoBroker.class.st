@@ -44,7 +44,7 @@ LanguageLinkMsgPackPharoBroker >> clientSocket [
 				connectTo: serverIP
 				port: socketAddress port
 				waitForConnectionFor: retryDelay ]
-			on: ConnectionTimedOut
+			on: ConnectionClosed, ConnectionTimedOut, SocketError
 			do: [ :ex | "nothing now, the status is checked below" ].
 		LlEsConnectCompletedSignal new
 			isConnected: newSocket isConnected;
