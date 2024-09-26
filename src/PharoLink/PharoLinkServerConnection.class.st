@@ -103,7 +103,7 @@ PharoLinkServerConnection >> handleNextRequestConnectionErrors: aRequestDictiona
 	handling connection errors and timeouts"
 
 	^ [ self handleRequest: aRequestDictionary ]
-		on: ConnectionClosed, ConnectionTimedOut
+		on: ConnectionClosed, ConnectionTimedOut, SocketError
 		do: [ :ex |
 			"Stop the receiver and announce it.
 			Run from a separate process since we are inside the listen process, and would kill the stop :-)"
@@ -118,7 +118,9 @@ PharoLinkServerConnection >> handleNextRequestSafely [
 	Pass any errors (other than connection related) back to the client"
 	| request |
 
-	^ [ request := stream next.
+	^ [ "Explicitly nil the request to ensure an exception while getting the next request doesn't result in the previous request being passed to the exception handler"
+		request := nil.
+		request := stream next.
 		self handleNextRequestConnectionErrors: request ]
 			on: Error
 			do: [ :ex | self notifyError: ex in: request ]
