@@ -131,20 +131,17 @@ PharoLinkServerConnection >> handleRequest: aDictionary [
 	| type syncId registryEntry |
 
 	type := aDictionary at: #type.
-	type = #'ENQUEUE' ifTrue: [ ^ self handlEnqueue: aDictionary ].
-	type = #'IS_ALIVE' ifTrue: [ ^ self handleIsAlive: aDictionary ].
-	"ERR should possibly be handled as a general sync message"
-	type = #'ERR' ifTrue: [ ^ self handleError: aDictionary ].
-
-	"The message is expected to be a sync message"
-	aDictionary 
-		at: #'__sync'
+	type = 'ENQUEUE' ifTrue: [ ^ self handlEnqueue: aDictionary ].
+	type = 'IS_ALIVE' ifTrue: [ ^ self handleIsAlive: aDictionary ].	"ERR should possibly be handled as a general sync message"
+	type = 'ERR' ifTrue: [ ^ self handleError: aDictionary ].	"The message is expected to be a sync message"
+	aDictionary
+		at: #__sync
 		ifPresent: [ :id | syncId := id ]
-		ifAbsent: [ self error: 'Unknown request type: ', type printString ].
+		ifAbsent: [ self error: 'Unknown request type: ' , type printString ].
 
 	registryEntry := syncRegistry at: syncId.
 	registryEntry result: (self deserialize: (aDictionary at: #value)).
-	registryEntry signal.
+	registryEntry signal
 ]
 
 { #category : #announcer }
@@ -278,11 +275,10 @@ PharoLinkServerConnection >> sendAsyncMessage: msgDictionary [
 
 { #category : #private }
 PharoLinkServerConnection >> sendResponse: responseDictionary to: msgDictionary [
-
-	(responseDictionary at: #type) = (msgDictionary at: #type) ifFalse:
-		[ self error: 'Invalid response' ].
-	responseDictionary at: #'__sync' put: (msgDictionary at: #'__sync').
-	stream nextPut: responseDictionary.
+	((responseDictionary at: #type) sameContentAs: (msgDictionary at: #type))
+		ifFalse: [ self error: 'Invalid response' ].
+	responseDictionary at: #__sync put: (msgDictionary at: #__sync).
+	stream nextPut: responseDictionary
 ]
 
 { #category : #private }
