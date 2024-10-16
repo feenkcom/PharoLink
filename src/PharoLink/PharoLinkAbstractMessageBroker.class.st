@@ -100,9 +100,9 @@ PharoLinkAbstractMessageBroker >> port [
 
 { #category : #private }
 PharoLinkAbstractMessageBroker >> resolveMessageFromType: aType [
-	^ LanguageLinkAbstractMessage allSubclasses 
-			detect: [ :cls | cls type = aType ] 
-			ifNone: [ Error signal: 'Message ' , aType , ' not understood.' ].
+	^ LanguageLinkAbstractMessage allSubclasses
+		detect: [ :cls | cls type sameContentAs: aType ]
+		ifNone: [ Error signal: 'Message ' , aType , ' not understood.' ]
 ]
 
 { #category : #messaging }

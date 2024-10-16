@@ -10,15 +10,11 @@ PharoLinkProxyObject class >> leProxyTypeForPlaygroundPage [
 ]
 
 { #category : #'instance creation' }
-PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId 	application: aLLApplication [
+PharoLinkProxyObject class >> remoteClass: remoteClassName name: registryId application: aLLApplication [
 	| proxyClass |
-
 	proxyClass := self allSubclasses
-		detect: [ :each | each remoteClassName = remoteClassName ]
-		ifNone: 
-			[ (remoteClassName endsWith: ' class')
-				ifTrue: [ PlpoClass ]
-				ifFalse: [ self ] ].
+			detect: [ :each | each remoteClassName sameContentAs: remoteClassName ]
+			ifNone: [ (remoteClassName endsWith: ' class') ifTrue: [ PlpoClass ] ifFalse: [ self ] ].
 
 	^ proxyClass new
 		initalizeWithRemoteClass: remoteClassName
