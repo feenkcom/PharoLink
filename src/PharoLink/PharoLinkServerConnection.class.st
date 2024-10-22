@@ -47,15 +47,17 @@ PharoLinkServerConnection >> globals [
 
 { #category : #private }
 PharoLinkServerConnection >> handlEnqueue: aDictionary [
-
 	"Process the supplied statements"
+	| command bindings |
 
-	| command |
+	bindings := Dictionary new.
+	(aDictionary at: #bindings) keysAndValuesDo: [ :key :value |
+		bindings
+			at: key asSymbol
+			put: (self deserialize: value) ].
 	command := PharoLinkEvalCommand
 		           source: (aDictionary at: #statements)
-		           bindings:
-			           ((aDictionary at: #bindings) asDictionary collect: [ 
-				            :obj | self deserialize: obj ])
+		           bindings: bindings
 		           id: (aDictionary at: #commandId).
 	command connection: self.
 	processes add: ([ 
