@@ -66,7 +66,7 @@ PharoLinkObserverTest >> startServer [
 		listenPort: 7001;
 		setDebugMode;
 		start;
-		setCloseOnExec: true;
+		closeOnExec: true;
 		yourself.
 	server globals at: #MyPharoLinkObserverTest put: self.
 
