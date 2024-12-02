@@ -196,3 +196,10 @@ PharoLinkTestCaseAnnouncement >> testCaseStartTimestamp: anObject [
 
 	testCaseStartTimestamp := anObject
 ]
+
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement >> testName [
+	"Answer the name as used by GtRrExplicitSUnitTask"
+
+	^ testCaseClassName -> testCaseSelector
+]
