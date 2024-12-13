@@ -210,7 +210,9 @@ PharoLinkServerConnection >> notifyError: error in: aRequestDictionary [
 		PharoLinkNetworkErrorSignal emitCommand: self error: error.
 		^ self ].
 
-	id := aRequestDictionary at: 'commandId' ifAbsent: [ '<unknown>' ].
+	id := aRequestDictionary
+		ifNil: [ '<unknown>' ]
+		ifNotNil: [ aRequestDictionary at: 'commandId' ifAbsent: [ '<unknown>' ] ].
 	data := Dictionary new.
 	data 	
 		at: 'type' put: 'ERR';
