@@ -314,7 +314,9 @@ PharoLinkServerConnection >> start [
 	listenProcess := 
 		[ PharoLinkServerCurrentConnection value: self during:
 			[ [ [ self isConnected ] whileTrue:
-				[ self handleNextRequestSafely ] ]
+				[ self handleNextRequestSafely ].
+			"Fork the stop as it will terminate this process"
+			[ self stop ] forkNamed: 'PharoLinkServerConnection stop'. ]
 				on: Error 
 				do: [ :ex | 
 					ex logStackToFile.
