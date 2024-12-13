@@ -210,7 +210,9 @@ PharoLinkServerConnection >> notifyError: error in: aRequestDictionary [
 		PharoLinkNetworkErrorSignal emitCommand: self error: error.
 		^ self ].
 
-	id := aRequestDictionary at: 'commandId' ifAbsent: [ '<unknown>' ].
+	id := aRequestDictionary
+		ifNil: [ '<unknown>' ]
+		ifNotNil: [ aRequestDictionary at: 'commandId' ifAbsent: [ '<unknown>' ] ].
 	data := Dictionary new.
 	data 	
 		at: 'type' put: 'ERR';
@@ -312,7 +314,9 @@ PharoLinkServerConnection >> start [
 	listenProcess := 
 		[ PharoLinkServerCurrentConnection value: self during:
 			[ [ [ self isConnected ] whileTrue:
-				[ self handleNextRequestSafely ] ]
+				[ self handleNextRequestSafely ].
+			"Fork the stop as it will terminate this process"
+			[ self stop ] forkNamed: 'PharoLinkServerConnection stop'. ]
 				on: Error 
 				do: [ :ex | 
 					ex logStackToFile.
