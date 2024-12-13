@@ -45,28 +45,6 @@ PharoLinkServerConnection >> globals [
 	^ server globals
 ]
 
-{ #category : #private }
-PharoLinkServerConnection >> handlEnqueue: aDictionary [
-	"Process the supplied statements"
-	| command bindings |
-
-	bindings := Dictionary new.
-	(aDictionary at: #bindings) keysAndValuesDo: [ :key :value |
-		bindings
-			at: key asSymbol
-			put: (self deserialize: value) ].
-	command := PharoLinkEvalCommand
-		           source: (aDictionary at: #statements)
-		           bindings: bindings
-		           id: (aDictionary at: #commandId).
-	command connection: self.
-	processes add: ([ 
-		 PharoLinkServerCurrentConnection
-			 value: self
-			 during: [ command execute: self globals ] ] forkAt:
-			 Processor userSchedulingPriority)
-]
-
 { #category : #'error handling' }
 PharoLinkServerConnection >> handleError: aDictionary [
 
@@ -126,6 +104,28 @@ PharoLinkServerConnection >> handleNextRequestSafely [
 		self handleNextRequestConnectionErrors: request ]
 			on: Error
 			do: [ :ex | self notifyError: ex in: request ]
+]
+
+{ #category : #private }
+PharoLinkServerConnection >> handlEnqueue: aDictionary [
+	"Process the supplied statements"
+	| command bindings |
+
+	bindings := Dictionary new.
+	(aDictionary at: #bindings) keysAndValuesDo: [ :key :value |
+		bindings
+			at: key asSymbol
+			put: (self deserialize: value) ].
+	command := PharoLinkEvalCommand
+		           source: (aDictionary at: #statements)
+		           bindings: bindings
+		           id: (aDictionary at: #commandId).
+	command connection: self.
+	processes add: ([ 
+		 PharoLinkServerCurrentConnection
+			 value: self
+			 during: [ command execute: self globals ] ] forkAt:
+			 Processor userSchedulingPriority)
 ]
 
 { #category : #public }
