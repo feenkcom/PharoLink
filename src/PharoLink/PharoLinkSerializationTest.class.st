@@ -66,7 +66,7 @@ PharoLinkSerializationTest >> testSendAndRetrieveDictionary [
 		setByValue;
 		<< '{ 1 -> true. 2 -> nil } asDictionary.';
 		sendAndWait.
-	self assert: value equals: { 1 -> true. 2 -> nil } asDictionary.
+	self assert: (value sameContentAs: { 1 -> true. 2 -> nil } asDictionary).
 
 	"Raise an exception if requiring primitives only and it fails"
 	self should:

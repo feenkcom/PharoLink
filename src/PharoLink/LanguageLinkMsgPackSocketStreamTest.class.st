@@ -12,7 +12,7 @@ Class {
 LanguageLinkMsgPackSocketStreamTest >> assertSerialize: anObject [
 	self connectStreams: [ :serverStream :clientStream |
 		clientStream nextPut: anObject.
-		self assert: serverStream next equals: anObject.
+		self assert: (serverStream next sameContentAs: anObject).
 		self deny: serverStream atEnd ]
 ]
 
