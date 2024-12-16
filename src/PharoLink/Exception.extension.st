@@ -28,7 +28,12 @@ Exception >> isPharoLinkNotification [
 
 { #category : #'*PharoLink' }
 Exception >> pharoLinkAdditionalData [
-	^  nil
+	^ self pharoLinkAdditionalDataInRuntimeContext: nil
+]
+
+{ #category : #'*PharoLink' }
+Exception >> pharoLinkAdditionalDataInRuntimeContext: aRuntimeContent [
+	^ nil
 ]
 
 { #category : #'*PharoLink' }

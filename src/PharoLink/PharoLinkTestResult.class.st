@@ -69,20 +69,20 @@ PharoLinkTestResult >> runCaseDebug: aTestCase start: start report: resourceRepo
 
 { #category : #accessing }
 PharoLinkTestResult >> runCaseNoDebug: aTestCase start: start report: resourceReport [
-	| announcement |
-
-	[ self runCaseDebug: aTestCase start: start report: resourceReport ]
+	[self runCaseDebug: aTestCase start: start report: resourceReport]
 		on: self class failure , self class skip , self class warning
-			, self class error
-		do: [ :e | 
+				, self class error
+		do: 
+			[:e |
+			| announcement |
 			resourceReport recordTargetReport.
 			e sunitAnnounce: aTestCase toResult: self.
-			announcement := e 
-				gtTestCaseException: aTestCase 
-				startTimestamp: start timestamp
-				additionalData: e pharoLinkAdditionalData.
+			announcement := e
+						gtTestCaseException: aTestCase
+						startTimestamp: start timestamp
+						additionalData: e pharoLinkAdditionalData.
 			announcement resourceReport: resourceReport.
-			announcer announce: announcement ].
+			announcer announce: announcement]
 ]
 
 { #category : #accessing }

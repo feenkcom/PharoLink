@@ -33,3 +33,9 @@ OutOfMemory >> pharoLinkAdditionalData [
 	
 	^ {#sizeRequested -> self isqByteSizeRequested} asDictionary.
 ]
+
+{ #category : #'*PharoLink' }
+OutOfMemory >> pharoLinkAdditionalDataInRuntimeContext: aRuntimeContent [
+	
+	^ {#sizeRequested -> self isqByteSizeRequested} asDictionary.
+]

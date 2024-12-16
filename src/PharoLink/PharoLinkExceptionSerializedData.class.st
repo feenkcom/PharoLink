@@ -16,6 +16,13 @@ PharoLinkExceptionSerializedData class >> fromException: anException [
 ]
 
 { #category : #'instance creation' }
+PharoLinkExceptionSerializedData class >> fromException: anException inRuntimeContext: aRuntimeContext [
+	^ self new 
+		initializeFromException: anException 
+		inRuntimeContext: aRuntimeContext
+]
+
+{ #category : #'instance creation' }
 PharoLinkExceptionSerializedData class >> fromException: anException stackString: aStackString additionalData: anAdditonalData [ ^ self new 
 		initializeFromException: anException 
 		stackString: aStackString 
@@ -37,6 +44,14 @@ PharoLinkExceptionSerializedData >> initializeFromException: anException [
 	exception := anException.
 	stackString :=  anException stackString.
 	additionalData := anException pharoLinkAdditionalData.
+]
+
+{ #category : #initialization }
+PharoLinkExceptionSerializedData >> initializeFromException: anException inRuntimeContext: aRuntimeContext [
+	exception := anException.
+	stackString := anException stackString.
+	additionalData := anException 
+		pharoLinkAdditionalDataInRuntimeContext: aRuntimeContext.
 ]
 
 { #category : #initialization }
