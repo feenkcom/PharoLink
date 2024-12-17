@@ -1,6 +1,6 @@
 Class {
 	#name : #PharoLinkErrorRequestSignal,
-	#superclass : #BeaconSignal,
+	#superclass : #PharoLinkSignal,
 	#instVars : [
 		'dictionary'
 	],

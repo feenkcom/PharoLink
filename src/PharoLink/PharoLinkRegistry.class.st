@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'idToObjMap',
-		'objToIdMap'
+		'objToIdMap',
+		'oldIds'
 	],
 	#classVars : [
 		'Default'
@@ -46,11 +47,15 @@ PharoLinkRegistry >> createNewObjId [
 { #category : #registry }
 PharoLinkRegistry >> deregister: anObjId [
 	"Remove the supplied id"
-	| object |
+	| object olds |
 
-	object := idToObjMap at: anObjId ifAbsent: [ ^ nil ].
+	olds := oldIds at: anObjId ifAbsentPut: [ OrderedCollection new ].
+	object := idToObjMap at: anObjId ifAbsent: 
+		[ olds add: DateAndTime now -> #missing.
+		^ nil ].
 	idToObjMap removeKey: anObjId.
 	objToIdMap removeKey: object.
+	olds add: DateAndTime now -> object class name.
 	^ nil.
 ]
 
@@ -67,6 +72,7 @@ PharoLinkRegistry >> initialize [
 	super initialize.
 	idToObjMap := Dictionary new.
 	objToIdMap := Dictionary new.
+	oldIds := Dictionary new.
 ]
 
 { #category : #registry }
@@ -135,7 +141,9 @@ PharoLinkRegistry >> register: anObject withId: newObjId [
 PharoLinkRegistry >> resolve: objId [
 	"Answer the object with the supplied id"
 
-	^ idToObjMap 
-		at: objId
-		ifAbsent: [ PharoLinkRegistryUnknownObjectError signalId: objId ]
+	^ idToObjMap at: objId ifAbsent: 
+		[ PharoLinkRegistryUnknownIdSignal new
+			unknownId: objId;
+			isOld: (oldIds includes: objId).
+		PharoLinkRegistryUnknownObjectError signalId: objId ]
 ]
