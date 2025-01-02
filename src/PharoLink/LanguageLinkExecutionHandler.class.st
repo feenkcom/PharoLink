@@ -156,7 +156,7 @@ LanguageLinkExecutionHandler >> registerObject: aProxyObject [
 	weakRegistry 
 		registerObject: aProxyObject 
 		finalizer: (LanguageLinkRegistryFinalizer 
-							variable: aProxyObject id 
+							variable: aProxyObject proxyObjectId 
 							executionHandler: self)
 ]
 

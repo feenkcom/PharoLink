@@ -4,7 +4,7 @@ It is possible there's a race condition in LanguageLinkRegistryFinalizer that me
 Class {
 	#name : #PharoLinkObjectTest,
 	#superclass : #PharoLinkApplicationTest,
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #tests }
@@ -17,7 +17,7 @@ PharoLinkObjectTest >> testProxyIdentity [
 	self assert: obj class equals: PharoLinkProxyObject.
 	self assert: obj remoteClass equals: 'PharoLinkRegistry'.
 	cf := application newCommandFactory.
-	cf << ('llCommand registry resolve: ', obj id printString).
+	cf << ('llCommand registry resolve: ', obj proxyObjectId printString).
 	self assert: cf sendAndWait equals: obj
 ]
 
@@ -33,6 +33,6 @@ PharoLinkObjectTest >> testSimpleProxy [
 			sendAndWait: 'llCommand registry includesId: 0'.
 	self deny: hasId.
 	hasId := application newCommandFactory 
-		sendAndWait: 'llCommand registry includesId: ', obj id printString.
+		sendAndWait: 'llCommand registry includesId: ', obj proxyObjectId printString.
 	self assert: hasId.
 ]

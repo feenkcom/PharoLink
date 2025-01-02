@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkObjectFinalizationTest,
 	#superclass : #PharoLinkApplicationTest,
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #tests }
@@ -10,7 +10,7 @@ PharoLinkObjectFinalizationTest >> testGCSimpleObj [
 
 	obj := application newCommandFactory
 				sendAndWait: '1 @ 2'.
-	id := obj id.
+	id := obj proxyObjectId.
 	obj2 := application newCommandFactory
 				sendAndWait: (self 
 					replace: { 'obj' -> obj } asDictionary

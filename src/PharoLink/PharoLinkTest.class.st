@@ -17,7 +17,7 @@ PharoLinkTest >> replace: variableDictionary in: pharoExpressionString [
 	variableDictionary keysAndValuesDo: [ :varName :proxyObject |
 		rewriter
 			replace: varName
-			with: 'llCommand registry resolve: ', proxyObject id printString ].
+			with: 'llCommand registry resolve: ', proxyObject proxyObjectId printString ].
 	rewriter executeTree: (RBParser parseExpression: pharoExpressionString).
 	^ rewriter tree formattedCode
 ]

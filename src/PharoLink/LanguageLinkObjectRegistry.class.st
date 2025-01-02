@@ -28,7 +28,7 @@ LanguageLinkObjectRegistry >> initialize [
 { #category : #api }
 LanguageLinkObjectRegistry >> registerObject: anObject [
 	mutex critical: [ 
-		idTable at: anObject id put: anObject ]
+		idTable at: anObject proxyObjectId put: anObject ]
 ]
 
 { #category : #api }
@@ -88,5 +88,5 @@ LanguageLinkObjectRegistry >> unregisterId: anId [
 
 { #category : #api }
 LanguageLinkObjectRegistry >> unregisterObject: anObject [
-	mutex critical: [ idTable removeKey: anObject id ]
+	mutex critical: [ idTable removeKey: anObject proxyObjectId ]
 ]
