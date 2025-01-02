@@ -16,7 +16,7 @@ PharoLinkPromiseRegistryTest >> setUp [
 PharoLinkPromiseRegistryTest >> testAddPromise [
 	registry addPromise: (LanguageLinkPromise id: '123').
 	self assert: registry promiseTable size equals: 1.
-	self assert: registry promiseTable anyOne id equals: '123'
+	self assert: registry promiseTable anyOne proxyObjectId equals: '123'
 ]
 
 { #category : #initialization }

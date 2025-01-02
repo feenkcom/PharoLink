@@ -72,12 +72,6 @@ LanguageLinkProxyObject >> hash [
 	^ remoteClass hash bitXor: (application hash bitXor: name hash)
 ]
 
-{ #category : #accessing }
-LanguageLinkProxyObject >> id [ 
-
-	^ name
-]
-
 { #category : #initialize }
 LanguageLinkProxyObject >> initalizeWithRemoteClass: aRemoteClassName name: aRegistryId application: anApplication [
 	self 
@@ -143,6 +137,12 @@ LanguageLinkProxyObject >> printOn: str [
 		<< ' (';
 		<< self class name;
 		<< ')'
+]
+
+{ #category : #accessing }
+LanguageLinkProxyObject >> proxyObjectId [ 
+
+	^ name
 ]
 
 { #category : #evaluating }
