@@ -48,17 +48,19 @@ PharoLinkExceptionSerializedData >> initializeFromException: anException [
 
 { #category : #initialization }
 PharoLinkExceptionSerializedData >> initializeFromException: anException inRuntimeContext: aRuntimeContext [
-	exception := anException.
+	exception := anException copy.
 	stackString := anException stackString.
 	additionalData := anException 
 		pharoLinkAdditionalDataInRuntimeContext: aRuntimeContext.
+	exception freeze.
 ]
 
 { #category : #initialization }
 PharoLinkExceptionSerializedData >> initializeFromException: anException stackString: aStackString additionalData: anAdditonalData [ 
-	exception := anException.
+	exception := anException copy.
 	stackString := aStackString.
-	additionalData := anAdditonalData 
+	additionalData := anAdditonalData.
+	exception freeze.
 ]
 
 { #category : #'as yet unclassified' }
