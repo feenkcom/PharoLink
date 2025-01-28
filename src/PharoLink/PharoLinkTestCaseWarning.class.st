@@ -12,7 +12,10 @@ PharoLinkTestCaseWarning class >> leJsonV4Name [
 
 { #category : #accessing }
 PharoLinkTestCaseWarning >> addToTestResult: result [
-	result addWarning: self asTestCase
+	"SUnit doesn't expect tests to complete with a warning.
+	Treat this as an error."
+
+	result addError: self asTestCase
 ]
 
 { #category : #accessing }
