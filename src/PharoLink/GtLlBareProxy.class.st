@@ -131,25 +131,26 @@ GtLlBareProxy >> gtPrintFor: aView [
 GtLlBareProxy >> gtRawFor: aView [
 	"Provide a basic view of the proxy object.
 	This is simpler than the standard Raw view, but avoids many methods that are implemented in Object"
-	<gtView>
 
+	<gtView>
 	^ aView columnedList
 		title: 'Raw';
 		priority: 100;
-		items: [ {
-			{ #self. self. }.
-			{ #proxyObject. proxyObject. } } ];
+		items: [ {{#self.
+					self}.
+				{#proxyObject.
+					proxyObject}} ];
 		column: #Icon
-			icon: [ :item | item second class systemIcon ]
+			icon: [ :item | item second class iconNamed: item second class systemIconName ]
 			width: 36;
 		column: #Variable text: [ :item | item first ];
-		column: #Value text: [ :item | 
-			item first = #self ifTrue:
-				[ self class name ]
-			ifFalse:
-				[ [ item second printString ]
-					on: Error, Halt
-					do: [ :ex | ex printString asRopedText foreground: Color red ] ] ];
+		column: #Value
+			text: [ :item | 
+				item first = #self
+					ifTrue: [ self class name ]
+					ifFalse: [ [ item second printString ]
+							on: Error , Halt
+							do: [ :ex | ex printString asRopedText foreground: Color red ] ] ];
 		send: [ :item | item second ];
 		actionUpdateButton
 ]
