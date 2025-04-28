@@ -78,16 +78,16 @@ TGtPharoLinkPlayground >> gtPlaygroundText [
 ]
 
 { #category : #'ui - accessing' }
+TGtPharoLinkPlayground >> gtPlaygroundXdocStore [
+	"Answer the XDoc store for the receiver."
+
+	^ XdKeyDocumentStore forKey: self gtPlaygroundXDocStoreKey
+]
+
+{ #category : #'ui - accessing' }
 TGtPharoLinkPlayground >> gtPlaygroundXDocStoreKey [
 	"Answer the key to be used for storing documents.
 	The base class should override this to use a custom key"
 
 	^ self class name
-]
-
-{ #category : #'ui - accessing' }
-TGtPharoLinkPlayground >> gtPlaygroundXdocStore [
-	"Answer the XDoc store for the receiver."
-
-	^ XdKeyDocumentStore forKey: self gtPlaygroundXDocStoreKey
 ]
