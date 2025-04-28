@@ -89,6 +89,15 @@ PharoLinkTestCaseAnnouncement >> hash [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseAnnouncement >> identifierDescription [ 
+	^String streamContents: [ :aStream |
+		aStream
+			nextPutAll: self testCaseClassName asString;
+			nextPutAll: '>>#';
+			nextPutAll: self testCaseSelector ] 
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseAnnouncement >> initializeTestCaseClassName: aClassName selector: aSelector [
 
 	testCaseClassName := aClassName.
