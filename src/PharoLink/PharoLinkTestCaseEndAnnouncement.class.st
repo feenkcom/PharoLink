@@ -113,6 +113,19 @@ PharoLinkTestCaseEndAnnouncement >> ensureAdditionalProperties [
 		additionalProperties := Dictionary new ]
 ]
 
+{ #category : #views }
+PharoLinkTestCaseEndAnnouncement >> gtAdditionalPropertiesFor: aView [
+	<gtView>
+	additionalProperties ifNil: [^aView empty].
+	^(aView columnedList)
+		title: 'Additional Properties';
+		priority: 20;
+		items: [additionalProperties associations];
+		column: 'Key' text: [:each | each key gtDisplayString];
+		column: 'Value' text: [:each | each value gtDisplayString];
+		send: [:each | each value]
+]
+
 { #category : #ui }
 PharoLinkTestCaseEndAnnouncement >> gtTestCaseFor: aView [
 
