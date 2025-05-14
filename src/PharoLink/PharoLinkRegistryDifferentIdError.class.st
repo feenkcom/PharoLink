@@ -20,16 +20,6 @@ PharoLinkRegistryDifferentIdError class >> signalId: objId object: anObject [
 ]
 
 { #category : #accessing }
-PharoLinkRegistryDifferentIdError >> object [
-	^ object
-]
-
-{ #category : #accessing }
-PharoLinkRegistryDifferentIdError >> object: anObject [
-	object := anObject
-]
-
-{ #category : #accessing }
 PharoLinkRegistryDifferentIdError >> objId [
 	^ objId
 ]
@@ -37,4 +27,14 @@ PharoLinkRegistryDifferentIdError >> objId [
 { #category : #accessing }
 PharoLinkRegistryDifferentIdError >> objId: anObject [
 	objId := anObject
+]
+
+{ #category : #accessing }
+PharoLinkRegistryDifferentIdError >> object [
+	^ object
+]
+
+{ #category : #accessing }
+PharoLinkRegistryDifferentIdError >> object: anObject [
+	object := anObject
 ]

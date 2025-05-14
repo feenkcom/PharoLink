@@ -247,8 +247,9 @@ LanguageLinkSettings >> serverImage [
 ]
 
 { #category : #accessing }
-LanguageLinkSettings >> serverImage: anObject [
-	serverImage := anObject
+LanguageLinkSettings >> serverImage: aFileReference [
+
+	serverImage := aFileReference
 ]
 
 { #category : #accessing }
