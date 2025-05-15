@@ -70,6 +70,13 @@ PharoLinkTestCaseAnnouncement >> asTestCase [
 	^ self testCaseClass new setTestSelector: testCaseSelector
 ]
 
+{ #category : #accessing }
+PharoLinkTestCaseAnnouncement >> checkName [
+	"Answer the name as used by the RemoteRunner"
+
+	^ testCaseClassName -> testCaseSelector
+]
+
 { #category : #ui }
 PharoLinkTestCaseAnnouncement >> gtActionInspectCheckFor: anAction [
 	<gtAction>
