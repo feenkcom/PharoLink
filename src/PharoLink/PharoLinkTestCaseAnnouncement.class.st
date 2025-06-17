@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseAnnouncement class >> className: classNameSymbol selector: selectorSymbol [
+
+	^ self new
+		  initializeTestCaseClassName: classNameSymbol
+		  selector: selectorSymbol
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseAnnouncement class >> isAbstract [
 
 	^ self == PharoLinkTestCaseAnnouncement
