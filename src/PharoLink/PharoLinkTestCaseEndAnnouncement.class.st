@@ -11,6 +11,16 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkTestCaseEndAnnouncement class >> className: classNameSymbol selector: selectorSymbol startTimestamp: aDateAndTime [
+
+	^ (super className: classNameSymbol selector: selectorSymbol)
+		initializeShouldPass: true
+			startTimestamp: aDateAndTime
+			endTimestamp: DateAndTime now;
+		yourself
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseEndAnnouncement class >> isAbstract [
 
 	^ self == PharoLinkTestCaseEndAnnouncement
