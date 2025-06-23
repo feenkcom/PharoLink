@@ -210,6 +210,11 @@ PharoLinkTestCaseEndAnnouncement >> messageTallyReport: aMessageTallyReport [
 ]
 
 { #category : #accessing }
+PharoLinkTestCaseEndAnnouncement >> primaryException [
+	^ nil
+]
+
+{ #category : #accessing }
 PharoLinkTestCaseEndAnnouncement >> resourceReport [
 
 	^ resourceReport
