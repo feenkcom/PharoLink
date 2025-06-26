@@ -18,9 +18,7 @@ LanguageLinkPharoWeakRegistry >> destroy [
 { #category : #initialization }
 LanguageLinkPharoWeakRegistry >> initialize [
 	super initialize.
-	weakRegistry := self
-		forPharo11AndPharo12: [ FinalizationRegistry new ]
-		forPharo10: [ WeakRegistry new ].
+	weakRegistry := FinalizationRegistry new.
 ]
 
 { #category : #registration }
