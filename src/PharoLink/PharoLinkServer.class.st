@@ -230,9 +230,7 @@ PharoLinkServer >> start [
 	serverSocket := LanguageLinkMsgPackUtils serverSocketOn: listenPort.
 	listenProcess := [ | bindSocket |
 	                 [ [ bindSocket isNil and: [ serverSocket isValid ] ] whileTrue: [ 
-		                 bindSocket := serverSocket
-			                               waitForAcceptFor: 10
-			                               ifTimedOut: [ nil ] ].
+		                 bindSocket := serverSocket waitForAcceptFor: 10  ].
  					bindSocket ifNotNil:
 	                 	[ self addConnection: (self newConnection: bindSocket) ].
 	                 bindSocket := nil ] doWhileTrue: [ serverSocket isValid ] ]
