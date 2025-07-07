@@ -40,7 +40,7 @@ LanguageLinkMsgPackPharoBrokerTest >> buildAndStartStubServer [
 	"Only listen for a single connection, then process it"
 	stubThread := [ 
 		[ bindSocket isNil ] whileTrue:
-			[ bindSocket := serverSocket waitForAcceptFor: 10 ifTimedOut: [ nil ] ].
+			[ bindSocket := serverSocket waitForAcceptFor: 10 ].
 		stubStream := SocketStream on: bindSocket.
 		stubStream := LanguageLinkMsgPackSocketStream on: stubStream.
 		[ self stubPrimHandle: stubStream next ] repeat.
