@@ -143,7 +143,7 @@ PharoLinkTestCaseEndAnnouncement >> gtTestCaseFor: aView [
 	^ aView forward
 		  title: 'Test case';
 		  priority: 10;
-		  object: [ (self class environment at: testCaseClassName asSymbol) lookupSelector: testCaseSelector ];
+		  object: [ (self class environment classOrTraitNamed: testCaseClassName asSymbol) lookupSelector: testCaseSelector ];
 		  view: #gtSourceFor:
 ]
 
