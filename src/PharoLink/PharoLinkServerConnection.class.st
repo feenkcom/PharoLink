@@ -289,7 +289,7 @@ PharoLinkServerConnection >> sendResponse: responseDictionary to: msgDictionary 
 PharoLinkServerConnection >> sendSyncMessage: msgDictionary [
 	| syncId registryEntry |
 
-	syncId := UUIDGenerator next base64Encoded.
+	syncId := UUID new base64Encoded.
 	msgDictionary at: #'__sync' put: syncId.
 	registryEntry := PharoServerSyncRegistryEntry id: syncId.
 	syncRegistry at: syncId put: registryEntry.

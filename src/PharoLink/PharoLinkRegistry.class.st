@@ -41,7 +41,7 @@ PharoLinkRegistry >> clean: anObjId [
 PharoLinkRegistry >> createNewObjId [
 	"Answer a new object id"
 
-	^ UUIDGenerator next asString
+	^ UUID new asString
 ]
 
 { #category : #registry }
