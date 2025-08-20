@@ -36,7 +36,7 @@ LanguageLinkCommunicationHandler >> isServerReady [
 			on: LanguageLinkCommunicationError
 			do: [ :e | false ].
 		semaphore signal ] forkAt: Processor lowIOPriority.
-	semaphore waitTimeoutMSecs: 4000.
+	semaphore waitTimeoutMilliseconds: 4000.
 	[ process terminate ]
 		on: ProcessAlreadyTerminating
 		do: [ "noop" ].
