@@ -101,7 +101,7 @@ LanguageLinkPromise >> wait [
 	"Wait for the promise to be fulfiller, but don't process the result"
 
 	timeout ifNil: [ semaphore wait. ^ self ].
-	(semaphore waitTimeoutMSecs: timeout asMilliSeconds) ifTrue:
+	(semaphore waitTimeoutMilliseconds: timeout asMilliSeconds) ifTrue:
 		[ TimedOut signal ].
 ]
 
