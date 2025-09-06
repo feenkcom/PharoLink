@@ -10,9 +10,7 @@ Class {
 { #category : #registration }
 LanguageLinkPharoWeakRegistry >> destroy [
 
-	self
-		forPharo11AndPharo12: [ weakRegistry := FinalizationRegistry new ]
-		forPharo10: [ weakRegistry removeAll ].
+	weakRegistry := FinalizationRegistry new 
 ]
 
 { #category : #initialization }
@@ -24,7 +22,5 @@ LanguageLinkPharoWeakRegistry >> initialize [
 { #category : #registration }
 LanguageLinkPharoWeakRegistry >> registerObject: anObject finalizer: finalizer [
 
-	self
-		forPharo11AndPharo12: [ weakRegistry add: anObject finalizer: finalizer ]
-		forPharo10: [ weakRegistry add: anObject executor: finalizer ]
+	weakRegistry add: anObject finalizer: finalizer 
 ]

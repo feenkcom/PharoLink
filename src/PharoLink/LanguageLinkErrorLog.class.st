@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkErrorLog,
 	#superclass : #LanguageLinkLog,
-	#category : 'PharoLink-Logs'
+	#category : #'PharoLink-Logs'
 }
 
 { #category : #testing }

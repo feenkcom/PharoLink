@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'handlingAction'
 	],
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #accessing }

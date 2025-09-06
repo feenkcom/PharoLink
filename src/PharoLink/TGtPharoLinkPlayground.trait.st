@@ -3,7 +3,7 @@ Trait {
 	#instVars : [
 		'gtPlaygroundFilename'
 	],
-	#category : 'PharoLink-UI'
+	#category : #'PharoLink-UI'
 }
 
 { #category : #'ui - accessing' }

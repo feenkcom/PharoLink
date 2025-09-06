@@ -5,7 +5,7 @@ Class {
 		'promiseId',
 		'value'
 	],
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #accessing }

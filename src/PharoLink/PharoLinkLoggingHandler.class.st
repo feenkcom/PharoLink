@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkLoggingHandler,
 	#superclass : #LanguageLinkHandler,
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #logging }

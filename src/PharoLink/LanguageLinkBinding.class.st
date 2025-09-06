@@ -5,7 +5,7 @@ Class {
 		'object',
 		'key'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #'instance creation' }

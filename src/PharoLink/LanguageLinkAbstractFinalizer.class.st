@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkAbstractFinalizer,
 	#superclass : #Object,
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #finalization }
