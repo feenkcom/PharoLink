@@ -1,5 +1,5 @@
 Class {
-	#name : #PharoLinkReadFileWriteMemorySourceFile,
+	#name : #PharoLinkReadFileWriteStreamSourceFile,
 	#superclass : #SourceFile,
 	#instVars : [
 		'virtual',
@@ -8,15 +8,21 @@ Class {
 	#category : #'PharoLink-Global'
 }
 
+{ #category : #testing }
+PharoLinkReadFileWriteStreamSourceFile >> closed [
+	^ super closed or:
+		[ virtual isNil or: [ virtual closed ] ]
+]
+
 { #category : #accessing }
-PharoLinkReadFileWriteMemorySourceFile >> initializeVirtual: aReadWriteStream readOnlyLimit: anInteger [
+PharoLinkReadFileWriteStreamSourceFile >> initializeVirtual: aReadWriteStream readOnlyLimit: anInteger [
 
 	virtual := aReadWriteStream.
 	readOnlyLimit := anInteger
 ]
 
 { #category : #accessing }
-PharoLinkReadFileWriteMemorySourceFile >> readOnlyCopy [
+PharoLinkReadFileWriteStreamSourceFile >> readOnlyCopy [
 
 	^ (self species on: path potentialLocations: potentialLocations)
 		  initializeVirtual: virtual readOnlyLimit: readOnlyLimit;
@@ -25,17 +31,19 @@ PharoLinkReadFileWriteMemorySourceFile >> readOnlyCopy [
 ]
 
 { #category : #accessing }
-PharoLinkReadFileWriteMemorySourceFile >> tryOpenReadOnly: readOnly [
+PharoLinkReadFileWriteStreamSourceFile >> tryOpenReadOnly: readOnly [
 	| basename |
 
 	basename := path asFileReference basename.
 	"Open a read write stream only if read only access was not requested.
 	We need to create the encoding and buffering streams manually because we need a read write stream."
+	virtual closed ifTrue:
+		[ virtual := virtual asOpenStream ].
 	readOnly ifFalse: [ 
 		potentialLocations do: [ :each | 
 			stream := SourceFileCharacterReadWriteStream
 				on: (SourceFileBufferedReadWriteStream on:
-					(PharoLinkReadFileWriteMemoryStream
+					(PharoLinkReadFileWriteStream
 						readOnly: (each asFileReference / basename) binaryReadStream
 						readOnlyLimit: readOnlyLimit
 						readWrite: virtual))
@@ -43,10 +51,10 @@ PharoLinkReadFileWriteMemorySourceFile >> tryOpenReadOnly: readOnly [
 			^ self ] ].
 	potentialLocations do: [ :each | 
 		stream := ZnCharacterReadStream
-			on: (PharoLinkReadFileWriteMemoryStream
+			on: (PharoLinkReadFileWriteStream
 				readOnly: (each asFileReference / basename) binaryReadStream
 				readOnlyLimit: readOnlyLimit
 				readWrite: virtual)
 			encoding: 'utf8'.
-		^ self ]
+		^ self ].
 ]
