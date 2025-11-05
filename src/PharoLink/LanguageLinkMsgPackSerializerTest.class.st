@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'serializer'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #tests }

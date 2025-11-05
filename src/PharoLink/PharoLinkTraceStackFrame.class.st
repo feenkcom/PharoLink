@@ -7,7 +7,7 @@ Class {
 		'methodName',
 		'blockSource'
 	],
-	#category : #'PharoLink-ExceptionAnalysis'
+	#category : 'PharoLink-ExceptionAnalysis'
 }
 
 { #category : #comparing }

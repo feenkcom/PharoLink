@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkBrokerHandleMessage,
 	#superclass : #LanguageLinkMsgPackPharoBrokerSignal,
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #'gt extensions' }

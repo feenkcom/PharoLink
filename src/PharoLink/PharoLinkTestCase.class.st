@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkTestCase,
 	#superclass : #LanguageLinkTestCase,
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #running }

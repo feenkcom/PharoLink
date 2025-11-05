@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkUtils,
 	#superclass : #Object,
-	#category : #'PharoLink-Core'
+	#category : 'PharoLink-Core'
 }
 
 { #category : #accessing }

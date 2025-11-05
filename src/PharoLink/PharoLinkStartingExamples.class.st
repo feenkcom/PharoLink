@@ -5,7 +5,7 @@ Class {
 		'server',
 		'application'
 	],
-	#category : #'PharoLink-Examples'
+	#category : 'PharoLink-Examples'
 }
 
 { #category : #accessing }

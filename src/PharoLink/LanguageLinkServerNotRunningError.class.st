@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'application'
 	],
-	#category : #'PharoLink-ErrorHandling'
+	#category : 'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }

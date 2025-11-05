@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkAbstractMessage,
 	#superclass : #Object,
-	#category : #'PharoLink-Platform-Messages'
+	#category : 'PharoLink-Platform-Messages'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkApplication,
 	#superclass : #LanguageLinkApplication,
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #initialization }

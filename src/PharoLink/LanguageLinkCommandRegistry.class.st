@@ -11,7 +11,7 @@ Class {
 		'dictionary',
 		'mutex'
 	],
-	#category : #'PharoLink-Execution'
+	#category : 'PharoLink-Execution'
 }
 
 { #category : #accessing }

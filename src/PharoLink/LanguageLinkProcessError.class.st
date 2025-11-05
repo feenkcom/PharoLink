@@ -8,7 +8,7 @@ Class {
 		'application',
 		'process'
 	],
-	#category : #'PharoLink-ErrorHandling'
+	#category : 'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }

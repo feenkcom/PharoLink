@@ -6,7 +6,7 @@ Class {
 		'commandFactory',
 		'promise'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #initialization }

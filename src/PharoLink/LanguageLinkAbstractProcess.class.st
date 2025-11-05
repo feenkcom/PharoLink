@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'serverExecutable'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #accessing }

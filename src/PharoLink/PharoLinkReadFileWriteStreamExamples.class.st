@@ -1,5 +1,5 @@
 Class {
-	#name : #PharoLinkReadFileWriteMemoryExamples,
+	#name : #PharoLinkReadFileWriteStreamExamples,
 	#superclass : #Object,
 	#traits : 'TAssertable',
 	#classTraits : 'TAssertable classTrait',
@@ -7,11 +7,11 @@ Class {
 		'readOnlyStream',
 		'readWriteStream'
 	],
-	#category : #'PharoLink-Examples'
+	#category : 'PharoLink-Examples'
 }
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> atEndNoWrite [
+PharoLinkReadFileWriteStreamExamples >> atEndNoWrite [
 	"Demonstrate the atEnd operation when no writes have been performed"
 	<gtExample>
 	| stream |
@@ -23,11 +23,11 @@ PharoLinkReadFileWriteMemoryExamples >> atEndNoWrite [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> nextPutAllStartingAt [
+PharoLinkReadFileWriteStreamExamples >> nextPutAllStartingAt [
 	<gtExample>
 	| stream |
 
-	stream := PharoLinkReadFileWriteMemoryStream
+	stream := PharoLinkReadFileWriteStream
 		readOnly: String new readStream 
 		readOnlyLimit: 0
 		readWrite: (ReadWriteStream with: String new).
@@ -41,11 +41,11 @@ PharoLinkReadFileWriteMemoryExamples >> nextPutAllStartingAt [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> peek [
+PharoLinkReadFileWriteStreamExamples >> peek [
 	<gtExample>
 	| stream |
 
-	stream := PharoLinkReadFileWriteMemoryStream
+	stream := PharoLinkReadFileWriteStream
 		readOnly: '0123456789' readStream 
 		readOnlyLimit: 10
 		readWrite: (ReadWriteStream with: String new).
@@ -60,7 +60,7 @@ PharoLinkReadFileWriteMemoryExamples >> peek [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> readOverBoundary [
+PharoLinkReadFileWriteStreamExamples >> readOverBoundary [
 	"Demonstrate reading a portion of the stream that starts within the readOnly stream and reads part of the readWrite stream"
 	<gtExample>
 	| stream |
@@ -73,7 +73,7 @@ PharoLinkReadFileWriteMemoryExamples >> readOverBoundary [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> readReadOnly [
+PharoLinkReadFileWriteStreamExamples >> readReadOnly [
 	"Demonstrate reading a portion of the stream that is fully contained within the readOnly stream"
 	<gtExample>
 	| stream |
@@ -84,7 +84,7 @@ PharoLinkReadFileWriteMemoryExamples >> readReadOnly [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> readReadWrite [
+PharoLinkReadFileWriteStreamExamples >> readReadWrite [
 	"Demonstrate reading a portion of the stream that is fully contained within the readWrite stream"
 	<gtExample>
 	| stream |
@@ -97,32 +97,32 @@ PharoLinkReadFileWriteMemoryExamples >> readReadWrite [
 ]
 
 { #category : #private }
-PharoLinkReadFileWriteMemoryExamples >> readWriteStreamOn: aCharacterReadStream [
+PharoLinkReadFileWriteStreamExamples >> readWriteStreamOn: aCharacterReadStream [
 	| virtual |
 
 	virtual := PharoLinkSourcesReadWriteStream empty.
 	^ SourceFileBufferedReadWriteStream on:
-		(PharoLinkReadFileWriteMemoryStream
+		(PharoLinkReadFileWriteStream
 			readOnly: aCharacterReadStream
 			readOnlyLimit: aCharacterReadStream size
 			readWrite: virtual)
 ]
 
 { #category : #private }
-PharoLinkReadFileWriteMemoryExamples >> sampleStream [ 
+PharoLinkReadFileWriteStreamExamples >> sampleStream [ 
 	"Answer a stream with known readOnly contents"
 	<gtExample>
 
 	readOnlyStream := self string64 readStream.
 	readWriteStream := ReadWriteStream with: String new.
-	^ PharoLinkReadFileWriteMemoryStream
+	^ PharoLinkReadFileWriteStream
 		readOnly: readOnlyStream 
 		readOnlyLimit: 64
 		readWrite: readWriteStream.
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> setToEnd [
+PharoLinkReadFileWriteStreamExamples >> setToEnd [
 	"Demonstrate setting the stream to the end and writing a character"
 	<gtExample>
 	| stream |
@@ -140,14 +140,14 @@ PharoLinkReadFileWriteMemoryExamples >> setToEnd [
 ]
 
 { #category : #private }
-PharoLinkReadFileWriteMemoryExamples >> string64 [
+PharoLinkReadFileWriteStreamExamples >> string64 [
 	"Answer a 64 character long string with known content"
 
 	^ String withAll: ($A to: $Z) , ($a to: $z) , ($0 to: $9) , #($+ $/).
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testBuffering [
+PharoLinkReadFileWriteStreamExamples >> testBuffering [
 	<gtExample>
 	| stream |
 	stream := self readWriteStreamOn: '01234567890123456789' readStream.
@@ -160,7 +160,7 @@ PharoLinkReadFileWriteMemoryExamples >> testBuffering [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testReadInto [
+PharoLinkReadFileWriteStreamExamples >> testReadInto [
 	<gtExample>
 	| stream buffer count |
 	stream := self readWriteStreamOn: '0123456789' readStream.
@@ -177,7 +177,7 @@ PharoLinkReadFileWriteMemoryExamples >> testReadInto [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testReadIntoLarger [
+PharoLinkReadFileWriteStreamExamples >> testReadIntoLarger [
 	<gtExample>
 	| stream buffer count |
 	stream := self readWriteStreamOn: '0123456789' readStream.
@@ -189,7 +189,7 @@ PharoLinkReadFileWriteMemoryExamples >> testReadIntoLarger [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testReadUpTo [
+PharoLinkReadFileWriteStreamExamples >> testReadUpTo [
 	<gtExample>
 	| stream |
 	stream := self readWriteStreamOn: '0123456789' readStream.
@@ -200,7 +200,7 @@ PharoLinkReadFileWriteMemoryExamples >> testReadUpTo [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testReadUpToEnd [
+PharoLinkReadFileWriteStreamExamples >> testReadUpToEnd [
 	<gtExample>
 	| stream |
 	stream := self readWriteStreamOn: '0123456789' readStream.
@@ -211,7 +211,7 @@ PharoLinkReadFileWriteMemoryExamples >> testReadUpToEnd [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testSetAtEnd [
+PharoLinkReadFileWriteStreamExamples >> testSetAtEnd [
 	<gtExample>
 	| stream |
 
@@ -226,7 +226,7 @@ PharoLinkReadFileWriteMemoryExamples >> testSetAtEnd [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testWriting [
+PharoLinkReadFileWriteStreamExamples >> testWriting [
 	<gtExample>
 	| bufferedStream |
 
@@ -239,7 +239,7 @@ PharoLinkReadFileWriteMemoryExamples >> testWriting [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemoryExamples >> testWritingOverflow [
+PharoLinkReadFileWriteStreamExamples >> testWritingOverflow [
 	<gtExample>
 	| bufferedStream |
 	

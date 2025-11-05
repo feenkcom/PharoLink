@@ -6,7 +6,7 @@ This class contains tests.
 Class {
 	#name : #PharoLinkSimpleApplicationTest,
 	#superclass : #PharoLinkApplicationTest,
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #tests }

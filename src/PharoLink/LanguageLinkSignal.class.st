@@ -1,5 +1,5 @@
 Class {
 	#name : #LanguageLinkSignal,
 	#superclass : #BeaconSignal,
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }

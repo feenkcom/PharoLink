@@ -5,7 +5,7 @@ Class {
 		'additionalExceptions',
 		'primaryException'
 	],
-	#category : #'PharoLink-Test-Runner'
+	#category : 'PharoLink-Test-Runner'
 }
 
 { #category : #testing }

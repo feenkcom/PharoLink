@@ -4,7 +4,7 @@ LanguageLinkMsgPackUtils provides common configuration for the {{gtClass:Socket}
 Class {
 	#name : #LanguageLinkMsgPackUtils,
 	#superclass : #Object,
-	#category : #'PharoLink-MessageBroker'
+	#category : 'PharoLink-MessageBroker'
 }
 
 { #category : #constants }

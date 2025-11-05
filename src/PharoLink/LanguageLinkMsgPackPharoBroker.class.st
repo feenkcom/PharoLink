@@ -7,7 +7,7 @@ Class {
 		'msgStream',
 		'syncRegistry'
 	],
-	#category : #'PharoLink-MessageBroker'
+	#category : 'PharoLink-MessageBroker'
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 		'traces',
 		'rootEntry'
 	],
-	#category : #'PharoLink-ExceptionAnalysis'
+	#category : 'PharoLink-ExceptionAnalysis'
 }
 
 { #category : #adding }
@@ -31,14 +31,6 @@ PharoLinkTraceGroup >> populateTree [
 	self traces do: [ :trace | self addToTreeTrace: trace ]
 ]
 
-{ #category : #initialization }
-PharoLinkTraceGroup >> traceStrings: aCollection [
-
-	self traces: (aCollection collect: [ :string |
-		PharoLinkTrace new traceString: string ]).
-
-]
-
 { #category : #accessing }
 PharoLinkTraceGroup >> traces [
 
@@ -50,4 +42,12 @@ PharoLinkTraceGroup >> traces: aCollection [
 
 	traces := aCollection.
 	self populateTree.
+]
+
+{ #category : #initialization }
+PharoLinkTraceGroup >> traceStrings: aCollection [
+
+	self traces: (aCollection collect: [ :string |
+		PharoLinkTrace new traceString: string ]).
+
 ]

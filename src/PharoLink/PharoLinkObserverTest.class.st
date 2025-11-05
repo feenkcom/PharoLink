@@ -9,7 +9,7 @@ Class {
 		'clientProcess',
 		'callbackProcess'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #helper }

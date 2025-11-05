@@ -1,16 +1,16 @@
 Class {
-	#name : #PharoLinkFilesOpener,
+	#name : #PharoLinkInMemoryFilesOpener,
 	#superclass : #PharoFilesOpener,
 	#instVars : [
 		'sourcesVirtual',
 		'fileSystem',
 		'changesVirtual'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }
-PharoLinkFilesOpener class >> initialize [
+PharoLinkInMemoryFilesOpener class >> initialize [
 
 	"Prority is one less than SourceFileArray's handler, as we want to influence it."
 
@@ -21,12 +21,12 @@ PharoLinkFilesOpener class >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkFilesOpener class >> install [
+PharoLinkInMemoryFilesOpener class >> install [
 	Default := self new
 ]
 
 { #category : #accessing }
-PharoLinkFilesOpener class >> startUp: isStarting [
+PharoLinkInMemoryFilesOpener class >> startUp: isStarting [
 
 	isStarting ifFalse: [ ^ self ].
 	(Smalltalk argumentsInclude: '--detachChangesFromFileSystem') 
@@ -35,7 +35,7 @@ PharoLinkFilesOpener class >> startUp: isStarting [
 ]
 
 { #category : #accessing }
-PharoLinkFilesOpener >> changesFileOrNil [
+PharoLinkInMemoryFilesOpener >> changesFileOrNil [
 
 	| changes |
 	changes := self changesName asFileReference.
@@ -48,7 +48,7 @@ PharoLinkFilesOpener >> changesFileOrNil [
 ]
 
 { #category : #accessing }
-PharoLinkFilesOpener >> initialize [
+PharoLinkInMemoryFilesOpener >> initialize [
 	super initialize.
 
 	sourcesVirtual := PharoLinkSourcesReadWriteStream empty.
@@ -56,7 +56,7 @@ PharoLinkFilesOpener >> initialize [
 ]
 
 { #category : #accessing }
-PharoLinkFilesOpener >> sourcesFileOrNil [
+PharoLinkInMemoryFilesOpener >> sourcesFileOrNil [
 
 	| sources |
 	sources := self sourcesName asFileReference.

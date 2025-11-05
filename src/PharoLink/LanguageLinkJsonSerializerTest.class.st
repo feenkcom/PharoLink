@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'serializer'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #testing }

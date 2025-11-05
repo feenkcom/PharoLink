@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkAbstractSerializerWrapper,
 	#superclass : #Object,
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #private }

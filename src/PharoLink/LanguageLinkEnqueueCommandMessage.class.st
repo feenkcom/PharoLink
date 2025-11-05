@@ -6,7 +6,7 @@ Class {
 		'statements',
 		'bindings'
 	],
-	#category : #'PharoLink-Platform-Messages'
+	#category : 'PharoLink-Platform-Messages'
 }
 
 { #category : #'as yet unclassified' }
