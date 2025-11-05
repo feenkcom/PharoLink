@@ -4,5 +4,5 @@ PharoLinkServerCurrentConnection holds the connection that is processing the cur
 Class {
 	#name : #PharoLinkServerCurrentConnection,
 	#superclass : #DynamicVariable,
-	#category : #'PharoLink-Server'
+	#category : 'PharoLink-Server'
 }

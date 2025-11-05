@@ -7,7 +7,7 @@ Class {
 		'executionHandler',
 		'application'
 	],
-	#category : #'PharoLink-Serialization'
+	#category : 'PharoLink-Serialization'
 }
 
 { #category : #'as yet unclassified' }

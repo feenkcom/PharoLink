@@ -14,7 +14,7 @@ Class {
 		'stubThread',
 		'serverSocket'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #utils }

@@ -7,7 +7,7 @@ Class {
 		'readOnlyLimit',
 		'position'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }

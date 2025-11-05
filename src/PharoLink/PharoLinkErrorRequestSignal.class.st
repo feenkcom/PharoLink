@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'dictionary'
 	],
-	#category : #'PharoLink-Server'
+	#category : 'PharoLink-Server'
 }
 
 { #category : #accessing }

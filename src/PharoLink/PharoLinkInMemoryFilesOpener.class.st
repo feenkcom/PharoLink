@@ -6,7 +6,7 @@ Class {
 		'fileSystem',
 		'changesVirtual'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }

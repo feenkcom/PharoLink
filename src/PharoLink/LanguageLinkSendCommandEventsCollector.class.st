@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkSendCommandEventsCollector,
 	#superclass : #GtBeaconEventsCollector,
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #initialization }

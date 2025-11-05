@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TAssertable',
 	#classTraits : 'TAssertable classTrait',
-	#category : #'PharoLink-Examples'
+	#category : 'PharoLink-Examples'
 }
 
 { #category : #private }
@@ -11,8 +11,6 @@ PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> emptySourceFileArray [
 	| sfa |
 
 	sfa := SourceFileArray new.
-	sfa ensureOpen.
-	sfa changesFileStream close.
 	sfa changesFileStream: (PharoLinkInMemoryFilesOpener new changesFileOrNil).
 	^ sfa
 ]

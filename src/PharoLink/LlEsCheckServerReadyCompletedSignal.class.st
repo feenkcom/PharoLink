@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'isServerReady'
 	],
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #initialization }

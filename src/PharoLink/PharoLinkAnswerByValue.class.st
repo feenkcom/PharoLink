@@ -15,7 +15,7 @@ Futures: Allowing values that can be JSON encoded in the standard Gt format (cur
 Class {
 	#name : #PharoLinkAnswerByValue,
 	#superclass : #DynamicVariable,
-	#category : #'PharoLink-Registry'
+	#category : 'PharoLink-Registry'
 }
 
 { #category : #api }

@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'PharoLink-Registry'
+	#category : 'PharoLink-Registry'
 }
 
 { #category : #accessing }

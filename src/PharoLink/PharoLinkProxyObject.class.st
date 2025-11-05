@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkProxyObject,
 	#superclass : #LanguageLinkProxyObject,
-	#category : #'PharoLink-Pharo-Platform'
+	#category : 'PharoLink-Pharo-Platform'
 }
 
 { #category : #accessing }

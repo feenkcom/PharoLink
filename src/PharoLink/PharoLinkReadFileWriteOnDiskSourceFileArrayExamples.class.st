@@ -1,20 +1,33 @@
 Class {
 	#name : #PharoLinkReadFileWriteOnDiskSourceFileArrayExamples,
 	#superclass : #PharoLinkReadFileWriteInMemorySourceFileArrayExamples,
-	#category : #'PharoLink-Examples'
+	#instVars : [
+		'changesFile',
+		'sourceFileArray'
+	],
+	#category : 'PharoLink-Examples'
 }
+
+{ #category : #'private - helpers' }
+PharoLinkReadFileWriteOnDiskSourceFileArrayExamples >> cleanUp [
+
+	sourceFileArray ifNotNil:
+		[ sourceFileArray close ].
+	changesFile ifNotNil:
+		[ changesFile ensureDelete ].
+]
 
 { #category : #private }
 PharoLinkReadFileWriteOnDiskSourceFileArrayExamples >> emptySourceFileArray [
-	"Answer a SourceFileArray with the changes file set to a "
-	| changesFile sfa |
+	"Answer a SourceFileArray with the changes file set to a temporary file.
+	We have to use an on-disk file as the MemoryFileSystem assumes that the contents of the file will never change over the lifetime of a ReadStream."
+	<gtExample>
+	<after: #cleanUp>
 
-	changesFile := FileSystem memory / 'changes.changes'.
-	sfa := SourceFileArray new.
-	sfa ensureOpen.
-	sfa changesFileStream close.
-	sfa changesFileStream: (PharoLinkOnDiskFilesOpener new 
-		changesVirtual: changesFile unbufferedBinaryWriteStream;
+	changesFile := FileReference newTempFilePrefix: self class name asString suffix: '.changes'.
+	sourceFileArray := SourceFileArray new.
+	sourceFileArray changesFileStream: (PharoLinkOnDiskFilesOpener new 
+		changesFilename: changesFile;
 		changesFileOrNil).
-	^ sfa
+	^ sourceFileArray
 ]

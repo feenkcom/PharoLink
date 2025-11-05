@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'logs'
 	],
-	#category : #'PharoLink-Core'
+	#category : 'PharoLink-Core'
 }
 
 { #category : #accessing }

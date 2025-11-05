@@ -5,7 +5,7 @@ Class {
 		'ivar1',
 		'ivar2'
 	],
-	#category : #'PharoLink-Platform-Messages'
+	#category : 'PharoLink-Platform-Messages'
 }
 
 { #category : #accessing }

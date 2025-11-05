@@ -2,22 +2,16 @@ Class {
 	#name : #PharoLinkReadFileWriteStreamSourceFile,
 	#superclass : #SourceFile,
 	#instVars : [
-		'virtual',
-		'readOnlyLimit'
+		'readOnlyLimit',
+		'extensionFilename'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
-{ #category : #testing }
-PharoLinkReadFileWriteStreamSourceFile >> closed [
-	^ super closed or:
-		[ virtual isNil or: [ virtual closed ] ]
-]
-
 { #category : #accessing }
-PharoLinkReadFileWriteStreamSourceFile >> initializeVirtual: aReadWriteStream readOnlyLimit: anInteger [
+PharoLinkReadFileWriteStreamSourceFile >> initializeExtensionFilename: aFileReference readOnlyLimit: anInteger [
 
-	virtual := aReadWriteStream.
+	extensionFilename := aFileReference.
 	readOnlyLimit := anInteger
 ]
 
@@ -25,36 +19,35 @@ PharoLinkReadFileWriteStreamSourceFile >> initializeVirtual: aReadWriteStream re
 PharoLinkReadFileWriteStreamSourceFile >> readOnlyCopy [
 
 	^ (self species on: path potentialLocations: potentialLocations)
-		  initializeVirtual: virtual readOnlyLimit: readOnlyLimit;
+		  initializeExtensionFilename: extensionFilename readOnlyLimit: readOnlyLimit;
 		  tryOpenReadOnly: true;
 		  yourself
 ]
 
 { #category : #accessing }
 PharoLinkReadFileWriteStreamSourceFile >> tryOpenReadOnly: readOnly [
-	| basename |
-
-	basename := path asFileReference basename.
 	"Open a read write stream only if read only access was not requested.
-	We need to create the encoding and buffering streams manually because we need a read write stream."
-	virtual closed ifTrue:
-		[ virtual := virtual asOpenStream ].
-	readOnly ifFalse: [ 
-		potentialLocations do: [ :each | 
-			stream := SourceFileCharacterReadWriteStream
-				on: (SourceFileBufferedReadWriteStream on:
-					(PharoLinkReadFileWriteStream
-						readOnly: (each asFileReference / basename) binaryReadStream
-						readOnlyLimit: readOnlyLimit
-						readWrite: virtual))
+	We need to create the encoding and buffering streams manually because we need a read write stream.
+	Note that the potentialLocations must have one entry that is known to contain the changes / sources as the extension file will be created if necessary."
+	| readOnlyName location |
+
+	readOnlyName := path asFileReference basename.
+	location := potentialLocations first.
+	readOnly ifFalse: 
+		[ stream := SourceFileCharacterReadWriteStream
+			on: (SourceFileBufferedReadWriteStream on:
+				(PharoLinkReadFileWriteStream
+					readOnly: (location asFileReference / readOnlyName) binaryReadStream
+					readOnlyLimit: readOnlyLimit
+					readWrite: extensionFilename unbufferedBinaryWriteStream))
 				encoding: 'utf8'.
-			^ self ] ].
-	potentialLocations do: [ :each | 
-		stream := ZnCharacterReadStream
-			on: (PharoLinkReadFileWriteStream
-				readOnly: (each asFileReference / basename) binaryReadStream
-				readOnlyLimit: readOnlyLimit
-				readWrite: virtual)
-			encoding: 'utf8'.
 		^ self ].
+
+	stream := ZnCharacterReadStream
+		on: (PharoLinkReadFileWriteStream
+			readOnly: (location asFileReference / readOnlyName) binaryReadStream
+			readOnlyLimit: readOnlyLimit
+			readWrite: extensionFilename binaryReadStream)
+		encoding: 'utf8'.
+	^ self.
 ]

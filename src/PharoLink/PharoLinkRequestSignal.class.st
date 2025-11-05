@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'request'
 	],
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #printing }

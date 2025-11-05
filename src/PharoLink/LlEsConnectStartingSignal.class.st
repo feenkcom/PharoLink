@@ -1,7 +1,7 @@
 Class {
 	#name : #LlEsConnectStartingSignal,
 	#superclass : #LlEsConnectSignal,
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #testing }

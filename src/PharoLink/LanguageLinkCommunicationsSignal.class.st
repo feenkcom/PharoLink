@@ -6,7 +6,7 @@ Class {
 		'commandId',
 		'stackString'
 	],
-	#category : #'PharoLink-ErrorHandling'
+	#category : 'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }

@@ -36,7 +36,7 @@ Class {
 		'promiseRegistry',
 		'mapperFactory'
 	],
-	#category : #'PharoLink-Execution'
+	#category : 'PharoLink-Execution'
 }
 
 { #category : #'private protocol' }

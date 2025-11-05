@@ -2,11 +2,10 @@ Class {
 	#name : #PharoLinkOnDiskFilesOpener,
 	#superclass : #PharoFilesOpener,
 	#instVars : [
-		'sourcesVirtual',
-		'fileSystem',
-		'changesVirtual'
+		'changesFilename',
+		'sourcesFilename'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }
@@ -35,71 +34,57 @@ PharoLinkOnDiskFilesOpener class >> startUp: isStarting [
 ]
 
 { #category : #accessing }
-PharoLinkOnDiskFilesOpener >> changesBasename [
-	"Answer the basename of the file when stored on-disk"
+PharoLinkOnDiskFilesOpener >> changesFilename [
+	"Answer the FileReference when stored on-disk.
+	This should normally be at the same location as the original changes file,
+	however it may be overwritten for testing."
 
-	^ 'detached.', GtOsSystemInfo current currentProcessId asString, '.changes'
+	^ changesFilename ifNil: 
+		[ changesFilename := self changesName asFileReference parent / ('detached.', GtOsSystemInfo current currentProcessId asString, '.changes') ].
+]
+
+{ #category : #accessing }
+PharoLinkOnDiskFilesOpener >> changesFilename: anObject [
+	changesFilename := anObject
 ]
 
 { #category : #accessing }
 PharoLinkOnDiskFilesOpener >> changesFileOrNil [
-
 	| changes |
+
 	changes := self changesName asFileReference.
 	^ (PharoLinkReadFileWriteStreamSourceFile
 		   on: changes
 		   potentialLocations: { changes parent })
-		  initializeVirtual: self changesVirtual readOnlyLimit: changes size;
+		  initializeExtensionFilename: self changesFilename readOnlyLimit: changes size;
 		  tryOpenReadOnly: false;
 		  yourself
 ]
 
 { #category : #accessing }
-PharoLinkOnDiskFilesOpener >> changesVirtual [
+PharoLinkOnDiskFilesOpener >> sourcesFilename [
+	"Answer the FileReference when stored on-disk.
+	This should normally be at the same location as the original sources file,
+	however it may be overwritten for testing."
 
-	^ changesVirtual ifNil: 
-		[ self changesBasename asFileReference unbufferedBinaryWriteStream ]
+	^ sourcesFilename ifNil:
+		[ sourcesFilename := self sourcesName asFileReference parent / ('detached.', GtOsSystemInfo current currentProcessId asString, '.sources' ) ]
 ]
 
 { #category : #accessing }
-PharoLinkOnDiskFilesOpener >> changesVirtual: anObject [
-	changesVirtual := anObject
-]
-
-{ #category : #private }
-PharoLinkOnDiskFilesOpener >> sourceFileBasename: aString [ 
-
-	^ SourceFile on: aString asFileReference potentialLocations: { FileLocator workingDirectory resolve }
-]
-
-{ #category : #accessing }
-PharoLinkOnDiskFilesOpener >> sourcesBasename [
-	"Answer the basename of the file when stored on-disk"
-
-	^ 'detached.', GtOsSystemInfo current currentProcessId asString, '.sources'
+PharoLinkOnDiskFilesOpener >> sourcesFilename: anObject [
+	sourcesFilename := anObject
 ]
 
 { #category : #accessing }
 PharoLinkOnDiskFilesOpener >> sourcesFileOrNil [
-
 	| sources |
+
 	sources := self sourcesName asFileReference.
 	^ (PharoLinkReadFileWriteStreamSourceFile
 		   on: sources
 		   potentialLocations: { sources parent })
-		  initializeVirtual: self sourcesVirtual readOnlyLimit: sources size;
+		  initializeExtensionFilename: self sourcesFilename readOnlyLimit: sources size;
 		  tryOpenReadOnly: true;
 		  yourself
-]
-
-{ #category : #accessing }
-PharoLinkOnDiskFilesOpener >> sourcesVirtual [
-
-	^ sourcesVirtual ifNil: 
-		[ self sourcesBasename asFileReference unbufferedBinaryWriteStream ]
-]
-
-{ #category : #accessing }
-PharoLinkOnDiskFilesOpener >> sourcesVirtual: anObject [
-	sourcesVirtual := anObject
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkTestAnnouncement,
 	#superclass : #Announcement,
-	#category : #'PharoLink-Test-Runner'
+	#category : 'PharoLink-Test-Runner'
 }
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 		'handlerException',
 		'settings'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #testing }

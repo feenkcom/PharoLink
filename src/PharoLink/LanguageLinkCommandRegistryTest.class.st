@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : #'PharoLink-Tests'
+	#category : 'PharoLink-Tests'
 }
 
 { #category : #initialization }

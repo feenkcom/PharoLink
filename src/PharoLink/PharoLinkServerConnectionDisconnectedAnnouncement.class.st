@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'connection'
 	],
-	#category : #'PharoLink-Server'
+	#category : 'PharoLink-Server'
 }
 
 { #category : #'instance creation' }

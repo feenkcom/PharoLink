@@ -8,7 +8,7 @@ But we can't use the default Pharo PRNG since it often hits the same value, ofte
 Class {
 	#name : #PharoLinkPortAllocator,
 	#superclass : #Object,
-	#category : #'PharoLink-Server'
+	#category : 'PharoLink-Server'
 }
 
 { #category : #accessing }

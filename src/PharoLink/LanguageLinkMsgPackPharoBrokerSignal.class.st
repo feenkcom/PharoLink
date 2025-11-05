@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'message'
 	],
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #accessing }

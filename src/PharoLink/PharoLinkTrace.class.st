@@ -5,7 +5,7 @@ Class {
 		'traceString',
 		'stackFrames'
 	],
-	#category : #'PharoLink-ExceptionAnalysis'
+	#category : 'PharoLink-ExceptionAnalysis'
 }
 
 { #category : #private }
