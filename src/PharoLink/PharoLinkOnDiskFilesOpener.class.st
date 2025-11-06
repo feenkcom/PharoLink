@@ -68,7 +68,7 @@ PharoLinkOnDiskFilesOpener >> sourcesFilename [
 	however it may be overwritten for testing."
 
 	^ sourcesFilename ifNil:
-		[ sourcesFilename := self sourcesName asFileReference parent / ('detached.', GtOsSystemInfo current currentProcessId asString, '.sources' ) ]
+		[ sourcesFilename := self sourcesName asFileReference ]
 ]
 
 { #category : #accessing }

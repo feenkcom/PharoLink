@@ -29,5 +29,14 @@ PharoLinkReadFileWriteOnDiskSourceFileArrayExamples >> emptySourceFileArray [
 	sourceFileArray changesFileStream: (PharoLinkOnDiskFilesOpener new 
 		changesFilename: changesFile;
 		changesFileOrNil).
-	^ sourceFileArray
+	^ sourceFileArray.
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteOnDiskSourceFileArrayExamples >> sourcesFilename [
+	"Confirm that the default sources file is used"
+	<gtExample>
+
+	self assert: PharoLinkOnDiskFilesOpener new sourcesFilename fullName
+		equals: Smalltalk sourcesName
 ]
