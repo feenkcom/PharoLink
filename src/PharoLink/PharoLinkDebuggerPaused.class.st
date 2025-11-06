@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'debuggerClient'
 	],
-	#category : 'PharoLink-ErrorHandling'
+	#category : #'PharoLink-ErrorHandling'
 }
 
 { #category : #signalling }

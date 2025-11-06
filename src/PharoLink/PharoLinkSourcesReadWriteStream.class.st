@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkSourcesReadWriteStream,
 	#superclass : #ReadWriteStream,
-	#category : 'PharoLink-Global'
+	#category : #'PharoLink-Global'
 }
 
 { #category : #requirements }

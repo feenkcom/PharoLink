@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkBrokerSendMessage,
 	#superclass : #LanguageLinkMsgPackPharoBrokerSignal,
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #accessing }

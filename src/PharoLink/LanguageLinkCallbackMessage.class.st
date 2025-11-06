@@ -6,7 +6,7 @@ Class {
 		'observerId',
 		'value'
 	],
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #accessing }

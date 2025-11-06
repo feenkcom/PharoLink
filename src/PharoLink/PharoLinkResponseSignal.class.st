@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'response'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #printing }

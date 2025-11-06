@@ -9,7 +9,7 @@ Class {
 		'waitAgain',
 		'timeout'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #accessing }

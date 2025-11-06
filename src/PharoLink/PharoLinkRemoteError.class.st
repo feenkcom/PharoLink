@@ -8,7 +8,7 @@ Class {
 		'proceedAction',
 		'trace'
 	],
-	#category : 'PharoLink-ErrorHandling'
+	#category : #'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }

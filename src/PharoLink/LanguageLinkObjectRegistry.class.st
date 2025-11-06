@@ -5,7 +5,7 @@ Class {
 		'idTable',
 		'mutex'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #testing }

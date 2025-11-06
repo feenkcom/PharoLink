@@ -5,7 +5,7 @@ Class {
 		'server',
 		'application'
 	],
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #'as yet unclassified' }

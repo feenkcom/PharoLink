@@ -1,7 +1,7 @@
 Class {
 	#name : #LlEsConnectSignal,
 	#superclass : #LanguageLinkEventSignal,
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #accessing }

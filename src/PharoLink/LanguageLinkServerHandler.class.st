@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'process'
 	],
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #accessing }

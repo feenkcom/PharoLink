@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkMsgPackPharoEventsGrouper,
 	#superclass : #GtBeaconEventsGrouper,
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #accessing }

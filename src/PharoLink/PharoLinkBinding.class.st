@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkBinding,
 	#superclass : #LanguageLinkBinding,
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkDeliverCommandEvent,
 	#superclass : #LanguageLinkCommandEvent,
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #accessing }

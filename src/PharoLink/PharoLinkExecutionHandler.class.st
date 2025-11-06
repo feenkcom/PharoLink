@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkExecutionHandler,
 	#superclass : #LanguageLinkExecutionHandler,
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #'private protocol' }

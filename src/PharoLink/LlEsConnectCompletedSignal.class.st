@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'isConnected'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #accessing }

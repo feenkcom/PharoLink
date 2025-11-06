@@ -11,7 +11,7 @@ Class {
 		'announcer',
 		'oneShot'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #clap }

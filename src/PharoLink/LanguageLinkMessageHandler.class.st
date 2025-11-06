@@ -5,7 +5,7 @@ Class {
 		'message',
 		'callback'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #'as yet unclassified' }

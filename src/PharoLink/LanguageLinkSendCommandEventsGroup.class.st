@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkSendCommandEventsGroup,
 	#superclass : #GtBeaconLogEventsGroup,
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #'gt - extensions' }

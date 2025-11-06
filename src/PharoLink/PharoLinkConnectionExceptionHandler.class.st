@@ -4,7 +4,7 @@ Handle exceptions raised while communicating and processing messages.
 Class {
 	#name : #PharoLinkConnectionExceptionHandler,
 	#superclass : #Object,
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #api }

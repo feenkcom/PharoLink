@@ -8,7 +8,7 @@ Class {
 		'connection',
 		'registry'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #'instance creation' }

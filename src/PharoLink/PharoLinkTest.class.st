@@ -5,7 +5,7 @@ Class {
 		'application',
 		'commandFactory'
 	],
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #private }

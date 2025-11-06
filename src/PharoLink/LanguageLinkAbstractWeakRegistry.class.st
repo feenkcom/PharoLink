@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkAbstractWeakRegistry,
 	#superclass : #Object,
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #registration }

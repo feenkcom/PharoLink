@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkManualProcess,
 	#superclass : #LanguageLinkAbstractProcess,
-	#category : 'PharoLink-Pharo-Processes'
+	#category : #'PharoLink-Pharo-Processes'
 }
 
 { #category : #private }

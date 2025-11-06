@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'stubServer'
 	],
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #utils }

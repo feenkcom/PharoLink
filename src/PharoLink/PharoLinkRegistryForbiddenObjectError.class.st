@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : 'PharoLink-Registry'
+	#category : #'PharoLink-Registry'
 }
 
 { #category : #signalling }

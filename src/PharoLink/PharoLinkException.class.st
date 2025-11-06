@@ -10,7 +10,7 @@ Class {
 		'exceptionTrace',
 		'exceptionAdditionalData'
 	],
-	#category : 'PharoLink-Test-Runner'
+	#category : #'PharoLink-Test-Runner'
 }
 
 { #category : #'instance creation' }

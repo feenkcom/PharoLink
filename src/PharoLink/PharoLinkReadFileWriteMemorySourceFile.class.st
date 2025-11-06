@@ -5,7 +5,7 @@ Class {
 		'virtual',
 		'readOnlyLimit'
 	],
-	#category : 'PharoLink-Global'
+	#category : #'PharoLink-Global'
 }
 
 { #category : #accessing }

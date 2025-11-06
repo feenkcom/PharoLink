@@ -8,7 +8,7 @@ Class {
 		'serializerClass',
 		'deserializerClass'
 	],
-	#category : 'PharoLink-Serialization'
+	#category : #'PharoLink-Serialization'
 }
 
 { #category : #'as yet unclassified' }

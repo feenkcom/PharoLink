@@ -9,7 +9,7 @@ Class {
 		'NodejsPath',
 		'PipenvPath'
 	],
-	#category : 'PharoLink-Pharo-Processes'
+	#category : #'PharoLink-Pharo-Processes'
 }
 
 { #category : #private }

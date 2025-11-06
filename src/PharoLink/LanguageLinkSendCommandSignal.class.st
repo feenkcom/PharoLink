@@ -6,7 +6,7 @@ Class {
 		'instructions',
 		'bindingsDictionary'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #accessing }

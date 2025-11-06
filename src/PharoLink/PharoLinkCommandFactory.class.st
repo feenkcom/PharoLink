@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkCommandFactory,
 	#superclass : #LanguageLinkCommandFactory,
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #bindings }

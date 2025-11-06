@@ -5,7 +5,7 @@ Class {
 		'ipOrName',
 		'port'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #accessing }

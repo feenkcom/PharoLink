@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #example }

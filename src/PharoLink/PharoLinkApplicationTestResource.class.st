@@ -6,7 +6,7 @@ Class {
 		'commandFactory',
 		'process'
 	],
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #initialization }

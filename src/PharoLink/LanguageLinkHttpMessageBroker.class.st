@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'server'
 	],
-	#category : 'PharoLink-Pharo-MessageBroker'
+	#category : #'PharoLink-Pharo-MessageBroker'
 }
 
 { #category : #accessing }

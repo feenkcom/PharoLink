@@ -7,7 +7,7 @@ Class {
 		'resourceReport',
 		'additionalProperties'
 	],
-	#category : 'PharoLink-Test-Runner'
+	#category : #'PharoLink-Test-Runner'
 }
 
 { #category : #accessing }
@@ -71,6 +71,12 @@ PharoLinkTestCaseEndAnnouncement class >> testCase: aTestCase startTimestamp: aD
 		yourself
 ]
 
+{ #category : #adding }
+PharoLinkTestCaseEndAnnouncement >> addToTestResult: aTestResult [
+
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 PharoLinkTestCaseEndAnnouncement >> additionalProperties [
 	^ additionalProperties
@@ -79,12 +85,6 @@ PharoLinkTestCaseEndAnnouncement >> additionalProperties [
 { #category : #accessing }
 PharoLinkTestCaseEndAnnouncement >> additionalProperties: aDictionary [
 	^ additionalProperties := aDictionary
-]
-
-{ #category : #adding }
-PharoLinkTestCaseEndAnnouncement >> addToTestResult: aTestResult [
-
-	self subclassResponsibility
 ]
 
 { #category : #accessing }
