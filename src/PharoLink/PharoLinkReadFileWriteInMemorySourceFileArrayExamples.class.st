@@ -72,10 +72,12 @@ PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testForkedWrite [
 PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testReadStreamAtFileIndexAtPosition [
 	<gtExample>
 	| stream array endPosition string |
+
 	array := self emptySourceFileArray.
 	stream := array changesFileStream readOnlyCopy.
-	stream setToEnd.
-	endPosition := stream position.
+	[ stream setToEnd.
+	endPosition := stream position ]
+		ensure: [ stream close ].
 	array deferFlushDuring: [ 
 			array
 				writeSource: 'source1'
