@@ -1,5 +1,5 @@
 Class {
-	#name : #PharoLinkReadFileWriteMemorySourceFileArrayExamples,
+	#name : #PharoLinkReadFileWriteInMemorySourceFileArrayExamples,
 	#superclass : #Object,
 	#traits : 'TAssertable',
 	#classTraits : 'TAssertable classTrait',
@@ -7,18 +7,16 @@ Class {
 }
 
 { #category : #private }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> emptySourceFileArray [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> emptySourceFileArray [
 	| sfa |
 
 	sfa := SourceFileArray new.
-	sfa ensureOpen.
-	sfa changesFileStream close.
-	sfa changesFileStream: (PharoLinkFilesOpener new changesFileOrNil).
+	sfa changesFileStream: (PharoLinkInMemoryFilesOpener new changesFileOrNil).
 	^ sfa
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testForkedRead [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testForkedRead [
 	<gtExample>
 	| originalString remoteString readSemaphore readString testSemaphore |
 
@@ -44,7 +42,7 @@ PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testForkedRead [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testForkedWrite [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testForkedWrite [
 	<gtExample>
 	| originalString remoteString readSemaphore readString testSemaphore |
 
@@ -71,13 +69,15 @@ PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testForkedWrite [
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testReadStreamAtFileIndexAtPosition [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testReadStreamAtFileIndexAtPosition [
 	<gtExample>
 	| stream array endPosition string |
+
 	array := self emptySourceFileArray.
 	stream := array changesFileStream readOnlyCopy.
-	stream setToEnd.
-	endPosition := stream position.
+	[ stream setToEnd.
+	endPosition := stream position ]
+		ensure: [ stream close ].
 	array deferFlushDuring: [ 
 			array
 				writeSource: 'source1'
@@ -108,7 +108,7 @@ PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testReadStreamAtFileIndex
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testRemoteStringReadsInGivenSourceFileArray [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testRemoteStringReadsInGivenSourceFileArray [
 	<gtExample>
 	| array remoteString readStream |
 
@@ -122,7 +122,7 @@ PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testRemoteStringReadsInGi
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testRemoteStringWritesInGivenSourceFileArray [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testRemoteStringWritesInGivenSourceFileArray [
 	<gtExample>
 	| array remoteString readStream |
 
@@ -139,7 +139,7 @@ test!'
 ]
 
 { #category : #examples }
-PharoLinkReadFileWriteMemorySourceFileArrayExamples >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefering [
+PharoLinkReadFileWriteInMemorySourceFileArrayExamples >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefering [
 	<gtExample>
 	| stream array endPosition |
 	array := self emptySourceFileArray.

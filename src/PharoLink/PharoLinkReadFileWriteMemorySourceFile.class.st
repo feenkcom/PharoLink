@@ -35,7 +35,7 @@ PharoLinkReadFileWriteMemorySourceFile >> tryOpenReadOnly: readOnly [
 		potentialLocations do: [ :each | 
 			stream := SourceFileCharacterReadWriteStream
 				on: (SourceFileBufferedReadWriteStream on:
-					(PharoLinkReadFileWriteMemoryStream
+					(PharoLinkReadFileWriteStream
 						readOnly: (each asFileReference / basename) binaryReadStream
 						readOnlyLimit: readOnlyLimit
 						readWrite: virtual))
@@ -43,7 +43,7 @@ PharoLinkReadFileWriteMemorySourceFile >> tryOpenReadOnly: readOnly [
 			^ self ] ].
 	potentialLocations do: [ :each | 
 		stream := ZnCharacterReadStream
-			on: (PharoLinkReadFileWriteMemoryStream
+			on: (PharoLinkReadFileWriteStream
 				readOnly: (each asFileReference / basename) binaryReadStream
 				readOnlyLimit: readOnlyLimit
 				readWrite: virtual)
