@@ -302,9 +302,7 @@ PharoLinkServerConnection >> sendSyncMessage: msgDictionary [
 { #category : #private }
 PharoLinkServerConnection >> stackString [
 
-	^ String streamContents: [ :stackStream |
-		thisContext stack do: [ :stackItem |
-			stackStream print: stackItem; cr ] ]
+	^ String streamContents: [ :aStream | thisContext errorReportOn: aStream ]
 ]
 
 { #category : #'start-stop' }

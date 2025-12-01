@@ -39,10 +39,7 @@ Exception >> pharoLinkAdditionalDataInRuntimeContext: aRuntimeContent [
 { #category : #'*PharoLink' }
 Exception >> stackString [
 
-	signalContext ifNil: [ ^ '' ].
-	^ String streamContents: [ :stream | 
-		  signalContext stack do: [ :stackItem | 
-			  stream
-				  print: stackItem;
-				  cr ] ]
+	signalContext ifNil: [^''].
+	^String streamContents: 
+			[ :stream | signalContext errorReportOn: stream ]
 ]
