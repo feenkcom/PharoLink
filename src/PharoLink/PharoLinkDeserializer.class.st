@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkDeserializer,
 	#superclass : #LanguageLinkDeserializer,
-	#category : #'PharoLink-Serialization'
+	#category : 'PharoLink-Serialization'
 }
 
 { #category : #'private protocol' }

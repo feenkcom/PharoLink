@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkDropQueue,
 	#superclass : #LanguageLinkErrorHandlingAction,
-	#category : #'PharoLink-ErrorHandling'
+	#category : 'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }

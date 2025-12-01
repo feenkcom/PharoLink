@@ -5,7 +5,7 @@ Class {
 		'promiseTable',
 		'semaphore'
 	],
-	#category : #'PharoLink-Execution'
+	#category : 'PharoLink-Execution'
 }
 
 { #category : #adding }

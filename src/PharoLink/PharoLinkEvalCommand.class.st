@@ -8,7 +8,7 @@ Class {
 		'connection',
 		'registry'
 	],
-	#category : #'PharoLink-Server'
+	#category : 'PharoLink-Server'
 }
 
 { #category : #'instance creation' }
@@ -201,7 +201,5 @@ PharoLinkEvalCommand >> stackArray [
 { #category : #accessing }
 PharoLinkEvalCommand >> stackString [
 
-	^ String streamContents: [ :stream |
-		thisContext stack do: [ :stackItem |
-			stream print: stackItem; cr ] ]
+	^ String streamContents: [ :stream | thisContext errorReportOn: stream ]
 ]

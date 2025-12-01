@@ -8,7 +8,7 @@ Class {
 		'decoderSemaphore',
 		'encoderSemaphore'
 	],
-	#category : #'PharoLink-MessageBroker'
+	#category : 'PharoLink-MessageBroker'
 }
 
 { #category : #'instance creation' }

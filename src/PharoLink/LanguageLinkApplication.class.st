@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }

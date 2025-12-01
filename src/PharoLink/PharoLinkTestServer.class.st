@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'PharoLink-Test-Runner'
+	#category : 'PharoLink-Test-Runner'
 }
 
 { #category : #accessing }

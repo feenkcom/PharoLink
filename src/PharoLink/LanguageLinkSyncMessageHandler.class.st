@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'answer'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #accessing }

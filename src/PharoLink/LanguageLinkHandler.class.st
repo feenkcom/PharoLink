@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'application'
 	],
-	#category : #'PharoLink-Core'
+	#category : 'PharoLink-Core'
 }
 
 { #category : #initalization }

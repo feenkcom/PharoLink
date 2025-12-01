@@ -5,7 +5,7 @@ Class {
 		'changesFilename',
 		'sourcesFilename'
 	],
-	#category : #'PharoLink-Global'
+	#category : 'PharoLink-Global'
 }
 
 { #category : #accessing }
@@ -34,19 +34,6 @@ PharoLinkOnDiskFilesOpener class >> startUp: isStarting [
 ]
 
 { #category : #accessing }
-PharoLinkOnDiskFilesOpener >> changesFileOrNil [
-	| changes |
-
-	changes := self changesName asFileReference.
-	^ (PharoLinkReadFileWriteStreamSourceFile
-		   on: changes
-		   potentialLocations: { changes parent })
-		  initializeExtensionFilename: self changesFilename readOnlyLimit: changes size;
-		  tryOpenReadOnly: false;
-		  yourself
-]
-
-{ #category : #accessing }
 PharoLinkOnDiskFilesOpener >> changesFilename [
 	"Answer the FileReference when stored on-disk.
 	This should normally be at the same location as the original changes file,
@@ -62,15 +49,15 @@ PharoLinkOnDiskFilesOpener >> changesFilename: anObject [
 ]
 
 { #category : #accessing }
-PharoLinkOnDiskFilesOpener >> sourcesFileOrNil [
-	| sources |
+PharoLinkOnDiskFilesOpener >> changesFileOrNil [
+	| changes |
 
-	sources := self sourcesName asFileReference.
+	changes := self changesName asFileReference.
 	^ (PharoLinkReadFileWriteStreamSourceFile
-		   on: sources
-		   potentialLocations: { sources parent })
-		  initializeExtensionFilename: self sourcesFilename readOnlyLimit: sources size;
-		  tryOpenReadOnly: true;
+		   on: changes
+		   potentialLocations: { changes parent })
+		  initializeExtensionFilename: self changesFilename readOnlyLimit: changes size;
+		  tryOpenReadOnly: false;
 		  yourself
 ]
 
@@ -87,4 +74,17 @@ PharoLinkOnDiskFilesOpener >> sourcesFilename [
 { #category : #accessing }
 PharoLinkOnDiskFilesOpener >> sourcesFilename: anObject [
 	sourcesFilename := anObject
+]
+
+{ #category : #accessing }
+PharoLinkOnDiskFilesOpener >> sourcesFileOrNil [
+	| sources |
+
+	sources := self sourcesName asFileReference.
+	^ (PharoLinkReadFileWriteStreamSourceFile
+		   on: sources
+		   potentialLocations: { sources parent })
+		  initializeExtensionFilename: self sourcesFilename readOnlyLimit: sources size;
+		  tryOpenReadOnly: true;
+		  yourself
 ]

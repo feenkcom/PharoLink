@@ -6,7 +6,7 @@ Class {
 		'position',
 		'parser'
 	],
-	#category : #'PharoLink-ErrorHandling'
+	#category : 'PharoLink-ErrorHandling'
 }
 
 { #category : #accessing }

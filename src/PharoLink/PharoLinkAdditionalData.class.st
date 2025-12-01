@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'properties'
 	],
-	#category : #'PharoLink-Test-Runner'
+	#category : 'PharoLink-Test-Runner'
 }
 
 { #category : #lejsonv4 }

@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkSerializer,
 	#superclass : #LanguageLinkMapper,
-	#category : #'PharoLink-Serialization'
+	#category : 'PharoLink-Serialization'
 }
 
 { #category : #api }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'weakRegistry'
 	],
-	#category : #'PharoLink-Pharo-Platform'
+	#category : 'PharoLink-Pharo-Platform'
 }
 
 { #category : #registration }

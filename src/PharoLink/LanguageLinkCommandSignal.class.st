@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'eventType'
 	],
-	#category : #'PharoLink-Logging'
+	#category : 'PharoLink-Logging'
 }
 
 { #category : #accessing }

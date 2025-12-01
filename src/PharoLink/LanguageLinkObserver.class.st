@@ -7,7 +7,7 @@ Class {
 		'command',
 		'answerEncoding'
 	],
-	#category : #'PharoLink-Execution'
+	#category : 'PharoLink-Execution'
 }
 
 { #category : #accessing }

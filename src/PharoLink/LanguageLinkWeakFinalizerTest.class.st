@@ -5,7 +5,7 @@ Class {
 		'weakRegistry',
 		'assertCounter'
 	],
-	#category : #'PharoLink-Platform'
+	#category : 'PharoLink-Platform'
 }
 
 { #category : #testing }

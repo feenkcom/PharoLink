@@ -7,7 +7,7 @@ Class {
 		'readOnlyStream',
 		'readWriteStream'
 	],
-	#category : #'PharoLink-Examples'
+	#category : 'PharoLink-Examples'
 }
 
 { #category : #examples }

@@ -1,5 +1,5 @@
 Class {
 	#name : #PharoLinkServerSignal,
 	#superclass : #PharoLinkSignal,
-	#category : #'PharoLink-Signals'
+	#category : 'PharoLink-Signals'
 }
