@@ -5,7 +5,7 @@ Class {
 		'unknownId',
 		'isOld'
 	],
-	#category : 'PharoLink-Registry'
+	#category : #'PharoLink-Registry'
 }
 
 { #category : #accessing }

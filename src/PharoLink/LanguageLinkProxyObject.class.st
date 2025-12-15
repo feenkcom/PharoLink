@@ -8,7 +8,7 @@ Class {
 		'remoteClass',
 		'name'
 	],
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #accessing }

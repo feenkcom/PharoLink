@@ -20,7 +20,7 @@ Class {
 		'workingDirectory',
 		'connectionExceptionHandler'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #'instance creation' }

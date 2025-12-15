@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkRMessage,
 	#superclass : #LanguageLinkAbstractMessage,
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #actions }

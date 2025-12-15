@@ -10,7 +10,7 @@ Class {
 		'exceptionTrace',
 		'exceptionAdditionalData'
 	],
-	#category : 'PharoLink-Test-Runner'
+	#category : #'PharoLink-Test-Runner'
 }
 
 { #category : #'instance creation' }
@@ -138,7 +138,10 @@ PharoLinkException >> gtTraceFor: aView [
 		priority: 15;
 		text: [ exceptionTrace ];
 		styler: GtTraceStyler new;
-		aptitude: BrGlamorousCodeEditorAptitude
+		aptitude: BrGlamorousCodeEditorAptitude;
+		actionButtonLabel: 'Inspect' tooltip: 'Open the PharoDebugLog inspector' action:
+			[ :aButton |
+				aButton phlow spawnObject: (GtPharoDebugLogInspector new string: exceptionTrace) parseLogEntries first ].
 ]
 
 { #category : #ui }

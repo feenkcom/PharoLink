@@ -5,7 +5,7 @@ Class {
 		'readOnlyLimit',
 		'extensionFilename'
 	],
-	#category : 'PharoLink-Global'
+	#category : #'PharoLink-Global'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'command',
 		'networkError'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #'instance creation' }

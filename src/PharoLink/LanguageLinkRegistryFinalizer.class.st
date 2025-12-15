@@ -5,7 +5,7 @@ Class {
 		'executionHandler',
 		'proxyObjectId'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #accessing }

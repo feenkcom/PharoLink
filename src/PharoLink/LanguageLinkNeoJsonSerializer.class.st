@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkNeoJsonSerializer,
 	#superclass : #LanguageLinkAbstractSerializerWrapper,
-	#category : 'PharoLink-Pharo-MessageBroker'
+	#category : #'PharoLink-Pharo-MessageBroker'
 }
 
 { #category : #private }

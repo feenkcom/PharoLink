@@ -5,7 +5,7 @@ This class contains tests
 Class {
 	#name : #LanguageLinkMsgPackSocketStreamTest,
 	#superclass : #TestCase,
-	#category : 'PharoLink-MessageBroker'
+	#category : #'PharoLink-MessageBroker'
 }
 
 { #category : #private }

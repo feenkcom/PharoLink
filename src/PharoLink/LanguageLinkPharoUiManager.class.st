@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkPharoUiManager,
 	#superclass : #LanguageLinkUiManager,
-	#category : 'PharoLink-Pharo-Platform'
+	#category : #'PharoLink-Pharo-Platform'
 }
 
 { #category : #hooks }

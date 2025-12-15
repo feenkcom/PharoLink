@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkTestCaseWarning,
 	#superclass : #PharoLinkTestCaseExceptionAnnouncement,
-	#category : 'PharoLink-Test-Runner'
+	#category : #'PharoLink-Test-Runner'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkPharoPlatform,
 	#superclass : #PharoLinkPlatform,
-	#category : 'PharoLink-Pharo-Platform'
+	#category : #'PharoLink-Pharo-Platform'
 }
 
 { #category : #private }

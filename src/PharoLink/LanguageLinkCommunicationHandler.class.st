@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'messageBroker'
 	],
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #adding }

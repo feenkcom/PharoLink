@@ -6,7 +6,7 @@ Class {
 		'errorMessage',
 		'trace'
 	],
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #accessing }

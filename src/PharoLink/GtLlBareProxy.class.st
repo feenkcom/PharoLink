@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'proxyObject'
 	],
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #'instance creation' }

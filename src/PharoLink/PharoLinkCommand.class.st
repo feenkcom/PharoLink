@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkCommand,
 	#superclass : #LanguageLinkCommand,
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #accessing }

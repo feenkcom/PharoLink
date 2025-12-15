@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'msgBrokerStrategy'
 	],
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #accessing }

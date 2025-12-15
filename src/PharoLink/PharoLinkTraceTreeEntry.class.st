@@ -5,7 +5,7 @@ Class {
 		'frame',
 		'traces'
 	],
-	#category : 'PharoLink-ExceptionAnalysis'
+	#category : #'PharoLink-ExceptionAnalysis'
 }
 
 { #category : #accessing }

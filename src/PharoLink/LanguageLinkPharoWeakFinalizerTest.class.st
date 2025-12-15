@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkPharoWeakFinalizerTest,
 	#superclass : #LanguageLinkWeakFinalizerTest,
-	#category : 'PharoLink-Pharo-Platform'
+	#category : #'PharoLink-Pharo-Platform'
 }
 
 { #category : #running }

@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkMessageHandlerTest,
 	#superclass : #TestCase,
-	#category : 'PharoLink-Platform'
+	#category : #'PharoLink-Platform'
 }
 
 { #category : #tests }

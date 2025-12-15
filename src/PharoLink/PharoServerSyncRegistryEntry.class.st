@@ -12,7 +12,7 @@ Class {
 		'result',
 		'exception'
 	],
-	#category : 'PharoLink-Server'
+	#category : #'PharoLink-Server'
 }
 
 { #category : #accessing }

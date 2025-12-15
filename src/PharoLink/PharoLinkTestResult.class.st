@@ -11,7 +11,7 @@ Class {
 		'announcer',
 		'debugMode'
 	],
-	#category : 'PharoLink-Test-Runner'
+	#category : #'PharoLink-Test-Runner'
 }
 
 { #category : #accessing }

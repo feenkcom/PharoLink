@@ -6,7 +6,7 @@ Class {
 		'stackString',
 		'additionalData'
 	],
-	#category : 'PharoLink-Test-Runner'
+	#category : #'PharoLink-Test-Runner'
 }
 
 { #category : #'instance creation' }

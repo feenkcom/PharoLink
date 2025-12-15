@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkRAnswer,
 	#superclass : #LanguageLinkAbstractAnswer,
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #encoding }

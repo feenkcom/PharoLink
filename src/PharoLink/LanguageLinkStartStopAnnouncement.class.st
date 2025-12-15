@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'subject'
 	],
-	#category : 'PharoLink-Announcements'
+	#category : #'PharoLink-Announcements'
 }
 
 { #category : #accessing }

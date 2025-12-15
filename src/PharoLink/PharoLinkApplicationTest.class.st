@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoLinkApplicationTest,
 	#superclass : #PharoLinkTest,
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #accessing }

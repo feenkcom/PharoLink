@@ -4,7 +4,7 @@ It is possible there's a race condition in LanguageLinkRegistryFinalizer that me
 Class {
 	#name : #PharoLinkObjectTest,
 	#superclass : #PharoLinkApplicationTest,
-	#category : 'PharoLink-Tests'
+	#category : #'PharoLink-Tests'
 }
 
 { #category : #tests }

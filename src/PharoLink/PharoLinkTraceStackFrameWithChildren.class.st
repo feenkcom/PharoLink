@@ -5,7 +5,7 @@ Class {
 		'frame',
 		'children'
 	],
-	#category : 'PharoLink-ExceptionAnalysis'
+	#category : #'PharoLink-ExceptionAnalysis'
 }
 
 { #category : #comparing }

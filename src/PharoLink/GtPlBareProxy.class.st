@@ -1,7 +1,7 @@
 Class {
 	#name : #GtPlBareProxy,
 	#superclass : #GtLlBareProxy,
-	#category : 'PharoLink-Core'
+	#category : #'PharoLink-Core'
 }
 
 { #category : #'instance creation' }

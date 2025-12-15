@@ -5,7 +5,7 @@ Class {
 		'request',
 		'response'
 	],
-	#category : 'PharoLink-Logging'
+	#category : #'PharoLink-Logging'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkMessage,
 	#superclass : #LanguageLinkAbstractMessage,
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #testing }

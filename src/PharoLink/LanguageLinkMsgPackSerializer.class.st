@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkMsgPackSerializer,
 	#superclass : #LanguageLinkAbstractSerializerWrapper,
-	#category : 'PharoLink-MessageBroker'
+	#category : #'PharoLink-MessageBroker'
 }
 
 { #category : #private }

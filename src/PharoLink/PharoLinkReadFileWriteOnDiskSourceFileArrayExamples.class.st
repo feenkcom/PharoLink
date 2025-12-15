@@ -5,7 +5,7 @@ Class {
 		'changesFile',
 		'sourceFileArray'
 	],
-	#category : 'PharoLink-Examples'
+	#category : #'PharoLink-Examples'
 }
 
 { #category : #'private - helpers' }

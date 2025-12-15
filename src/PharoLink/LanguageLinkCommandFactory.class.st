@@ -11,7 +11,7 @@ Class {
 		'command',
 		'instructions'
 	],
-	#category : 'PharoLink-Execution'
+	#category : #'PharoLink-Execution'
 }
 
 { #category : #'instance creation' }

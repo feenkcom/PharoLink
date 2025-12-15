@@ -1,7 +1,7 @@
 Class {
 	#name : #LanguageLinkAsyncMessage,
 	#superclass : #LanguageLinkMessage,
-	#category : 'PharoLink-Platform-Messages'
+	#category : #'PharoLink-Platform-Messages'
 }
 
 { #category : #accessing }
