@@ -103,6 +103,16 @@ LanguageLinkMsgPackPharoBroker >> isRunning [
 	^ msgStream notNil and: [ msgStream isConnected ]
 ]
 
+{ #category : #accessing }
+LanguageLinkMsgPackPharoBroker >> localAddressString [
+
+	^ String streamContents: [ :stream |
+		socket localAddress printOn: stream delimiter: '.'.
+		stream
+			nextPut: $:;
+			print: socket localPort ]
+]
+
 { #category : #private }
 LanguageLinkMsgPackPharoBroker >> preventTestForkedPDestroyServer [
 	| env |

@@ -44,6 +44,12 @@ LanguageLinkCommunicationHandler >> isServerReady [
 ]
 
 { #category : #accessing }
+LanguageLinkCommunicationHandler >> localAddressString [
+
+	^ messageBroker localAddressString.
+]
+
+{ #category : #accessing }
 LanguageLinkCommunicationHandler >> remoteAddressString [
 
 	^ messageBroker remoteAddressString.
