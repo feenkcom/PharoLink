@@ -1,6 +1,6 @@
 {
 	"repositories" : {
-		"github://feenkcom/gtoolkit-external-process/src" : "v0.6.157",
+		"github://feenkcom/gtoolkit-external-process/src" : "v0.6.158",
 		"github://feenkcom/msgpack-smalltalk/repository" : "v1.3.9",
 		"github://feenkcom/pharo-beacon/repository" : "1ec64c67ca04a00e9a0c791fe064b6f451b1b422",
 		"github://svenvc/NeoJSON/repository" : "11e274dd96dc9636cab90929937b7cd09719de7c"
