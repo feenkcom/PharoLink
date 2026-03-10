@@ -123,6 +123,7 @@ LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 					errorMessage: errorMsg errorMessage;
 					trace: errorMsg trace;
 					exceptionData: errorMsg exceptionData;
+					script: errorMsg script;
 					yourself.
 	self safeTriggerDebugger: error.
 	^ errorMsg createAnswer 

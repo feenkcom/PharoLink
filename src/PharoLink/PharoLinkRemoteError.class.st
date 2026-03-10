@@ -7,7 +7,8 @@ Class {
 		'application',
 		'proceedAction',
 		'trace',
-		'exceptionData'
+		'exceptionData',
+		'script'
 	],
 	#category : #'PharoLink-ErrorHandling'
 }
@@ -91,6 +92,16 @@ PharoLinkRemoteError >> proceedAction [
 { #category : #accessing }
 PharoLinkRemoteError >> proceedAction: anObject [
 	proceedAction := anObject
+]
+
+{ #category : #accessing }
+PharoLinkRemoteError >> script [
+	^ script
+]
+
+{ #category : #accessing }
+PharoLinkRemoteError >> script: anObject [
+	script := anObject
 ]
 
 { #category : #accessing }
