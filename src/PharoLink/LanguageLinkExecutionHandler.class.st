@@ -116,11 +116,13 @@ LanguageLinkExecutionHandler >> notifyDebuggerPaused: aDebugger [
 { #category : #handlers }
 LanguageLinkExecutionHandler >> notifyErrorHandler: errorMsg [
 	| error |
+
 	error := PharoLinkRemoteError new
 					application: self application;
 					command: (commandQueue getCommand: errorMsg commandId);
 					errorMessage: errorMsg errorMessage;
 					trace: errorMsg trace;
+					exceptionData: errorMsg exceptionData;
 					yourself.
 	self safeTriggerDebugger: error.
 	^ errorMsg createAnswer 

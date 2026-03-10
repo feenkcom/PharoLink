@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'commandId',
 		'errorMessage',
-		'trace'
+		'trace',
+		'exceptionData'
 	],
 	#category : #'PharoLink-Platform-Messages'
 }
@@ -39,12 +40,23 @@ LanguageLinkErrorMessage >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
+{ #category : #accessing }
+LanguageLinkErrorMessage >> exceptionData [
+	^ exceptionData
+]
+
+{ #category : #accessing }
+LanguageLinkErrorMessage >> exceptionData: anObject [
+	exceptionData := anObject
+]
+
 { #category : #'as yet unclassified' }
 LanguageLinkErrorMessage >> privateDecode: dict [
 	super privateDecode: dict.
 	commandId := dict at: #commandId.
 	errorMessage := dict at: #errMsg.
-	trace := dict at: #trace
+	trace := dict at: #trace.
+	exceptionData := dict at: #exceptionData ifAbsent: [].
 ]
 
 { #category : #accessing }

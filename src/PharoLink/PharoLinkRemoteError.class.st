@@ -6,7 +6,8 @@ Class {
 		'errorMessage',
 		'application',
 		'proceedAction',
-		'trace'
+		'trace',
+		'exceptionData'
 	],
 	#category : #'PharoLink-ErrorHandling'
 }
@@ -53,6 +54,16 @@ PharoLinkRemoteError >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
+{ #category : #accessing }
+PharoLinkRemoteError >> exceptionData [
+	^ exceptionData
+]
+
+{ #category : #accessing }
+PharoLinkRemoteError >> exceptionData: anObject [
+	exceptionData := anObject
+]
+
 { #category : #initialization }
 PharoLinkRemoteError >> initialize [
 	super initialize.
@@ -80,6 +91,12 @@ PharoLinkRemoteError >> proceedAction [
 { #category : #accessing }
 PharoLinkRemoteError >> proceedAction: anObject [
 	proceedAction := anObject
+]
+
+{ #category : #accessing }
+PharoLinkRemoteError >> stackFrames [
+
+	^ exceptionData at: 'frames'
 ]
 
 { #category : #tracing }
