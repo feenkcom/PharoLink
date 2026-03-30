@@ -37,7 +37,7 @@ PharoLinkApplicationTestResource >> setUp [
 		add: '--oneShot';
 		add: '--log';
 		add: port asString;
-		add: '--detachChangesFromFileSystem';
+		add: '--detachChanges';
 		add: '--epiceaMemoryStore';
 		add: '--noGtImageUpdate'.
 	process := GtSubprocessWithInMemoryOutput new

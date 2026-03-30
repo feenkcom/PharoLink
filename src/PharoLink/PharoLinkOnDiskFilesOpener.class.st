@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #accessing }
+PharoLinkOnDiskFilesOpener class >> defaultBasename [
+
+	^ 'detached.', GtOsSystemInfo current currentProcessId asString, '.changes'
+]
+
+{ #category : #initialization }
 PharoLinkOnDiskFilesOpener class >> initialize [
 
 	"Prority is one less than SourceFileArray's handler, as we want to influence it."
@@ -19,18 +25,31 @@ PharoLinkOnDiskFilesOpener class >> initialize [
 		atPriority: SessionManager default defaultPriority - 1
 ]
 
-{ #category : #accessing }
+{ #category : #'startup - shutdown' }
 PharoLinkOnDiskFilesOpener class >> install [
 	Default := self new
 ]
 
-{ #category : #accessing }
+{ #category : #'startup - shutdown' }
+PharoLinkOnDiskFilesOpener class >> installIn: aFileReference [
+
+	Default := self new
+		changesFilename: (aFileReference asFileReference / self defaultBasename)
+]
+
+{ #category : #'startup - shutdown' }
 PharoLinkOnDiskFilesOpener class >> startUp: isStarting [
+	"If starting, install the receiver in the specified directory.
+	The directory must exist prior to imgage startup."
+	| arguments index |
 
 	isStarting ifFalse: [ ^ self ].
-	(Smalltalk argumentsInclude: '--detachChanges') 
-		ifFalse: [ ^ self ].
-	self install.
+	arguments := Smalltalk argumentsStartingAtIndex: 0.
+	(arguments includes: '--detachChanges')
+		ifTrue: [ ^ self install ].
+	index := arguments indexOf: '--detachChangesDir'.
+	index > 0 ifTrue:
+		[ ^ self installIn: (arguments at: index + 1) ].
 ]
 
 { #category : #accessing }
@@ -53,12 +72,13 @@ PharoLinkOnDiskFilesOpener >> changesFilename [
 	however it may be overwritten for testing."
 
 	^ changesFilename ifNil: 
-		[ changesFilename := self changesName asFileReference parent / ('detached.', GtOsSystemInfo current currentProcessId asString, '.changes') ].
+		[ changesFilename := self changesName asFileReference parent / self class defaultBasename ].
 ]
 
 { #category : #accessing }
-PharoLinkOnDiskFilesOpener >> changesFilename: anObject [
-	changesFilename := anObject
+PharoLinkOnDiskFilesOpener >> changesFilename: aFileReference [
+
+	changesFilename := aFileReference
 ]
 
 { #category : #accessing }
