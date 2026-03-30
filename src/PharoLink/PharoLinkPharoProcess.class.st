@@ -88,7 +88,7 @@ PharoLinkPharoProcess >> processArguments [
 	self debugMode ifTrue: [ args add: '--log' ].
 	args
 		add: self settings serverSocketAddress port asString;
-		add: '--detachChangesFromFileSystem';
+		add: '--detachChanges';
 		add: '--epiceaMemoryStore';
 		add: '--noGtImageUpdate'.
 	^ args
