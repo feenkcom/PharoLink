@@ -22,5 +22,10 @@ BaselineOfPharoLink >> baseline: spec [
 			baseline: 'Beacon'
 			with: [ 
 				spec repository: 'github://feenkcom/pharo-beacon/repository' ].
-		spec package: 'PharoLink' with: [ spec requires: #('GToolkitExternalProcess') ] ]
+		spec package: 'PharoLink' with: [ spec requires: #('GToolkitExternalProcess') ].
+		self 
+			forPharo13AndNewer: [] 
+			forOlder: [
+				spec package: 'PharoLink-Pharo12Extensions' with: [ 
+					spec requires: #('PharoLink') ] ] ]
 ]
