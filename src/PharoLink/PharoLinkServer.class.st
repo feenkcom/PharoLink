@@ -47,7 +47,7 @@ PharoLinkServer class >> commandLine [
 { #category : #clap }
 PharoLinkServer class >> commandLineCommand [
 
-	^ (ClapCommand id: 'pharoLinkServer')
+	^ (ClapCommandSpec id: 'pharoLinkServer')
 		  description: 'Run the PharoLink Server';
 		  add: ClapFlag forHelp;
 		  add: ((ClapFlag id: 'log') description: 'Enable logging to stdout');
