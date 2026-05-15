@@ -19,7 +19,7 @@ BaselineOfPharoLink >> baseline: spec [
 				spec repository: 'github://feenkcom/msgpack-smalltalk:v1.3.9/repository' ].
 		spec
 			baseline: 'Beacon' with: [
-				spec repository: 'github://feenkcom/pharo-beacon:6f2cc9f4d96f3079356bc50d2f808552cd29ec23/repository' ].
+				spec repository: 'github://feenkcom/pharo-beacon:d1af72fc3fb759440b1b4b3e62144d1c7f8d73f2/repository' ].
 
 		spec package: 'PharoLink' with: [
 			spec requires: #(#GToolkitExternalProcess) ].
