@@ -58,7 +58,7 @@ PharoLinkTestResult >> runCase: aTestCase [
 PharoLinkTestResult >> runCaseDebug: aTestCase start: start report: resourceReport [
 	| announcement |
 
-	CurrentExecutionEnvironment runTestCase: aTestCase.
+	aTestCase runCaseManaged.
 
 	resourceReport recordTargetReport.
 	announcement := aTestCase gtTestCasePassStartTimestamp: start timestamp.
