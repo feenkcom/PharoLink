@@ -106,21 +106,30 @@ PharoLinkReadFileWriteStream >> next: aQuantity [
 { #category : #accessing }
 PharoLinkReadFileWriteStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 	"Write anInteger characters/bytes from aCollection starting at startIndex."
-	| offset |
+	| oldPosition readOnlyCount localStart localCount result |
 
-	offset := readOnlyLimit - position max: 0.
-	offset > 0 ifTrue: [ 
+	oldPosition := position.
+	readOnlyCount := ((readOnlyLimit - oldPosition) max: 0) min: anInteger.
+	readOnlyCount > 0 ifTrue: [
 		| read written |
-		read := readOnly next: offset.
+		readOnly position: oldPosition.
+		read := readOnly next: readOnlyCount.
 		written := aCollection
 			           copyFrom: startIndex
-			           to: startIndex + offset - 1.
+			           to: startIndex + readOnlyCount - 1.
 		read = written ifFalse: [ self error: 'readOnly is immutable' ] ].
-	position := position + anInteger - offset.
-	^ readWrite
-		  next: anInteger - offset
-		  putAll: aCollection
-		  startingAt: startIndex + offset
+
+	localStart := startIndex + readOnlyCount.
+	localCount := anInteger - readOnlyCount.
+	localCount > 0 ifTrue: [
+		readWrite position: ((oldPosition + readOnlyCount - readOnlyLimit) max: 0).
+		result := readWrite
+			next: localCount
+			putAll: aCollection
+			startingAt: localStart ].
+
+	position := oldPosition + anInteger.
+	^ result ifNil: [ aCollection ]
 ]
 
 { #category : #accessing }
@@ -159,15 +168,16 @@ PharoLinkReadFileWriteStream >> position: anInteger [
 
 { #category : #accessing }
 PharoLinkReadFileWriteStream >> readInto: aCollection startingAt: startIndex count: n [
-	| max read |
+	| max read readOnlyCount |
 
-	max := self size - position min: n.
+	max := (self size - position) min: n.
 	read := 0.
 	position < readOnlyLimit ifTrue: [ 
+		readOnlyCount := max min: readOnlyLimit - position.
 		read := readOnly
-			        readInto: aCollection
-			        startingAt: startIndex
-			        count: max ].
+		        readInto: aCollection
+		        startingAt: startIndex
+		        count: readOnlyCount ].
 	read < max ifTrue: [ 
 		read := read + (readWrite
 			         readInto: aCollection
