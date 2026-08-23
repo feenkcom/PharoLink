@@ -211,6 +211,47 @@ PharoLinkReadFileWriteStreamExamples >> testReadUpToEnd [
 ]
 
 { #category : #examples }
+PharoLinkReadFileWriteStreamExamples >> testRewrite [
+	<gtExample>
+	| stream |
+
+	readOnlyStream := self string64 readStream.
+	readWriteStream := ReadWriteStream with: String new.
+	stream := PharoLinkReadFileWriteStream
+		readOnly: readOnlyStream 
+		readOnlyLimit: 64
+		readWrite: readWriteStream.
+	stream setToEnd.
+	stream nextPutAll: '0123456789'.
+	stream position: 69.
+	self assert: (stream next: 5) equals: '56789'.
+	stream position: 69.
+	stream nextPutAll: '56789ABCDE'.
+	stream position: 69.
+	self assert: (stream next: 10) equals: '56789ABCDE'.
+	^ stream
+]
+
+{ #category : #examples }
+PharoLinkReadFileWriteStreamExamples >> testRewriteSourcesReadWrite [
+	<gtExample>
+	| stream |
+
+	stream := self readWriteStreamOn: self string64 utf8Encoded readStream.
+	stream setToEnd.
+	stream nextPutAll: '0123456789' utf8Encoded.
+	stream flush.
+	stream position: 69.
+	self assert: (stream next: 5) equals: '56789' utf8Encoded.
+	stream position: 69.
+	stream nextPutAll: '56789ABCDE' utf8Encoded.
+	stream flush.
+	stream position: 69.
+	self assert: (stream next: 10) equals: '56789ABCDE' utf8Encoded.
+	^ stream
+]
+
+{ #category : #examples }
 PharoLinkReadFileWriteStreamExamples >> testSetAtEnd [
 	<gtExample>
 	| stream |
