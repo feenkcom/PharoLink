@@ -60,6 +60,25 @@ PharoLinkReadFileWriteStreamExamples >> peek [
 ]
 
 { #category : #examples }
+PharoLinkReadFileWriteStreamExamples >> readAcrossDetachedChangesBoundary [
+	"Bytes added to the original changes file after detachment are not part of
+	the logical stream. A bulk read that crosses the snapshot boundary must
+	continue in the detached changes file."
+	<gtExample>
+	| baseChanges detachedChanges stream |
+
+	baseChanges := '0123456789GROWN' utf8Encoded readStream.
+	detachedChanges := ReadWriteStream with: 'detached' utf8Encoded.
+	stream := PharoLinkReadFileWriteStream
+		readOnly: baseChanges
+		readOnlyLimit: 10
+		readWrite: detachedChanges.
+
+	stream position: 8.
+	self assert: (stream next: 10) utf8Decoded equals: '89detached'
+]
+
+{ #category : #examples }
 PharoLinkReadFileWriteStreamExamples >> readOverBoundary [
 	"Demonstrate reading a portion of the stream that starts within the readOnly stream and reads part of the readWrite stream"
 	<gtExample>
