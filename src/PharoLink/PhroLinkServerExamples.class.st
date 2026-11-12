@@ -12,6 +12,7 @@ Class {
 PhroLinkServerExamples >> invalidRegistryId [
 	"Check that the server handles requests of an object with an invalid id correctly"
 	<gtExample>
+	<timeLimit: 120000>
 	<after: #tidyUp>
 	| invalidObject result promise |
 	
