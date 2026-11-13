@@ -53,9 +53,10 @@ LanguageLinkHttpMessageBroker >> preventTestForkedPDestroyServer [
 	| env |
 	env := CurrentExecutionEnvironment value.
 	(env isKindOf: TestExecutionEnvironment) ifTrue: [ 
-		env forkedProcesses
-			remove: server process 
-			ifAbsent: [  ] ]
+		env processMonitor lock: [ :aService |
+			aService forkedProcesses
+				remove: server process 
+				ifAbsent: [  ] ] ]
 ]
 
 { #category : #private }
