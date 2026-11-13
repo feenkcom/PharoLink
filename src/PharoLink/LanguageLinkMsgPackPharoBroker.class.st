@@ -118,9 +118,10 @@ LanguageLinkMsgPackPharoBroker >> preventTestForkedPDestroyServer [
 	| env |
 	env := CurrentExecutionEnvironment value.
 	(env isKindOf: TestExecutionEnvironment) ifTrue: [ 
-		env forkedProcesses
-			remove: handlerThread 
-			ifAbsent: [  ] ]
+		env processMonitor lock: [ :aService |
+			aService forkedProcesses
+				remove: handlerThread 
+				ifAbsent: [  ] ] ]
 ]
 
 { #category : #private }
