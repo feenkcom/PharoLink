@@ -59,9 +59,8 @@ PhroLinkServerExamples >> newRunningServer [
 
 { #category : #'as yet unclassified' }
 PhroLinkServerExamples >> tidyUp [
-
-	application ifNotNil: #stop.
+	application ifNotNil: [ :v | v stop ].
 	application := nil.
-	server ifNotNil: #stop.
-	server := nil.
+	server ifNotNil: [ :v | v stop ].
+	server := nil
 ]

@@ -137,13 +137,12 @@ PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messa
 ]
 
 { #category : #initialization }
-PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString additionalData:  additionalData [
- 
- 	primaryException := PharoLinkException new
- 		exceptionClassName: (aClass ifNotNil: #name);
- 		exceptionMessageText: aString;
- 		exceptionTrace: anotherString;
- 		exceptionAdditionalData: additionalData.
+PharoLinkTestCaseExceptionAnnouncement >> initializeExceptionClass: aClass messageText: aString trace: anotherString additionalData: additionalData [
+	primaryException := PharoLinkException new
+			exceptionClassName: (aClass ifNotNil: [ :v | v name ]);
+			exceptionMessageText: aString;
+			exceptionTrace: anotherString;
+			exceptionAdditionalData: additionalData
 ]
 
 { #category : #accessing }

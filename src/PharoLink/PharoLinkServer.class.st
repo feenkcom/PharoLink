@@ -243,12 +243,12 @@ PharoLinkServer >> start [
 PharoLinkServer >> stop [
 	"Stop the receiver"
 
-	listenProcess ifNotNil: #terminate.
+	listenProcess ifNotNil: [ :v | v terminate ].
 	listenProcess := nil.
 	connections do: [ :connection | connection ifNotNil: [ connection stop ] ].
 	connections removeAll.
-	serverSocket  ifNotNil: #closeAndDestroy.
-	serverSocket := nil.
+	serverSocket ifNotNil: [ :v | v closeAndDestroy ].
+	serverSocket := nil
 ]
 
 { #category : #'announcer - subscription' }
