@@ -225,9 +225,8 @@ LanguageLinkMsgPackPharoBroker >> start [
 
 { #category : #'start-stop' }
 LanguageLinkMsgPackPharoBroker >> stop [
-
-	msgStream ifNotNil: #close.
-	handlerThread ifNotNil: #terminate.
-	socket ifNotNil: #closeAndDestroy.
+	msgStream ifNotNil: [ :v | v close ].
+	handlerThread ifNotNil: [ :v | v terminate ].
+	socket ifNotNil: [ :v | v closeAndDestroy ].
 	msgStream := socket := handlerThread := nil
 ]

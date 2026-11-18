@@ -334,19 +334,17 @@ PharoLinkServerConnection >> stop [
 	This is called by #handleNextRequestSafely when the connection is closed.
 	Notify the server (which may cause it to quit the image)."
 
-	listenProcess ifNotNil: #terminate.
+	listenProcess ifNotNil: [ :v | v terminate ].
 	listenProcess := nil.
-	socket ifNotNil: #closeAndDestroy.
+	socket ifNotNil: [ :v | v closeAndDestroy ].
 	socket := nil.
 	syncRegistry valuesDo: [ :entry | entry signalConnectionLost ].
-	processes do: [ :e | 
-		[ e terminate ]
-			on: ProcessAlreadyTerminating
-			do: [ "noop" ] ].
+	processes
+		do: [ :e | [ e terminate ] on: ProcessAlreadyTerminating do: [  "noop" ] ].
 	processes removeAll.
-	self announce:
-		(PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
-	server onConnectionStopped: self.
+	self
+		announce: (PharoLinkServerConnectionDisconnectedAnnouncement connection: self).
+	server onConnectionStopped: self
 ]
 
 { #category : #'announcer - subscription' }

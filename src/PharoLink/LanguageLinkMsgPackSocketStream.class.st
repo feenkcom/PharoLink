@@ -26,7 +26,7 @@ LanguageLinkMsgPackSocketStream >> atEnd [
 { #category : #streaming }
 LanguageLinkMsgPackSocketStream >> close [
 	| ans |
-	ans := socketStream socket ifNotNil: #closeAndDestroy.
+	ans := socketStream socket ifNotNil: [ :v | v closeAndDestroy ].
 	30 timesRepeat: [ encoderSemaphore signal ].
 	30 timesRepeat: [ decoderSemaphore signal ].
 	^ ans
